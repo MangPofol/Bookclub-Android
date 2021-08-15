@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bookclub</string>
+
+    <!-- bottom navigation -->
+    <string name="write">write</string>
+    <string name="bookclub">bookclub</string>
+    <string name="my_bookclub">my bookclub</string>
 </resources>
