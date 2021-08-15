@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_border_color_24"
         android:title="@string/write" />
     <item
-        android:id="@+id/bookclub"
+        android:id="@+id/library"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_mode_comment_24"
         android:title="@string/bookclub"/>

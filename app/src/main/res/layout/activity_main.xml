@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/bottomViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/lineLayout"
@@ -19,19 +19,19 @@
         android:layout_height="3dp"
         android:background="@color/grey1"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationLayout"
+        app:layout_constraintTop_toBottomOf="@+id/bottomViewPager" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/bottomNavigation"
+        android:id="@+id/bottomNavigationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lineLayout">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+            android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemIconTint="@drawable/bottom_icon_color"
