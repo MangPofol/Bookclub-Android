@@ -9,7 +9,7 @@
         android:id="@+id/library"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_mode_comment_24"
-        android:title="@string/bookclub"/>
+        android:title="@string/book_club_en"/>
     <item
         android:id="@+id/myBookclub"
         android:enabled="true"
