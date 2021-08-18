@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/latestOrder"
+            android:layout_width="49dp"
+            android:layout_height="21dp"
+            android:background="@drawable/selector_filter2"
+            android:button="@null"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:text="@string/latest_order"
+            android:textColor="@drawable/selector_filter_text"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/oldOrder"
+            android:layout_width="60dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/selector_filter2"
+            android:button="@null"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:text="@string/old_order"
+            android:textColor="@drawable/selector_filter_text"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/nameOrder"
+            android:layout_width="49dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/selector_filter2"
+            android:button="@null"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:text="@string/name_order"
+            android:textColor="@drawable/selector_filter_text"
+            android:textSize="10sp" />
+
+    </RadioGroup>
+
+</LinearLayout>
