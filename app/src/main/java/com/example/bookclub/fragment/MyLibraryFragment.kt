@@ -1,13 +1,10 @@
 package com.example.bookclub.fragment
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bookclub.R
 import com.example.bookclub.adapter.MyLibraryPagerAdapter
@@ -16,6 +13,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MyLibraryFragment : Fragment() {
     private lateinit var binding: FragmentMyLibraryBinding
+    private lateinit var myLibraryPagerAdapter: MyLibraryPagerAdapter
+
     private var searchFlag = 0
     private var clubFlag = 0
     private var sortFlag = 0
@@ -31,7 +30,8 @@ class MyLibraryFragment : Fragment() {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)
 
         //viewPager adapter 설정
-        binding.viewPager.adapter = MyLibraryPagerAdapter()
+        myLibraryPagerAdapter = MyLibraryPagerAdapter()
+        binding.viewPager.adapter = myLibraryPagerAdapter
 
         //tablayout이랑 viewPager 연결
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
@@ -61,8 +61,11 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 1
                 clubFlag = 0
                 sortFlag = 0
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
+                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.searchButton)
             } else {
                 binding.filterRadioGroup.clearCheck()
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
                 searchFlag = 0
             }
             //Log.d("현재 플래그", "검색: ${searchFlag}, 북클럽: ${clubFlag}, 정렬: ${sortFlag}")
@@ -73,11 +76,13 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 0
                 clubFlag = 1
                 sortFlag = 0
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
+                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.clubButton)
             } else {
                 binding.filterRadioGroup.clearCheck()
                 clubFlag = 0
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
             }
-            Log.d("현재 플래그", "검색: ${searchFlag}, 북클럽: ${clubFlag}, 정렬: ${sortFlag}")
         }
 
         binding.sortButton.setOnClickListener {
@@ -85,15 +90,19 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 0
                 clubFlag = 0
                 sortFlag = 1
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
+                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.sortButton)
+
             } else {
-                binding.filterRadioGroup.clearCheck()
                 sortFlag = 0
+                binding.filterRadioGroup.clearCheck()
+                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
             }
         }
 
         //val sp: Float = 10 / resources.displayMetrics.scaledDensity
-        //val dp: Float = 5 / resources.displayMetrics.density
-        //Log.d("dp", dp.toString())
+//        val dp: Float = 3 / resources.displayMetrics.density
+//        Log.d("dp", dp.toString())
 
         return binding.root
     }
