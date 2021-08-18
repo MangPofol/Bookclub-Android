@@ -1,27 +1,38 @@
 package com.example.bookclub.adapter
 
-import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.bookclub.fragment.CompleteReadingFragment
-import com.example.bookclub.fragment.ReadingFragment
-import com.example.bookclub.fragment.WantReadFragment
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bookclub.databinding.BookListPagerBinding
 
-class MyLibraryPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-    private val READING = 0
-    private val COMPLETE_READING = 1
-    private val WANT_TO_READ = 2
+class MyLibraryPagerAdapter() : RecyclerView.Adapter<MyLibraryPagerAdapter.MyLibraryPagerViewHolder>() {
+    private lateinit var binding: BookListPagerBinding
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyLibraryPagerAdapter.MyLibraryPagerViewHolder {
+        binding = BookListPagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return MyLibraryPagerViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(
+        holder: MyLibraryPagerAdapter.MyLibraryPagerViewHolder,
+        position: Int
+    ) {
+        holder.recyclerView.adapter = BookAdapter()
+        holder.recyclerView.layoutManager = LinearLayoutManager(holder.recyclerView.context, LinearLayoutManager.VERTICAL, false)
+    }
 
     override fun getItemCount(): Int {
         return 3
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            READING -> ReadingFragment()
-            COMPLETE_READING -> CompleteReadingFragment()
-            else -> WantReadFragment()
-        }
+    class MyLibraryPagerViewHolder(itemView: BookListPagerBinding) : RecyclerView.ViewHolder(itemView.root) {
+        val filterLayout: LinearLayout = itemView.filterLayout
+        val recyclerView: RecyclerView = itemView.bookListRecyclerView
     }
 }
