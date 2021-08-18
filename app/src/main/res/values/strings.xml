@@ -15,4 +15,7 @@
     <string name="search">검색</string>
     <string name="book_club_kr">북클럽</string>
     <string name="sort">정렬</string>
+    <string name="latest_order">최신순</string>
+    <string name="old_order">오래된순</string>
+    <string name="name_order">이름순</string>
 </resources>
