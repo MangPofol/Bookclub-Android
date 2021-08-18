@@ -3,16 +3,16 @@
     <item
         android:id="@+id/write"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_border_color_24"
+        android:icon="@drawable/ic_baseline_border_color_48"
         android:title="@string/write" />
     <item
         android:id="@+id/library"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_mode_comment_24"
+        android:icon="@drawable/ic_baseline_mode_comment_48"
         android:title="@string/book_club_en"/>
     <item
         android:id="@+id/myBookclub"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_mode_comment_24"
+        android:icon="@drawable/ic_baseline_mode_comment_48"
         android:title="@string/my_bookclub"/>
 </menu>
