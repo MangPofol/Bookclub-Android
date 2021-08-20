@@ -1,6 +1,8 @@
 package com.example.bookclub.fragment
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,10 +37,12 @@ class MyLibraryFragment : Fragment() {
 
         //tablayout이랑 viewPager 연결
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
+            Log.d("position", position.toString())
             when (position) {
                 0 -> tab.text = getString(R.string.reading)
                 1 -> tab.text = getString(R.string.read_complete)
-                else -> tab.text = getString(R.string.want_to_read)
+                2 -> tab.text = getString(R.string.want_to_read)
+                else -> null
             }
         }.attach()
 
@@ -47,8 +51,8 @@ class MyLibraryFragment : Fragment() {
             override fun onPageSelected(position: Int){
                 super.onPageSelected(position)
 
-                filterClear()
-                when(position) {
+                filterLayoutInit()
+                when(position) {    //읽고 싶은 탭에서는 북클럽 필터 버튼 GONE 으로
                     0 -> setVisibilityClubButton(View.VISIBLE)
                     1 -> setVisibilityClubButton(View.VISIBLE)
                     2 -> setVisibilityClubButton(View.GONE)
@@ -61,12 +65,12 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 1
                 clubFlag = 0
                 sortFlag = 0
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
-                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.searchButton)
+                fragmentManager!!.beginTransaction().replace(binding.filterLayout.id, SearchFragment()).commit()
+                binding.filterLayout.visibility = View.VISIBLE
             } else {
-                binding.filterRadioGroup.clearCheck()
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
                 searchFlag = 0
+                binding.filterRadioGroup.clearCheck()
+                binding.filterLayout.visibility = View.GONE
             }
             //Log.d("현재 플래그", "검색: ${searchFlag}, 북클럽: ${clubFlag}, 정렬: ${sortFlag}")
         }
@@ -76,12 +80,12 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 0
                 clubFlag = 1
                 sortFlag = 0
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
-                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.clubButton)
+                fragmentManager!!.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
+                binding.filterLayout.visibility = View.VISIBLE
             } else {
-                binding.filterRadioGroup.clearCheck()
                 clubFlag = 0
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
+                binding.filterRadioGroup.clearCheck()
+                binding.filterLayout.visibility = View.GONE
             }
         }
 
@@ -90,13 +94,12 @@ class MyLibraryFragment : Fragment() {
                 searchFlag = 0
                 clubFlag = 0
                 sortFlag = 1
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.VISIBLE)
-                myLibraryPagerAdapter.addFilterLayout(childFragmentManager, R.id.sortButton)
-
+                fragmentManager!!.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
+                binding.filterLayout.visibility = View.VISIBLE
             } else {
                 sortFlag = 0
                 binding.filterRadioGroup.clearCheck()
-                myLibraryPagerAdapter.setVisibilityFilterLayout(View.GONE)
+                binding.filterLayout.visibility = View.GONE
             }
         }
 
@@ -107,10 +110,13 @@ class MyLibraryFragment : Fragment() {
         return binding.root
     }
 
-    private fun filterClear() {
+    private fun filterLayoutInit() {
         searchFlag = 0
         clubFlag = 0
         sortFlag = 0
+
+        binding.filterLayout.removeAllViewsInLayout()
+        binding.filterLayout.visibility = View.GONE
         binding.filterRadioGroup.clearCheck()
     }
 
