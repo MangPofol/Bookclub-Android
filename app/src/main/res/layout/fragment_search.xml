@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragment.SearchFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:background="@drawable/search_stroke"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center_vertical"
+        android:hint="@string/book_search"
+        android:minHeight="0dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+</LinearLayout>
