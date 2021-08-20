@@ -78,7 +78,7 @@
                     android:minHeight="0dp"
                     android:text="@string/search"
                     android:textColor="@drawable/selector_filter_text"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/clubButton"
@@ -92,7 +92,7 @@
                     android:minHeight="0dp"
                     android:text="@string/book_club_kr"
                     android:textColor="@drawable/selector_filter_text"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <RadioButton
                     android:id="@+id/sortButton"
@@ -106,10 +106,21 @@
                     android:minHeight="0dp"
                     android:text="@string/sort"
                     android:textColor="@drawable/selector_filter_text"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
             </RadioGroup>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/filterLayout"
+            android:background="@color/grey5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="22dp"
+            android:paddingRight="20dp"
+            android:visibility="gone" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -117,6 +128,8 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:background="@color/grey5"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
