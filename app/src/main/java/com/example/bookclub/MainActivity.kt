@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookclub.adapter.BottomNavigationPagerAdapter
 import com.example.bookclub.databinding.ActivityMainBinding
+import com.example.bookclub.fragment.BookListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
