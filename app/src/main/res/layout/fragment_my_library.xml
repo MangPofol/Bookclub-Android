@@ -42,8 +42,7 @@
                 android:id="@+id/readTypeTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginHorizontal="20dp"
                 app:tabIndicatorColor="@color/main_blue"
                 app:tabSelectedTextColor="@color/main_blue"
                 app:tabTextAppearance="@style/tab_text"
@@ -52,8 +51,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginHorizontal="20dp"
                 android:background="@color/grey2"
                 android:orientation="vertical" />
 
@@ -61,10 +59,8 @@
                 android:id="@+id/filterRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="12dp"
                 android:orientation="horizontal">
 
                 <RadioButton
@@ -111,24 +107,12 @@
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/filterLayout"
-            android:background="@color/grey5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingTop="22dp"
-            android:paddingRight="20dp"
-            android:visibility="gone" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="10dp"
         android:background="@color/grey5"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
