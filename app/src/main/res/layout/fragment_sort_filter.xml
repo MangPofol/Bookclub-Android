@@ -6,53 +6,45 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+    <CheckBox
+        android:id="@+id/latestOrder"
+        android:layout_width="49dp"
+        android:layout_height="21dp"
+        android:background="@drawable/selector_filter2"
+        android:button="@null"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:text="@string/latest_order"
+        android:textColor="@drawable/selector_filter_text"
+        android:textSize="12sp" />
 
-        <RadioButton
-            android:id="@+id/latestOrder"
-            android:layout_width="49dp"
-            android:layout_height="21dp"
-            android:background="@drawable/selector_filter2"
-            android:button="@null"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:text="@string/latest_order"
-            android:textColor="@drawable/selector_filter_text"
-            android:textSize="12sp" />
+    <CheckBox
+        android:id="@+id/oldOrder"
+        android:layout_width="60dp"
+        android:layout_height="21dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/selector_filter2"
+        android:button="@null"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:text="@string/old_order"
+        android:textColor="@drawable/selector_filter_text"
+        android:textSize="12sp" />
 
-        <RadioButton
-            android:id="@+id/oldOrder"
-            android:layout_width="60dp"
-            android:layout_height="21dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/selector_filter2"
-            android:button="@null"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:text="@string/old_order"
-            android:textColor="@drawable/selector_filter_text"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/nameOrder"
-            android:layout_width="49dp"
-            android:layout_height="21dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/selector_filter2"
-            android:button="@null"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:text="@string/name_order"
-            android:textColor="@drawable/selector_filter_text"
-            android:textSize="12sp" />
-
-    </RadioGroup>
+    <CheckBox
+        android:id="@+id/nameOrder"
+        android:layout_width="49dp"
+        android:layout_height="21dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/selector_filter2"
+        android:button="@null"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:text="@string/name_order"
+        android:textColor="@drawable/selector_filter_text"
+        android:textSize="12sp" />
 
 </LinearLayout>
