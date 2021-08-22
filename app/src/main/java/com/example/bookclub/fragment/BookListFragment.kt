@@ -45,17 +45,22 @@ class BookListFragment: Fragment() {
 
         //메인 필터 클릭 이벤트 observer
         mainFilterViewModel.selectedFilter.observe(activity as MainActivity, Observer { mainFilter ->
-            binding.filterLayout.visibility = View.VISIBLE
+            if (mainFilter==null) {
+                binding.filterLayout.visibility = View.GONE
+            } else {
+                binding.filterLayout.removeAllViewsInLayout()
+                binding.filterLayout.visibility = View.VISIBLE
 
-            when(mainFilter) {
-                R.id.searchButton -> {
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment()).commit()
-                }
-                R.id.clubButton -> {
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
-                }
-                R.id.sortButton -> {
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
+                when(mainFilter) {
+                    R.id.searchButton -> {
+                        childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment()).commit()
+                    }
+                    R.id.clubButton -> {
+                        childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
+                    }
+                    R.id.sortButton -> {
+                        childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
+                    }
                 }
             }
         })
