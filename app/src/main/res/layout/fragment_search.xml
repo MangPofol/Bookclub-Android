@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
     tools:context=".fragment.SearchFragment">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="27dp"
         android:background="@drawable/search_stroke"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableLeft="@drawable/ic_baseline_search_12_black"
         android:drawablePadding="10dp"
         android:fontFamily="@font/roboto_regular"
         android:gravity="center_vertical"
