@@ -55,6 +55,11 @@ class MyLibraryFragment : Fragment() {
                 super.onPageSelected(position)
                 Log.e("ViewPagerFragment", "Page ${position + 1}")
 
+                //이전 탭에서 체크돼 있던 메인 필터 체크 해제
+                binding.searchButton.isChecked = false
+                binding.clubButton.isChecked = false
+                binding.sortButton.isChecked = false
+
                 //완독 부분에선 북클럽 필터 GONE
                 when (position) {
                     0 -> setVisibilityClubButton(View.VISIBLE)
