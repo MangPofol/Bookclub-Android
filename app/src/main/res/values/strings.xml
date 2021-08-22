@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Bookclub</string>
 
+    <!-- main activity -->
+    <string name="open">open</string>
+    <string name="close">close</string>
+
     <!-- bottom navigation -->
     <string name="write">write</string>
     <string name="book_club_en">bookclub</string>
