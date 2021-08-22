@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,10 +17,12 @@ import com.example.bookclub.adapter.MyLibraryPagerAdapter
 import com.example.bookclub.viewmodel.MainFilterViewModel
 import com.example.bookclub.databinding.FragmentMyLibraryBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.properties.Delegates
 
 class MyLibraryFragment : Fragment() {
     private lateinit var binding: FragmentMyLibraryBinding
     private lateinit var mainFilterViewModel: MainFilterViewModel
+    private var viewPagerStack: MutableList<Int> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +38,9 @@ class MyLibraryFragment : Fragment() {
 
         //메인 필터 체크박스 리스너
         val checkBoxListener = CompoundButton.OnCheckedChangeListener { checkBox, isChecked ->
-            if (isChecked)
+            if (isChecked) {
                 changeFilterCheckBox(checkBox.id)
-            else {
+            } else {
                 isNotCheckedAll()
             }
         }
@@ -54,11 +57,16 @@ class MyLibraryFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.e("ViewPagerFragment", "Page ${position + 1}")
+                viewPagerStack.add(position)
 
-                //이전 탭에서 체크돼 있던 메인 필터 체크 해제
-                binding.searchButton.isChecked = false
-                binding.clubButton.isChecked = false
-                binding.sortButton.isChecked = false
+                //완독 탭을 누르면 콜백 함수가 두 번 호출되는 버그 해결하기 위한 방법
+                if (viewPagerStack.size > 1 && viewPagerStack[viewPagerStack.lastIndex - 1] != position) {
+                    when (mainFilterViewModel.selectedFilter.value) {
+                        binding.searchButton.id -> binding.searchButton.isChecked = false
+                        binding.clubButton.id -> binding.clubButton.isChecked = false
+                        binding.sortButton.id -> binding.sortButton.isChecked = false
+                    }
+                }
 
                 //완독 부분에선 북클럽 필터 GONE
                 when (position) {
@@ -74,6 +82,9 @@ class MyLibraryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
+        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36)  //navigation icon 설정
 
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
             when (position) {
