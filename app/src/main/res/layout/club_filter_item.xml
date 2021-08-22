@@ -14,7 +14,8 @@
         android:fontFamily="@font/roboto_regular"
         android:gravity="center_vertical"
         android:minHeight="0dp"
-        android:paddingLeft="5dp"
+        android:paddingHorizontal="5dp"
+        android:drawableEnd="@drawable/bookclub_checkbox_drawable_end"
         android:textColor="@drawable/selector_filter_text"
         android:textSize="12sp" />
 
