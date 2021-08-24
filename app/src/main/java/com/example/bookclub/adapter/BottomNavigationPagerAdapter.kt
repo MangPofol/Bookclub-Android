@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.bookclub.fragment.BookClubFragment
 import com.example.bookclub.fragment.MyLibraryFragment
 import com.example.bookclub.fragment.WriteFragment
 
@@ -16,7 +17,7 @@ class BottomNavigationPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(f
         return when (position) {
             0 -> WriteFragment()
             1 -> MyLibraryFragment()
-            else -> MyLibraryFragment()
+            else -> BookClubFragment()
         }
     }
 
