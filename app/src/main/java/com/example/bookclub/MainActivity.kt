@@ -2,11 +2,14 @@ package com.example.bookclub
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.bookclub.adapter.BottomNavigationPagerAdapter
 import com.example.bookclub.databinding.ActivityMainBinding
 import com.example.bookclub.fragment.BookListFragment
@@ -18,6 +21,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val window = window
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -25,6 +34,25 @@ class MainActivity : AppCompatActivity() {
         binding.bottomViewPager.currentItem = 1
         binding.bottomNavigation.selectedItemId = R.id.library
 
+        binding.bottomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(    //뷰페이저 스크롤 시 프래그먼트 전환되면서 bottom navigation 아이콘 체크 상태 변경
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                binding.bottomNavigation.menu.getItem(position).isChecked = true
+            }
+
+            override fun onPageSelected(position: Int) {
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
+
+        //bottom navigation 메뉴 선택 시 프래그먼트 전환
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.write -> {
@@ -71,10 +99,7 @@ class MainActivity : AppCompatActivity() {
         //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawers()
-        else if (fragment.javaClass == MyLibraryFragment().javaClass && (fragment as MyLibraryFragment).isClubListVisible()) {
-            //내 서재 화면의 클럽을 선택하는 top sheet 가 열려 있을 경우
-            (fragment as MyLibraryFragment).closeClubList()
-        } else {
+        else {
             super.onBackPressed()
         }
 
