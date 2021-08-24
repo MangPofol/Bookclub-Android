@@ -1,15 +1,11 @@
 package com.example.bookclub.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.TranslateAnimation
 import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -20,10 +16,6 @@ import com.example.bookclub.adapter.MyLibraryPagerAdapter
 import com.example.bookclub.viewmodel.MainFilterViewModel
 import com.example.bookclub.databinding.FragmentMyLibraryBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import androidx.transition.Transition
-import androidx.transition.Fade
-import androidx.transition.TransitionManager
-
 
 class MyLibraryFragment : Fragment() {
     private lateinit var binding: FragmentMyLibraryBinding
@@ -49,20 +41,6 @@ class MyLibraryFragment : Fragment() {
             } else {
                 isNotCheckedAll()
             }
-        }
-
-        //클럽을 선택하는 top sheet 화면을 여는 아이콘을 눌렀을 때 발생하는 이벤트 리스너
-        binding.toolbar.setOnMenuItemClickListener {
-            if (binding.clubListLayout.visibility==View.GONE) {
-                val anim = AnimationUtils.loadAnimation(context, R.anim.slide_down)
-                binding.clubListLayout.animation = anim
-                binding.clubListLayout.visibility = View.VISIBLE
-                binding.coordinatorLayout.isEnabled = false
-            } else {
-                closeClubList()
-            }
-
-            true
         }
 
         //메인 필터 체크박스 리스너 등록
@@ -145,16 +123,6 @@ class MyLibraryFragment : Fragment() {
         if (!binding.searchButton.isChecked && !binding.clubButton.isChecked && !binding.sortButton.isChecked) {
             mainFilterViewModel.selectedFilter.value = null
         }
-    }
-
-    fun isClubListVisible(): Boolean {
-        return binding.clubListLayout.visibility==View.VISIBLE
-    }
-
-    fun closeClubList() {
-        val anim = AnimationUtils.loadAnimation(context, R.anim.slide_up)
-        binding.clubListLayout.animation = anim
-        binding.clubListLayout.visibility = View.GONE
     }
 
 }
