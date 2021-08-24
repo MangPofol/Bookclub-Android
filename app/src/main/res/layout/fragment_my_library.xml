@@ -20,41 +20,22 @@
             android:orientation="vertical"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <androidx.constraintlayout.motion.widget.MotionLayout
-                android:id="@+id/motionLayout"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutDescription="@xml/fragment_my_library_xml_constraintlayout_scene">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:elevation="0dp">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/white"
-                    android:elevation="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/clubListRecyclerView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:menu="@menu/top_app_bar">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="@string/my_library"
-                        android:textColor="@color/black"
-                        android:textSize="19sp" />
-                </com.google.android.material.appbar.MaterialToolbar>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/clubListRecyclerView"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/main_blue"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-            </androidx.constraintlayout.motion.widget.MotionLayout>
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/my_library"
+                    android:textColor="@color/black"
+                    android:textSize="19sp" />
+            </com.google.android.material.appbar.MaterialToolbar>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/readTypeTabLayout"
