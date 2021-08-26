@@ -16,7 +16,7 @@
         android:gravity="center"
         android:minHeight="0dp"
         android:text="@string/latest_order"
-        android:textColor="@drawable/selector_filter_text"
+        android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 
     <CheckBox
@@ -30,7 +30,7 @@
         android:gravity="center"
         android:minHeight="0dp"
         android:text="@string/old_order"
-        android:textColor="@drawable/selector_filter_text"
+        android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 
     <CheckBox
@@ -44,7 +44,7 @@
         android:gravity="center"
         android:minHeight="0dp"
         android:text="@string/name_order"
-        android:textColor="@drawable/selector_filter_text"
+        android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 
 </LinearLayout>

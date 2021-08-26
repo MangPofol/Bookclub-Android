@@ -75,7 +75,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="12dp"
                     android:text="@string/search"
-                    android:textColor="@drawable/selector_filter_text"
+                    android:textColor="@drawable/state_checked_text_white_black"
                     android:textSize="12sp" />
 
                 <CheckBox
@@ -88,7 +88,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/book_club_kr"
-                    android:textColor="@drawable/selector_filter_text"
+                    android:textColor="@drawable/state_checked_text_white_black"
                     android:textSize="12sp" />
 
                 <CheckBox
@@ -101,7 +101,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/sort"
-                    android:textColor="@drawable/selector_filter_text"
+                    android:textColor="@drawable/state_checked_text_white_black"
                     android:textSize="12sp" />
 
             </LinearLayout>
