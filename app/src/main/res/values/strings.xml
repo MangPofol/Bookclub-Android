@@ -16,11 +16,19 @@
     <string name="reading">읽는 중</string>
     <string name="read_complete">완독</string>
     <string name="want_to_read">읽고 싶은</string>
-    <string name="search">검색</string>
     <string name="book_search">책 제목을 입력하세요.</string>
     <string name="book_club_kr">북클럽</string>
-    <string name="sort">정렬</string>
     <string name="latest_order">최신순</string>
     <string name="old_order">오래된순</string>
     <string name="name_order">이름순</string>
+    
+    <!-- clubs -->
+    <string name="hot_memo">핫한 메모</string>
+    <string name="hot_topic">핫한 토픽</string>
+    <string name="gather_records">기록 모아보기</string>
+    <string name="club_members">클럽원</string>
+
+    <!-- my library, clubs -->
+    <string name="search">검색</string>
+    <string name="sort">정렬</string>
 </resources>
