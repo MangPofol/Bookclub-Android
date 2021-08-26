@@ -82,7 +82,7 @@ class MyLibraryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36)  //navigation icon 설정
+        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
 
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
             when (position) {
