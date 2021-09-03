@@ -1,7 +1,6 @@
-package com.example.bookclub
+package com.example.bookclub.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -9,11 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.example.bookclub.adapter.BottomNavigationPagerAdapter
+import com.example.bookclub.R
+import com.example.bookclub.view.adapter.BottomNavigationPagerAdapter
 import com.example.bookclub.databinding.ActivityMainBinding
-import com.example.bookclub.fragment.BookListFragment
-import com.example.bookclub.fragment.MyLibraryFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

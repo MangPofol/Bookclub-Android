@@ -1,4 +1,4 @@
-package com.example.bookclub.fragment
+package com.example.bookclub.view.library
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

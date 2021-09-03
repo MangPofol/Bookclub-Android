@@ -1,15 +1,15 @@
-package com.example.bookclub.adapter
+package com.example.bookclub.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookclub.databinding.ClubFilterItemBinding
-import com.example.bookclub.model.ClubDTO
+import com.example.bookclub.model.ClubModel
 
-class BookClubFilterAdapter(clubs: List<ClubDTO>) : RecyclerView.Adapter<BookClubFilterAdapter.BookClubFilterViewHolder>() {
+class BookClubFilterAdapter(clubs: List<ClubModel>) : RecyclerView.Adapter<BookClubFilterAdapter.BookClubFilterViewHolder>() {
     private lateinit var binding: ClubFilterItemBinding
-    private var clubs: List<ClubDTO> = clubs
+    private var clubs: List<ClubModel> = clubs
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookClubFilterViewHolder {
         binding = ClubFilterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
