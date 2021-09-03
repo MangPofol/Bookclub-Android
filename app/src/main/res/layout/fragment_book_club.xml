@@ -5,7 +5,7 @@
     android:id="@+id/bookClubCoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BookClubFragment">
+    tools:context=".view.bookclub.BookClubFragment">
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout"
@@ -31,7 +31,8 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="@color/main_blue"
                     android:elevation="0dp"
-                    app:layout_collapseMode="pin">
+                    app:layout_collapseMode="pin"
+                    app:menu="@menu/bookclub_menu">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
                         android:fontFamily="@font/roboto_regular"
                         android:text="북클럽 A"
                         android:textColor="@color/white"
-                        android:textSize="19sp" />
+                        android:textSize="18sp" />
                 </com.google.android.material.appbar.MaterialToolbar>
 
                 <LinearLayout
@@ -100,7 +101,7 @@
                         android:paddingBottom="8dp"
                         android:text="@string/hot_memo"
                         android:textColor="@drawable/state_checked_text_blue_white"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/hotTopicButton"
@@ -115,111 +116,101 @@
                         android:paddingBottom="8dp"
                         android:text="@string/hot_topic"
                         android:textColor="@drawable/state_checked_text_blue_white"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                 </RadioGroup>
 
-                <LinearLayout
-                    android:id="@+id/hotMemoContents"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="192dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/hotTopicContents"
-                    app:layout_constraintTop_toBottomOf="@+id/hotContents">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="left|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="left|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="left|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/hotTopicContents"
-                    android:layout_width="0dp"
+                    android:layout_marginLeft="31dp"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="left|center"
+                    android:paddingVertical="15dp"
+                    android:text="메모 제목"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/hotContents"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+                <TextView
+                    android:id="@+id/tv4"
+                    android:layout_width="117dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="right|center"
+                    android:paddingVertical="15dp"
                     android:layout_marginRight="20dp"
-                    android:orientation="vertical"
-                    app:layout_constraintLeft_toRightOf="@+id/hotMemoContents"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/hotContents">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:enabled="false"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="right|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:enabled="false"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="right|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bottom_border_grey4_05"
-                        android:enabled="false"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="right|center"
-                        android:paddingHorizontal="11dp"
-                        android:paddingVertical="15dp"
-                        android:text="메모 제목"
-                        android:textColor="@drawable/hot_contents_enabled_text"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:text="메모 제목"
+                    android:textColor="@color/grey4"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/hotContents"
+                    app:layout_constraintLeft_toRightOf="@+id/tv1"
+                    app:layout_constraintRight_toRightOf="parent"/>
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31dp"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="left|center"
+                    android:paddingVertical="15dp"
+                    android:text="메모 제목"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv1"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+                <TextView
+                    android:id="@+id/tv5"
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="right|center"
+                    android:paddingVertical="15dp"
+                    android:layout_marginRight="20dp"
+                    android:text="메모 제목"
+                    android:textColor="@color/grey4"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv4"
+                    app:layout_constraintLeft_toRightOf="@+id/tv2"
+                    app:layout_constraintRight_toRightOf="parent"/>
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31dp"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="left|center"
+                    android:paddingVertical="15dp"
+                    android:text="메모 제목"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv2"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+                <TextView
+                    android:id="@+id/tv6"
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_border_grey4_05"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="right|center"
+                    android:paddingVertical="15dp"
+                    android:layout_marginRight="20dp"
+                    android:text="메모 제목"
+                    android:textColor="@color/grey4"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv5"
+                    app:layout_constraintLeft_toRightOf="@+id/tv3"
+                    app:layout_constraintRight_toRightOf="parent"/>
 
                 <TextView
                     android:id="@+id/gatherRecordsTextView"
-                    android:layout_width="110dp"
+                    android:layout_width="105dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="44dp"
@@ -229,9 +220,9 @@
                     android:paddingBottom="8dp"
                     android:text="@string/gather_records"
                     android:textColor="@color/main_blue"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/hotMemoContents" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv3" />
 
                 <View
                     android:id="@+id/blueDivider"
@@ -255,8 +246,8 @@
 
                 <CheckBox
                     android:id="@+id/searchButton"
-                    android:layout_width="65dp"
-                    android:layout_height="27dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/filter_checkbox"
@@ -268,15 +259,15 @@
                     android:paddingHorizontal="12dp"
                     android:text="@string/search"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/clubMemberButton"
                     app:layout_constraintTop_toBottomOf="@+id/blueDivider" />
 
                 <CheckBox
                     android:id="@+id/clubMemberButton"
-                    android:layout_width="65dp"
-                    android:layout_height="27dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="14dp"
@@ -286,15 +277,15 @@
                     android:gravity="center"
                     android:text="@string/club_members"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     app:layout_constraintLeft_toRightOf="@+id/searchButton"
                     app:layout_constraintRight_toLeftOf="@+id/sortButton"
                     app:layout_constraintTop_toBottomOf="@+id/blueDivider" />
 
                 <CheckBox
                     android:id="@+id/sortButton"
-                    android:layout_width="55dp"
-                    android:layout_height="27dp"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/filter_checkbox"
@@ -303,7 +294,7 @@
                     android:gravity="center"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     app:layout_constraintLeft_toRightOf="@+id/clubMemberButton"
                     app:layout_constraintTop_toBottomOf="@+id/blueDivider" />
 
@@ -311,6 +302,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="15dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="33dp"
                     android:background="@color/grey5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/searchButton" />

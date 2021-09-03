@@ -5,37 +5,46 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.MyLibraryFragment">
+    tools:context=".view.library.MyLibraryFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
-        app:elevation="0dp">
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:elevation="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/my_library"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                android:elevation="0dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="@string/my_library"
-                    android:textColor="@color/black"
-                    android:textSize="19sp" />
-            </com.google.android.material.appbar.MaterialToolbar>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/readTypeTabLayout"
@@ -58,15 +67,15 @@
                 android:id="@+id/mainFilterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="15dp">
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="11dp"
+                android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/searchButton"
-                    android:layout_width="65dp"
-                    android:layout_height="27dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/filter_checkbox"
                     android:button="@null"
                     android:drawableEnd="@drawable/filter_checkbox_drawable_end"
@@ -76,47 +85,55 @@
                     android:paddingHorizontal="12dp"
                     android:text="@string/search"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <CheckBox
                     android:id="@+id/clubButton"
-                    android:layout_width="65dp"
-                    android:layout_height="27dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/filter_checkbox"
                     android:button="@null"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/book_club_kr"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <CheckBox
                     android:id="@+id/sortButton"
-                    android:layout_width="55dp"
-                    android:layout_height="27dp"
-                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/filter_checkbox"
                     android:button="@null"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12sp" />
-
+                    android:textSize="10sp" />
             </LinearLayout>
+
+            <FrameLayout
+                android:background="@color/grey5"
+                android:id="@+id/filterLayout"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="16dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/bookListRecyclerView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey5" />
 
         </LinearLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grey5"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
