@@ -1,16 +1,22 @@
 package com.example.bookclub.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.example.bookclub.R
 import com.example.bookclub.view.adapter.BottomNavigationPagerAdapter
 import com.example.bookclub.databinding.ActivityMainBinding
+import com.example.bookclub.model.UserModel
+import com.example.bookclub.view.bookclub.CreateClubActivity
+import com.example.bookclub.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,6 +32,19 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //navigation drawer 화면 메뉴 아이템 클릭 리스너
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            // Handle menu item selected
+            when(menuItem.itemId) {
+                R.id.myBookclub -> {
+                    val intent: Intent = Intent(this@MainActivity, CreateClubActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            true
+        }
 
         binding.bottomViewPager.adapter = BottomNavigationPagerAdapter(supportFragmentManager)
         binding.bottomViewPager.currentItem = 1
