@@ -31,4 +31,14 @@
     <!-- my library, clubs -->
     <string name="search">검색</string>
     <string name="sort">정렬</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- create club -->
+    <string name="create_club">북클럽 생성</string>
+    <string name="confirm">확인</string>
+    <string name="club_name">클럽명</string>
+    <string name="club_name_hint">클럽명을 입력해주세요</string>
+    <string name="club_info">클럽 한줄 소개</string>
+    <string name="club_info_hint">클럽 소개글을 입력해주세요</string>
 </resources>
