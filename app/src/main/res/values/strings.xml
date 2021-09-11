@@ -41,4 +41,13 @@
     <string name="club_name_hint">클럽명을 입력해주세요</string>
     <string name="club_info">클럽 한줄 소개</string>
     <string name="club_info_hint">클럽 소개글을 입력해주세요</string>
+
+    <!-- write -->
+    <string name="recording">기록하기</string>
+    <string name="posting">올리기</string>
+    <string name="book_select">기록할 책을 선택해주세요</string>
+    <string name="memo">메모</string>
+    <string name="topic">토픽</string>
+    <string name="title_hint">제목을 입력해주세요.</string>
+    <string name="content_hint">내용을 입력하세요</string>
 </resources>
