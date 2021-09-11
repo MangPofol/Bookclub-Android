@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.example.bookclub.R
 import com.example.bookclub.databinding.FragmentWriteBinding
 import com.example.bookclub.view.MainActivity
@@ -23,14 +24,15 @@ class WriteFragment : Fragment() {
     ): View? {
         binding = FragmentWriteBinding.inflate(inflater, container, false)
 
+        //기본 화면을 기록하기 화면으로 설정
+        childFragmentManager.beginTransaction().add(binding.frameLayout.id, RecordFragment()).commit()
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
+    fun changeChildFragment() {
+        binding.frameLayout.removeAllViewsInLayout()
+        childFragmentManager.beginTransaction().add(binding.frameLayout.id, SelectBookFragment()).commit()
     }
 
 }
