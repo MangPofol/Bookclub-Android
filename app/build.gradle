@@ -1,7 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     compileSdk 30
@@ -12,6 +16,9 @@ android {
         targetSdk 30
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "NAVERBOOK_KEY", properties["naverbook.key"]
+        buildConfigField "String", "NAVERBOOK_SECRET", properties["naverbook.secret"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -35,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.3.1'
     def lifecycle_version = "2.4.0-alpha03"
 
     implementation 'com.android.support:appcompat-v7:30.0.0'
@@ -45,6 +53,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    //retrofit2
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    //OkHttp
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+    //coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
