@@ -24,7 +24,7 @@ class RecordFragment : Fragment() {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
 
         binding.selectBookBtn.setOnClickListener {
-            (parentFragment as WriteFragment).changeChildFragment()
+            (parentFragment as WriteFragment).changeChildFragment(1)
         }
 
         return binding.root

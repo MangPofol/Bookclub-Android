@@ -30,9 +30,10 @@ class WriteFragment : Fragment() {
         return binding.root
     }
 
-    fun changeChildFragment() {
-        binding.frameLayout.removeAllViewsInLayout()
-        childFragmentManager.beginTransaction().add(binding.frameLayout.id, SelectBookFragment()).commit()
+    fun changeChildFragment(fragment: Int) {
+        if (fragment==0)
+            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, RecordFragment()).commit()
+        else
+            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, SelectBookFragment()).commit()
     }
-
 }
