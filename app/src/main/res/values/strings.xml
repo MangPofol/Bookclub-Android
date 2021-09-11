@@ -13,9 +13,6 @@
     <!-- my library -->
     <string name="my_library">내 서재</string>
     <string name="other_club">other club</string>
-    <string name="reading">읽는 중</string>
-    <string name="read_complete">완독</string>
-    <string name="want_to_read">읽고 싶은</string>
     <string name="book_search">책 제목을 입력하세요.</string>
     <string name="book_club_kr">북클럽</string>
     <string name="latest_order">최신순</string>
@@ -42,7 +39,7 @@
     <string name="club_info">클럽 한줄 소개</string>
     <string name="club_info_hint">클럽 소개글을 입력해주세요</string>
 
-    <!-- write -->
+    <!-- record fragment -->
     <string name="recording">기록하기</string>
     <string name="posting">올리기</string>
     <string name="book_select">기록할 책을 선택해주세요</string>
@@ -50,4 +47,14 @@
     <string name="topic">토픽</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="content_hint">내용을 입력하세요</string>
+    
+    <!-- select book fragment -->
+    <string name="select_book">책 선택하기</string>
+    <string name="enroll_new_book">새 책 등록하기</string>
+    <string name="select_in_library">내 책장에서 선택하기</string>
+
+    <!-- my library, select book fragment -->
+    <string name="reading">읽는 중</string>
+    <string name="read_complete">완독</string>
+    <string name="want_to_read">읽고 싶은</string>
 </resources>
