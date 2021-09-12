@@ -8,18 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bookclub.view.MainActivity
 import com.example.bookclub.R
 import com.example.bookclub.view.adapter.MyLibraryPagerAdapter
-import com.example.bookclub.viewmodel.MyLibraryViewModel
 import com.example.bookclub.databinding.FragmentMyLibraryBinding
-import com.example.bookclub.util.HorizontalItemDecorator
-import com.example.bookclub.util.VerticalItemDecorator
-import com.example.bookclub.view.adapter.BookAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MyLibraryFragment : Fragment() {
@@ -36,6 +29,7 @@ class MyLibraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
+
 //        myLibraryViewModel = ViewModelProvider(activity as FragmentActivity)[MyLibraryViewModel::class.java]//메인 필터 뷰모델 초기화
 
         //메인 필터 체크박스 리스너

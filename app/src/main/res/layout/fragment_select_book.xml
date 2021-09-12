@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchBookET">
 
         <TextView
+            android:id="@+id/selectBookTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -101,7 +102,7 @@
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/reading"
-                android:textColor="@drawable/state_checked_text_white_grey"
+                android:textColor="@drawable/state_checked_text_white_grey9"
                 android:textSize="10sp" />
 
             <RadioButton
@@ -113,7 +114,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/read_complete"
-                android:textColor="@drawable/state_checked_text_white_grey"
+                android:textColor="@drawable/state_checked_text_white_grey9"
                 android:textSize="10sp" />
 
             <RadioButton
@@ -124,7 +125,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/want_to_read"
-                android:textColor="@drawable/state_checked_text_white_grey"
+                android:textColor="@drawable/state_checked_text_white_grey9"
                 android:textSize="10sp" />
 
         </RadioGroup>
