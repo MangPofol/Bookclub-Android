@@ -28,8 +28,6 @@
     <!-- my library, clubs -->
     <string name="search">검색</string>
     <string name="sort">정렬</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- create club -->
     <string name="create_club">북클럽 생성</string>
@@ -47,13 +45,17 @@
     <string name="topic">토픽</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="content_hint">내용을 입력하세요</string>
-    
+
     <!-- select book fragment -->
     <string name="select_book">책 선택하기</string>
     <string name="enroll_new_book">새 책 등록하기</string>
     <string name="select_in_library">내 책장에서 선택하기</string>
 
-    <!-- my library, select book fragment -->
+    <!-- add book bottom sheet fragment -->
+    <string name="book_option">책 옵션</string>
+    <string name="add_book">책 추가하기</string>
+
+    <!-- my library, select book fragment, add book bottom sheet fragment -->
     <string name="reading">읽는 중</string>
     <string name="read_complete">완독</string>
     <string name="want_to_read">읽고 싶은</string>
