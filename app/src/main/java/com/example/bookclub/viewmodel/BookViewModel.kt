@@ -9,21 +9,21 @@ import com.example.bookclub.model.NaverBookModel
 import com.example.bookclub.repository.BookRepository
 import kotlinx.coroutines.launch
 
-class SelectBookViewModel(): ViewModel() {
+class BookViewModel(): ViewModel() {
     private val bookRepository: BookRepository = BookRepository()
 
     private val _searchBookTitle: MutableLiveData<String> = MutableLiveData<String>()
+    private val _selectedBookTitle: MutableLiveData<String> = MutableLiveData<String>()
     private val _books: MutableLiveData<MutableList<NaverBookModel>> = MutableLiveData<MutableList<NaverBookModel>>()
 
-    val searchBookTitle : LiveData<String>
+    private val searchBookTitle : LiveData<String>
         get() = _searchBookTitle
+
+    val selectedBookTitle: LiveData<String>
+        get() = _selectedBookTitle
 
     val books: LiveData<MutableList<NaverBookModel>>
         get() = _books
-
-    init {
-        _searchBookTitle.value = ""
-    }
 
     suspend fun updateSearchBookTitle(title: String) {
         viewModelScope.launch {
@@ -33,5 +33,9 @@ class SelectBookViewModel(): ViewModel() {
                 _books.value = bookRepository.getNaverBooksByTitle(_searchBookTitle.value.toString())
             }
         }
+    }
+
+    fun updateSelectedTookTitle(title: String) {
+        _selectedBookTitle.value = title
     }
 }
