@@ -2,12 +2,9 @@ package com.example.bookclub.service
 
 import com.example.bookclub.BuildConfig
 import com.example.bookclub.model.BookModel
-import com.example.bookclub.model.BookResponseData
-import retrofit2.Call
+import com.example.bookclub.model.BookResData
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface BookService {
     //books?email=&category=
@@ -15,7 +12,7 @@ interface BookService {
     suspend fun getBooks(
         @Query("email") email: String,
         @Query("category") category: String
-    ): Call<BookResponseData>
+    ): Response<BookResData>
 
     //?d_isbn=
     @Headers(
@@ -32,4 +29,8 @@ interface BookService {
     )
     @GET("book_adv.xml?display=25")
     suspend fun getNaverBooksByTitle(@Query("d_titl") title: String): Response<String>
+
+    @Headers("Content-Type: application/json")
+    @POST("/books")
+    suspend fun createBook(@Body newBook: BookModel): Response<BookModel>
 }
