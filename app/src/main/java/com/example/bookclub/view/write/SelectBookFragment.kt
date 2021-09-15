@@ -38,7 +38,7 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
     ): View? {
         binding = FragmentSelectBookBinding.inflate(inflater, container, false)
 
-        bookViewModel.books.observe(viewLifecycleOwner, Observer {
+        bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
             Log.e("observe!!", it.toString())
             bookAdapter.setBooks(it)
         })
@@ -88,12 +88,12 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
 
     }
 
-    override fun onClick(title: String) {
+    override fun onClick(position: Int) {
         //책을 등록하는 bottom sheet 을 띄운다.
         bottomSheet.show(
             (activity as MainActivity).supportFragmentManager, bottomSheet.tag
         )
         //클릭된 책 제목을 SelectBookViewModel의 selectedBookTitle 변수에 업데이트
-        bookViewModel.updateSelectedTookTitle(title)
+        bookViewModel.updateSelectedBook(position)
     }
 }

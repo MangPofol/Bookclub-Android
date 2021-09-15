@@ -35,7 +35,7 @@ class BookAdapter() :
 
         //책 이미지가 클릭됐을 때 리스너
         holder.bookImg.setOnClickListener {
-            bookItemClick.onClick(holder.bookTitle.text.toString())
+            bookItemClick.onClick(position)
         }
     }
 
