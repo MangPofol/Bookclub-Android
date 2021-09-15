@@ -11,11 +11,16 @@ import com.example.bookclub.R
 import com.example.bookclub.databinding.FragmentAddBookBottomSheetBinding
 import com.example.bookclub.viewmodel.BookViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddBookBottomSheetBinding
     private val bookViewModel: BookViewModel by activityViewModels()
+    private var readType: String = "NOW"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +35,28 @@ class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = FragmentAddBookBottomSheetBinding.inflate(inflater, container, false)
 
+
+        binding.readTypeRG.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
+                binding.readingRB.id -> readType = "NOW"
+                binding.readCompleteRB.id -> readType = "AFTER"
+                binding.wantToReadRB.id -> readType = "BEFORE"
+            }
+        }
+
         binding.addBtn.setOnClickListener {
-            Log.e("책 추가하기", bookViewModel.selectedBookTitle.value.toString())
+            var code = runBlocking {
+                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                    bookViewModel.createBook(readType)
+                }
+            }
+
+            if (code==201) {
+                //완독, 읽는중 -> 기록하기 화면
+                //읽고 싶은 -> 책 선택하기 화면
+            } else {
+                Log.e("책 추가 서버에 실패!", code.toString())
+            }
         }
 
         return binding.root

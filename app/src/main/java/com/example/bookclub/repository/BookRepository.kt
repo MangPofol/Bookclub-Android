@@ -1,14 +1,12 @@
 package com.example.bookclub.repository
 
 import com.example.bookclub.model.BookModel
-import com.example.bookclub.model.BookResponseData
+import com.example.bookclub.model.BookResData
 import com.example.bookclub.model.NaverBookModel
 import com.example.bookclub.service.BookService
 import org.w3c.dom.Document
 import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilder
@@ -19,27 +17,11 @@ class BookRepository {
     private val bookService: BookService = ApiClient.bookService
     private val bookNaverService: BookService = ApiClient.bookNaverService
 
-    suspend fun getBooks(email: String, category: String): Boolean {
+    suspend fun getBooks(email: String, category: String): BookResData? {
         var books: List<BookModel> = ArrayList<BookModel>()
         var isSuccess: Boolean = false
 
-        bookService.getBooks(email, category).enqueue(object : Callback<BookResponseData> {
-            override fun onResponse(
-                call: Call<BookResponseData>,
-                response: Response<BookResponseData>
-            ) {
-                println(response.code())
-                books = response.body()!!.books
-                isSuccess = true
-            }
-
-            override fun onFailure(call: Call<BookResponseData>, t: Throwable) {
-                println(t.message)
-            }
-
-        })
-
-        return isSuccess
+        return bookService.getBooks(email, category).body()
     }
 
     suspend fun getNaverBooksByIsbn(isbn: String): NaverBookModel {
@@ -68,7 +50,6 @@ class BookRepository {
             val book = itemNodeList.item(index)
             bookItems.add(
                 NaverBookModel(
-//                    regex.findAll(book.childNodes.item(0).textContent)!!.count().toString(),
                     book.childNodes.item(0).textContent.replace(regex, ""),
                     book.childNodes.item(2).textContent,
                     book.childNodes.item(8).textContent
@@ -77,5 +58,10 @@ class BookRepository {
         }
 
         return bookItems
+    }
+
+    suspend fun createBook(book: BookModel): Response<BookModel> {
+        return bookService.createBook(book)
+
     }
 }
