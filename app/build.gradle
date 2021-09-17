@@ -17,10 +17,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "NAVERBOOK_KEY", properties["naverbook.key"]
-        buildConfigField "String", "NAVERBOOK_SECRET", properties["naverbook.secret"]
+        buildConfigField("String", "KAKAOBOOK_KEY", properties.getProperty("kakaobook.key"))
+        buildConfigField("String", "KAKAO_BOOK_API_BASE_URL", properties.getProperty("kakao.book.api.base.url"))
         buildConfigField "String", "BASE_URL", properties["baseurl"]
-        buildConfigField "String", "NAVER_BOOK_API_BASE_URL", properties["naver.book.api.base.url"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
