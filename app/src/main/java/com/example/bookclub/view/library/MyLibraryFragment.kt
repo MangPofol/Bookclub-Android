@@ -8,17 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bookclub.view.MainActivity
 import com.example.bookclub.R
 import com.example.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.example.bookclub.databinding.FragmentMyLibraryBinding
+import com.example.bookclub.model.BookModel
+import com.example.bookclub.repository.KakaoBookRepository
+import com.example.bookclub.viewmodel.BookViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MyLibraryFragment : Fragment() {
     private lateinit var binding: FragmentMyLibraryBinding
-//    private lateinit var myLibraryViewModel: MyLibraryViewModel
-//    private var viewPagerStack: MutableList<Int> = ArrayList()
+    private val bookViewModel: BookViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +37,6 @@ class MyLibraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
-
-//        myLibraryViewModel = ViewModelProvider(activity as FragmentActivity)[MyLibraryViewModel::class.java]//메인 필터 뷰모델 초기화
 
         //메인 필터 체크박스 리스너
         val checkBoxListener = CompoundButton.OnCheckedChangeListener { checkBox, isChecked ->
@@ -58,6 +64,8 @@ class MyLibraryFragment : Fragment() {
                 binding.searchButton.isChecked = false
                 binding.clubButton.isChecked = false
                 binding.sortButton.isChecked = false
+
+                bookViewModel.updateReadType(position)
 
                 //완독 탭을 누르면 콜백 함수가 두 번 호출되는 버그 해결하기 위한 방법
                /* if (viewPagerStack.size > 1 && viewPagerStack[viewPagerStack.lastIndex - 1] != position) {

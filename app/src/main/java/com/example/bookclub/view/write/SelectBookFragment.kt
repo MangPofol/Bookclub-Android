@@ -40,7 +40,7 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
 
         bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
             Log.e("observe!!", it.toString())
-            bookAdapter.setBooks(it)
+            bookAdapter.setKakaoBooks(it)
         })
 
         //책 검색 EditText에 TextChanged 리스너 등록

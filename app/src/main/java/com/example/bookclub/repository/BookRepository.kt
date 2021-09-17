@@ -1,67 +1,49 @@
 package com.example.bookclub.repository
 
+import android.app.Application
+import android.util.Log
+import com.example.bookclub.dao.BookImageDao
+import com.example.bookclub.database.MangpoDatabase
+import com.example.bookclub.model.BookImageModel
 import com.example.bookclub.model.BookModel
-import com.example.bookclub.model.BookResData
-import com.example.bookclub.model.NaverBookModel
 import com.example.bookclub.service.BookService
-import org.w3c.dom.Document
-import org.w3c.dom.NodeList
-import org.xml.sax.InputSource
+import com.example.bookclub.service.KakaoBookService
 import retrofit2.Response
-import java.io.StringReader
-import javax.xml.parsers.DocumentBuilder
-import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.collections.ArrayList
 
-class BookRepository {
+class BookRepository(application: Application) {
     private val bookService: BookService = ApiClient.bookService
-    private val bookNaverService: BookService = ApiClient.bookNaverService
+    private val bookImageDao: BookImageDao
+    private val kakaoBookService: KakaoBookService = ApiClient.kakaoBookService
 
-    suspend fun getBooks(email: String, category: String): BookResData? {
-        var books: List<BookModel> = ArrayList<BookModel>()
-        var isSuccess: Boolean = false
-
-        return bookService.getBooks(email, category).body()
+    init {
+        val mangpoDB: MangpoDatabase = MangpoDatabase.getInstance(application)!!
+        bookImageDao = mangpoDB.bookImageDao()
     }
 
-    suspend fun getNaverBooksByIsbn(isbn: String): NaverBookModel {
-        var bookStr: String = bookNaverService.getNaverBooksByIsbn(isbn).body().toString()
-        val dbf: DocumentBuilderFactory = DocumentBuilderFactory.newInstance();
-        val db: DocumentBuilder = dbf.newDocumentBuilder()
-        val doc: Document = db.parse(InputSource(StringReader(bookStr)))
-        val bookNodes: NodeList = doc.firstChild.firstChild.childNodes.item(7).childNodes
+    suspend fun getBooks(email: String, category: String): MutableList<BookModel> {
+        val body = bookService.getBooks(email, category).body()
+        var books: MutableList<BookModel> = mutableListOf<BookModel>()
 
-        return NaverBookModel(
-            bookNodes.item(0).textContent,
-            bookNodes.item(1).textContent,
-            bookNodes.item(2).textContent
-        )
-    }
+        if (body != null) {
+            books = body.books
 
-    suspend fun getNaverBooksByTitle(title: String): MutableList<NaverBookModel> {
-        val regex: Regex = "<(.)>|<(/.)>".toRegex()
-        val bookItems: MutableList<NaverBookModel> = ArrayList<NaverBookModel>()
-        val bodyStr: String = bookNaverService.getNaverBooksByTitle(title).body().toString()
-        val doc: Document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-            .parse(InputSource(StringReader(bodyStr)))
+            for (book in books) {
+                var image: String? = bookImageDao.getImage(book.isbn!!)
 
-        val itemNodeList: NodeList = doc.getElementsByTagName("item")
-        for (index in 0 until itemNodeList.length) {
-            val book = itemNodeList.item(index)
-            bookItems.add(
-                NaverBookModel(
-                    book.childNodes.item(0).textContent.replace(regex, ""),
-                    book.childNodes.item(2).textContent,
-                    book.childNodes.item(8).textContent
-                )
-            )
+                if (image == null) {
+                    image = kakaoBookService.getKakaoBooks(book.isbn!!, "isbn", 1)
+                        .body()!!.documents[0].thumbnail
+                    bookImageDao.insertBook(BookImageModel(isbn=book.isbn.toString(), image=image))
+                }
+
+                book.image = image
+            }
         }
 
-        return bookItems
+        return books
     }
 
     suspend fun createBook(book: BookModel): Response<BookModel> {
         return bookService.createBook(book)
-
     }
 }

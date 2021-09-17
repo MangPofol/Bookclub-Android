@@ -7,13 +7,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookclub.databinding.BookItemBinding
-import com.example.bookclub.model.NaverBookModel
+import com.example.bookclub.model.BookModel
+import com.example.bookclub.model.KakaoBookModel
 
 class BookAdapter() :
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     private lateinit var binding: BookItemBinding
     private lateinit var bookItemClick: OnBookItemClick
-    private var books: MutableList<NaverBookModel> = ArrayList<NaverBookModel>()
+    private var books: MutableList<Any> = ArrayList<Any>()
+    private var type: String = "library"
 
     constructor(bookItemClick: OnBookItemClick): this() {
         this.bookItemClick = bookItemClick
@@ -27,11 +29,32 @@ class BookAdapter() :
 
     override fun onBindViewHolder(holder: BookAdapter.BookViewHolder, position: Int) {
         holder.bookImg.clipToOutline = true
+
+        if (type=="write") {
+            writeViewBinding(position, holder)
+        } else {
+            libraryViewBinding(position, holder)
+        }
+    }
+
+    private fun libraryViewBinding(position: Int, holder: BookViewHolder) {
+        val book: BookModel = books[position] as BookModel
+
         Glide.with(holder.bookImg)
-            .load(books[position].image)
+            .load(book.image)
             .into(holder.bookImg)
 
-        holder.bookTitle.text = books[position].title
+        holder.bookTitle.text = book.name
+    }
+
+    private fun writeViewBinding(position: Int, holder: BookViewHolder) {
+        val book: KakaoBookModel = books[position] as KakaoBookModel
+
+        Glide.with(holder.bookImg)
+            .load(book.thumbnail)
+            .into(holder.bookImg)
+
+        holder.bookTitle.text = book.title
 
         //책 이미지가 클릭됐을 때 리스너
         holder.bookImg.setOnClickListener {
@@ -49,8 +72,15 @@ class BookAdapter() :
 
     }
 
-    fun setBooks(bookList: MutableList<NaverBookModel>) {
-        books = bookList
+    fun setKakaoBooks(bookList: MutableList<KakaoBookModel>) {
+        books = bookList.toMutableList()
         notifyDataSetChanged()
+        type = "write"
+    }
+
+    fun setBooks(bookList: MutableList<BookModel>) {
+        books = bookList.toMutableList()
+        notifyDataSetChanged()
+        type = "library"
     }
 }

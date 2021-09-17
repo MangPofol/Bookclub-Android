@@ -6,23 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.bookclub.view.MainActivity
-import com.example.bookclub.R
 import com.example.bookclub.view.adapter.BookAdapter
 import com.example.bookclub.databinding.FragmentBookListBinding
 import com.example.bookclub.util.HorizontalItemDecorator
 import com.example.bookclub.util.VerticalItemDecorator
-import com.example.bookclub.viewmodel.MyLibraryViewModel
+import com.example.bookclub.view.MainActivity
+import com.example.bookclub.viewmodel.BookViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
     private lateinit var binding: FragmentBookListBinding
+    private lateinit var bookAdapter: BookAdapter
+    private val bookViewModel: BookViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        bookAdapter = BookAdapter()
     }
 
     override fun onCreateView(
@@ -31,7 +37,22 @@ class BookListFragment : Fragment() {
     ): View? {
         binding = FragmentBookListBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
-        binding.bookListRecyclerView.adapter = BookAdapter()    //어댑터 설정
+        CoroutineScope(Dispatchers.Main).launch {
+            bookViewModel.getBooks("NOW")
+            bookViewModel.getBooks("AFTER")
+            bookViewModel.getBooks("BEFORE")
+
+            bookViewModel.readType.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
+                    1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
+                    2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
+                }
+
+            })
+        }
+
+        binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정
         //아이템 간 간격 설정
         binding.bookListRecyclerView.addItemDecoration(VerticalItemDecorator(40))

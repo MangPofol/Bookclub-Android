@@ -44,6 +44,7 @@ class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
+        //책 추가하기 버튼 클릭 리스너 -> 서버에 책 추가 요청 보내기
         binding.addBtn.setOnClickListener {
             var code = runBlocking {
                 withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
@@ -52,10 +53,11 @@ class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             if (code==201) {
+                Log.e(code.toString(), "서버에 책 추가 완료!", )
                 //완독, 읽는중 -> 기록하기 화면
                 //읽고 싶은 -> 책 선택하기 화면
             } else {
-                Log.e("책 추가 서버에 실패!", code.toString())
+                Log.e(code.toString(), "책 추가 서버에 실패!", )
             }
         }
 
