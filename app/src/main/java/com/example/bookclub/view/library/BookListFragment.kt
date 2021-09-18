@@ -52,6 +52,21 @@ class BookListFragment : Fragment() {
             })
         }
 
+        bookViewModel.nowBooks.observe(viewLifecycleOwner, Observer {
+            if (bookViewModel.readType.value==0)
+                bookAdapter.setBooks(it)
+        })
+
+        bookViewModel.afterBooks.observe(viewLifecycleOwner, Observer {
+            if (bookViewModel.readType.value==1)
+                bookAdapter.setBooks(it)
+        })
+
+        bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
+            if (bookViewModel.readType.value==2)
+                bookAdapter.setBooks(it)
+        })
+
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정
         //아이템 간 간격 설정
