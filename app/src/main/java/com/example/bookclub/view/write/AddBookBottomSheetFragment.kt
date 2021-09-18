@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.bookclub.R
 import com.example.bookclub.databinding.FragmentAddBookBottomSheetBinding
+import com.example.bookclub.model.KakaoBookModel
 import com.example.bookclub.viewmodel.BookViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
+class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddBookBottomSheetBinding
     private val bookViewModel: BookViewModel by activityViewModels()
@@ -34,7 +36,6 @@ class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddBookBottomSheetBinding.inflate(inflater, container, false)
-
 
         binding.readTypeRG.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
@@ -54,10 +55,15 @@ class AddBookBottomSheetFragment : BottomSheetDialogFragment() {
 
             if (code==201) {
                 Log.e(code.toString(), "서버에 책 추가 완료!", )
-                //완독, 읽는중 -> 기록하기 화면
-                //읽고 싶은 -> 책 선택하기 화면
+                dismiss()   //다이얼로그 닫기.
+                callback(readType)  //콜백 함수 호출
+            } else if (code==400) {
+                Log.e(code.toString(), "책 추가 서버에 실패! - 이미 등록된 책")
+                bookViewModel.clearSelectedBook()   //selectedBook 빈값으로 변경
+                Toast.makeText(this.context, "이미 등록된 책입니다.", Toast.LENGTH_SHORT).show()
             } else {
-                Log.e(code.toString(), "책 추가 서버에 실패!", )
+                Log.e(code.toString(), "책 추가 서버에 실패!")
+                bookViewModel.clearSelectedBook()   //selectedBook 빈값으로 변경
             }
         }
 

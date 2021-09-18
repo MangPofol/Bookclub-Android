@@ -1,6 +1,7 @@
 package com.example.bookclub.view.write
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,15 +26,19 @@ class WriteFragment : Fragment() {
         binding = FragmentWriteBinding.inflate(inflater, container, false)
 
         //기본 화면을 기록하기 화면으로 설정
-        childFragmentManager.beginTransaction().add(binding.frameLayout.id, RecordFragment()).commit()
+        childFragmentManager.beginTransaction().add(binding.frameLayout.id, RecordFragment())
+            .commit()
 
         return binding.root
     }
 
-    fun changeChildFragment(fragment: Int) {
-        if (fragment==0)
-            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, RecordFragment()).commit()
-        else
-            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, SelectBookFragment()).commit()
+    fun moveToRecord() {
+        childFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, RecordFragment()).addToBackStack(null).commit()
+    }
+
+    fun moveToSelectBook() {
+        childFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, SelectBookFragment()).addToBackStack(null).commit()
     }
 }
