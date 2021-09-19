@@ -30,6 +30,8 @@ import java.security.NoSuchAlgorithmException
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
+    private var bottomNavigationPagerAdapter: BottomNavigationPagerAdapter =
+        BottomNavigationPagerAdapter(supportFragmentManager)
     private var userRepository: UserRepository = UserRepository()
 
     init {
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //뷰페이저 어댑터 설정&페이지 변환 리스너 설정
-        binding.bottomViewPager.adapter = BottomNavigationPagerAdapter(supportFragmentManager)
+        binding.bottomViewPager.adapter = bottomNavigationPagerAdapter
         binding.bottomViewPager.currentItem = 1
         binding.bottomNavigation.selectedItemId = R.id.library
         binding.bottomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -141,5 +143,9 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
+    }
+
+    fun moveBottomPager(currentItem: Int) {
+        binding.bottomViewPager.currentItem = currentItem
     }
 }

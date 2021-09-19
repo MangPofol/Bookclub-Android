@@ -25,9 +25,11 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
     private val bookViewModel: BookViewModel by activityViewModels()
+    private var flag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("SelectBook", "onCreate")
         bookAdapter = BookAdapter(this)
     }
 
@@ -36,6 +38,7 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSelectBookBinding.inflate(inflater, container, false)
+        Log.e("SelectBook", "onCreateView")
 
         //검색어가 변경되면 recycler view 의 책 목록이 계속 업데이트 됨.
         bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
@@ -57,6 +60,11 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
             if (bookViewModel.readType.value == 2)
                 bookAdapter.setBooks(it)
         })
+
+        //뒤로가기 버튼 누르면 -> 기록하기 화면
+        binding.toolbar.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         //책 검색 EditText에 TextChanged 리스너 등록
         binding.searchBookET.addTextChangedListener(this)
@@ -81,6 +89,8 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
 
     override fun onPause() {
         super.onPause()
+        Log.e("SelectBook", "onPause")
+        (requireParentFragment() as WriteFragment).moveToRecord()
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -112,7 +122,9 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
         val bottomSheet: AddBookBottomSheetFragment = AddBookBottomSheetFragment {
             when (it) {
                 //읽는 중, 완독이면 -> 기록하기 화면으로 이동
-                "NOW", "AFTER" -> (parentFragment as WriteFragment).moveToRecord()
+                "NOW", "AFTER" -> {
+                    (requireParentFragment() as WriteFragment).moveToRecord()
+                }
                 //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
                 "BEFORE" -> {
                     binding.selectBookTV.visibility = View.VISIBLE

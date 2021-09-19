@@ -25,20 +25,24 @@ class WriteFragment : Fragment() {
     ): View? {
         binding = FragmentWriteBinding.inflate(inflater, container, false)
 
+        binding.frameLayout.removeAllViewsInLayout()
         //기본 화면을 기록하기 화면으로 설정
         childFragmentManager.beginTransaction().add(binding.frameLayout.id, RecordFragment())
+            .addToBackStack("record")
             .commit()
 
         return binding.root
     }
 
     fun moveToRecord() {
+        binding.frameLayout.removeAllViews()
         childFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, RecordFragment()).addToBackStack(null).commit()
+            .replace(binding.frameLayout.id, RecordFragment()).addToBackStack("record").commit()
     }
 
     fun moveToSelectBook() {
+        binding.frameLayout.removeAllViews()
         childFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, SelectBookFragment()).addToBackStack(null).commit()
+            .replace(binding.frameLayout.id, SelectBookFragment()).addToBackStack("selectBook").commit()
     }
 }
