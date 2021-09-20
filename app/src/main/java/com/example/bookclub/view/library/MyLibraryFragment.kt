@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginTop
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,7 +22,6 @@ import com.example.bookclub.viewmodel.MyLibraryViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MyLibraryFragment : Fragment() {
@@ -36,9 +36,9 @@ class MyLibraryFragment : Fragment() {
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
-            books = bookViewModel.getBooks("NOW")!!
-            books = bookViewModel.getBooks("AFTER")!!
-            books = bookViewModel.getBooks("BEFORE")!!
+            bookViewModel.getBooks("NOW")!!
+            bookViewModel.getBooks("AFTER")!!
+            bookViewModel.getBooks("BEFORE")!!
         }
     }
 
@@ -127,18 +127,24 @@ class MyLibraryFragment : Fragment() {
 
             when(it) {
                 0 -> {
+                    binding.filterLayout.visibility = View.VISIBLE
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
+                    binding.filterLayout.layoutParams.height = 160
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment(adapter)).commit()
                 }
                 1 -> {
+                    binding.filterLayout.visibility = View.VISIBLE
                     binding.searchButton.isChecked = false
                     binding.sortButton.isChecked = false
+                    binding.filterLayout.layoutParams.height = 160
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
                 }
                 2 -> {
+                    binding.filterLayout.visibility = View.VISIBLE
                     binding.searchButton.isChecked = false
                     binding.clubButton.isChecked = false
+                    binding.filterLayout.layoutParams.height = 160
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
                 }
                 -1 -> {
@@ -146,6 +152,7 @@ class MyLibraryFragment : Fragment() {
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
                     binding.filterLayout.removeAllViews()
+                    binding.filterLayout.layoutParams.height = 50
                 }
             }
         })
@@ -197,5 +204,6 @@ class MyLibraryFragment : Fragment() {
         if (!binding.searchButton.isChecked&&!binding.clubButton.isChecked&&!binding.sortButton.isChecked)
             myLibraryViewModel.updateMainFilter(-1)
     }
+
 }
 
