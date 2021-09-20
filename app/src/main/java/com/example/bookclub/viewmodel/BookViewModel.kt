@@ -16,7 +16,6 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
     private val bookRepository: BookRepository = BookRepository(application)
     private val kakaoBookRepository: KakaoBookRepository = KakaoBookRepository()
 
-    //    private val _searchBookTitle: MutableLiveData<String> = MutableLiveData<String>()
     private val _selectedBook: MutableLiveData<KakaoBookModel> =
         MutableLiveData<KakaoBookModel>()  //사용자가 선택한 책
     private val _searchedBooks: MutableLiveData<MutableList<KakaoBookModel>> =
@@ -31,7 +30,6 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
 
     private var books: MutableList<BookModel> = ArrayList()
 
-    //    private val searchBookTitle : LiveData<String> get() = _searchBookTitle
     val selectedBook: LiveData<KakaoBookModel> get() = _selectedBook
     val searchedBooks: LiveData<MutableList<KakaoBookModel>> get() = _searchedBooks
     val readType: LiveData<Int> get() = _readType
@@ -64,14 +62,8 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun updateSearchBookTitle(title: String) {
         viewModelScope.launch {
-            if (title != "")
-                _searchedBooks.value =
-                    kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
-            /*_searchBookTitle.value = title
-
-            if (_searchBookTitle.value!="") {
-                _searchedBooks.value = bookRepository.getNaverBooksByTitle(_searchBookTitle.value.toString())
-            }*/
+            _searchedBooks.value =
+                kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
         }
     }
 

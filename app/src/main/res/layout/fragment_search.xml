@@ -8,6 +8,7 @@
     tools:context=".view.library.SearchFragment">
 
     <EditText
+        android:id="@+id/searchBookET"
         android:layout_width="match_parent"
         android:layout_height="27dp"
         android:background="@drawable/search_stroke"
