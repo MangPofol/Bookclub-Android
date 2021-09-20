@@ -2,30 +2,30 @@ package com.example.bookclub.view.write
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookclub.databinding.FragmentSelectBookBinding
 import com.example.bookclub.util.HorizontalItemDecorator
+import com.example.bookclub.util.TextWatcher
 import com.example.bookclub.util.VerticalItemDecorator
 import com.example.bookclub.view.MainActivity
 import com.example.bookclub.view.adapter.BookAdapter
 import com.example.bookclub.view.adapter.OnBookItemClick
 import com.example.bookclub.viewmodel.BookViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
+class SelectBookFragment : Fragment(), android.text.TextWatcher, OnBookItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
     private val bookViewModel: BookViewModel by activityViewModels()
-    private var flag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
         binding = FragmentSelectBookBinding.inflate(inflater, container, false)
         Log.e("SelectBook", "onCreateView")
 
-        //검색어가 변경되면 recycler view 의 책 목록이 계속 업데이트 됨.
+        //검색어에 따라 searchedBooks가 업데이트 되면 recycler view도 변경.
         bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
             bookAdapter.setKakaoBooks(it)
         })
@@ -61,7 +61,7 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
                 bookAdapter.setBooks(it)
         })
 
-        //뒤로가기 버튼 누르면 -> 기록하기 화면
+        //뒤로가기 아이콘 누르면 -> 기록하기 화면
         binding.toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -93,30 +93,6 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
         (requireParentFragment() as WriteFragment).moveToRecord()
     }
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        GlobalScope.launch {
-            bookViewModel.updateSearchBookTitle(s.toString())
-        }
-
-        if (s!!.isNotEmpty()) { //검색 테스트가 안 비어 있으면 radio group -> INVISIBLE
-            binding.selectBookTV.visibility = View.INVISIBLE
-            binding.readTypeRG.visibility = View.INVISIBLE
-        } else {    //검색 테스트가 비어 있으면 radio group -> VISIBLE, radio group을 읽고 있는이 체크돼 있도록, recycler view도 읽고 있는 책 목록으로 업데이트
-            binding.selectBookTV.visibility = View.VISIBLE
-            binding.readTypeRG.visibility = View.VISIBLE
-            binding.readingRB.isChecked = true
-            bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
-        }
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-
-    }
-
     override fun onClick(position: Int) {
         //책을 등록하는 bottom sheet 을 띄운다.
         val bottomSheet: AddBookBottomSheetFragment = AddBookBottomSheetFragment {
@@ -137,6 +113,36 @@ class SelectBookFragment : Fragment(), TextWatcher, OnBookItemClick {
 
         //클릭된 책 제목을 SelectBookViewModel의 selectedBookTitle 변수에 업데이트
         bookViewModel.updateSelectedBook(position)
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        if (count==0) { //겁색어가 비어있으면
+            //내 책장에서 선택하기, 읽기 유형 선택 화면 VISIBLE
+            binding.selectBookTV.visibility = View.VISIBLE
+            binding.readTypeRG.visibility = View.VISIBLE
+
+            when(bookViewModel.readType.value) {    //선택돼 있는 읽는 유형에 따라 책 목록 보이도록 설정
+                0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
+                1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
+                2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
+            }
+        } else {    //검색어가 입력돼 있으면
+            //내 책장에서 선택하기, 읽기 유형 선택 화면 INVISIBLE
+            binding.selectBookTV.visibility = View.INVISIBLE
+            binding.readTypeRG.visibility = View.INVISIBLE
+
+            CoroutineScope(Dispatchers.IO).launch { //입력된 검색어에 따라 책 목록 보이도록
+                bookViewModel.updateSearchBookTitle(s.toString())
+            }
+        }
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+
     }
 
 }

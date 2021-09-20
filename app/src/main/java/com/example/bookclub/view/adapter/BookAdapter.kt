@@ -72,8 +72,12 @@ class BookAdapter() :
 
     }
 
-    fun setKakaoBooks(bookList: MutableList<KakaoBookModel>) {
-        books = bookList.toMutableList()
+    fun setKakaoBooks(bookList: MutableList<KakaoBookModel>?) {
+        if (bookList==null) {
+            books.clear()
+        } else {
+            books = bookList.toMutableList()
+        }
         notifyDataSetChanged()
         type = "write"
     }
