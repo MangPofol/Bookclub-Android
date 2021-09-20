@@ -13,11 +13,16 @@ import com.example.bookclub.databinding.FragmentSearchBinding
 import com.example.bookclub.model.BookModel
 import com.example.bookclub.view.adapter.BookAdapter
 import com.example.bookclub.viewmodel.BookViewModel
+import com.example.bookclub.viewmodel.MyLibraryViewModel
 
 class SearchFragment(adapter: BookAdapter) : Fragment(), TextWatcher {
     private lateinit var binding: FragmentSearchBinding
-    private val bookViewModel: BookViewModel by activityViewModels()
+
+    private var books: MutableList<BookModel> = ArrayList<BookModel>()
+
     private val bookAdapter: BookAdapter = adapter
+    private val myLibraryViewModel: MyLibraryViewModel by activityViewModels<MyLibraryViewModel>()
+    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,14 @@ class SearchFragment(adapter: BookAdapter) : Fragment(), TextWatcher {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.searchBookET.addTextChangedListener(this)
 
+        when(myLibraryViewModel.libraryReadType.value) {
+            0 -> books = bookViewModel.nowBooks.value!!
+            1 -> books = bookViewModel.afterBooks.value!!
+            2 -> books = bookViewModel.beforeBooks.value!!
+        }
+
+        bookAdapter.setBooks(books)
+
         return binding.root
     }
 
@@ -39,27 +52,9 @@ class SearchFragment(adapter: BookAdapter) : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (count!=0) {
-            when (bookViewModel.readType.value) {
-                0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!.filter {
-                    it.name.contains(s!!)
-                } as MutableList<BookModel>)
-
-                1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!.filter {
-                    it.name.contains(s!!)
-                } as MutableList<BookModel>)
-
-                2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!.filter {
-                    it.name.contains(s!!)
-                } as MutableList<BookModel>)
-            }
-        } else {
-            when (bookViewModel.readType.value) {
-                0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
-                1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
-                2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
-            }
-        }
+        bookAdapter.setBooks(books.filter {
+            it.name.contains(s!!)
+        } as MutableList<BookModel>)
     }
 
     override fun afterTextChanged(s: Editable?) {

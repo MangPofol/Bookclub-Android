@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.example.bookclub.R
 import com.example.bookclub.databinding.ActivityMainBinding
@@ -19,6 +21,7 @@ import com.example.bookclub.repository.KakaoBookRepository
 import com.example.bookclub.repository.UserRepository
 import com.example.bookclub.view.adapter.BottomNavigationPagerAdapter
 import com.example.bookclub.view.bookclub.CreateClubActivity
+import com.example.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

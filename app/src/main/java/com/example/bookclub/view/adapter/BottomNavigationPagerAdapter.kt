@@ -16,7 +16,6 @@ class BottomNavigationPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(f
     }
 
     override fun getItem(position: Int): Fragment {
-        Log.e("getItem", position.toString())
         return when (position) {
             0 -> WriteFragment()
             1 -> MyLibraryFragment()

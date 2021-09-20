@@ -1,5 +1,6 @@
 package com.example.bookclub.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,7 +18,7 @@ class BookAdapter() :
     private var books: MutableList<Any> = ArrayList<Any>()
     private var type: String = "library"
 
-    constructor(bookItemClick: OnBookItemClick): this() {
+    constructor(bookItemClick: OnBookItemClick) : this() {
         this.bookItemClick = bookItemClick
     }
 
@@ -30,7 +31,7 @@ class BookAdapter() :
     override fun onBindViewHolder(holder: BookAdapter.BookViewHolder, position: Int) {
         holder.bookImg.clipToOutline = true
 
-        if (type=="write") {
+        if (type == "write") {
             writeViewBinding(position, holder)
         } else {
             libraryViewBinding(position, holder)
@@ -73,7 +74,7 @@ class BookAdapter() :
     }
 
     fun setKakaoBooks(bookList: MutableList<KakaoBookModel>?) {
-        if (bookList==null) {
+        if (bookList == null) {
             books.clear()
         } else {
             books = bookList.toMutableList()

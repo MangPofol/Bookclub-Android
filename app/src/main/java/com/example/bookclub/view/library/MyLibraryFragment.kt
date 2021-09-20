@@ -6,21 +6,41 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bookclub.view.MainActivity
 import com.example.bookclub.R
 import com.example.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.example.bookclub.databinding.FragmentMyLibraryBinding
+import com.example.bookclub.model.BookModel
+import com.example.bookclub.view.adapter.BookAdapter
 import com.example.bookclub.viewmodel.BookViewModel
+import com.example.bookclub.viewmodel.MyLibraryViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MyLibraryFragment : Fragment() {
     private lateinit var binding: FragmentMyLibraryBinding
-    private val bookViewModel: BookViewModel by activityViewModels()
     private lateinit var myLibraryPagerAdapter: MyLibraryPagerAdapter
+
+    private val myLibraryViewModel: MyLibraryViewModel by activityViewModels<MyLibraryViewModel>()
+    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
+
+    private var books: MutableList<BookModel> = ArrayList<BookModel>()
+    private var adapter: BookAdapter = BookAdapter()
+
+    init {
+        CoroutineScope(Dispatchers.Main).launch {
+            books = bookViewModel.getBooks("NOW")!!
+            books = bookViewModel.getBooks("AFTER")!!
+            books = bookViewModel.getBooks("BEFORE")!!
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,20 +52,6 @@ class MyLibraryFragment : Fragment() {
     ): View? {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
-        //메인 필터 체크박스 리스너
-        val checkBoxListener = CompoundButton.OnCheckedChangeListener { checkBox, isChecked ->
-            if (isChecked) {
-                changeFilterCheckBox(checkBox.id)
-            } else {
-                isNotCheckedAll()
-            }
-        }
-
-        //메인 필터 체크박스 리스너 등록
-        binding.searchButton.setOnCheckedChangeListener(checkBoxListener)
-        binding.clubButton.setOnCheckedChangeListener(checkBoxListener)
-        binding.sortButton.setOnCheckedChangeListener(checkBoxListener)
-
         myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity)
         binding.viewPager.adapter = myLibraryPagerAdapter  //어댑터 설정
 
@@ -54,22 +60,7 @@ class MyLibraryFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.e("ViewPagerFragment", "Page ${position + 1}")
-//                viewPagerStack.add(position)
-
-                binding.searchButton.isChecked = false
-                binding.clubButton.isChecked = false
-                binding.sortButton.isChecked = false
-
-                bookViewModel.updateReadType(position)
-
-                //완독 탭을 누르면 콜백 함수가 두 번 호출되는 버그 해결하기 위한 방법
-                /* if (viewPagerStack.size > 1 && viewPagerStack[viewPagerStack.lastIndex - 1] != position) {
-                     when (myLibraryViewModel.selectedFilter?.value) {
-                         binding.searchButton.id -> binding.searchButton.isChecked = false
-                         binding.clubButton.id -> binding.clubButton.isChecked = false
-                         binding.sortButton.id -> binding.sortButton.isChecked = false
-                     }
-                 }*/
+                myLibraryViewModel.updateLibraryReadType(position)
 
                 //완독 부분에선 북클럽 필터 GONE
                 when (position) {
@@ -77,6 +68,105 @@ class MyLibraryFragment : Fragment() {
                     1 -> setVisibilityClubButton(View.VISIBLE)
                     2 -> setVisibilityClubButton(View.GONE)
                 }
+            }
+        })
+
+        binding.searchButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                myLibraryViewModel.updateMainFilter(0)
+            } else {
+                isAllNotChecked()
+            }
+        }
+
+        binding.clubButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                myLibraryViewModel.updateMainFilter(1)
+            } else {
+                isAllNotChecked()
+            }
+        }
+
+        binding.sortButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                myLibraryViewModel.updateMainFilter(2)
+            } else {
+                isAllNotChecked()
+            }
+        }
+
+        //읽는중, 완독, 읽고싶은 observe
+        myLibraryViewModel.libraryReadType.observe(viewLifecycleOwner, Observer {
+            Log.e("libraryReadType observe", it.toString())
+            myLibraryViewModel.updateMainFilter(-1)
+            myLibraryViewModel.updateSortFilter(-1)
+
+            adapter = myLibraryPagerAdapter.getAdapter(it)
+
+            when (it) {
+                0 ->CoroutineScope(Dispatchers.Main).launch {
+                        books = bookViewModel.getBooks("NOW")!!
+                        adapter.setBooks(books)
+                    }
+                1 -> CoroutineScope(Dispatchers.Main).launch {
+                    books = bookViewModel.getBooks("AFTER")!!
+                    adapter.setBooks(books)
+                }
+                2 -> CoroutineScope(Dispatchers.Main).launch {
+                    books = bookViewModel.getBooks("BEFORE")!!
+                    adapter.setBooks(books)
+                }
+            }
+            adapter.setBooks(books)
+        })
+
+        //mainFilter: 검색, 북클럽, 정렬 observe
+        myLibraryViewModel.mainFilter.observe(viewLifecycleOwner, Observer {
+            Log.e("mainFilter observe", it.toString())
+            adapter.setBooks(books)
+
+            when(it) {
+                0 -> {
+                    binding.clubButton.isChecked = false
+                    binding.sortButton.isChecked = false
+                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment(adapter)).commit()
+                }
+                1 -> {
+                    binding.searchButton.isChecked = false
+                    binding.sortButton.isChecked = false
+                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
+                }
+                2 -> {
+                    binding.searchButton.isChecked = false
+                    binding.clubButton.isChecked = false
+                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
+                }
+                -1 -> {
+                    binding.searchButton.isChecked = false
+                    binding.clubButton.isChecked = false
+                    binding.sortButton.isChecked = false
+                    binding.filterLayout.removeAllViews()
+                }
+            }
+        })
+
+        //정렬 필터: 최신순, 오래된순, 이름순 observe
+        myLibraryViewModel.sortFilter.observe(viewLifecycleOwner, Observer { sortFilter ->
+            Log.e("sortFilter observe", sortFilter.toString())
+
+            if (books.size!=0) {
+                when (sortFilter) {
+                    0 -> {
+
+                    }
+                    1 -> {
+
+                    }
+                    2 -> adapter.setBooks(books.sortedWith(compareBy { it.name }) as MutableList<BookModel>)
+                    -1 -> adapter.setBooks(books)
+                }
+            } else {
+                Log.e("MyLibrary sortFilter observe", "등록된 책이 없습니다.")
             }
         })
 
@@ -103,39 +193,9 @@ class MyLibraryFragment : Fragment() {
         binding.clubButton.visibility = visibility
     }
 
-    //체크된 필터 말고는 모두 체크 해제 + 필터에 맞는 뷰 동적 생성
-    private fun changeFilterCheckBox(checkBoxId: Int) {
-        when (checkBoxId) {
-            binding.searchButton.id -> {
-                binding.clubButton.isChecked = false
-                binding.sortButton.isChecked = false
-                childFragmentManager.beginTransaction()
-                    .replace(
-                        binding.filterLayout.id,
-                        SearchFragment(myLibraryPagerAdapter.getAdapter(bookViewModel.readType.value!!))
-                    ).commit()
-            }
-            binding.clubButton.id -> {
-                binding.searchButton.isChecked = false
-                binding.sortButton.isChecked = false
-                childFragmentManager.beginTransaction()
-                    .replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
-            }
-            binding.sortButton.id -> {
-                binding.searchButton.isChecked = false
-                binding.clubButton.isChecked = false
-                childFragmentManager.beginTransaction()
-                    .replace(binding.filterLayout.id, SortFilterFragment()).commit()
-            }
-        }
+    private fun isAllNotChecked() {
+        if (!binding.searchButton.isChecked&&!binding.clubButton.isChecked&&!binding.sortButton.isChecked)
+            myLibraryViewModel.updateMainFilter(-1)
     }
-
-    //세 필터 모두 체크 해제됐는지 확인
-    private fun isNotCheckedAll() {
-        if (!binding.searchButton.isChecked && !binding.clubButton.isChecked && !binding.sortButton.isChecked) {
-            binding.filterLayout.removeAllViewsInLayout()
-        }
-    }
-
 }
 

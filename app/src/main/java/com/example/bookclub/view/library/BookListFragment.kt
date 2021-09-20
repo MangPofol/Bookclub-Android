@@ -13,8 +13,8 @@ import com.example.bookclub.view.adapter.BookAdapter
 import com.example.bookclub.databinding.FragmentBookListBinding
 import com.example.bookclub.util.HorizontalItemDecorator
 import com.example.bookclub.util.VerticalItemDecorator
-import com.example.bookclub.view.MainActivity
 import com.example.bookclub.viewmodel.BookViewModel
+import com.example.bookclub.viewmodel.MyLibraryViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -22,13 +22,11 @@ import kotlinx.coroutines.launch
 
 class BookListFragment : Fragment() {
     private lateinit var binding: FragmentBookListBinding
-    private lateinit var bookAdapter: BookAdapter
-    private val bookViewModel: BookViewModel by activityViewModels()
+    private val bookAdapter: BookAdapter = BookAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bookAdapter = BookAdapter()
     }
 
     override fun onCreateView(
@@ -36,36 +34,6 @@ class BookListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBookListBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
-
-        CoroutineScope(Dispatchers.Main).launch {
-            bookViewModel.getBooks("NOW")
-            bookViewModel.getBooks("AFTER")
-            bookViewModel.getBooks("BEFORE")
-
-            bookViewModel.readType.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
-                    1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
-                    2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
-                }
-
-            })
-        }
-
-        bookViewModel.nowBooks.observe(viewLifecycleOwner, Observer {
-            if (bookViewModel.readType.value==0)
-                bookAdapter.setBooks(it)
-        })
-
-        bookViewModel.afterBooks.observe(viewLifecycleOwner, Observer {
-            if (bookViewModel.readType.value==1)
-                bookAdapter.setBooks(it)
-        })
-
-        bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
-            if (bookViewModel.readType.value==2)
-                bookAdapter.setBooks(it)
-        })
 
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정

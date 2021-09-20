@@ -26,16 +26,17 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         MutableLiveData<MutableList<BookModel>>() //읽고 싶은 책 목록
     private val _afterBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>()  //완독 책 목록
-    private val _readType: MutableLiveData<Int> = MutableLiveData<Int>()    //읽는중, 완독, 읽고싶은 페이지 변환
+//    private val _readType: MutableLiveData<Int> = MutableLiveData<Int>()    //읽는중, 완독, 읽고싶은 페이지 변환
 
     private var books: MutableList<BookModel> = ArrayList()
 
     val selectedBook: LiveData<KakaoBookModel> get() = _selectedBook
     val searchedBooks: LiveData<MutableList<KakaoBookModel>> get() = _searchedBooks
-    val readType: LiveData<Int> get() = _readType
+//    val readType: LiveData<Int> get() = _readType
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
     val beforeBooks: LiveData<MutableList<BookModel>> get() = _beforeBooks
     val afterBooks: LiveData<MutableList<BookModel>> get() = _afterBooks
+
 
     suspend fun getBooks(category: String): MutableList<BookModel>? {
         books = withContext(Dispatchers.IO) {
@@ -104,9 +105,9 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         return code
     }
 
-    fun updateReadType(readType: Int) {
+    /*fun updateReadType(readType: Int) {
         _readType.value = readType
-    }
+    }*/
 
     fun clearSelectedBook() {
         _selectedBook.value = _selectedBook.value!!.copy("", "", "")
