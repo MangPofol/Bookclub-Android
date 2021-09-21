@@ -2,6 +2,7 @@ package com.example.bookclub.repository
 
 import com.example.bookclub.BuildConfig
 import com.example.bookclub.service.BookService
+import com.example.bookclub.service.ClubService
 import com.example.bookclub.service.KakaoBookService
 import com.example.bookclub.service.UserService
 import com.google.gson.Gson
@@ -37,4 +38,5 @@ object ApiClient {
     val userService: UserService = retrofit.create(UserService::class.java)
     val bookService: BookService = retrofit.create(BookService::class.java)
     val kakaoBookService: KakaoBookService = kakaoRetrofit.create(KakaoBookService::class.java)
+    val clubService: ClubService = retrofit.create(ClubService::class.java)
 }
