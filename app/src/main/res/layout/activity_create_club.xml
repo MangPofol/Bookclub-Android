@@ -58,6 +58,42 @@
         android:background="@color/main_blue"
         app:layout_constraintTop_toBottomOf="@+id/coordinateLayout">
 
+        <ImageView
+            android:id="@+id/clubPatternIV1"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/black"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/clubPatternIV2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/clubPatternIV2"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/grey1"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toRightOf="@+id/clubPatternIV1"
+            app:layout_constraintRight_toLeftOf="@+id/clubPatternIV3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/clubPatternIV3"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toRightOf="@+id/clubPatternIV2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
