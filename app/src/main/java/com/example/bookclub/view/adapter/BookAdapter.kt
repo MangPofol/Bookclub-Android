@@ -1,6 +1,5 @@
 package com.example.bookclub.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -87,5 +86,10 @@ class BookAdapter() :
         books = bookList.toMutableList()
         notifyDataSetChanged()
         type = "library"
+    }
+
+    fun setBooksClear() {
+        books.clear()
+        notifyDataSetChanged()
     }
 }

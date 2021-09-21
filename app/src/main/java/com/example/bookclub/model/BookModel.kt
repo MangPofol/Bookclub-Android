@@ -8,22 +8,22 @@ data class BookModel(
     var id: Long? = null,
 
     @SerializedName("name")
-    var name: String,
+    var name: String? = "",
 
     @SerializedName("isbn")
-    var isbn: String? = null,
+    var isbn: String? = "",
 
     @SerializedName("category")
-    var category: String? = null,
+    var category: String? = "",
 
     @SerializedName("createdDate")
-    var createdDate: String? = null,
+    var createdDate: String? = "",
 
     @SerializedName("modifiedDate")
-    var modifiedDate: String? = null,
+    var modifiedDate: String? = "",
 
     @SerializedName("likedList")
     var likedLists: List<LikedListModel>? = null,
 
-    var image: String? = null
+    var image: String? = ""
 )

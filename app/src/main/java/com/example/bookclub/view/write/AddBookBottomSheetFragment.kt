@@ -12,6 +12,7 @@ import com.example.bookclub.R
 import com.example.bookclub.databinding.FragmentAddBookBottomSheetBinding
 import com.example.bookclub.model.KakaoBookModel
 import com.example.bookclub.viewmodel.BookViewModel
+import com.example.bookclub.viewmodel.SelectedBookViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +22,11 @@ import kotlinx.coroutines.withContext
 class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddBookBottomSheetBinding
-    private val bookViewModel: BookViewModel by activityViewModels()
+
     private var readType: String = "NOW"
+
+    private val selectedBookViewModel: SelectedBookViewModel by activityViewModels<SelectedBookViewModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,23 +51,15 @@ class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDi
 
         //책 추가하기 버튼 클릭 리스너 -> 서버에 책 추가 요청 보내기
         binding.addBtn.setOnClickListener {
-            var code = runBlocking {
-                withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
-                    bookViewModel.createBook(readType)
+            Log.e("click", selectedBookViewModel.selectedBook.value.toString())
+            when (readType) {
+                "NOW", "AFTER" -> {
+                    dismiss()
+                    callback(readType)
                 }
-            }
+                "BEFORE" -> {
 
-            if (code==201) {
-                Log.e(code.toString(), "서버에 책 추가 완료!", )
-                dismiss()   //다이얼로그 닫기.
-                callback(readType)  //콜백 함수 호출
-            } else if (code==400) {
-                Log.e(code.toString(), "책 추가 서버에 실패! - 이미 등록된 책")
-                bookViewModel.clearSelectedBook()   //selectedBook 빈값으로 변경
-                Toast.makeText(this.context, "이미 등록된 책입니다.", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.e(code.toString(), "책 추가 서버에 실패!")
-                bookViewModel.clearSelectedBook()   //selectedBook 빈값으로 변경
+                }
             }
         }
 

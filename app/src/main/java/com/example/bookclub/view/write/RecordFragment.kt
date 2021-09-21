@@ -10,13 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.bookclub.R
 import com.example.bookclub.databinding.FragmentRecordBinding
-import com.example.bookclub.model.KakaoBookModel
 import com.example.bookclub.view.MainActivity
-import com.example.bookclub.viewmodel.BookViewModel
+import com.example.bookclub.viewmodel.SelectedBookViewModel
 
 class RecordFragment : Fragment() {
     private lateinit var binding: FragmentRecordBinding
-    private val bookViewModel: BookViewModel by activityViewModels()
+    private val selectedBookViewModel: SelectedBookViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +31,11 @@ class RecordFragment : Fragment() {
         Log.e("Record", "onCreateView")
 
         //selectedBook observer
-        bookViewModel.selectedBook.observe(viewLifecycleOwner, Observer {
-            if (it.title == "") { //빈값이면 책 선택 버튼에 "기록할 책을 선택하세요"
+        selectedBookViewModel.selectedBook.observe(viewLifecycleOwner, Observer {
+            if (it.name == "") { //빈값이면 책 선택 버튼에 "기록할 책을 선택하세요"
                 binding.selectBookBtn.text = getString(R.string.book_select)
             } else {    //값이 존재하면 책 선택 버튼에 추가된 책의 이름
-                binding.selectBookBtn.text = it.title
+                binding.selectBookBtn.text = it.name
             }
         })
 
@@ -53,5 +52,10 @@ class RecordFragment : Fragment() {
 
         (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
+    }
+
+    override fun onPause() {
+        super.onPause()
+        selectedBookViewModel.clearSelectedBook()
     }
 }

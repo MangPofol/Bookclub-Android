@@ -3,7 +3,6 @@ package com.example.bookclub.view.library
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +52,7 @@ class SearchFragment(adapter: BookAdapter) : Fragment(), TextWatcher {
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         bookAdapter.setBooks(books.filter {
-            it.name.contains(s!!)
+            it.name!!.contains(s!!)
         } as MutableList<BookModel>)
     }
 
