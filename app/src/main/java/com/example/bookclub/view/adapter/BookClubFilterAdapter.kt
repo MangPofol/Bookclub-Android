@@ -19,7 +19,7 @@ class BookClubFilterAdapter(clubs: List<ClubModel>) : RecyclerView.Adapter<BookC
 
     override fun onBindViewHolder(holder: BookClubFilterViewHolder, position: Int) {
         if (clubs.isNotEmpty())
-            holder.clubCheckBox.text = clubs[position].clubName
+            holder.clubCheckBox.text = clubs[position].name
     }
 
     override fun getItemCount(): Int {
