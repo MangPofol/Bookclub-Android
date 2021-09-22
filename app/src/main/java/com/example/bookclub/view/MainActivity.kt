@@ -1,34 +1,20 @@
 package com.example.bookclub.view
 
-import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.example.bookclub.R
 import com.example.bookclub.databinding.ActivityMainBinding
-import com.example.bookclub.repository.KakaoBookRepository
 import com.example.bookclub.repository.UserRepository
 import com.example.bookclub.view.adapter.BottomNavigationPagerAdapter
-import com.example.bookclub.view.bookclub.CreateClubActivity
-import com.example.bookclub.viewmodel.BookViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.bookclub.view.contract.CreateClubContract
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -52,6 +38,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //북클럽 생성 activity 로 이동하는 contract 선언
+        val launcher = registerForActivityResult(CreateClubContract()) {
+            if (it!=null) { //정상적으로 북클럽이 생성됐다면
+                binding.bottomViewPager.currentItem = 2 //북클럽 fragment 로 이동한다.
+            }
+        }
+
         //시스템 툴바 보이도록
         val window = window
         window.setFlags(
@@ -64,8 +57,8 @@ class MainActivity : AppCompatActivity() {
             // Handle menu item selected
             when (menuItem.itemId) {
                 R.id.myBookclub -> {
-                    val intent: Intent = Intent(this@MainActivity, CreateClubActivity::class.java)
-                    startActivity(intent)
+                    binding.drawerLayout.closeDrawers() //navigation drawer 닫기
+                    launcher.launch(null)   //CreateClubContract launch(MainActivity -> CreateClubActivity)
                 }
             }
 
