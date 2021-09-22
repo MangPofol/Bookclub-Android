@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookclub.model.ClubModel
 import com.example.bookclub.repository.ClubRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class ClubViewModel: ViewModel() {
     private val clubRepository: ClubRepository = ClubRepository()
@@ -19,7 +20,7 @@ class ClubViewModel: ViewModel() {
 
     val clubs: LiveData<MutableList<ClubModel>> get() = _clubs
 
-    suspend fun createClub(newClub: ClubModel): Int {
+    suspend fun createClub(newClub: ClubModel): Response<ClubModel> {
         val res = withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             clubRepository.createClub(newClub)
         }
@@ -31,13 +32,14 @@ class ClubViewModel: ViewModel() {
             Log.e("클럽 생성 실패", res.toString())
         }
 
-        return res.code()
+        return res
     }
 
     suspend fun getClubsByUser() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _clubs.postValue(clubRepository.getClubsByUser().body()!!.clubs)
+        val clubList = viewModelScope.async(Dispatchers.IO) {
+            clubRepository.getClubsByUser().body()!!.clubs
         }
+        _clubs.value = clubList.await()
     }
 
     private fun addClub(newClub: ClubModel) {
