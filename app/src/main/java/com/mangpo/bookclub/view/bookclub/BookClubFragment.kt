@@ -1,4 +1,4 @@
-package com.example.bookclub.view.bookclub
+package com.mangpo.bookclub.view.bookclub
 
 import android.os.Bundle
 import android.util.Log
@@ -7,30 +7,57 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.TextView
-import com.example.bookclub.view.MainActivity
-import com.example.bookclub.R
-import com.example.bookclub.databinding.FragmentBookClubBinding
+import androidx.fragment.app.activityViewModels
+import com.mangpo.bookclub.R
+import com.mangpo.bookclub.databinding.FragmentBookClubBinding
+import com.mangpo.bookclub.model.ClubModel
+import com.mangpo.bookclub.view.MainActivity
+import com.mangpo.bookclub.viewmodel.ClubViewModel
+import kotlinx.coroutines.*
 
 class BookClubFragment : Fragment() {
     private lateinit var binding: FragmentBookClubBinding
     private lateinit var bottomSheet: ClubSelectBottomSheetFragment
 
+    private val clubViewModel: ClubViewModel by activityViewModels<ClubViewModel>()
+
+    private lateinit var job: Deferred<Unit>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("BookClub", "onCreate")
+
+        //사용자가 소속된 클럽 정보 가져오기
+        job = CoroutineScope(Dispatchers.Main).async {
+            clubViewModel.getClubsByUser()
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e("BookClub", "onCreateView")
+
         binding = FragmentBookClubBinding.inflate(inflater, container, false)
         bottomSheet = ClubSelectBottomSheetFragment()
+
+        //클럽 정보를 받아올 때까지 기다리고, 클럽 소개 부분 홤면 구성하기
+        CoroutineScope(Dispatchers.IO).launch {
+            job.await()
+
+            if (clubViewModel.clubs.value == null) {
+                Log.e("BookClub", "소속된 클럽이 없습니다!")
+            } else {
+                setClubView(clubViewModel.clubs.value!![0])
+            }
+        }
 
         //클럽 변경 시 bottom sheet dialog 띄우기
         binding.toolbar.setOnMenuItemClickListener {
             bottomSheet.show(
-                (activity as MainActivity).supportFragmentManager, bottomSheet.tag)
+                (activity as MainActivity).supportFragmentManager, bottomSheet.tag
+            )
 
             false
         }
@@ -83,4 +110,14 @@ class BookClubFragment : Fragment() {
         }
     }
 
+    fun addClub(club: ClubModel) {
+        clubViewModel.addClub(club)
+        setClubView(club)
+    }
+
+    private fun setClubView(club: ClubModel) {
+        binding.clubNameTV.text = club.name
+        binding.levelBtn.text = "${club.level}단계"
+        binding.descriptionTV.text = "\"${club.description}\""
+    }
 }
