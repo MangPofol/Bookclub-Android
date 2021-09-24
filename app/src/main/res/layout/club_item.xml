@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/club_profile_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:fitsSystemWindows="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/club_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_marginStart="7dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="북클럽 A"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/club_description_tv"
+        app:layout_constraintStart_toEndOf="@+id/club_profile_iv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/club_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="14dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="북클럽 한줄 소개"
+        android:textColor="@color/grey7"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/club_profile_iv"
+        app:layout_constraintTop_toBottomOf="@+id/club_name_tv" />
+
+    <View
+        android:id="@+id/club_item_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/grey10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/club_description_tv" />
+</androidx.constraintlayout.widget.ConstraintLayout>
