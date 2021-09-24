@@ -1,4 +1,4 @@
-package com.example.bookclub
+package com.mangpo.bookclub
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

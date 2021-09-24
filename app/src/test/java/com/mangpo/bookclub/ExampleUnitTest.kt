@@ -1,4 +1,4 @@
-package com.example.bookclub
+package com.mangpo.bookclub
 
 import org.junit.Test
 
