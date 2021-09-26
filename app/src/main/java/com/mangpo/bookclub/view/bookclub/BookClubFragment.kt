@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookClubBinding
 import com.mangpo.bookclub.model.ClubModel
@@ -42,14 +43,19 @@ class BookClubFragment : Fragment() {
         binding = FragmentBookClubBinding.inflate(inflater, container, false)
         bottomSheet = ClubSelectBottomSheetFragment()
 
-        //클럽 정보를 받아올 때까지 기다리고, 클럽 소개 부분 홤면 구성하기
-        CoroutineScope(Dispatchers.IO).launch {
+        //클럽 정보를 받아올 때까지 기다리고, 클럽 소개 부분 화면 구성하기
+        CoroutineScope(Dispatchers.Main).launch {
             job.await()
 
-            if (clubViewModel.clubs.value == null) {
-                Log.e("BookClub", "소속된 클럽이 없습니다!")
-            } else {
-                setClubView(clubViewModel.clubs.value!![0])
+            //클럽 정보를 가져오는 처리가 완료될때까지 기다렸다가 클럽 정보 세팅하기
+            if (job.isCompleted) {
+                if (clubViewModel.clubs.value!!.size==0) {
+                    Log.e("BookClub", "소속된 클럽이 없습니다!")
+                } else {
+                    Log.e("BookClub", "소속된 클럽이 있습니다!")
+                    clubViewModel.updateSelectedClub(0)
+                    setClubView(clubViewModel.clubs.value!![0])
+                }
             }
         }
 
@@ -82,6 +88,12 @@ class BookClubFragment : Fragment() {
         binding.clubMemberButton.setOnCheckedChangeListener(checkBoxListener)
         binding.sortButton.setOnCheckedChangeListener(checkBoxListener)
 
+        //selectedClubIdx가 변경되면 이에 따라 클럽 정보 다시 셋팅
+        clubViewModel.selectedClubIdx.observe(viewLifecycleOwner, Observer {
+            if (clubViewModel.clubs.value!!.size!=0)
+                setClubView(clubViewModel.clubs.value!![it])
+        })
+
         return binding.root
     }
 
@@ -111,8 +123,10 @@ class BookClubFragment : Fragment() {
     }
 
     fun addClub(club: ClubModel) {
-        clubViewModel.addClub(club)
-        setClubView(club)
+        CoroutineScope(Dispatchers.Main).launch {
+            clubViewModel.addClub(club)
+            setClubView(club)
+        }
     }
 
     private fun setClubView(club: ClubModel) {

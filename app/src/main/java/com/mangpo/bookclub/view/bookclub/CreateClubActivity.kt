@@ -59,7 +59,7 @@ class CreateClubActivity : AppCompatActivity() {
                         ClubModel(name = clubName, description = clubInfo, colorSet = colorSet)
 
                     CoroutineScope(Dispatchers.Main).launch {
-                        val res = async(Dispatchers.IO) {
+                        val res = async(Dispatchers.Main) {
                             clubViewModel.createClub(newClub)   //서버 요청
                         }
 

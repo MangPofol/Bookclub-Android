@@ -15,10 +15,12 @@ import retrofit2.Response
 class ClubViewModel: ViewModel() {
     private val clubRepository: ClubRepository = ClubRepository()
     private val _clubs: MutableLiveData<MutableList<ClubModel>> = MutableLiveData<MutableList<ClubModel>>()
+    private val _selectedClubIdx: MutableLiveData<Int> = MutableLiveData<Int>()
 
     private var tempClubs: MutableList<ClubModel> = ArrayList<ClubModel>()
 
     val clubs: LiveData<MutableList<ClubModel>> get() = _clubs
+    val selectedClubIdx: LiveData<Int> get() = _selectedClubIdx
 
     suspend fun createClub(newClub: ClubModel): Response<ClubModel> {
         val res = withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -42,11 +44,19 @@ class ClubViewModel: ViewModel() {
         _clubs.value = clubList.await()
     }
 
-    fun addClub(newClub: ClubModel) {
-        if (clubs.value!=null) {
-            tempClubs = _clubs.value!!
+    suspend fun addClub(newClub: ClubModel) {
+        if (clubs.value==null) {
+            getClubsByUser()
         }
+        tempClubs = _clubs.value!!
+
         tempClubs.add(newClub)
         _clubs.postValue(tempClubs)
+        Log.e("ClubViewModel", _clubs.value.toString())
+        _selectedClubIdx.value = _clubs.value!!.size-1
+    }
+
+    fun updateSelectedClub(position: Int) {
+        _selectedClubIdx.value = position
     }
 }

@@ -12,9 +12,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentClubSelectBottomSheetBinding
 import com.mangpo.bookclub.view.adapter.ClubAdapter
+import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 
-class ClubSelectBottomSheetFragment : BottomSheetDialogFragment() {
+class ClubSelectBottomSheetFragment : BottomSheetDialogFragment(), OnItemClick {
     private lateinit var binding: FragmentClubSelectBottomSheetBinding
     private lateinit var clubAdapter: ClubAdapter
 
@@ -27,17 +28,6 @@ class ClubSelectBottomSheetFragment : BottomSheetDialogFragment() {
         //bottom sheet 모서리 둥글게 디자인
         setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_Demo_BottomSheetDialog)
 
-        if (clubViewModel.clubs.value==null) {
-            Log.e("ClubSelectBottomSheet", "클럽이 존재하지 않습니다.")
-        } else {
-            Log.e("ClubSelectBottomSheet", clubViewModel.clubs.value.toString())
-            clubAdapter = ClubAdapter(clubViewModel.clubs.value!!)
-        }
-
-        /*CoroutineScope(Dispatchers.Main).launch {
-            Log.e("ClubSelectBottomSheet", "clubs -> ${clubViewModel.clubs.value}")
-        }*/
-
     }
 
     override fun onCreateView(
@@ -45,9 +35,19 @@ class ClubSelectBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentClubSelectBottomSheetBinding.inflate(inflater, container, false)
-        binding.clubRv.adapter = clubAdapter
-        binding.clubRv.layoutManager = LinearLayoutManager(this.context)
+
+        if (clubViewModel.clubs.value!!.size==0) {  //사용자가 속한 클럽이 없음.
+        } else {    //사용자가 속한 클럽이 존재.
+            clubAdapter = ClubAdapter(clubViewModel.clubs.value!!, clubViewModel.selectedClubIdx.value!!, this)
+            binding.clubRv.adapter = clubAdapter
+            binding.clubRv.layoutManager = LinearLayoutManager(this.context)
+        }
 
         return binding.root
+    }
+
+    override fun onClick(position: Int) {
+        clubViewModel.updateSelectedClub(position)
+        dismiss()
     }
 }
