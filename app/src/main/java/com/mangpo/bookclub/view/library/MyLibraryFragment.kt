@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.library
 
-import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.core.view.marginTop
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -37,22 +35,16 @@ class MyLibraryFragment : Fragment() {
     private var books: MutableList<BookModel> = ArrayList<BookModel>()
     private var adapter: BookAdapter = BookAdapter()
 
-    /*init {
-        *//*CoroutineScope(Dispatchers.Main).launch {
-            bookViewModel.getBooks("NOW")!!
-            bookViewModel.getBooks("AFTER")!!
-            bookViewModel.getBooks("BEFORE")!!
-        }*//*
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("MyLibrary", "onCreate")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e("MyLibrary", "onCreateView")
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
         myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity)
@@ -147,6 +139,8 @@ class MyLibraryFragment : Fragment() {
                     binding.sortButton.isChecked = false
                     binding.filterLayout.visibility = View.VISIBLE
 
+                    (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
+
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
                     binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                 }
@@ -156,6 +150,8 @@ class MyLibraryFragment : Fragment() {
                     binding.searchButton.isChecked = false
                     binding.clubButton.isChecked = false
                     binding.filterLayout.visibility = View.VISIBLE
+
+                    (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
 
                     binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
@@ -167,6 +163,7 @@ class MyLibraryFragment : Fragment() {
                     binding.filterLayout.removeAllViews()
                     binding.filterLayout.visibility = View.GONE
                     binding.viewPager.setPadding(0, 35, 0, 0)
+                    (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
                 }
             }
         })
@@ -196,6 +193,7 @@ class MyLibraryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("MyLibrary", "onViewCreated")
 
         (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정

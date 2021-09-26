@@ -1,12 +1,13 @@
 package com.mangpo.bookclub.view
 
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
@@ -133,12 +134,27 @@ class MainActivity : AppCompatActivity() {
         mDrawerToggle!!.syncState()
     }
 
+    fun moveBottomPager(currentItem: Int) {
+        binding.bottomViewPager.currentItem = currentItem
+    }
+
+    fun goToBeforeLibrary() {
+        binding.bottomViewPager.currentItem = 1
+        myLibraryViewModel.updateLibraryReadType(2)
+    }
+
+    //올라와 있는 키보드를 내리는 함수
+    fun hideKeyBord(v: View) {
+        val imm: InputMethodManager = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
     override fun onBackPressed() {
-        //view pager의 현재 프래그먼트 가져오기
+        /*//view pager의 현재 프래그먼트 가져오기
         var fragment: Fragment = binding.bottomViewPager.adapter!!.instantiateItem(
             binding.bottomViewPager,
             binding.bottomViewPager.currentItem
-        ) as Fragment
+        ) as Fragment*/
 
         //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
@@ -147,14 +163,5 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-    }
-
-    fun moveBottomPager(currentItem: Int) {
-        binding.bottomViewPager.currentItem = currentItem
-    }
-
-    fun goToBeforeLibrary() {
-        binding.bottomViewPager.currentItem = 1
-        myLibraryViewModel.updateLibraryReadType(2)
     }
 }
