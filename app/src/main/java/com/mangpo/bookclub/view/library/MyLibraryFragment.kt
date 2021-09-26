@@ -97,6 +97,7 @@ class MyLibraryFragment : Fragment() {
         //읽는중, 완독, 읽고싶은 observe
         myLibraryViewModel.libraryReadType.observe(viewLifecycleOwner, Observer {
             Log.e("libraryReadType observe", it.toString())
+            binding.myLibraryScrollView.scrollTo(0, 0)
             myLibraryViewModel.updateMainFilter(-1)
             myLibraryViewModel.updateSortFilter(-1)
 
@@ -112,6 +113,7 @@ class MyLibraryFragment : Fragment() {
                     adapter.setBooks(books)
                 }
                 2 -> CoroutineScope(Dispatchers.Main).launch {
+                    binding.viewPager.currentItem = 2
                     books = bookViewModel.getBooks("BEFORE")!!
                     adapter.setBooks(books)
                 }
