@@ -1,4 +1,4 @@
-package com.example.bookclub.view.write
+package com.mangpo.bookclub.view.write
 
 import android.os.Bundle
 import android.util.Log
@@ -6,23 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
-import com.example.bookclub.R
-import com.example.bookclub.databinding.FragmentWriteBinding
-import com.example.bookclub.view.MainActivity
+import com.mangpo.bookclub.databinding.FragmentWriteBinding
 
 class WriteFragment : Fragment() {
     private lateinit var binding: FragmentWriteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.e("WriteFragment", "onCreate")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e("WriteFragment", "onCreateView")
         binding = FragmentWriteBinding.inflate(inflater, container, false)
 
         binding.frameLayout.removeAllViewsInLayout()
@@ -34,8 +32,7 @@ class WriteFragment : Fragment() {
         return binding.root
     }
 
-    fun moveToRecord() {
-        binding.frameLayout.removeAllViews()
+    private fun moveToRecord() {
         childFragmentManager.beginTransaction()
             .replace(binding.frameLayout.id, RecordFragment()).addToBackStack("record").commit()
     }
@@ -43,6 +40,13 @@ class WriteFragment : Fragment() {
     fun moveToSelectBook() {
         binding.frameLayout.removeAllViews()
         childFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, SelectBookFragment()).addToBackStack("selectBook").commit()
+            .replace(binding.frameLayout.id, SelectFragment()).addToBackStack("selectBook").commit()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("WriteFragment", "onPause")
+
+        moveToRecord()
     }
 }
