@@ -1,11 +1,15 @@
 package com.mangpo.bookclub.view.library
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.core.view.marginTop
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -128,30 +132,32 @@ class MyLibraryFragment : Fragment() {
 
             when(it) {
                 0 -> {
-                    binding.viewPager.setPadding(0, 23, 0, 0)
-
-                    binding.filterLayout.visibility = View.VISIBLE
+                    binding.filterLayout.layoutParams
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
+                    binding.filterLayout.visibility = View.VISIBLE
 
+                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment(adapter)).commit()
+                    binding.viewPager.setPadding(0, 23, 0, 0)
                 }
                 1 -> {
                     binding.viewPager.setPadding(0, 26, 0, 0)
-
-                    binding.filterLayout.visibility = View.VISIBLE
                     binding.searchButton.isChecked = false
                     binding.sortButton.isChecked = false
+                    binding.filterLayout.visibility = View.VISIBLE
 
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
+                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                 }
                 2 -> {
                     binding.viewPager.setPadding(0, 26, 0, 0)
 
-                    binding.filterLayout.visibility = View.VISIBLE
                     binding.searchButton.isChecked = false
                     binding.clubButton.isChecked = false
+                    binding.filterLayout.visibility = View.VISIBLE
 
+                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                     childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
                 }
                 -1 -> {
@@ -159,7 +165,8 @@ class MyLibraryFragment : Fragment() {
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
                     binding.filterLayout.removeAllViews()
-
+                    binding.filterLayout.visibility = View.GONE
+                    binding.viewPager.setPadding(0, 35, 0, 0)
                 }
             }
         })
