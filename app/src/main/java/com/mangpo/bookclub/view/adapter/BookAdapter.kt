@@ -13,12 +13,12 @@ import com.mangpo.bookclub.model.KakaoBookModel
 class BookAdapter() :
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     private lateinit var binding: BookItemBinding
-    private lateinit var bookItemClick: OnBookItemClick
+    private lateinit var itemClick: OnItemClick
     private var books: MutableList<Any> = ArrayList<Any>()
     private var type: String = "library"
 
-    constructor(bookItemClick: OnBookItemClick) : this() {
-        this.bookItemClick = bookItemClick
+    constructor(itemClick: OnItemClick) : this() {
+        this.itemClick = itemClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookAdapter.BookViewHolder {
@@ -38,7 +38,7 @@ class BookAdapter() :
 
         //책 이미지가 클릭됐을 때 리스너
         holder.bookImg.setOnClickListener {
-            bookItemClick.onClick(position)
+            itemClick.onClick(position)
         }
     }
 
