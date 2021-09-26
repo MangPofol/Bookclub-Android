@@ -45,6 +45,7 @@
     <string name="topic">토픽</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="content_hint">내용을 입력하세요</string>
+    <string name="memo_topic_desc">*메모와 토픽 중 선택해주세요</string>
 
     <!-- select book fragment -->
     <string name="select_book">책 선택하기</string>

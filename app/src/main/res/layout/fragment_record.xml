@@ -62,8 +62,8 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         android:gravity="left|center"
-        android:paddingTop="7dp"
         android:paddingLeft="15dp"
+        android:paddingTop="7dp"
         android:text="@string/book_select"
         android:textColor="@color/white"
         android:textSize="14sp"
@@ -74,11 +74,12 @@
 
     <RadioGroup
         android:id="@+id/memoTopicRG"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:orientation="horizontal"
         android:paddingLeft="20dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectBookBtn">
 
         <RadioButton
@@ -108,7 +109,178 @@
 
     </RadioGroup>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/memo_topic_desc_tv"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="19dp"
+        android:gravity="right|top"
+        android:text="@string/memo_topic_desc"
+        android:textColor="@color/red"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/memoTopicRG"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/memoTopicRG" />
+
+    <View
+        android:id="@+id/record_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/grey5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/memoTopicRG" />
+
+    <View
+        android:id="@+id/add_img_view"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/add_img_view"
+        app:layout_constraintEnd_toStartOf="@+id/record_iv1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/record_view" />
+
+    <TextView
+        android:id="@+id/img_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="3dp"
+        android:text="4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
+        app:layout_constraintEnd_toStartOf="@+id/img_total_cnt_tv"
+        app:layout_constraintStart_toStartOf="@+id/add_img_view" />
+
+    <TextView
+        android:id="@+id/img_total_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="3dp"
+        android:text="/4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
+        app:layout_constraintEnd_toEndOf="@+id/add_img_view"
+        app:layout_constraintStart_toEndOf="@+id/img_cnt_tv" />
+
+    <ImageView
+        android:id="@+id/record_iv1"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="13dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/record_iv2"
+        app:layout_constraintStart_toEndOf="@+id/add_img_view"
+        app:layout_constraintTop_toTopOf="@+id/add_img_view" />
+
+    <Button
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:textColor="@color/black"
+        android:background="@color/grey11"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="100dp"
+        app:layout_constraintTop_toTopOf="@+id/record_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/record_iv2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="13dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/record_iv3"
+        app:layout_constraintStart_toEndOf="@+id/record_iv1"
+        app:layout_constraintTop_toTopOf="@+id/add_img_view" />
+
+    <Button
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:textColor="@color/black"
+        android:background="@color/grey11"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="150dp"
+        app:layout_constraintTop_toTopOf="@+id/record_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/record_iv3"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="13dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/record_iv4"
+        app:layout_constraintStart_toEndOf="@+id/record_iv2"
+        app:layout_constraintTop_toTopOf="@+id/add_img_view" />
+
+    <Button
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:textColor="@color/black"
+        android:background="@color/grey11"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="200dp"
+        app:layout_constraintTop_toTopOf="@+id/record_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/record_iv4"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="13dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/record_iv3"
+        app:layout_constraintTop_toTopOf="@+id/add_img_view" />
+
+    <Button
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:textColor="@color/black"
+        android:background="@color/grey11"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="250dp"
+        app:layout_constraintTop_toTopOf="@+id/record_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/record_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey11"
+        app:layout_constraintTop_toBottomOf="@+id/add_img_view" />
+
+    <EditText
+        android:id="@+id/postTitleET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="11dp"
+        android:background="@android:color/transparent"
+        android:hint="@string/title_hint"
+        android:textColor="@color/grey7"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/record_line_view" />
+
+    <EditText
+        android:id="@+id/contentET"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="14dp"
+        android:background="@android:color/transparent"
+        android:gravity="start"
+        android:hint="@string/content_hint"
+        android:textColor="@color/grey7"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postTitleET" />
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
@@ -141,5 +313,5 @@
             android:textColor="@color/grey7"
             android:textSize="14sp" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
