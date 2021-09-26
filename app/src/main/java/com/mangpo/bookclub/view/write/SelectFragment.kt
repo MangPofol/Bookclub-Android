@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.write
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,17 +20,30 @@ import com.mangpo.bookclub.util.VerticalItemDecorator
 import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
-import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
 
 class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
+    private lateinit var callback: OnBackPressedCallback
 
     private var isNewBook: Boolean = false
 
     private val bookViewModel: BookViewModel by activityViewModels()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.e("SelectFragment", "onAttach")
+
+        //뒤로가기 콜백: 기록하기 화면으로 전환.
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                parentFragmentManager.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,9 +87,10 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         bookViewModel.selectedBookReadType.observe(viewLifecycleOwner, Observer {
             Log.e("selectedBookReadType observe", it.toString())
 
+            (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 위로 올라와 있다면 키보드 내리기
+
             when (it) {
                 0 -> {
-                    Log.e("SelectBook", "readType observe - 읽는중")
                     bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
                 }
                 1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
@@ -195,4 +211,9 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        Log.e("Select", "onDetach")
+        callback.remove()
+    }
 }
