@@ -1,27 +1,32 @@
-package com.example.bookclub.view
+package com.mangpo.bookclub.view
 
 import android.os.Bundle
-import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.example.bookclub.R
-import com.example.bookclub.databinding.ActivityMainBinding
-import com.example.bookclub.repository.UserRepository
-import com.example.bookclub.view.adapter.BottomNavigationPagerAdapter
-import com.example.bookclub.view.contract.CreateClubContract
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.mangpo.bookclub.R
+import com.mangpo.bookclub.databinding.ActivityMainBinding
+import com.mangpo.bookclub.repository.UserRepository
+import com.mangpo.bookclub.view.adapter.BottomNavigationPagerAdapter
+import com.mangpo.bookclub.view.contract.CreateClubContract
+import com.mangpo.bookclub.viewmodel.BookViewModel
+import com.mangpo.bookclub.viewmodel.MyLibraryViewModel
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
+
     private var bottomNavigationPagerAdapter: BottomNavigationPagerAdapter =
         BottomNavigationPagerAdapter(supportFragmentManager)
     private var userRepository: UserRepository = UserRepository()
+
+    private val bookViewModel: BookViewModel by viewModels<BookViewModel>()
+    private val myLibraryViewModel: MyLibraryViewModel by viewModels<MyLibraryViewModel>()
 
     init {
         GlobalScope.launch {
@@ -40,17 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         //북클럽 생성 activity 로 이동하는 contract 선언
         val launcher = registerForActivityResult(CreateClubContract()) {
-            if (it!=null) { //정상적으로 북클럽이 생성됐다면
+            if (it != null) { //정상적으로 북클럽이 생성됐다면
                 binding.bottomViewPager.currentItem = 2 //북클럽 fragment 로 이동한다.
+                bottomNavigationPagerAdapter.sendNewClub(it)
             }
         }
-
-        //시스템 툴바 보이도록
-        val window = window
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-        )
 
         //navigation drawer 화면 메뉴 아이템 클릭 리스너
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -65,9 +64,17 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
+                bookViewModel.getBooks("NOW")!!
+                bookViewModel.getBooks("AFTER")!!
+                bookViewModel.getBooks("BEFORE")!!
+            }
+        }
+
+
         //뷰페이저 어댑터 설정&페이지 변환 리스너 설정
         binding.bottomViewPager.adapter = bottomNavigationPagerAdapter
-        binding.bottomViewPager.currentItem = 1
         binding.bottomNavigation.selectedItemId = R.id.library
         binding.bottomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(    //뷰페이저 스크롤 시 프래그먼트 전환되면서 bottom navigation 아이콘 체크 상태 변경
@@ -87,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        binding.bottomViewPager.currentItem = 1
         //bottom navigation 메뉴 선택 시 프래그먼트 전환
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -143,5 +151,10 @@ class MainActivity : AppCompatActivity() {
 
     fun moveBottomPager(currentItem: Int) {
         binding.bottomViewPager.currentItem = currentItem
+    }
+
+    fun goToBeforeLibrary() {
+        binding.bottomViewPager.currentItem = 1
+        myLibraryViewModel.updateLibraryReadType(2)
     }
 }

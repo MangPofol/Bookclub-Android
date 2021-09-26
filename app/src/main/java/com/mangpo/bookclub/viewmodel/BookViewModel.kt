@@ -1,32 +1,44 @@
 package com.mangpo.bookclub.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
 import com.mangpo.bookclub.repository.BookRepository
+import com.mangpo.bookclub.repository.KakaoBookRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class BookViewModel(application: Application) : AndroidViewModel(application) {
     private val bookRepository: BookRepository = BookRepository(application)
+    private val kakaoBookRepository: KakaoBookRepository = KakaoBookRepository()
 
-    private val _selectedBook: MutableLiveData<KakaoBookModel> =
-        MutableLiveData<KakaoBookModel>()  //사용자가 선택한 책
+    private val _selectedBook: MutableLiveData<BookModel> =
+        MutableLiveData<BookModel>()  //사용자가 선택한 책
+    private val _selectedBookReadType: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val _searchedBooks: MutableLiveData<MutableList<KakaoBookModel>> =
+        MutableLiveData<MutableList<KakaoBookModel>>()   //검색을 통해 얻어낸 책 목록
     private val _nowBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>()    //읽는 중 책 목록
     private val _beforeBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>() //읽고 싶은 책 목록
     private val _afterBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>()  //완독 책 목록
+    private val _createdBook: MutableLiveData<BookModel?> = MutableLiveData<BookModel?>() //방금 추가된 책
 
     private var books: MutableList<BookModel> = ArrayList()
 
-    val selectedBook: LiveData<KakaoBookModel> get() = _selectedBook
+    val selectedBook: LiveData<BookModel> get() = _selectedBook
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
     val beforeBooks: LiveData<MutableList<BookModel>> get() = _beforeBooks
     val afterBooks: LiveData<MutableList<BookModel>> get() = _afterBooks
-
+    val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
+    val searchedBooks: LiveData<MutableList<KakaoBookModel>> get() = _searchedBooks
+    val createdBook: LiveData<BookModel?> get() = _createdBook
 
     suspend fun getBooks(category: String): MutableList<BookModel>? {
         books = withContext(Dispatchers.IO) {
@@ -51,33 +63,82 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateBeforeBook(book: BookModel) {
-        books = _beforeBooks.value!!
-        books.add(book)
-        _beforeBooks.postValue(books)
+    fun updateSelectedBookReadType(readType: Int) {
+        _selectedBookReadType.value = readType
     }
 
-    /*fun clearSelectedBook() {
-        _selectedBook.value = _selectedBook.value!!.copy("", "", "")
-    }*/
+    fun updateSelectedBook(book: BookModel) {
+        _selectedBook.value = book
+    }
 
-    /*private fun updateBooks(book: BookModel) {
-        when (book.category) {
-            "NOW" -> {
-                books = _nowBooks.value!!
-                books.add(book)
-                _nowBooks.postValue(books)
+    fun clearSelectedBook() {
+        _selectedBook.value = BookModel()
+    }
+
+    suspend fun updateSearchBookTitle(title: String) {
+        viewModelScope.launch {
+            _searchedBooks.value =
+                kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
+        }
+    }
+
+    suspend fun createBook(book: BookModel): Int {
+        try {
+            book.isbn = book.isbn!!.split(" ")[0]
+        } catch (e: Exception) {
+            Log.e("BookViewModel-createBook", "책 추가하기에서 isbn split 오류 -> ${e.message}")
+            book.isbn = book.isbn!!.split(" ")[1]
+        }
+
+        val newBook = withContext(viewModelScope.coroutineContext) {
+            bookRepository.createBook(book)
+        }
+
+        when {
+            newBook.code()==201 -> {
+                Log.e("SelectedBookViewModel", "책 추가 성공! -> ${newBook.body()}")
+                _nowBooks.value = getBooks("NOW")!!
+                _createdBook.value = _nowBooks.value!!.filter {
+                    it.isbn==newBook.body()!!.isbn
+                }[0]
             }
-            "AFTER" -> {
-                books = _afterBooks.value!!
-                books.add(book)
-                _afterBooks.postValue(books)
+            newBook.code()==400 -> {
+                Log.e("SelectedBookViewModel", "책 추가 실패! -> 이미 등록된 책")
+                _createdBook.value = null
             }
-            "BEFORE" -> {
-                books = _beforeBooks.value!!
-                books.add(book)
-                _beforeBooks.postValue(books)
+            else -> {
+                Log.e("SelectedBookViewModel", "책 추가 실패! -> ${newBook.toString()}")
+                _createdBook.value = null
             }
         }
-    }*/
+
+        return newBook.code()
+    }
+
+    suspend fun createBeforeBook(newBook: BookModel): Int {
+        try {
+            newBook.isbn = newBook.isbn!!.split(" ")[0]
+        } catch (e: Exception) {
+            Log.e("BookViewModel-createBook", "책 추가하기에서 isbn split 오류 -> ${e.message}")
+            newBook.isbn = newBook.isbn!!.split(" ")[1]
+        }
+
+        newBook.category = "BEFORE"
+
+        val res = viewModelScope.async(Dispatchers.IO) {
+            bookRepository.createBook(newBook)
+        }
+
+        when (res.await().code()) {
+            201 -> {
+                Log.e("BookViewModel", "읽고 싶은 책 추가 완료 -> ${res.await().body()}")
+
+                val tempBook = _beforeBooks.value
+                tempBook!!.add(res.await().body()!!)
+                _beforeBooks.postValue(tempBook!!)
+            }
+        }
+
+        return res.await().code()
+    }
 }
