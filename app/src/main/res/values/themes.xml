@@ -5,6 +5,10 @@
         <item name="colorPrimary">@color/main_blue</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/teal_200</item>
-        <!-- Customize your theme here. -->
+        <!-- StatusBar-->
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!--custom font-family 적용-->
+        <item name="android:fontFamily">@font/custom_font_family</item>
     </style>
 </resources>

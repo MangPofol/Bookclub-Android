@@ -2,13 +2,13 @@
 <resources>
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
     </style>
 
     <style
         name="ThemeOverlay.Demo.BottomSheetDialog"
         parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
+        <item name="android:fontFamily">@font/custom_font_family</item>
     </style>
 
     <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">

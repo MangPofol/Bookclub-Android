@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/roboto_bold"
+                android:textStyle="bold"
                 android:text="@string/my_library"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -36,6 +36,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/my_library_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -80,7 +81,6 @@
                     android:button="@null"
                     android:drawableEnd="@drawable/filter_checkbox_drawable_end"
                     android:drawablePadding="0dp"
-                    android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:paddingHorizontal="12dp"
                     android:text="@string/search"
@@ -93,7 +93,6 @@
                     android:layout_height="25dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/book_club_kr"
                     android:textColor="@drawable/state_checked_text_white_black"
@@ -106,7 +105,6 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
