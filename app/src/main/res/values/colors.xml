@@ -19,5 +19,7 @@
     <color name="grey10">#E7E7E7</color>
     <color name="grey11">#E4E4E4</color>
     <color name="main_blue">#303860</color>
+    <color name="main_blue_light">#1940CD</color>
     <color name="red">#FF3838</color>
+    <color name="ted_image_picker_primary">#1940CD</color>
 </resources>

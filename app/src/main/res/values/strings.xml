@@ -60,4 +60,8 @@
     <string name="reading">읽는 중</string>
     <string name="read_complete">완독</string>
     <string name="want_to_read">읽고 싶은</string>
+
+    <!-- 갤러리 이미지 선택하기 화면 -->
+    <string name="gallery_title">사진들</string>
+    <string name="max_image_desc">이미지는 최대 4장까지 첨부할 수 있습니다.</string>
 </resources>
