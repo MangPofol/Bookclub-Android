@@ -14,8 +14,8 @@
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:minHeight="0dp"
         android:text="@string/latest_order"
+        android:paddingTop="2dp"
         android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 
@@ -27,8 +27,8 @@
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:minHeight="0dp"
         android:text="@string/old_order"
+        android:paddingTop="2dp"
         android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 
@@ -40,8 +40,8 @@
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:minHeight="0dp"
         android:text="@string/name_order"
+        android:paddingTop="2dp"
         android:textColor="@drawable/state_checked_text_white_black"
         android:textSize="12sp" />
 

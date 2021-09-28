@@ -15,7 +15,7 @@
         android:background="@drawable/search_stroke"
         android:drawableLeft="@drawable/ic_baseline_search_12_black"
         android:drawablePadding="10dp"
-        android:gravity="center_vertical"
+        android:paddingTop="5dp"
         android:hint="@string/book_search"
         android:minHeight="0dp"
         android:paddingHorizontal="10dp"

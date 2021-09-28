@@ -93,7 +93,8 @@
                     android:layout_height="25dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp"
                     android:text="@string/book_club_kr"
                     android:textColor="@drawable/state_checked_text_white_black"
                     android:textSize="10sp" />
@@ -105,7 +106,8 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
                     android:textSize="10sp" />
@@ -116,9 +118,9 @@
                 android:id="@+id/filterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingHorizontal="20dp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/bookListRecyclerView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,8 +128,8 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grey5"
-                android:paddingTop="35dp"/>
+                android:paddingTop="35dp"
+                android:background="@color/grey5"/>
 
         </LinearLayout>
 
