@@ -24,6 +24,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -70,6 +74,8 @@ dependencies {
     //room
     implementation "androidx.room:room-runtime:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
+    //TedImagePicker
+    implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.4'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
