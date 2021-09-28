@@ -3,6 +3,8 @@ package com.mangpo.bookclub.view
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,10 @@ import com.mangpo.bookclub.view.contract.CreateClubContract
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.MyLibraryViewModel
 import kotlinx.coroutines.*
+import com.mangpo.bookclub.viewmodel.PostViewModel
+import gun0912.tedimagepicker.builder.TedImagePicker
+import gun0912.tedimagepicker.builder.type.MediaType
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -28,6 +34,29 @@ class MainActivity : AppCompatActivity() {
 
     private val bookViewModel: BookViewModel by viewModels<BookViewModel>()
     private val myLibraryViewModel: MyLibraryViewModel by viewModels<MyLibraryViewModel>()
+    private val postViewModel: PostViewModel by viewModels<PostViewModel>()
+
+    val galleryPermissionCallback = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions() // ◀ 퍼미션 요청 + ACCESS_FINE_LOCATION 지정
+    ) { isGranted ->
+        if (isGranted["android.permission.READ_EXTERNAL_STORAGE"] == true && isGranted["android.permission.WRITE_EXTERNAL_STORAGE"] == true) {
+            //이미지 선택하는 화면으로 이동
+            TedImagePicker.with(this)
+                .mediaType(MediaType.IMAGE)
+                .cameraTileBackground(R.color.grey1)
+                .title(R.string.gallery_title)
+                .backButton(R.drawable.ic_baseline_arrow_back_ios_new_24_blue)
+                .max(4, R.string.max_image_desc)
+                .buttonBackground(R.color.white)
+                .buttonTextColor(R.color.main_blue_light)
+                .dropDownAlbum()
+                .startMultiImage {
+                        uriList -> postViewModel.updateImgUriList(uriList)
+                }
+        }
+        else
+            Toast.makeText(baseContext, "갤러리 접근 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+    }
 
     init {
         GlobalScope.launch {
@@ -106,11 +135,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.library -> {
                     binding.bottomViewPager.currentItem = 1
+                    bookViewModel.clearSelectedBook()
+                    postViewModel.updateImgUriList(null)
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.myBookclub -> {
                     binding.bottomViewPager.currentItem = 2
+                    bookViewModel.clearSelectedBook()
+                    postViewModel.updateImgUriList(null)
 
                     return@setOnItemSelectedListener true
                 }
@@ -118,6 +151,22 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener false
         }
+    }
+
+    override fun onBackPressed() {
+        /*//view pager의 현재 프래그먼트 가져오기
+        var fragment: Fragment = binding.bottomViewPager.adapter!!.instantiateItem(
+            binding.bottomViewPager,
+            binding.bottomViewPager.currentItem
+        ) as Fragment*/
+
+        //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.closeDrawers()
+        else {
+            super.onBackPressed()
+        }
+
     }
 
     //navigation drawer 설정
@@ -145,23 +194,8 @@ class MainActivity : AppCompatActivity() {
 
     //올라와 있는 키보드를 내리는 함수
     fun hideKeyBord(v: View) {
-        val imm: InputMethodManager = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(v.windowToken, 0)
-    }
-
-    override fun onBackPressed() {
-        /*//view pager의 현재 프래그먼트 가져오기
-        var fragment: Fragment = binding.bottomViewPager.adapter!!.instantiateItem(
-            binding.bottomViewPager,
-            binding.bottomViewPager.currentItem
-        ) as Fragment*/
-
-        //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
-            binding.drawerLayout.closeDrawers()
-        else {
-            super.onBackPressed()
-        }
-
     }
 }
