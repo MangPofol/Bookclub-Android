@@ -18,8 +18,6 @@ class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //bottom sheet 모서리 둥글게 디자인
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_Demo_BottomSheetDialog)
     }
 
     override fun onCreateView(
@@ -45,4 +43,7 @@ class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDi
         return binding.root
     }
 
+    override fun getTheme(): Int {
+        return R.style.BottomSheetDialog
+    }
 }

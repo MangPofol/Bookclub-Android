@@ -25,9 +25,6 @@ class ClubSelectBottomSheetFragment : BottomSheetDialogFragment(), OnItemClick {
         super.onCreate(savedInstanceState)
         Log.e("ClubSelectBottomSheet", "onCreate")
 
-        //bottom sheet 모서리 둥글게 디자인
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_Demo_BottomSheetDialog)
-
     }
 
     override fun onCreateView(
@@ -49,5 +46,9 @@ class ClubSelectBottomSheetFragment : BottomSheetDialogFragment(), OnItemClick {
     override fun onClick(position: Int) {
         clubViewModel.updateSelectedClub(position)
         dismiss()
+    }
+
+    override fun getTheme(): Int {
+        return R.style.BottomSheetDialog
     }
 }

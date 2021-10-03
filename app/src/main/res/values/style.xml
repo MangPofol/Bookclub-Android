@@ -4,22 +4,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style
-        name="ThemeOverlay.Demo.BottomSheetDialog"
-        parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.Demo.BottomSheet</item>
-        <item name="android:fontFamily">@font/custom_font_family</item>
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
     </style>
 
-    <style name="Widget.Demo.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Demo</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.Demo" parent="">
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerSizeTopLeft">16dp</item>
-        <item name="cornerFamilyTopRight">rounded</item>
-        <item name="cornerSizeTopRight">16dp</item>
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_dialog</item>
     </style>
 
 </resources>
