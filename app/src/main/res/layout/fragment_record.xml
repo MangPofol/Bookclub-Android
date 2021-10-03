@@ -32,22 +32,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/recording"
-                    android:textColor="@color/black"
+                    android:text="@string/record_en"
+                    android:textColor="@color/main_blue"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/postTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/record_upload_iv"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="19dp"
-                    android:gravity="center"
-                    android:text="@string/posting"
-                    android:textColor="@color/main_blue"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:src="@drawable/record_upload_icon" />
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -90,9 +86,10 @@
             android:button="@null"
             android:gravity="center"
             android:paddingTop="3dp"
-            android:text="@string/memo"
-            android:textColor="@drawable/state_checked_text_white_black"
-            android:textSize="12sp" />
+            android:text="@string/memo_en"
+            android:textColor="@drawable/record_memo_topic_selector_text"
+            android:textSize="10sp"
+            android:textStyle="bold"/>
 
         <RadioButton
             android:id="@+id/topicRB"
@@ -103,13 +100,14 @@
             android:button="@null"
             android:gravity="center"
             android:paddingTop="3dp"
-            android:text="@string/topic"
-            android:textColor="@drawable/state_checked_text_white_black"
-            android:textSize="12sp" />
+            android:text="@string/topic_en"
+            android:textColor="@drawable/record_memo_topic_selector_text"
+            android:textSize="10sp"
+            android:textStyle="bold"/>
 
     </RadioGroup>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/memo_topic_desc_tv"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
@@ -120,7 +118,7 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/memoTopicRG"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/memoTopicRG" />
+        app:layout_constraintTop_toTopOf="@+id/memoTopicRG" />-->
 
     <View
         android:id="@+id/record_view"
@@ -129,7 +127,18 @@
         android:layout_marginTop="15dp"
         android:background="@color/grey5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/memoTopicRG" />
+        app:layout_constraintTop_toBottomOf="@+id/memoTopicRG"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:layout_width="17dp"
+        android:layout_height="15dp"
+        android:src="@drawable/photo_icon"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@+id/add_img_view"
+        app:layout_constraintStart_toStartOf="@+id/add_img_view"
+        app:layout_constraintEnd_toEndOf="@+id/add_img_view"/>
 
     <View
         android:id="@+id/add_img_view"
@@ -149,8 +158,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginBottom="3dp"
         android:text="0"
+        android:textColor="@color/red2"
         android:textSize="10sp"
-        android:textColor="@color/main_blue_light"
         app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintEnd_toStartOf="@+id/img_total_cnt_tv"
         app:layout_constraintStart_toStartOf="@+id/add_img_view" />
@@ -162,6 +171,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="3dp"
         android:text="/4"
+        android:textColor="@color/red2"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintEnd_toEndOf="@+id/add_img_view"
@@ -171,9 +181,9 @@
         android:id="@+id/record_img_rv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintStart_toEndOf="@+id/add_img_view"
-        app:layout_constraintTop_toTopOf="@+id/add_img_view"
-        app:layout_constraintBottom_toBottomOf="@+id/add_img_view" />
+        app:layout_constraintTop_toTopOf="@+id/add_img_view" />
 
     <View
         android:id="@+id/record_line_view"
@@ -181,7 +191,7 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:background="@color/grey11"
+        android:background="@color/grey12"
         app:layout_constraintTop_toBottomOf="@+id/add_img_view" />
 
     <EditText
@@ -192,23 +202,24 @@
         android:layout_marginTop="11dp"
         android:background="@android:color/transparent"
         android:hint="@string/title_hint"
-        android:textColor="@color/grey7"
-        android:textSize="18sp"
+        android:textColor="@color/main_blue"
+        android:textColorHint="@color/grey12"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/record_line_view" />
 
     <EditText
         android:id="@+id/contentET"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="14dp"
         android:background="@android:color/transparent"
         android:gravity="start"
         android:hint="@string/content_hint"
-        android:textColor="@color/grey7"
+        android:textColor="@color/main_blue"
+        android:textColorHint="@color/grey12"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/postTitleET" />
     <!--<LinearLayout
         android:layout_width="match_parent"

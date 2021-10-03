@@ -38,11 +38,11 @@
     <string name="club_info_hint">클럽 소개글을 입력해주세요</string>
 
     <!-- record fragment -->
-    <string name="recording">기록하기</string>
+    <string name="record_en">Record</string>
     <string name="posting">올리기</string>
     <string name="book_select">기록할 책을 선택해주세요</string>
-    <string name="memo">메모</string>
-    <string name="topic">토픽</string>
+    <string name="memo_en">MEMO</string>
+    <string name="topic_en">TOPIC</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="content_hint">내용을 입력하세요</string>
     <string name="memo_topic_desc">*메모와 토픽 중 선택해주세요</string>
@@ -64,4 +64,8 @@
     <!-- 갤러리 이미지 선택하기 화면 -->
     <string name="gallery_title">사진들</string>
     <string name="max_image_desc">이미지는 최대 4장까지 첨부할 수 있습니다.</string>
+
+    <!-- record_scope_bottom_sheet -->
+    <string name="record_scope_title">공개 설정</string>
+    <string name="record_kr">기록하기</string>
 </resources>
