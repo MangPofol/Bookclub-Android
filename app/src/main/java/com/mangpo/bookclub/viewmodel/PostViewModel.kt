@@ -1,31 +1,56 @@
 package com.mangpo.bookclub.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.model.PostReqModel
+import com.mangpo.bookclub.repository.FileRepository
 import com.mangpo.bookclub.repository.PostRespository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PostViewModel(): ViewModel() {
     private val postRepository: PostRespository = PostRespository()
+    private val fileRepository: FileRepository = FileRepository()
 
-    private val _imgUriList: MutableLiveData<List<Uri>?> =
-        MutableLiveData<List<Uri>?>()  //사용자가 기록하기에 넣을 이미지
+    private val _imgUriList: MutableLiveData<MutableList<Uri>?> =
+        MutableLiveData<MutableList<Uri>?>()  //사용자가 기록하기에 넣을 이미지
+    private val _temporaryPost: MutableLiveData<PostReqModel?> = MutableLiveData<PostReqModel?>()   //임시로 저장해 놓는 post
 
-    val imgUriList: MutableLiveData<List<Uri>?> get() = _imgUriList
+    val imgUriList: MutableLiveData<MutableList<Uri>?> get() = _imgUriList
+    val temporaryPost: MutableLiveData<PostReqModel?> get() = _temporaryPost
 
-    fun updateImgUriList(uriList: List<Uri>?) {
+    fun updateImgUriList(uriList: MutableList<Uri>?) {
         _imgUriList.postValue(uriList)
     }
 
-    suspend fun createPost(newPost: PostModel): PostModel? {
-        val newPost = viewModelScope.async (Dispatchers.IO) {
-            return@async postRepository.createPost(newPost)
-        }.await()
+    fun initTemtporaryPost() {
+        _temporaryPost.value = PostReqModel()
+    }
 
-        return newPost
+    fun setTemporaryPost(post: PostReqModel?) {
+        _temporaryPost.value = post
+    }
+
+    suspend fun createPost(newPost: PostReqModel): PostModel? {
+        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+            postRepository.createPost(newPost)
+        }
+    }
+
+    fun uploadMultipleImg(paths: List<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            fileRepository.uploadMultipleFiles(paths)
+        }
+    }
+
+    suspend fun uploadImg(path: String): MutableList<String> {
+        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+            fileRepository.uploadFile(path)
+        }
     }
 }

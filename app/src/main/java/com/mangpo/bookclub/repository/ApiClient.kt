@@ -2,10 +2,7 @@ package com.mangpo.bookclub.repository
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.mangpo.bookclub.service.BookService
-import com.mangpo.bookclub.service.ClubService
-import com.mangpo.bookclub.service.KakaoBookService
-import com.mangpo.bookclub.service.UserService
+import com.mangpo.bookclub.service.*
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -39,4 +36,6 @@ object ApiClient {
     val bookService: BookService = retrofit.create(BookService::class.java)
     val kakaoBookService: KakaoBookService = kakaoRetrofit.create(KakaoBookService::class.java)
     val clubService: ClubService = retrofit.create(ClubService::class.java)
+    val postService: PostService = retrofit.create(PostService::class.java)
+    val fileService: FileService = retrofit.create(FileService::class.java)
 }

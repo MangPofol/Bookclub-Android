@@ -1,6 +1,8 @@
 package com.mangpo.bookclub.view
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -23,7 +25,6 @@ import com.mangpo.bookclub.viewmodel.PostViewModel
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.MediaType
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
@@ -39,19 +40,19 @@ class MainActivity : AppCompatActivity() {
     val galleryPermissionCallback = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions() // ◀ 퍼미션 요청 + ACCESS_FINE_LOCATION 지정
     ) { isGranted ->
-        if (isGranted["android.permission.READ_EXTERNAL_STORAGE"] == true && isGranted["android.permission.WRITE_EXTERNAL_STORAGE"] == true) {
+        if (isGranted["android.permission.READ_EXTERNAL_STORAGE"] == true && isGranted["android.permission.WRITE_EXTERNAL_STORAGE"] == true && isGranted["android.permission.CAMERA"]==true) {
             //이미지 선택하는 화면으로 이동
             TedImagePicker.with(this)
                 .mediaType(MediaType.IMAGE)
                 .cameraTileBackground(R.color.grey1)
                 .title(R.string.gallery_title)
-                .backButton(R.drawable.ic_baseline_arrow_back_ios_new_24_blue)
+                .backButton(R.drawable.back_icon)
                 .max(4, R.string.max_image_desc)
                 .buttonBackground(R.color.white)
-                .buttonTextColor(R.color.main_blue_light)
+                .buttonTextColor(R.color.main_blue)
                 .dropDownAlbum()
                 .startMultiImage {
-                        uriList -> postViewModel.updateImgUriList(uriList)
+                        uriList -> postViewModel.updateImgUriList(uriList as MutableList<Uri>)
                 }
         }
         else

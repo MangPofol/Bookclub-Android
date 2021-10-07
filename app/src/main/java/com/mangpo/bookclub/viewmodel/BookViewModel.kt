@@ -2,7 +2,10 @@ package com.mangpo.bookclub.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
 import com.mangpo.bookclub.repository.BookRepository
@@ -11,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class BookViewModel(application: Application) : AndroidViewModel(application) {
     private val bookRepository: BookRepository = BookRepository(application)
@@ -80,6 +82,17 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
             _searchedBooks.value =
                 kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
         }
+    }
+
+    suspend fun getSearchedBooks(title: String): MutableList<KakaoBookModel> {
+        return withContext(viewModelScope.coroutineContext) {
+            kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
+        }
+
+    }
+
+    fun updateSearchedBooks(books: MutableList<KakaoBookModel>) {
+        _searchedBooks.value = books
     }
 
     suspend fun createBook(book: BookModel): Int {
