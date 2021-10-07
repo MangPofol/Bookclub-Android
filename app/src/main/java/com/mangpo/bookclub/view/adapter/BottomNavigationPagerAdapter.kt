@@ -10,6 +10,7 @@ import com.mangpo.bookclub.view.write.WriteFragment
 
 class BottomNavigationPagerAdapter(fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    private val fragmentManager: FragmentManager = fm
     private val writeFragment: WriteFragment = WriteFragment()
     private val myLibraryFragment: MyLibraryFragment = MyLibraryFragment()
     private val bookClubFragment: BookClubFragment = BookClubFragment()
