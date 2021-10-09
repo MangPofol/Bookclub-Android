@@ -31,7 +31,7 @@
 
     <!-- create club -->
     <string name="create_club">북클럽 생성</string>
-    <string name="confirm">확인</string>
+    <string name="confirm">완료</string>
     <string name="club_name">클럽명</string>
     <string name="club_name_hint">클럽명을 입력해주세요</string>
     <string name="club_info">클럽 한줄 소개</string>
