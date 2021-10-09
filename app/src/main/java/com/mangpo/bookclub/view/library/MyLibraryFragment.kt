@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -70,7 +72,8 @@ class MyLibraryFragment : Fragment() {
             if (isChecked) {
                 myLibraryViewModel.updateMainFilter(0)
             } else {
-                isAllNotChecked()
+                //binding.filterLayout.removeAllViews()
+                //isAllNotChecked()
             }
         }
 
@@ -78,7 +81,8 @@ class MyLibraryFragment : Fragment() {
             if (isChecked) {
                 myLibraryViewModel.updateMainFilter(1)
             } else {
-                isAllNotChecked()
+                //binding.filterLayout.removeAllViews()
+                //isAllNotChecked()
             }
         }
 
@@ -86,14 +90,15 @@ class MyLibraryFragment : Fragment() {
             if (isChecked) {
                 myLibraryViewModel.updateMainFilter(2)
             } else {
-                isAllNotChecked()
+                //binding.filterLayout.removeAllViews()
+                //isAllNotChecked()
             }
         }
 
         //읽는중, 완독, 읽고싶은 observe
         myLibraryViewModel.libraryReadType.observe(viewLifecycleOwner, Observer {
             Log.e("libraryReadType observe", it.toString())
-            binding.myLibraryScrollView.scrollTo(0, 0)
+
             myLibraryViewModel.updateMainFilter(-1)
             myLibraryViewModel.updateSortFilter(-1)
 
@@ -121,48 +126,54 @@ class MyLibraryFragment : Fragment() {
         myLibraryViewModel.mainFilter.observe(viewLifecycleOwner, Observer {
             Log.e("mainFilter observe", it.toString())
             adapter.setBooks(books)
+            binding.searchLayout.root.visibility = View.GONE
+            binding.bookClubFilterLayout.root.visibility = View.GONE
+            binding.sortFilterLayout.root.visibility = View.GONE
 
             when(it) {
                 0 -> {
-                    binding.filterLayout.layoutParams
+                    //binding.filterLayout.layoutParams
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
-                    binding.filterLayout.visibility = View.VISIBLE
+                    binding.searchLayout.root.visibility = View.VISIBLE
+                    //binding.filterLayout.visibility = View.VISIBLE
 
-                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment(adapter)).commit()
-                    binding.viewPager.setPadding(0, 23, 0, 0)
+                    //binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                    //childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SearchFragment(adapter)).commit()
+                    //binding.viewPager.setPadding(0, 23, 0, 0)
                 }
                 1 -> {
-                    binding.viewPager.setPadding(0, 26, 0, 0)
+                    //binding.viewPager.setPadding(0, 26, 0, 0)
                     binding.searchButton.isChecked = false
                     binding.sortButton.isChecked = false
-                    binding.filterLayout.visibility = View.VISIBLE
+                    binding.bookClubFilterLayout.root.visibility = View.VISIBLE
+                    //binding.filterLayout.visibility = View.VISIBLE
 
                     (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
 
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
-                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                    //childFragmentManager.beginTransaction().replace(binding.filterLayout.id, BookClubFilterFragment()).commit()
+                    //binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                 }
                 2 -> {
-                    binding.viewPager.setPadding(0, 26, 0, 0)
+                    //binding.viewPager.setPadding(0, 26, 0, 0)
 
                     binding.searchButton.isChecked = false
                     binding.clubButton.isChecked = false
-                    binding.filterLayout.visibility = View.VISIBLE
+                    binding.sortFilterLayout.root.visibility = View.VISIBLE
+                    //binding.filterLayout.visibility = View.VISIBLE
 
                     (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
 
-                    binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-                    childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
+                    //binding.filterLayout.layoutParams = LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                    //childFragmentManager.beginTransaction().replace(binding.filterLayout.id, SortFilterFragment()).commit()
                 }
                 -1 -> {
                     binding.searchButton.isChecked = false
                     binding.clubButton.isChecked = false
                     binding.sortButton.isChecked = false
-                    binding.filterLayout.removeAllViews()
-                    binding.filterLayout.visibility = View.GONE
-                    binding.viewPager.setPadding(0, 35, 0, 0)
+                    //binding.filterLayout.removeAllViews()
+                    //binding.filterLayout.visibility = View.GONE
+                    //binding.viewPager.setPadding(0, 35, 0, 0)
                     (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
                 }
             }
@@ -215,6 +226,10 @@ class MyLibraryFragment : Fragment() {
     private fun isAllNotChecked() {
         if (!binding.searchButton.isChecked&&!binding.clubButton.isChecked&&!binding.sortButton.isChecked)
             myLibraryViewModel.updateMainFilter(-1)
+    }
+
+    fun scrollUp() {
+        binding.myLibraryScrollView.fullScroll(ScrollView.FOCUS_UP)
     }
 
 }

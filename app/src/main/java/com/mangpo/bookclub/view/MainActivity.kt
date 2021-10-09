@@ -18,6 +18,7 @@ import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.repository.UserRepository
 import com.mangpo.bookclub.view.adapter.BottomNavigationPagerAdapter
 import com.mangpo.bookclub.view.contract.CreateClubContract
+import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.MyLibraryViewModel
 import kotlinx.coroutines.*
@@ -136,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.library -> {
                     binding.bottomViewPager.currentItem = 1
+                    (bottomNavigationPagerAdapter.getItem(1) as MyLibraryFragment).scrollUp()
                     bookViewModel.clearSelectedBook()
                     postViewModel.updateImgUriList(null)
 
