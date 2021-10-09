@@ -30,7 +30,7 @@ class ClubAdapter(clubs: MutableList<ClubModel>, selectedClub: Int, itemClick: O
         holder.clubDesc.text = clubs[position].description
 
         if (selectedClub==position) {
-            holder.clubName.setTextColor(getColor(holder.clubName.context, R.color.main_blue))
+            holder.clubName.setTextColor(getColor(holder.clubName.context, R.color.light_red))
         }
 
         if (position==clubs.size-1) {
