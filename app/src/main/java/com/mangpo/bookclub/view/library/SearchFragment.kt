@@ -3,6 +3,7 @@ package com.mangpo.bookclub.view.library
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,10 +36,15 @@ class SearchFragment(adapter: BookAdapter) : Fragment(), TextWatcher {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.searchBookET.addTextChangedListener(this)
 
-        when(myLibraryViewModel.libraryReadType.value) {
-            0 -> books = bookViewModel.nowBooks.value!!
-            1 -> books = bookViewModel.afterBooks.value!!
-            2 -> books = bookViewModel.beforeBooks.value!!
+        //부모 프래그먼트가 MyLibraryFragment일 때
+        if (requireParentFragment().javaClass.toString().contains("MyLibraryFragment")) {
+            when(myLibraryViewModel.libraryReadType.value) {
+                0 -> books = bookViewModel.nowBooks.value!!
+                1 -> books = bookViewModel.afterBooks.value!!
+                2 -> books = bookViewModel.beforeBooks.value!!
+            }
+        } else {    //부모 프래그먼트가 BookClubFragment 일 때
+            Log.e("SearchFragment", requireParentFragment().javaClass.toString().contains("BookClubFragment").toString())
         }
 
         bookAdapter.setBooks(books)
