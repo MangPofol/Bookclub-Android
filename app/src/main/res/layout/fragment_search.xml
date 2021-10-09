@@ -5,21 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:paddingTop="16dp"
     tools:context=".view.library.SearchFragment">
 
     <EditText
         android:id="@+id/searchBookET"
         android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:background="@drawable/search_stroke"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/search_book_et"
         android:drawableLeft="@drawable/ic_baseline_search_12_black"
         android:drawablePadding="10dp"
-        android:paddingTop="5dp"
         android:hint="@string/book_search"
-        android:minHeight="0dp"
         android:paddingHorizontal="10dp"
-        android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:textColor="@color/main_blue"
+        android:textColorHint="@color/main_blue"
+        android:textSize="10sp" />
 
 </LinearLayout>
