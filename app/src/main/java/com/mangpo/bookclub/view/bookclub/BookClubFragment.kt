@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookClubBinding
 import com.mangpo.bookclub.model.ClubModel
 import com.mangpo.bookclub.view.MainActivity
+import com.mangpo.bookclub.view.adapter.HotMemoTopicViewpagerAdapter
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 import kotlinx.coroutines.*
 
@@ -21,6 +23,7 @@ class BookClubFragment : Fragment() {
     private lateinit var bottomSheet: ClubSelectBottomSheetFragment
 
     private val clubViewModel: ClubViewModel by activityViewModels<ClubViewModel>()
+    private val tabInfomation: ArrayList<String> = arrayListOf("핫한 메모", "핫한 토픽")
 
     private lateinit var job: Deferred<Unit>
 
@@ -68,13 +71,13 @@ class BookClubFragment : Fragment() {
             false
         }
 
-        binding.hotContents.check(binding.hotMemoButton.id)   //처음 선택된 라디오버튼: 핫한 메모
-        //라디오버튼 체크 이벤트 리스너
-        binding.hotContents.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
+        //핫한 메모, 토픽 tabLayout&viewpager
+        val hotMemoTopicAdapter = HotMemoTopicViewpagerAdapter(this)
+        binding.hotMemoTopicVp.adapter = hotMemoTopicAdapter
 
-            }
-        }
+        TabLayoutMediator(binding.hotMemoTopicTab, binding.hotMemoTopicVp) {
+            tab, position -> tab.text = tabInfomation[position]
+        }.attach()
 
         //필터 체크박스 리스너
         val checkBoxListener = CompoundButton.OnCheckedChangeListener { checkBox, isChecked ->

@@ -22,6 +22,7 @@
     <color name="grey13">#EFF0F3</color>
     <color name="main_blue">#303860</color>
     <color name="main_blue_light">#1940CD</color>
+    <color name="light_blue">#646A88</color>
     <color name="red1">#FF3838</color>
     <color name="red2">#E5949D</color>
     <color name="ted_image_picker_primary">#E5949D</color>
