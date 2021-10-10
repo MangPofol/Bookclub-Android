@@ -5,11 +5,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.PostReqModel
 import com.mangpo.bookclub.repository.FileRepository
 import com.mangpo.bookclub.repository.PostRespository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -36,9 +38,32 @@ class PostViewModel(): ViewModel() {
         _temporaryPost.value = post
     }
 
+    /*suspend fun updateBooksLatestPostDate(books: MutableList<BookModel>) {
+        for (book in books) {
+            if (book.latestPostDate=="") {
+                val posts = viewModelScope.async {
+                    getPost(book.id!!.toInt(), null)
+                }
+
+                //Log.e("PostViewModel", "updateBooksLatestPostDate\n book name: ${book.name}\n posts: ${posts.await()}")
+
+                if (posts.await()!!.size!=0)
+                    book.latestPostDate = posts.await()!![posts.await()!!.size-1].modifiedDate
+                else
+                    book.latestPostDate = book.modifiedDate
+            }
+        }
+    }*/
+
     suspend fun createPost(newPost: PostReqModel): PostModel? {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             postRepository.createPost(newPost)
+        }
+    }
+
+    suspend fun getPost(bookId: Int, clubId: Int?): ArrayList<PostModel>? {
+        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+            postRepository.getPost(bookId, clubId)
         }
     }
 
