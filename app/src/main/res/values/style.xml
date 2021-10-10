@@ -9,6 +9,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="navigation_view_tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>

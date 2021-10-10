@@ -5,6 +5,9 @@
     <string name="open">open</string>
     <string name="close">close</string>
 
+    <!-- navigation view -->
+    <string name="add_book_club">북클럽 추가하기</string>
+
     <!-- bottom navigation -->
     <string name="write">write</string>
     <string name="book_club_en">bookclub</string>
@@ -18,6 +21,7 @@
     <string name="latest_order">최신순</string>
     <string name="old_order">오래된순</string>
     <string name="name_order">이름순</string>
+    <string name="like_order">좋아요순</string>
 
     <!-- clubs -->
     <string name="hot_memo">핫한 메모</string>

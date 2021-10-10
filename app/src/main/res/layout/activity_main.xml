@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivity">
+        tools:context=".view.main.MainActivity">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/bottomViewPager"
@@ -50,9 +50,13 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
-        android:layout_width="360dp"
+        android:layout_width="303dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/navigation_drawer_menu" />
+        android:layout_gravity="start">
+
+        <include
+            android:id="@+id/navigation_view_layout"
+            layout="@layout/main_navigation_view" />
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
