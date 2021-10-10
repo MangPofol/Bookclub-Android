@@ -29,7 +29,7 @@ class BookListFragment : Fragment() {
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정
         //아이템 간 간격 설정
-        binding.bookListRecyclerView.addItemDecoration(VerticalItemDecorator(40))
+        binding.bookListRecyclerView.addItemDecoration(VerticalItemDecorator(50))
         binding.bookListRecyclerView.addItemDecoration(HorizontalItemDecorator(20))
 
         return binding.root
