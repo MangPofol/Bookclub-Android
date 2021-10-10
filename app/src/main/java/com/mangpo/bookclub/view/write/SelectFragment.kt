@@ -17,9 +17,9 @@ import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.util.HorizontalItemDecorator
 import com.mangpo.bookclub.util.VerticalItemDecorator
-import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
+import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
 
