@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Our page</string>
 
-    <string name="login_id">아이디</string>
-    <string name="login_password">비밀번호</string>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="password_confirm">비밀번호 확인</string>
     <string name="login">LOG IN</string>
     <string name="social_login">소셜 계정으로 로그인</string>
     <string name="sign_in">회원가입</string>
     <string name="find_password">비밀번호 찾기</string>
+    <string name="signin_id_alert">사용할 수 없는 아이디 입니다.</string>
+    <string name="signin_password_alert">사용할 수 없는 비밀번호 입니다.</string>
 
     <!-- main activity -->
     <string name="open">open</string>
@@ -42,7 +45,6 @@
 
     <!-- create club -->
     <string name="create_club">북클럽 생성</string>
-    <string name="confirm">완료</string>
     <string name="club_name">클럽명</string>
     <string name="club_name_hint">클럽명을 입력해주세요</string>
     <string name="club_info">클럽 한줄 소개</string>
@@ -79,6 +81,6 @@
     <!-- record_scope_bottom_sheet -->
     <string name="record_scope_title">공개 설정</string>
     <string name="record_kr">기록하기</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="complete">완료</string>
 </resources>

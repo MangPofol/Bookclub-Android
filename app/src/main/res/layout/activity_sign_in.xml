@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SignInActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/signin_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/signin_toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/sign_in"
+                android:textColor="@color/main_blue"
+                android:textSize="21.6sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/signin_complete_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="25.2dp"
+                android:text="@string/complete"
+                android:textColor="@color/main_blue"
+                android:textSize="16.8sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/layout_gradation">
+
+        <EditText
+            android:id="@+id/signin_id_et"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="25.2dp"
+            android:background="@drawable/signin_et"
+            android:hint="@string/id"
+            android:paddingHorizontal="10.8dp"
+            android:textColorHint="@color/grey12"
+            android:textSize="19.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.15" />
+
+        <TextView
+            android:id="@+id/signin_id_alert_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4.8dp"
+            android:text="@string/signin_id_alert"
+            android:textColor="@color/light_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signin_id_et"
+            app:layout_constraintVertical_bias="0.21" />
+
+        <EditText
+            android:id="@+id/signin_password_et"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="25.2dp"
+            android:background="@drawable/signin_et"
+            android:hint="@string/password"
+            android:paddingHorizontal="10.8dp"
+            android:textColorHint="@color/grey12"
+            android:textSize="19.2sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <EditText
+            android:id="@+id/signin_password_confirm_et"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="25.2dp"
+            android:background="@drawable/signin_et"
+            android:hint="@string/password_confirm"
+            android:paddingHorizontal="10.8dp"
+            android:textColorHint="@color/grey12"
+            android:textSize="19.2sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signin_password_et" />
+
+        <TextView
+            android:id="@+id/signin_password_alert_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4.8dp"
+            android:text="@string/signin_password_alert"
+            android:textColor="@color/light_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signin_password_confirm_et"
+            app:layout_constraintVertical_bias="0.41" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
