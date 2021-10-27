@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">Bookclub</string>
+    <string name="app_name">Our page</string>
+
+    <string name="login_id">아이디</string>
+    <string name="login_password">비밀번호</string>
+    <string name="login">LOG IN</string>
+    <string name="social_login">소셜 계정으로 로그인</string>
+    <string name="sign_in">회원가입</string>
+    <string name="find_password">비밀번호 찾기</string>
 
     <!-- main activity -->
     <string name="open">open</string>
