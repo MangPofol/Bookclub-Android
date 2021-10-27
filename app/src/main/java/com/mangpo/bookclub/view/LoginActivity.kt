@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mangpo.bookclub.R
@@ -12,5 +13,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.loginSigninTv.setOnClickListener {  //회원가입 화면으로 이동
+            val intent: Intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
