@@ -18,5 +18,7 @@ class LoginActivity : AppCompatActivity() {
             val intent: Intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
+
+        binding.loginBtn.outlineProvider = null //로그인 버튼 그림자 제거
     }
 }
