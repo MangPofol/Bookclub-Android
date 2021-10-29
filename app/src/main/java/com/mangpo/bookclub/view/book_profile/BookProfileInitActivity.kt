@@ -15,8 +15,8 @@ class BookProfileInitActivity : AppCompatActivity() {
         binding = ActivityBookProfileInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.backIv.setOnClickListener { //뒤로가기 클릭 -> 액티비티 종료
-            finish()
+        binding.backIv.setOnClickListener { //뒤로가기 이미지 버튼 클릭 리스너
+            backFragment()
         }
 
         binding.nextBtn.outlineProvider = null  //다음 버튼 그림자 제거
@@ -24,13 +24,19 @@ class BookProfileInitActivity : AppCompatActivity() {
         //frmame layout의 초기 화면 설정
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
 
-        binding.nextBtn.setOnClickListener {
+        binding.nextBtn.setOnClickListener {    //다음 버튼 클릭 리스너
             when (supportFragmentManager.fragments[0].javaClass) {
                 BookProfileDescFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
                 }
             }
         }
+
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        backFragment()
     }
 
     fun unEnableNextBtn() {
@@ -43,5 +49,16 @@ class BookProfileInitActivity : AppCompatActivity() {
         binding.nextBtn.isEnabled = true
         binding.nextBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.nextBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.light_red))
+    }
+
+    private fun backFragment() {
+        when (supportFragmentManager.fragments[0].javaClass) {
+            BookProfileDescFragment::class.java -> {
+                finish()
+            }
+            SetNicknameFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+            }
+        }
     }
 }
