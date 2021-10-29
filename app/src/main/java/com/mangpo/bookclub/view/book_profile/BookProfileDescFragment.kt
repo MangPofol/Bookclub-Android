@@ -22,6 +22,7 @@ class BookProfileDescFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBookProfileDescBinding.inflate(inflater, container, false)
+        (activity as BookProfileInitActivity).enableNextBtn()
 
         return binding.root
     }
