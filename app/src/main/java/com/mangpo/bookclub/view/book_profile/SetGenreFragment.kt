@@ -55,10 +55,13 @@ class SetGenreFragment : Fragment() {
             val chip: Chip = inflater.inflate(R.layout.genre_chip, container, false) as Chip
             chip.text = genre
             chip.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked)
+                if (isChecked) {
                     (buttonView as Chip).setChipBackgroundColorResource(R.color.main_blue)
-                else
+                    (buttonView as Chip).setChipStrokeColorResource(R.color.transparent)
+                } else {
                     (buttonView as Chip).setChipBackgroundColorResource(R.color.white)
+                    (buttonView as Chip).setChipStrokeColorResource(R.color.grey12)
+                }
 
                 if (binding.genreCg.checkedChipIds.size > 0)
                     (activity as BookProfileInitActivity).enableNextBtn()
