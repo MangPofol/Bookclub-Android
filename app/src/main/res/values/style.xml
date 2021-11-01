@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="tab_text" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
     </style>
@@ -21,5 +22,13 @@
     <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_dialog</item>
     </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="android:textColor">@color/main_blue</item>
+        <item name="android:textSize">16.8sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>
