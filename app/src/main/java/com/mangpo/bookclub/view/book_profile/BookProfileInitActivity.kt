@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.book_profile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
+import com.mangpo.bookclub.view.main.MainActivity
 import gun0912.tedimagepicker.util.ToastUtil.context
 
 class BookProfileInitActivity : AppCompatActivity() {
@@ -43,7 +45,17 @@ class BookProfileInitActivity : AppCompatActivity() {
                 SetGenreFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
                 }
+                ReadingStyleFragment::class.java -> {
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
+                }
+                ReadingGoalFragment::class.java -> {
+                    goToMain()
+                }
             }
+        }
+
+        binding.skipTv.setOnClickListener {
+            goToMain()
         }
     }
 
@@ -84,6 +96,9 @@ class BookProfileInitActivity : AppCompatActivity() {
             ReadingStyleFragment::class.java -> {
                 supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
             }
+            ReadingGoalFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+            }
         }
     }
 
@@ -101,5 +116,11 @@ class BookProfileInitActivity : AppCompatActivity() {
 
     fun setKeyboardStateResize() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+
+    private fun goToMain() {
+        val intent: Intent = Intent(this, MainActivity::class.java)
+        finish()
+        startActivity(intent)
     }
 }
