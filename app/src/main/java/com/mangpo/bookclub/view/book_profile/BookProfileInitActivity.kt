@@ -29,6 +29,9 @@ class BookProfileInitActivity : AppCompatActivity() {
                 BookProfileDescFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
                 }
+                SetNicknameFragment::class.java -> {
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+                }
             }
         }
 
@@ -58,6 +61,9 @@ class BookProfileInitActivity : AppCompatActivity() {
             }
             SetNicknameFragment::class.java -> {
                 supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+            }
+            SetGenderAndBirthFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
             }
         }
     }
