@@ -26,4 +26,5 @@
     <color name="red1">#FF3838</color>
     <color name="light_red">#E5949D</color>
     <color name="ted_image_picker_primary">#E5949D</color>
+    <color name="transparent">#00000000</color>
 </resources>
