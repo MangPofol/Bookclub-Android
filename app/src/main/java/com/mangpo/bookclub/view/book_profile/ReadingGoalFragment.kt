@@ -13,9 +13,9 @@ class ReadingGoalFragment : Fragment() {
 
     private lateinit var binding: FragmentReadingGoalBinding
 
-    private val periodNumList = (1..12).toList().map { it.toString() }
+    private val periodNumList = (1..30).toList().map { it.toString() }
     private val periodUnitList = listOf<String>("년", "개월", "일")
-    private val bookCntList = (1..40).toList().map { it.toString() }
+    private val bookCntList = (1..100).toList().map { it.toString() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
