@@ -25,7 +25,10 @@ class SetNicknameFragment : Fragment(), TextWatcher {
     ): View? {
         binding = FragmentSetNicknameBinding.inflate(inflater, container, false)
 
+        (activity as BookProfileInitActivity).setKeyboardStateResize()
+        (activity as BookProfileInitActivity).invisibleSkipTV()
         (activity as BookProfileInitActivity).unEnableNextBtn()     //다음 버튼 비활성화
+
         binding.nicknameEt.addTextChangedListener(this) //텍스트 입력 시 이벤트 처리
 
         return binding.root
@@ -36,7 +39,7 @@ class SetNicknameFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (count==0) { //입력값이 없으면 다음 버튼 비활성화
+        if (count == 0) { //입력값이 없으면 다음 버튼 비활성화
             (activity as BookProfileInitActivity).unEnableNextBtn()
         } else {    //입력값이 있으면 다음 버튼 활성화
             (activity as BookProfileInitActivity).enableNextBtn()

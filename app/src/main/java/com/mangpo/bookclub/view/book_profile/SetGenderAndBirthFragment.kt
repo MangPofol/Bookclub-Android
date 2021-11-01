@@ -1,13 +1,11 @@
 package com.mangpo.bookclub.view.book_profile
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentSetGenderAndBirthBinding
 
 class SetGenderAndBirthFragment : Fragment() {
@@ -62,7 +60,9 @@ class SetGenderAndBirthFragment : Fragment() {
     ): View? {
         binding = FragmentSetGenderAndBirthBinding.inflate(inflater, container, false)
 
+        (activity as BookProfileInitActivity).invisibleSkipTV()
         (activity as BookProfileInitActivity).unEnableNextBtn()
+        (activity as BookProfileInitActivity).setKeyboardStatePan()
 
         binding.setGenderRg.setOnCheckedChangeListener { group, checkedId ->
             (activity as BookProfileInitActivity).enableNextBtn()
