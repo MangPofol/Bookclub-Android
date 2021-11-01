@@ -25,6 +25,8 @@
     <string name="express_me_hint">나는 책을 정말 좋아하는 사람입니다.</string>
     <string name="skip">건너뛰기</string>
     <string name="set_genre_title">좋아하는 장르를 선택해주세요.</string>
+    <string name="reading_style_title">책 읽는 스타일을 선택해주세요.</string>
+    <string name="self_reading_style_hint">+ 직접 입력하기 (최대 30자)</string>
 
     <!-- main activity -->
     <string name="open">open</string>

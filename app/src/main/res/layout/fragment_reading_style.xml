@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.book_profile.ReadingStyleFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reading_style_title"
+        android:textColor="@color/main_blue"
+        android:textSize="21.6sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/style_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.8dp">
+
+        <RadioButton
+            android:id="@+id/style_rb1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:text="TEST"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="16.8sp" />
+
+        <RadioButton
+            android:id="@+id/style_rb2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16.8dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="16.8sp" />
+
+        <RadioButton
+            android:id="@+id/style_rb3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16.8dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="16.8sp" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/style_et"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="16.8dp"
+        android:background="@drawable/login_book_profile_et"
+        android:gravity="center_vertical"
+        android:hint="@string/self_reading_style_hint"
+        android:maxLength="30"
+        android:focusableInTouchMode="true"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/grey12"
+        android:textColorHint="@color/grey12"
+        android:textSize="16.8sp" />
+
+</LinearLayout>
