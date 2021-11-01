@@ -16,17 +16,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/skip_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21.6dp"
+        android:layout_marginEnd="28.8dp"
+        android:text="@string/skip"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="66dp"
         android:layout_marginHorizontal="24dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="66dp"
+        app:layout_constraintBottom_toTopOf="@+id/next_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_iv"
-        app:layout_constraintBottom_toTopOf="@+id/next_btn" />
-    
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_iv" />
+
     <Button
         android:id="@+id/next_btn"
         android:layout_width="match_parent"
@@ -36,8 +50,8 @@
         android:backgroundTint="@color/light_red"
         android:text="@string/next"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="21.6sp"
+        android:textStyle="bold"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toTopOf="@+id/desc_tv" />
 
