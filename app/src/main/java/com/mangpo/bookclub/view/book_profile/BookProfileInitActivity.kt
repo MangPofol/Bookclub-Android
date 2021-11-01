@@ -2,6 +2,8 @@ package com.mangpo.bookclub.view.book_profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
@@ -32,9 +34,11 @@ class BookProfileInitActivity : AppCompatActivity() {
                 SetNicknameFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
                 }
+                SetGenderAndBirthFragment::class.java -> {
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+                }
             }
         }
-
     }
 
     override fun onBackPressed() {
@@ -65,6 +69,25 @@ class BookProfileInitActivity : AppCompatActivity() {
             SetGenderAndBirthFragment::class.java -> {
                 supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
             }
+            ExpressMeFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+            }
         }
+    }
+
+    fun visibleSkipTV() {
+        binding.skipTv.visibility = View.VISIBLE
+    }
+
+    fun invisibleSkipTV() {
+        binding.skipTv.visibility = View.INVISIBLE
+    }
+
+    fun setKeyboardStatePan() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    fun setKeyboardStateResize() {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 }
