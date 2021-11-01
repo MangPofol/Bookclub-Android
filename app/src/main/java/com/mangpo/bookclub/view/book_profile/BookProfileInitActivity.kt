@@ -37,6 +37,9 @@ class BookProfileInitActivity : AppCompatActivity() {
                 SetGenderAndBirthFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
                 }
+                ExpressMeFragment::class.java -> {
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
+                }
             }
         }
     }
@@ -71,6 +74,9 @@ class BookProfileInitActivity : AppCompatActivity() {
             }
             ExpressMeFragment::class.java -> {
                 supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+            }
+            SetGenreFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
             }
         }
     }
