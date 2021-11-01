@@ -27,6 +27,7 @@
     <string name="set_genre_title">좋아하는 장르를 선택해주세요.</string>
     <string name="reading_style_title">책 읽는 스타일을 선택해주세요.</string>
     <string name="self_reading_style_hint">+ 직접 입력하기 (최대 30자)</string>
+    <string name="reading_goal_title">독서 목표를 설정해주세요.</string>
 
     <!-- main activity -->
     <string name="open">open</string>
