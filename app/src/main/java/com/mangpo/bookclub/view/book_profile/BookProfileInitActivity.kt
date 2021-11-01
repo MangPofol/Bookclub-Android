@@ -40,6 +40,9 @@ class BookProfileInitActivity : AppCompatActivity() {
                 ExpressMeFragment::class.java -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
                 }
+                SetGenreFragment::class.java -> {
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+                }
             }
         }
     }
@@ -77,6 +80,9 @@ class BookProfileInitActivity : AppCompatActivity() {
             }
             SetGenreFragment::class.java -> {
                 supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+            }
+            ReadingStyleFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
             }
         }
     }
