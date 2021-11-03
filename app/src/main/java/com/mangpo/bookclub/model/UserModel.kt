@@ -1,22 +1,36 @@
 package com.mangpo.bookclub.model
 
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDateTime
 
 data class UserModel(
     @SerializedName("email")
-    var email: String?,
+    val email: String? = null,
 
     @SerializedName("nickname")
-    var nickname: String?,
+    val nickname: String? = null,
+
+    @SerializedName("password")
+    val password: String? = null,
 
     @SerializedName("sex")
-    var sex: String?,
+    val sex: String? = null,
 
     @SerializedName("birthdate")
-    var birthdate: String?,
+    val birthdate: LocalDateTime? = null,
+
+    @SerializedName("introduce")
+    val introduce: String? = null,
+
+    @SerializedName("style")
+    val style: String? = null,
+
+    @SerializedName("goal")
+    val goal: String? = null,
 
     @SerializedName("profileImgLocation")
-    var profileImgLocation: String?
-) {
-    constructor(): this(null, null, null, null, null)
-}
+    val profileImgLocation: String? = null,
+
+    @SerializedName("genres")
+    val genres: List<String>? = null
+)
