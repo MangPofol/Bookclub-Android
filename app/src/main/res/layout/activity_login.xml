@@ -54,6 +54,7 @@
         android:layout_height="31dp"
         android:background="@drawable/login_book_profile_et"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:paddingHorizontal="15.6dp"
         android:paddingTop="5dp"
         android:textColorHint="@color/grey12"
