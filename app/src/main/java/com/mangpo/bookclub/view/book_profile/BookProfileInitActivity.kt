@@ -1,8 +1,10 @@
 package com.mangpo.bookclub.view.book_profile
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -13,11 +15,16 @@ import gun0912.tedimagepicker.util.ToastUtil.context
 
 class BookProfileInitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookProfileInitBinding
+    private lateinit var mPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityBookProfileInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
+        Log.d("BookProfileInitActivity", mPreferences.getString("newUser", "null")!!)
 
         binding.backIv.setOnClickListener { //뒤로가기 이미지 버튼 클릭 리스너
             backFragment()
