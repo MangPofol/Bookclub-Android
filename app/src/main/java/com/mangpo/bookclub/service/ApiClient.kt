@@ -1,8 +1,7 @@
-package com.mangpo.bookclub.repository
+package com.mangpo.bookclub.service
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.mangpo.bookclub.service.*
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -32,7 +31,7 @@ object ApiClient {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    val userService: UserService = retrofit.create(UserService::class.java)
+    val userService: UserService = BaseService().getClient(BASE_URL).create(UserService::class.java)
     val bookService: BookService = retrofit.create(BookService::class.java)
     val kakaoBookService: KakaoBookService = kakaoRetrofit.create(KakaoBookService::class.java)
     val clubService: ClubService = retrofit.create(ClubService::class.java)
