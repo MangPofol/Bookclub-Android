@@ -102,7 +102,7 @@
     <string name="complete">완료</string>
     <string name="next">다음</string>
     <string name="content_hint">내용을 입력해주세요.</string>
-    <string name="set_nickname_info">특수문자, 한글, 영어 혼용 가능</string>
+    <string name="set_nickname_info">특수문자, 한글, 영어 혼용 가능 (최대 10자)</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
