@@ -8,6 +8,8 @@ import com.mangpo.bookclub.service.UserService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
+import java.net.UnknownHostException
 
 class UserRepository(private val userService: UserService) {
 
@@ -28,11 +30,19 @@ class UserRepository(private val userService: UserService) {
         return userModel
     }*/
 
-    suspend fun login(user: JsonObject): Int = userService.login(user).code()
+    suspend fun login(user: JsonObject): Int {
+        return try {
+            userService.login(user).code()
+        } catch (e: UnknownHostException) {
+            -1
+        } catch (e: Exception) {
+            e.printStackTrace()
+            500
+        }
+    }
+        suspend fun validateEmail(email: JsonObject): Int = userService.validateEmail(email).code()
 
-    suspend fun validateEmail(email: JsonObject): Int = userService.validateEmail(email).code()
-
-    /*suspend fun logout(): String {
-        return userService.logout()
-    }*/
+        /*suspend fun logout(): String {
+            return userService.logout()
+        }*/
 }
