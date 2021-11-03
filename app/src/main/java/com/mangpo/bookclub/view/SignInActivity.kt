@@ -1,29 +1,31 @@
 package com.mangpo.bookclub.view
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivitySignInBinding
-import com.mangpo.bookclub.repository.UserRepository
-import com.mangpo.bookclub.service.ApiClient
+import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
-import com.mangpo.bookclub.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : AppCompatActivity(), TextWatcher {
     private lateinit var binding: ActivitySignInBinding
-    private lateinit var viewModel: MainViewModel
-    private lateinit var viewModelFactory: MainViewModelFactory
+    private lateinit var mPreferences: SharedPreferences
+
+    private val mainVm: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,25 +33,34 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
+        observe()   //mainViewModel livedate observe 함수
 
         binding.signinAppbar.outlineProvider = null //Appbar Layout 그림자 제거
 
+        //EditText TextWatcher 리스너 등록
         binding.signinIdEt.addTextChangedListener(this)
+        binding.signinPasswordEt.addTextChangedListener(this)
+        binding.signinPasswordConfirmEt.addTextChangedListener(this)
 
         binding.signinToolbar.setNavigationOnClickListener {    //뒤로가기 클릭 -> 액티비티 종료
             finish()
         }
 
-        binding.signinCompleteTv.setOnClickListener {
+        binding.signinCompleteTv.setOnClickListener {   //회원가입 완료 버튼 클릭 리스너
+            mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
+            val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
+            val newUser: UserModel = UserModel(
+                email = binding.signinIdEt.text.toString(),
+                password = binding.signinPasswordEt.text.toString()
+            )
+
+            preferencesEditor.putString("newUser", newUser.toString())
+            preferencesEditor.apply()
+
             val intent: Intent = Intent(this, BookProfileInitActivity::class.java)
             startActivity(intent)
+            finish()
         }
-    }
-
-    private fun initViewModel() {
-        viewModelFactory = MainViewModelFactory(UserRepository(ApiClient.userService))
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -57,10 +68,18 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (count!=0) {
+        if (binding.signinIdEt.hasFocus()) {    //아이디 중복확인
             val emailJson: JsonObject = JsonObject()
             emailJson.addProperty("email", s.toString())
             validateEmail(emailJson)
+        } else if (binding.signinPasswordEt.hasFocus()) {
+
+        } else {    //비밀번호, 비밀번호 확인 일치 여부
+            if (binding.signinPasswordEt.text.toString() == s.toString()) {
+                binding.signinPasswordAlertTv.visibility = View.INVISIBLE
+            } else {
+                binding.signinPasswordAlertTv.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -70,14 +89,13 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
 
     private fun validateEmail(email: JsonObject) {
         CoroutineScope(Dispatchers.Main).launch {
-            val result = withContext(Dispatchers.IO) {
-                viewModel.validateEmail(email)
-            }
-
-            if (result==204)
-                binding.signinIdAlertTv.visibility = View.INVISIBLE
-            else
-                binding.signinIdAlertTv.visibility = View.VISIBLE
+            mainVm.validateEmail(email)
         }
+    }
+
+    private fun observe() {
+        mainVm.emailAlertVisibility.observe(this, Observer {
+            binding.signinIdAlertTv.visibility = it
+        })
     }
 }
