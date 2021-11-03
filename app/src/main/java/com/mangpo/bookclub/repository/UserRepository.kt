@@ -28,9 +28,9 @@ class UserRepository(private val userService: UserService) {
         return userModel
     }*/
 
-    suspend fun login(user: JsonObject): Int {
-        return userService.login(user).code()
-    }
+    suspend fun login(user: JsonObject): Int = userService.login(user).code()
+
+    suspend fun validateEmail(email: JsonObject): Int = userService.validateEmail(email).code()
 
     /*suspend fun logout(): String {
         return userService.logout()

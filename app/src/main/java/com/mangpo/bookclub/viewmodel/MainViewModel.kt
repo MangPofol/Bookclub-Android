@@ -27,4 +27,9 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
         withContext(viewModelScope.coroutineContext) {
             repository.login(user)
         }
+
+    suspend fun validateEmail(email: JsonObject): Int =
+        withContext(viewModelScope.coroutineContext) {
+            repository.validateEmail(email)
+        }
 }
