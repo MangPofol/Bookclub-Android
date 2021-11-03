@@ -7,23 +7,17 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
-import com.mangpo.bookclub.repository.UserRepository
-import com.mangpo.bookclub.service.ApiClient
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
-import com.mangpo.bookclub.viewmodel.MainViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: MainViewModel
-    private lateinit var viewModelFactory: MainViewModelFactory
+    private val mainVm: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
+        observe()
 
         binding.loginSigninTv.setOnClickListener {  //회원가입 화면으로 이동
             val intent: Intent = Intent(this, SignInActivity::class.java)
@@ -52,19 +46,8 @@ class LoginActivity : AppCompatActivity() {
                 loginEditJson.addProperty("password", binding.loginPasswordEt.text.toString())
 
                 //로그인 요청 api 전송
-                CoroutineScope(Dispatchers.IO).launch {
-                    val result =
-                        withContext(Dispatchers.Default) {
-                            viewModel.login(loginEditJson)
-                        }
-
-                    if (result==200) {
-                        goToMain()
-                    } else {
-                        runOnUiThread {
-                            Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                CoroutineScope(Dispatchers.Main).launch {
+                    mainVm.login(loginEditJson)
                 }
             } else {
                 Toast.makeText(baseContext, "아이디와 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
@@ -78,11 +61,22 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun initViewModel() {
-        viewModelFactory = MainViewModelFactory(UserRepository(ApiClient.userService))
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-    }
-
     private fun validationLogin(): Boolean =
         !(binding.loginIdEt.text.isBlank() || binding.loginPasswordEt.text.isBlank())
+
+    private fun observe() {
+        mainVm.loginCode.observe(this, Observer {
+            when (it) {
+                200 -> {
+                    goToMain()
+                }
+                -1 -> {
+                    Toast.makeText(baseContext, "인터넷 연결이 필요합니다.", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
 }
