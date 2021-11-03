@@ -1,19 +1,13 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mangpo.bookclub.model.UserModel
+import com.google.gson.JsonObject
 import com.mangpo.bookclub.repository.UserRepository
-import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import retrofit2.Response
+import kotlinx.coroutines.withContext
 
-class MainViewModel(): ViewModel() {
-    private val userRepository: UserRepository = UserRepository()
+class MainViewModel(private val repository: UserRepository): ViewModel() {
+    /*private val userRepository: UserRepository = UserRepository()
 
     fun getUser(user: HashMap<String, Any>): UserModel {
         return userRepository.createUser(user)
@@ -27,5 +21,10 @@ class MainViewModel(): ViewModel() {
     fun logout() = viewModelScope.launch {
         val result = userRepository.logout()
         Log.e("viewModel-로그아웃", result.toString())
-    }
+    }*/
+
+    suspend fun login(user: JsonObject): Int =
+        withContext(viewModelScope.coroutineContext) {
+            repository.login(user)
+        }
 }

@@ -1,25 +1,17 @@
 package com.mangpo.bookclub.repository
 
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.service.ApiClient
 import com.mangpo.bookclub.service.UserService
-import okhttp3.JavaNetCookieJar
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.converter.gson.GsonConverterFactory
 
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.net.CookieManager
+class UserRepository(private val userService: UserService) {
 
-class UserRepository {
-    private val userService: UserService = ApiClient.userService
-
-    fun createUser(userReq: HashMap<String, Any>): UserModel {
+    /*fun createUser(userReq: HashMap<String, Any>): UserModel {
         var userModel: UserModel = UserModel()
 
         userService.createUser(userReq).enqueue(object : Callback<UserModel> {
@@ -34,13 +26,13 @@ class UserRepository {
         })
 
         return userModel
-    }
+    }*/
 
-    suspend fun login(user: HashMap<String, String>): Int {
+    suspend fun login(user: JsonObject): Int {
         return userService.login(user).code()
     }
 
-    suspend fun logout(): String {
+    /*suspend fun logout(): String {
         return userService.logout()
-    }
+    }*/
 }
