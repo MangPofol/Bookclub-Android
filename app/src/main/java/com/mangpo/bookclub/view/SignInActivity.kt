@@ -70,12 +70,14 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (binding.signinIdEt.hasFocus()) {    //아이디 중복확인
             val emailJson: JsonObject = JsonObject()
-            emailJson.addProperty("email", s.toString())
             validateEmail(emailJson)
-        } else if (binding.signinPasswordEt.hasFocus()) {
-
-        } else {    //비밀번호, 비밀번호 확인 일치 여부
-            if (binding.signinPasswordEt.text.toString() == s.toString()) {
+        } else if (binding.signinPasswordEt.hasFocus()) { //비밀번호 6~12자
+            if (s?.length in 6..12)
+                binding.signinPasswordAlertTv.visibility = View.INVISIBLE
+            else
+                binding.signinPasswordAlertTv.visibility = View.VISIBLE
+        } else {    //비밀번호 6~12자 & 비밀번호, 비밀번호 확인 일치 여부
+            if (binding.signinPasswordEt.text.toString() == s.toString() && s?.length in 6..12) {
                 binding.signinPasswordAlertTv.visibility = View.INVISIBLE
             } else {
                 binding.signinPasswordAlertTv.visibility = View.VISIBLE
