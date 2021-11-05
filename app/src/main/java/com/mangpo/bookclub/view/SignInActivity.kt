@@ -24,7 +24,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : AppCompatActivity(), TextWatcher {
     private lateinit var binding: ActivitySignInBinding
-    private lateinit var mPreferences: SharedPreferences
 
     private val mainVm: MainViewModel by viewModel()
 
@@ -49,9 +48,10 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
 
         binding.signinCompleteTv.setOnClickListener {   //회원가입 완료 버튼 클릭 리스너
             if (checkEdit()) {
-                mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
+                val mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
                 val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
                 val userJson: JsonObject = JsonObject()
+
                 userJson.addProperty("email", binding.signinIdEt.text.toString())
                 userJson.addProperty("password", binding.signinPasswordEt.text.toString())
 
@@ -74,6 +74,7 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (binding.signinIdEt.hasFocus()) {    //아이디 중복확인
             val emailJson: JsonObject = JsonObject()
+            emailJson.addProperty("email", s.toString())
             validateEmail(emailJson)
         } else if (binding.signinPasswordEt.hasFocus()) { //비밀번호 6~12자
             if (s?.length in 6..12)
