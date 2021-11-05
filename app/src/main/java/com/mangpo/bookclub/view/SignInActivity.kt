@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
@@ -47,19 +48,22 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
         }
 
         binding.signinCompleteTv.setOnClickListener {   //회원가입 완료 버튼 클릭 리스너
-            mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
-            val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
-            val newUser: UserModel = UserModel(
-                email = binding.signinIdEt.text.toString(),
-                password = binding.signinPasswordEt.text.toString()
-            )
+            if (checkEdit()) {
+                mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
+                val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
+                val userJson: JsonObject = JsonObject()
+                userJson.addProperty("email", binding.signinIdEt.text.toString())
+                userJson.addProperty("password", binding.signinPasswordEt.text.toString())
 
-            preferencesEditor.putString("newUser", newUser.toString())
-            preferencesEditor.apply()
+                preferencesEditor.putString("newUser", Gson().toJson(userJson))
+                preferencesEditor.apply()
 
-            val intent: Intent = Intent(this, BookProfileInitActivity::class.java)
-            startActivity(intent)
-            finish()
+                val intent: Intent = Intent(this, BookProfileInitActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(this, "아이디와 비밀번호를 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -100,4 +104,10 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
             binding.signinIdAlertTv.visibility = it
         })
     }
+
+    private fun checkEdit(): Boolean =
+        !(binding.signinIdEt.text.isBlank() || binding.signinIdAlertTv.visibility == View.VISIBLE ||
+                binding.signinPasswordEt.text.isBlank() || binding.signinPasswordConfirmEt.text.isBlank() ||
+                binding.signinPasswordAlertTv.visibility == View.VISIBLE)
+
 }
