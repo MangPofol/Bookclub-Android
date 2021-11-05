@@ -16,6 +16,7 @@ class SetGenreFragment : Fragment() {
 
     private lateinit var binding: FragmentSetGenreBinding
 
+    private val clickedGenres: MutableList<String> = ArrayList<String>()
     private val genres = listOf<String>(
         "소설",
         "시",
@@ -58,9 +59,11 @@ class SetGenreFragment : Fragment() {
                 if (isChecked) {
                     (buttonView as Chip).setChipBackgroundColorResource(R.color.main_blue)
                     (buttonView as Chip).setChipStrokeColorResource(R.color.transparent)
+                    clickedGenres.add(chip.text.toString())
                 } else {
                     (buttonView as Chip).setChipBackgroundColorResource(R.color.white)
                     (buttonView as Chip).setChipStrokeColorResource(R.color.grey12)
+                    clickedGenres.remove(chip.text.toString())
                 }
 
                 if (binding.genreCg.checkedChipIds.size > 0)
@@ -73,5 +76,7 @@ class SetGenreFragment : Fragment() {
 
         return binding.root
     }
+
+    fun getGenres(): List<String> = clickedGenres
 
 }

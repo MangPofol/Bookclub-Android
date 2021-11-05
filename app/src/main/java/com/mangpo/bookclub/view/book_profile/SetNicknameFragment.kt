@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.book_profile
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,11 +9,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.mangpo.bookclub.databinding.FragmentSetNicknameBinding
+import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SetNicknameFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentSetNicknameBinding
+
+    //private val mainVm: MainViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +49,9 @@ class SetNicknameFragment : Fragment(), TextWatcher {
         if (count == 0) { //입력값이 없으면 다음 버튼 비활성화
             (activity as BookProfileInitActivity).unEnableNextBtn()
         } else {    //입력값이 있으면 다음 버튼 활성화
+            /*val user: UserModel = mainVm.getNewUser()
+            user.nickname = s.toString()
+            mainVm.updateNewUser(user)*/
             (activity as BookProfileInitActivity).enableNextBtn()
         }
     }
@@ -50,4 +60,5 @@ class SetNicknameFragment : Fragment(), TextWatcher {
 
     }
 
+    fun getNickname():String = binding.nicknameEt.text.toString()
 }

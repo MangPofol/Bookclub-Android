@@ -47,4 +47,5 @@ class ExpressMeFragment : Fragment(), TextWatcher {
     override fun afterTextChanged(s: Editable?) {
     }
 
+    fun getExpressText(): String = binding.expressMeEt.text.toString()
 }

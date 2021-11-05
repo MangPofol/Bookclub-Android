@@ -1,12 +1,15 @@
 package com.mangpo.bookclub.view.book_profile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import androidx.core.view.size
 import com.mangpo.bookclub.databinding.FragmentSetGenderAndBirthBinding
+import java.time.LocalDateTime
 
 class SetGenderAndBirthFragment : Fragment() {
 
@@ -82,18 +85,37 @@ class SetGenderAndBirthFragment : Fragment() {
         binding.yearNp.minValue = 0
         binding.yearNp.maxValue= yearList.size - 1
         binding.yearNp.wrapSelectorWheel = true
+        binding.yearNp.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         binding.yearNp.setOnValueChangedListener(dayNpValueListener)
 
         binding.monthNp.displayedValues = monthList.toTypedArray()
         binding.monthNp.minValue = 0
         binding.monthNp.maxValue= monthList.size - 1
         binding.monthNp.wrapSelectorWheel = true
+        binding.monthNp.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         binding.monthNp.setOnValueChangedListener(monthNpValueListener)
 
         binding.dayNp.displayedValues = dayList.toTypedArray()
         binding.dayNp.minValue = 0
         binding.dayNp.maxValue= dayList.size - 1
         binding.dayNp.wrapSelectorWheel = true
+        binding.dayNp.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+    }
+
+    fun getGender(): String? {
+        return when(binding.setGenderRg.checkedRadioButtonId) {
+            binding.manRb.id -> "MALE"
+            binding.womanRb.id -> "FEMALE"
+            else -> null
+        }
+    }
+
+    fun getBirth(): String {
+        val year = yearList[binding.yearNp.value].toInt()
+        val month = monthList[binding.monthNp.value].toInt()
+        val day = dayList[binding.dayNp.value].toInt()
+
+        return LocalDateTime.of(year, month, day, 0, 0).toString()
     }
 
 }
