@@ -1,11 +1,13 @@
 package com.mangpo.bookclub.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
+import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.repository.UserRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,6 +16,9 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _loginCode = MutableLiveData<Int>()
     private val _emailAlertVisibility = MutableLiveData<Int>()
+
+    private var _newUser = UserModel()
+    private var _user: UserModel? = UserModel()
 
     val loginCode: LiveData<Int> get() = _loginCode
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
@@ -52,4 +57,17 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
             _emailAlertVisibility.value = View.VISIBLE
     }
 
+    suspend fun createUser() {
+        _user = withContext(viewModelScope.coroutineContext) {
+            repository.createUser(_newUser)
+        }
+    }
+
+    fun updateNewUser(user: UserModel) {
+        _newUser = user
+    }
+
+    fun getNewUser(): UserModel = _newUser
+
+    fun getUser(): UserModel? = _user
 }
