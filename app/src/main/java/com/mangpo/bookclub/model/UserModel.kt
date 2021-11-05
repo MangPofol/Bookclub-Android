@@ -8,29 +8,29 @@ data class UserModel(
     val email: String? = null,
 
     @SerializedName("nickname")
-    val nickname: String? = null,
+    var nickname: String? = null,
 
     @SerializedName("password")
     val password: String? = null,
 
     @SerializedName("sex")
-    val sex: String? = null,
+    var sex: String? = null,
 
     @SerializedName("birthdate")
-    val birthdate: LocalDateTime? = null,
+    var birthdate: String? = null,
 
     @SerializedName("introduce")
-    val introduce: String? = null,
+    var introduce: String? = null,
 
     @SerializedName("style")
-    val style: String? = null,
+    var style: String? = null,
 
     @SerializedName("goal")
-    val goal: String? = null,
+    var goal: String? = null,
 
     @SerializedName("profileImgLocation")
-    val profileImgLocation: String? = null,
+    var profileImgLocation: String = "",
 
     @SerializedName("genres")
-    val genres: List<String>? = null
+    var genres: List<String>? = null
 )
