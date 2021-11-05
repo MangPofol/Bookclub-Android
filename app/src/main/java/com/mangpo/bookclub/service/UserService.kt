@@ -21,6 +21,9 @@ interface UserService {
     @POST("/users/validate-duplicate")
     suspend fun validateEmail(@Body email: JsonObject): Response<JsonObject>
 
+    @POST("/users")
+    suspend fun createUser(@Body newUser: UserModel): Response<JsonObject>
+
     /*@POST("/logout")
     suspend fun logout(): String*/
 }
