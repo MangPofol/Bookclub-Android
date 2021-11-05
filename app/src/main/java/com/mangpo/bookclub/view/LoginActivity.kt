@@ -2,6 +2,7 @@ package com.mangpo.bookclub.view
 
 import android.content.Context
 import android.content.Intent
+import android.net.*
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
@@ -12,12 +13,24 @@ import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
+import gun0912.tedimagepicker.util.ToastUtil.context
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
     private val mainVm: MainViewModel by viewModel()
+
+    /*private val networkCallBack = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+        }
+
+        override fun onLost(network: Network) {
+            // 네트워크가 끊길 때 호출됩니다.
+            Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
+        }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +41,22 @@ class LoginActivity : AppCompatActivity() {
         observe()
 
         binding.loginSigninTv.setOnClickListener {  //회원가입 화면으로 이동
-            val intent: Intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
+            if (checkNetwork()==null) {
+                Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent: Intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         binding.loginBtn.outlineProvider = null //로그인 버튼 그림자 제거
 
         binding.loginBtn.setOnClickListener {   //로그인 버튼 클릭 이벤트 리스너
-            //키보드 내리기
-            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.loginIdEt.windowToken, 0)
+            downKeyboard()  //키보드 내리기
 
-            if (validationLogin()) {    //로그인 유효성 검사
+            if (checkNetwork()==null)   //네트워크 연결 상태 확인
+                Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
+            else if (validationLogin()) {    //로그인 유효성 검사
                 //로그인 입력값 JSON 객체로 저장
                 val loginEditJson: JsonObject = JsonObject()
                 loginEditJson.addProperty("email", binding.loginIdEt.text.toString())
@@ -53,6 +70,16 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "아이디와 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //registerNetworkCallback()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //terminateNetworkCallback()
     }
 
     private fun goToMain() {
@@ -78,5 +105,30 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    // 콜백을 등록하는 함수
+   /* private fun registerNetworkCallback() {
+        val networkRequest = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .build()
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallBack)
+    }*/
+
+    // 콜백을 해제하는 함수
+    /*private fun terminateNetworkCallback() {
+        connectivityManager.unregisterNetworkCallback(networkCallBack)
+    }*/
+
+    private fun checkNetwork(): Network? {
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
+
+        return connectivityManager.activeNetwork
+    }
+
+    private fun downKeyboard() {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.loginIdEt.windowToken, 0)
     }
 }
