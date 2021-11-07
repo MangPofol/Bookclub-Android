@@ -50,44 +50,11 @@ class BookProfileInitActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
 
         binding.nextBtn.setOnClickListener {    //다음 버튼 클릭 리스너
-            user = mainVm.getNewUser()
-
-            when (supportFragmentManager.fragments[0].javaClass) {
-                BookProfileDescFragment::class.java -> {
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
-                }
-                SetNicknameFragment::class.java -> {
-                    user.nickname = (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
-                }
-                SetGenderAndBirthFragment::class.java -> {
-                    user.sex = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getGender()
-                    user.birthdate = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
-                }
-                ExpressMeFragment::class.java -> {
-                    user.introduce = (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
-                }
-                SetGenreFragment::class.java -> {
-                    user.genres = (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
-                }
-                ReadingStyleFragment::class.java -> {
-                    user.style = (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
-                }
-                ReadingGoalFragment::class.java -> {
-                    user.goal = (supportFragmentManager.fragments[0] as ReadingGoalFragment).getGoal()
-                    signIn()
-                }
-            }
-
-            mainVm.updateNewUser(user)
+            goToNextStep(false)
         }
 
         binding.skipTv.setOnClickListener {
-            goToMain()
+            goToNextStep(true)
         }
     }
 
@@ -202,5 +169,46 @@ class BookProfileInitActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun goToNextStep(isSkip: Boolean) {
+        user = mainVm.getNewUser()
+
+        when (supportFragmentManager.fragments[0].javaClass) {
+            BookProfileDescFragment::class.java -> {
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
+            }
+            SetNicknameFragment::class.java -> {
+                user.nickname = (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+            }
+            SetGenderAndBirthFragment::class.java -> {
+                user.sex = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getGender()
+                user.birthdate = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+            }
+            ExpressMeFragment::class.java -> {
+                if (!isSkip)
+                    user.introduce = (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
+            }
+            SetGenreFragment::class.java -> {
+                if (!isSkip)
+                    user.genres = (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+            }
+            ReadingStyleFragment::class.java -> {
+                if (!isSkip)
+                    user.style = (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
+                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
+            }
+            ReadingGoalFragment::class.java -> {
+                if (!isSkip)
+                    user.goal = (supportFragmentManager.fragments[0] as ReadingGoalFragment).getGoal()
+                signIn()
+            }
+        }
+
+        mainVm.updateNewUser(user)
     }
 }
