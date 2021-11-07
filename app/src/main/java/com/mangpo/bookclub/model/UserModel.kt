@@ -20,17 +20,17 @@ data class UserModel(
     var birthdate: String? = null,
 
     @SerializedName("introduce")
-    var introduce: String? = null,
+    var introduce: String = "",
 
     @SerializedName("style")
-    var style: String? = null,
+    var style: String = "",
 
     @SerializedName("goal")
-    var goal: String? = null,
+    var goal: String = "",
 
     @SerializedName("profileImgLocation")
     var profileImgLocation: String = "",
 
     @SerializedName("genres")
-    var genres: List<String>? = null
+    var genres: List<String> = ArrayList<String>()
 )
