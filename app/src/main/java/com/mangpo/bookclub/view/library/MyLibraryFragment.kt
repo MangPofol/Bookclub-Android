@@ -9,42 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyLibraryBinding
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.util.HorizontalItemDecorator
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.BookClubFilterAdapter
 import com.mangpo.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
-import com.mangpo.bookclub.viewmodel.ClubViewModel
-import com.mangpo.bookclub.viewmodel.MyLibraryViewModel
-import com.mangpo.bookclub.viewmodel.PostViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MyLibraryFragment : Fragment(), TextWatcher {
     private lateinit var binding: FragmentMyLibraryBinding
     private lateinit var myLibraryPagerAdapter: MyLibraryPagerAdapter
-    private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
+    //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
 
-    private val myLibraryViewModel: MyLibraryViewModel by activityViewModels<MyLibraryViewModel>()
-    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
-    private val clubViewModel: ClubViewModel by activityViewModels<ClubViewModel>()
-    private val postViewModel: PostViewModel by activityViewModels<PostViewModel>()
-
-    private var books: MutableList<BookModel> = ArrayList<BookModel>()
-    private var adapter: BookAdapter = BookAdapter()
+    private val bookViewModel: BookViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("MyLibrary", "onCreate")
 
     }
 
@@ -52,24 +37,38 @@ class MyLibraryFragment : Fragment(), TextWatcher {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("MyLibrary", "onCreateView")
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
         myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity)
         binding.viewPager.adapter = myLibraryPagerAdapter  //어댑터 설정
 
-        //페이지 변환 후 호출되는 콜백 함수
+        binding.searchLayout.searchBookET.addTextChangedListener(this)
+
+        //읽는중, 완독, 읽고 싶은 페이지 변환 리스너
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                Log.e("ViewPagerFragment", "Page ${position + 1}")
-                myLibraryViewModel.updateLibraryReadType(position)
+
+                //모든 필터 초기화
+                binding.searchButton.isChecked = false
+                binding.sortButton.isChecked = false
+                //키보드 올라와 있으면 키보드 내리기
+                (activity as MainActivity).hideKeyBord(requireView())
 
                 //완독 부분에선 북클럽 필터 GONE
                 when (position) {
-                    0 -> setVisibilityClubButton(View.VISIBLE)
-                    1 -> setVisibilityClubButton(View.VISIBLE)
-                    2 -> setVisibilityClubButton(View.GONE)
+                    0 -> {
+                        //setVisibilityClubButton(View.VISIBLE)
+                        bookViewModel.setReadType("NOW")
+                    }
+                    1 -> {
+                        //setVisibilityClubButton(View.VISIBLE)
+                        bookViewModel.setReadType("AFTER")
+                    }
+                    2 -> {
+                        //setVisibilityClubButton(View.GONE)
+                        bookViewModel.setReadType("BEFORE")
+                    }
                 }
             }
         })
@@ -80,15 +79,16 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 binding.clubButton.isChecked = false
                 binding.sortButton.isChecked = false
                 binding.searchLayout.root.visibility = View.VISIBLE
-                binding.searchLayout.searchBookET.addTextChangedListener(this)
                 binding.searchLayout.searchBookET.text.clear()
             } else {
                 binding.searchLayout.root.visibility = View.GONE
+                binding.searchLayout.searchBookET.text.clear()  //검색어 초기화
+                (activity as MainActivity).hideKeyBord(requireView())   //키보드 숨기기
             }
         }
 
         //main 북클럽 필터 버튼 클릭 리스너
-        binding.clubButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        /*binding.clubButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.searchButton.isChecked = false
                 binding.sortButton.isChecked = false
@@ -105,7 +105,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             } else {
                 binding.bookClubFilterLayout.root.visibility = View.GONE
             }
-        }
+        }*/
 
         //main 정렬 필터 버튼 클릭 리스너
         binding.sortButton.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -119,47 +119,20 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 binding.sortFilterLayout.nameOrder.isChecked = false
             } else {
                 binding.sortFilterLayout.root.visibility = View.GONE
+                binding.sortFilterLayout.latestOrder.isChecked = false
+                binding.sortFilterLayout.oldOrder.isChecked = false
+                binding.sortFilterLayout.nameOrder.isChecked = false
             }
         }
-
-        //읽는중, 완독, 읽고싶은 observe
-        myLibraryViewModel.libraryReadType.observe(viewLifecycleOwner, Observer {
-            Log.e("libraryReadType observe", it.toString())
-
-            (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 올라와 있다면 내리기
-            binding.searchLayout.root.visibility = View.GONE
-            binding.bookClubFilterLayout.root.visibility = View.GONE
-            binding.sortFilterLayout.root.visibility = View.GONE
-            binding.searchButton.isChecked = false
-            binding.clubButton.isChecked = false
-            binding.sortButton.isChecked = false
-
-            adapter = myLibraryPagerAdapter.getAdapter(it)
-
-            when (it) {
-                0 ->CoroutineScope(Dispatchers.Main).launch {
-                        books = bookViewModel.getBooks("NOW")!!
-                        adapter.setBooks(books)
-                    }
-                1 -> CoroutineScope(Dispatchers.Main).launch {
-                    books = bookViewModel.getBooks("AFTER")!!
-                    adapter.setBooks(books)
-                }
-                2 -> CoroutineScope(Dispatchers.Main).launch {
-                    binding.viewPager.currentItem = 2
-                    books = bookViewModel.getBooks("BEFORE")!!
-                    adapter.setBooks(books)
-                }
-            }
-        })
 
         //정렬-최신순 필터 체크 리스너
         binding.sortFilterLayout.latestOrder.setOnCheckedChangeListener { checkBox, isChecked ->
             if (isChecked) {
                 binding.sortFilterLayout.oldOrder.isChecked = false
                 binding.sortFilterLayout.nameOrder.isChecked = false
+                bookViewModel.setMyLibrarySort("Latest")
             } else {
-                adapter.setBooks(books)
+                bookViewModel.setMyLibrarySort("")
             }
         }
 
@@ -168,8 +141,9 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             if (isChecked) {
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.nameOrder.isChecked = false
+                bookViewModel.setMyLibrarySort("Old")
             } else {
-                adapter.setBooks(books)
+                bookViewModel.setMyLibrarySort("")
             }
         }
 
@@ -178,9 +152,9 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             if (isChecked) {
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.oldOrder.isChecked = false
-                adapter.setBooks(books.sortedWith(compareBy { it.name }) as MutableList<BookModel>)
+                bookViewModel.setMyLibrarySort("Name")
             } else {
-                adapter.setBooks(books)
+                bookViewModel.setMyLibrarySort("")
             }
         }
 
@@ -189,7 +163,6 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("MyLibrary", "onViewCreated")
 
         (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
@@ -208,17 +181,15 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        adapter.setBooks(books.filter {
-            it.name!!.contains(s!!)
-        } as MutableList<BookModel>)
+        bookViewModel.setMyLibrarySearch(s.toString())
     }
 
     override fun afterTextChanged(s: Editable?) {
     }
 
-    private fun setVisibilityClubButton(visibility: Int) {
+    /*private fun setVisibilityClubButton(visibility: Int) {
         binding.clubButton.visibility = visibility
-    }
+    }*/
 
 }
 
