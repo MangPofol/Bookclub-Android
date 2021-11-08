@@ -17,9 +17,6 @@ import kotlinx.coroutines.withContext
 
 class BookViewModel(application: Application, private val bookRepository: BookRepository, private val kakaoBookRepository: KakaoBookRepository) : AndroidViewModel(application) {
 
-    /*private val _selectedBook: MutableLiveData<BookModel> =
-        MutableLiveData<BookModel>()  //사용자가 선택한 책
-    private val _selectedBookReadType: MutableLiveData<Int> = MutableLiveData<Int>()*/
     private val _searchedBooks: MutableLiveData<MutableList<KakaoBookModel>> =
         MutableLiveData<MutableList<KakaoBookModel>>()   //검색을 통해 얻어낸 책 목록
     private val _nowBooks: MutableLiveData<MutableList<BookModel>> =
@@ -28,6 +25,9 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
         MutableLiveData<MutableList<BookModel>>() //읽고 싶은 책 목록
     private val _afterBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>()  //완독 책 목록
+    private val _readType: MutableLiveData<String> = MutableLiveData<String>()
+    private val _myLibrarySearch: MutableLiveData<String> = MutableLiveData<String>()
+    private val _myLibrarySort: MutableLiveData<String> = MutableLiveData<String>()
 
     private var _selectedBook: BookModel? = null
 
@@ -40,6 +40,10 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
     val beforeBooks: LiveData<MutableList<BookModel>> get() = _beforeBooks
     val afterBooks: LiveData<MutableList<BookModel>> get() = _afterBooks
     val searchedBooks: LiveData<MutableList<KakaoBookModel>> get() = _searchedBooks
+    val readType: LiveData<String> get() = _readType
+    val myLibrarySearch: LiveData<String> get() = _myLibrarySearch
+    val myLibrarySort: LiveData<String> get() = _myLibrarySort
+
     /*val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
     val createdBook: LiveData<BookModel?> get() = _createdBook*/
 
@@ -47,8 +51,6 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
         val books = withContext(Dispatchers.IO) {
             bookRepository.getBooks(email, category)
         }
-
-        Log.d("BookViewModel", books.toString())
 
         when (category) {
             "NOW" -> {
@@ -76,11 +78,25 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
         }
     }
 
+    fun getSelectedBook(): BookModel? = _selectedBook
+
     fun setSelectedBook(book: BookModel) {
         _selectedBook = book
     }
 
-    fun getSelectedBook(): BookModel? = _selectedBook
+    fun setReadType(readType: String) {
+        _readType.value = readType
+    }
+
+    fun setMyLibrarySearch(search: String) {
+        _myLibrarySearch.value = search
+    }
+
+    fun setMyLibrarySort(filter: String) {
+        _myLibrarySort.value = filter
+    }
+
+
 
     /*fun updateSelectedBookReadType(readType: Int) {
         _selectedBookReadType.value = readType
