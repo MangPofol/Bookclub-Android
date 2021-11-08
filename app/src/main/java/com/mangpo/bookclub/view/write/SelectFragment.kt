@@ -64,7 +64,6 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         bookAdapter.setBooks(bookViewModel.getBookList("NOW"))
         binding.bookListRV.adapter = bookAdapter
         binding.bookListRV.layoutManager = GridLayoutManager(this.context, 3)
-        binding.bookListRV.addItemDecoration(VerticalItemDecorator(60))
 
         //읽는중, 완독, 읽고 싶은 체크박스를 클릭하면 book recycler view UI 업데이트
         binding.readTypeRG.setOnCheckedChangeListener { group, checkedId ->

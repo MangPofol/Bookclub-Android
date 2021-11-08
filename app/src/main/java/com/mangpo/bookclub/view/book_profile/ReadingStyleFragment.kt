@@ -95,18 +95,17 @@ class ReadingStyleFragment : Fragment(), TextWatcher {
         }
     }
 
-    fun getReadingStyle(): String? {
-        if (binding.styleRg.checkedRadioButtonId==-1) {
-            return binding.styleEt.text.toString()
+    fun getReadingStyle(): String {
+        return if (binding.styleRg.checkedRadioButtonId==-1) {
+            binding.styleEt.text.toString()
         } else {
             when (binding.styleRg.checkedRadioButtonId) {
-                binding.styleRb1.id -> return binding.styleRb1.text.toString()
-                binding.styleRb2.id -> return binding.styleRb2.text.toString()
-                binding.styleRb3.id -> return binding.styleRb3.text.toString()
+                binding.styleRb1.id -> binding.styleRb1.text.toString()
+                binding.styleRb2.id -> binding.styleRb2.text.toString()
+                binding.styleRb3.id -> binding.styleRb3.text.toString()
+                else -> ""
             }
         }
-
-        return null
     }
 
 }

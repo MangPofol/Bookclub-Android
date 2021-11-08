@@ -31,7 +31,7 @@ import java.io.*
 
 class RecordFragment : Fragment(), OnItemClick {
     private lateinit var binding: FragmentRecordBinding
-    private lateinit var callback: OnBackPressedCallback
+//    private lateinit var callback: OnBackPressedCallback
 
     private val recordImgAdapter: RecordImgAdapter = RecordImgAdapter(this)
     private val bookVm: BookViewModel by sharedViewModel()
@@ -205,7 +205,7 @@ class RecordFragment : Fragment(), OnItemClick {
         super.onDetach()
         Log.d("Record", "onDetach")
 
-        callback.remove()
+//        callback.remove()
     }
 
     override fun onClick(size: Int) {   //선택된 이미지 삭제하면 이미지 cnt 변경되도록
