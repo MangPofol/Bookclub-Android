@@ -46,7 +46,7 @@ class BookAdapter() :
         val book: BookModel = books[position] as BookModel
 
         Glide.with(holder.bookImg)
-            .load(book.image)
+            .load(book.imgPath)
             .into(holder.bookImg)
 
         holder.bookTitle.text = book.name
@@ -82,8 +82,13 @@ class BookAdapter() :
         type = "write"
     }
 
-    fun setBooks(bookList: MutableList<BookModel>) {
-        books = bookList.toMutableList()
+    fun setBooks(bookList: MutableList<BookModel>?) {
+        if (bookList!=null) {
+            books = bookList.toMutableList()
+        } else {
+            books.removeAll(books)
+        }
+
         notifyDataSetChanged()
         type = "library"
     }
