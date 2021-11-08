@@ -24,6 +24,6 @@ interface UserService {
     @POST("/users")
     suspend fun createUser(@Body newUser: UserModel): Response<JsonObject>
 
-    /*@POST("/logout")
-    suspend fun logout(): String*/
+    @POST("/logout")
+    suspend fun logout(): Response<String>
 }

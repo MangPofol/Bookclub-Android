@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,16 +17,16 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _loginCode = MutableLiveData<Int>()
     private val _emailAlertVisibility = MutableLiveData<Int>()
+    private val _logoutCode = MutableLiveData<Int>()
 
     private var _newUser = UserModel()
     private var _user: UserModel? = UserModel()
 
     val loginCode: LiveData<Int> get() = _loginCode
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
+    val logoutCode: LiveData<Int> get() = _logoutCode
 
-    /*private val userRepository: UserRepository = UserRepository()
-
-    fun getUser(user: HashMap<String, Any>): UserModel {
+    /*fun getUser(user: HashMap<String, Any>): UserModel {
         return userRepository.createUser(user)
     }
 
@@ -45,12 +46,10 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
-
     suspend fun validateEmail(email: JsonObject) {
         val statusCode = withContext(viewModelScope.coroutineContext) {
             repository.validateEmail(email)
         }
-
         if (statusCode==204)
             _emailAlertVisibility.value = View.INVISIBLE
         else
@@ -60,6 +59,12 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
     suspend fun createUser() {
         _user = withContext(viewModelScope.coroutineContext) {
             repository.createUser(_newUser)
+        }
+    }
+
+    suspend fun logout() {
+        viewModelScope.launch {
+            _logoutCode.value = repository.logout()
         }
     }
 

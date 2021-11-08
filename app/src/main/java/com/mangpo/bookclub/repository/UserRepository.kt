@@ -67,7 +67,12 @@ class UserRepository(private val userService: UserService) {
         }
     }
 
-        /*suspend fun logout(): String {
-            return userService.logout()
-        }*/
+    suspend fun logout(): Int {
+        return try {
+            userService.logout().code()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            500
+        }
+    }
 }
