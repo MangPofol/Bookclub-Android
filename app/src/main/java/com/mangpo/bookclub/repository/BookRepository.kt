@@ -1,6 +1,8 @@
 package com.mangpo.bookclub.repository
 
 import android.app.Application
+import android.util.Log
+import com.google.gson.JsonObject
 import com.mangpo.bookclub.dao.BookImageDao
 import com.mangpo.bookclub.database.MangpoDatabase
 import com.mangpo.bookclub.model.BookImageModel
@@ -8,8 +10,13 @@ import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.service.BookService
 import com.mangpo.bookclub.service.KakaoBookService
 import retrofit2.Response
+import java.lang.Exception
 
-class BookRepository(private val application: Application, private val bookService: BookService, private val kakaoBookService: KakaoBookService) {
+class BookRepository(
+    private val application: Application,
+    private val bookService: BookService,
+    private val kakaoBookService: KakaoBookService
+) {
     private val bookImageDao: BookImageDao
 
     init {
@@ -45,7 +52,24 @@ class BookRepository(private val application: Application, private val bookServi
         return books
     }
 
-    suspend fun createBook(book: BookModel): Response<BookModel> {
-        return bookService.createBook(book)
+    suspend fun createBook(book: BookModel): BookModel? {
+        try {
+            val result = bookService.createBook(book)
+
+            return if (result.isSuccessful) {
+                book
+            } else {
+                Log.e(
+                    "BookRepository",
+                    "createBook 에러\ncode: ${result.code()}, message: ${result.body().toString()}"
+                )
+
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+            return null
+        }
     }
 }

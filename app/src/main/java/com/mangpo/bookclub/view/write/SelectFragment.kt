@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
@@ -85,6 +86,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     override fun onDetach() {
         super.onDetach()
+        Log.d("SelectFragment", "onDetach")
 
         callback.remove()
     }
@@ -94,7 +96,6 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
         //책을 등록하는 bottom sheet 을 띄운다.
         if (binding.readTypeRG.visibility == View.GONE) {    //새로운 책을 클릭한 상황이면
-            //클릭된 책 제목을 SelectBookViewModel의 selectedBookTitle 변수에 업데이트
             selectedBook = BookModel(
                 name = bookViewModel.searchedBooks.value!![position].title,
                 isbn = bookViewModel.searchedBooks.value!![position].isbn,
@@ -102,41 +103,23 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
             )
 
             val bottomSheet: AddBookBottomSheetFragment = AddBookBottomSheetFragment {
+                selectedBook.category = it
+
                 when (it) {
                     //읽는 중, 완독이면 -> 기록하기 화면으로 이동
                     "NOW", "AFTER" -> {
-                        selectedBook.category = it
                         bookViewModel.setSelectedBook(selectedBook)
                         parentFragmentManager.popBackStack()
                     }
                     //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
-                    /*"BEFORE" -> {
-                        Log.e("Select", bookViewModel.selectedBook.value.toString())
-
+                    "BEFORE" -> {
                         CoroutineScope(Dispatchers.Main).launch {
-                            val code = CoroutineScope(Dispatchers.IO).async {
-                                bookViewModel.createBeforeBook(bookViewModel.selectedBook.value!!)
-                            }
-
-                            when (code.await()) {
-                                201 -> {
-                                    Toast.makeText(context, "책 추가 성공!", Toast.LENGTH_SHORT).show()
-                                    (requireActivity() as MainActivity).goToBeforeLibrary()
-                                }
-                                400 -> {
-                                    Toast.makeText(context, "이미 등록된 책입니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-                            }
+                            bookViewModel.createBook(selectedBook)
                         }
-
-                        bookViewModel.updateBeforeBook(selectedBookViewModel.createdBook.value!!)
-                        binding.selectBookTV.visibility = View.VISIBLE
-                        binding.readTypeRG.visibility = View.VISIBLE
-                        binding.wantToReadRB.isChecked = true
-                    }*/
+                    }
                 }
             }
+
             bottomSheet.show((activity as MainActivity).supportFragmentManager, bottomSheet.tag)
         } else {    //기존 책을 클릭한 상황이면
             selectedBook = when (binding.readTypeRG.checkedRadioButtonId) {
@@ -188,5 +171,13 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
             if (binding.searchBookET.text.isNotBlank())
                 bookAdapter.setKakaoBooks(it)
         })
+
+        bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
+            if (viewLifecycleOwner.lifecycle.currentState== Lifecycle.State.RESUMED) {
+                (activity as MainActivity).moveBottomPager(1)
+                bookViewModel.setReadType("BEFORE")
+            }
+        })
     }
+
 }
