@@ -32,8 +32,9 @@ object ApiClient {
         .build()
 
     val userService: UserService = BaseService().getClient(BASE_URL).create(UserService::class.java)
-    val bookService: BookService = retrofit.create(BookService::class.java)
-    val kakaoBookService: KakaoBookService = kakaoRetrofit.create(KakaoBookService::class.java)
+    val bookService: BookService = BaseService().getClient(BASE_URL).create(BookService::class.java)
+    val kakaoBookService: KakaoBookService =
+        BaseService().getKakaoClient(KAKAO_BOOK_API_BASE_URL).create(KakaoBookService::class.java)
     val clubService: ClubService = retrofit.create(ClubService::class.java)
     val postService: PostService = retrofit.create(PostService::class.java)
     val fileService: FileService = retrofit.create(FileService::class.java)
