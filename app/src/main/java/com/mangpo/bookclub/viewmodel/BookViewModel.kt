@@ -15,13 +15,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BookViewModel(application: Application) : AndroidViewModel(application) {
-    private val bookRepository: BookRepository = BookRepository(application)
-    private val kakaoBookRepository: KakaoBookRepository = KakaoBookRepository()
+class BookViewModel(application: Application, private val bookRepository: BookRepository, private val kakaoBookRepository: KakaoBookRepository) : AndroidViewModel(application) {
 
-    private val _selectedBook: MutableLiveData<BookModel> =
+    /*private val _selectedBook: MutableLiveData<BookModel> =
         MutableLiveData<BookModel>()  //사용자가 선택한 책
-    private val _selectedBookReadType: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val _selectedBookReadType: MutableLiveData<Int> = MutableLiveData<Int>()*/
     private val _searchedBooks: MutableLiveData<MutableList<KakaoBookModel>> =
         MutableLiveData<MutableList<KakaoBookModel>>()   //검색을 통해 얻어낸 책 목록
     private val _nowBooks: MutableLiveData<MutableList<BookModel>> =
@@ -30,24 +28,29 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         MutableLiveData<MutableList<BookModel>>() //읽고 싶은 책 목록
     private val _afterBooks: MutableLiveData<MutableList<BookModel>> =
         MutableLiveData<MutableList<BookModel>>()  //완독 책 목록
-    private val _createdBook: MutableLiveData<BookModel?> = MutableLiveData<BookModel?>() //방금 추가된 책
 
-    private var books: MutableList<BookModel> = ArrayList()
+    private var _selectedBook: BookModel? = null
 
-    val selectedBook: LiveData<BookModel> get() = _selectedBook
+//    private val _createdBook: MutableLiveData<BookModel?> = MutableLiveData<BookModel?>() //방금 추가된 책
+
+//    private var books: MutableList<BookModel> = ArrayList()
+
+//    val selectedBook: LiveData<BookModel> get() = _selectedBook
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
     val beforeBooks: LiveData<MutableList<BookModel>> get() = _beforeBooks
     val afterBooks: LiveData<MutableList<BookModel>> get() = _afterBooks
-    val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
     val searchedBooks: LiveData<MutableList<KakaoBookModel>> get() = _searchedBooks
-    val createdBook: LiveData<BookModel?> get() = _createdBook
+    /*val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
+    val createdBook: LiveData<BookModel?> get() = _createdBook*/
 
-    suspend fun getBooks(category: String): MutableList<BookModel>? {
-        books = withContext(Dispatchers.IO) {
-            bookRepository.getBooks("", category)
+    suspend fun requestBookList(email: String, category: String) {
+        val books = withContext(Dispatchers.IO) {
+            bookRepository.getBooks(email, category)
         }
 
-        return when (category) {
+        Log.d("BookViewModel", books.toString())
+
+        when (category) {
             "NOW" -> {
                 _nowBooks.value = books
                 _nowBooks.value
@@ -65,30 +68,46 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateSelectedBookReadType(readType: Int) {
+    fun getBookList(category: String): MutableList<BookModel>? {
+        return when (category) {
+            "NOW" -> _nowBooks.value
+            "AFTER" -> _afterBooks.value
+            else -> _beforeBooks.value
+        }
+    }
+
+    fun setSelectedBook(book: BookModel) {
+        _selectedBook = book
+    }
+
+    fun getSelectedBook(): BookModel? = _selectedBook
+
+    /*fun updateSelectedBookReadType(readType: Int) {
         _selectedBookReadType.value = readType
     }
 
-    fun updateSelectedBook(book: BookModel) {
-        _selectedBook.value = book
-    }
+
 
     fun clearSelectedBook() {
         _selectedBook.value = BookModel()
-    }
+    }*/
 
-    suspend fun updateSearchBookTitle(title: String) {
+    /*suspend fun updateSearchBookTitle(title: String) {
         viewModelScope.launch {
             _searchedBooks.value =
                 kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
         }
-    }
+    }*/
 
-    suspend fun getSearchedBooks(title: String): MutableList<KakaoBookModel> {
-        return withContext(viewModelScope.coroutineContext) {
-            kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
+    suspend fun getSearchedBooks(title: String) {
+        viewModelScope.launch {
+            _searchedBooks.value = kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
         }
 
+    }
+
+    fun clearSearchedBooks() {
+        _searchedBooks.value!!.removeAll(_searchedBooks.value!!)
     }
 
     fun updateSearchedBooks(books: MutableList<KakaoBookModel>) {
@@ -107,7 +126,7 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
             bookRepository.createBook(book)
         }
 
-        when {
+        /*when {
             newBook.code()==201 -> {
                 Log.e("SelectedBookViewModel", "책 추가 성공! -> ${newBook.body()}")
                 _nowBooks.value = getBooks("NOW")!!
@@ -123,7 +142,7 @@ class BookViewModel(application: Application) : AndroidViewModel(application) {
                 Log.e("SelectedBookViewModel", "책 추가 실패! -> ${newBook.toString()}")
                 _createdBook.value = null
             }
-        }
+        }*/
 
         return newBook.code()
     }

@@ -9,10 +9,8 @@ import com.mangpo.bookclub.service.BookService
 import com.mangpo.bookclub.service.KakaoBookService
 import retrofit2.Response
 
-class BookRepository(application: Application) {
-    private val bookService: BookService = ApiClient.bookService
+class BookRepository(private val application: Application, private val bookService: BookService, private val kakaoBookService: KakaoBookService) {
     private val bookImageDao: BookImageDao
-    private val kakaoBookService: KakaoBookService = ApiClient.kakaoBookService
 
     init {
         val mangpoDB: MangpoDatabase = MangpoDatabase.getInstance(application)!!
@@ -34,13 +32,13 @@ class BookRepository(application: Application) {
                         .body()!!.documents[0].thumbnail
                     bookImageDao.insertBook(
                         BookImageModel(
-                            isbn = book.isbn.toString(),
+                            isbn = book.isbn,
                             image = image
                         )
                     )
                 }
 
-                book.image = image
+                book.imgPath = image
             }
         }
 
