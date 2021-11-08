@@ -22,12 +22,4 @@ class MyLibraryPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
             else -> beforeBookListFragment
         }
     }
-
-    fun getAdapter(position: Int): BookAdapter {
-        return when (position) {
-            0 -> nowBookListFragment.getAdapter()
-            1 -> afterBookListFragment.getAdapter()
-            else -> beforeBookListFragment.getAdapter()
-        }
-    }
 }
