@@ -2,6 +2,7 @@ package com.mangpo.bookclub.view
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.*
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private val mainVm: MainViewModel by viewModel()
+    private val loginEditJson: JsonObject = JsonObject()
 
     /*private val networkCallBack = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
@@ -58,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             else if (validationLogin()) {    //로그인 유효성 검사
                 //로그인 입력값 JSON 객체로 저장
-                val loginEditJson: JsonObject = JsonObject()
                 loginEditJson.addProperty("email", binding.loginIdEt.text.toString())
                 loginEditJson.addProperty("password", binding.loginPasswordEt.text.toString())
 
@@ -83,6 +84,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMain() {
+        val mPreferences = getSharedPreferences("emailPreferences", MODE_PRIVATE)
+        val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
+        preferencesEditor.putString("email", loginEditJson.get("email").asString)
+        preferencesEditor.apply()
+
         val intent: Intent = Intent(this, MainActivity::class.java)
         finish()
         startActivity(intent)
