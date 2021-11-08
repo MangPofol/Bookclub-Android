@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentAddBookBottomSheetBinding
@@ -34,7 +33,7 @@ class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDi
             }
         }
 
-        //책 추가하기 버튼 클릭 리스너 -> 서버에 책 추가 요청 보내기
+        //책 추가하기 버튼 클릭 리스너 -> SelectFragment에 readType 전달
         binding.addBtn.setOnClickListener {
             dismiss()
             callback(readType)
