@@ -27,8 +27,8 @@ class BottomNavigationPagerAdapter(fm: FragmentManager) :
         }
     }
 
-    fun sendNewClub(newClub: ClubModel) {
+    /*fun sendNewClub(newClub: ClubModel) {
         bookClubFragment.addClub(newClub)
-    }
+    }*/
 
 }
