@@ -81,6 +81,7 @@
     <string name="select_book">책 선택하기</string>
     <string name="enroll_new_book">새 책 등록하기</string>
     <string name="select_in_library">내 책장에서 선택하기</string>
+    <string name="search_result">검색 결과</string>
 
     <!-- add book bottom sheet fragment -->
     <string name="book_option">책 옵션</string>

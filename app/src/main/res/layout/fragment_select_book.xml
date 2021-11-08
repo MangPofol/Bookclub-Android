@@ -27,7 +27,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:elevation="0dp"
-                app:navigationIcon="@drawable/back_icon">
+                app:navigationIcon="@drawable/back">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                     android:layout_gravity="center"
                     android:text="@string/select_book"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="21.6sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -47,21 +47,29 @@
     <EditText
         android:id="@+id/searchBookET"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="27dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="33.6dp"
+        android:layout_marginBottom="32.4dp"
         android:background="@drawable/border_round_blue"
-        android:drawableRight="@drawable/ic_baseline_search_12_blue"
         android:hint="@string/enroll_new_book"
-        android:minHeight="0dp"
-        android:paddingHorizontal="12dp"
-        android:paddingTop="3dp"
+        android:paddingHorizontal="14.4dp"
+        android:paddingTop="4.8dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey1"
-        android:textSize="14sp"
+        android:textSize="14.4sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bookListLayout"
         app:layout_constraintTop_toBottomOf="@id/coordinateLayout" />
+
+    <ImageView
+        android:layout_width="10.8dp"
+        android:layout_height="10.8dp"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/search_filter_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBookET"
+        app:layout_constraintEnd_toEndOf="@+id/searchBookET"
+        app:layout_constraintTop_toTopOf="@+id/searchBookET" />
 
     <LinearLayout
         android:id="@+id/bookListLayout"
@@ -73,61 +81,80 @@
         app:layout_constraintTop_toBottomOf="@+id/searchBookET">
 
         <TextView
+            android:id="@+id/search_result_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="19.2dp"
+            android:text="@string/search_result"
+            android:textColor="@color/light_blue"
+            android:textSize="15.6sp"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/selectBookTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="19.2dp"
             android:text="@string/select_in_library"
             android:textColor="@color/grey8"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="15.6sp" />
+
+        <View
+            android:id="@+id/search_result_line"
+            android:layout_width="match_parent"
+            android:layout_height="1.2dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="15.6dp"
+            android:background="@color/grey12"
+            android:visibility="gone" />
 
         <RadioGroup
             android:id="@+id/readTypeRG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="11.856dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/readingRB"
-                android:layout_width="45dp"
-                android:layout_height="19dp"
+                android:layout_width="58.416dp"
+                android:layout_height="24.66dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center_horizontal"
-                android:paddingTop="3dp"
+                android:paddingTop="3.792dp"
                 android:text="@string/reading"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/readCompleteRB"
-                android:layout_width="34dp"
-                android:layout_height="19dp"
-                android:layout_marginHorizontal="5dp"
+                android:layout_width="44.136dp"
+                android:layout_height="24.66dp"
+                android:layout_marginHorizontal="6.492dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:gravity="center_horizontal"
-                android:paddingTop="3dp"
+                android:paddingTop="3.792dp"
                 android:text="@string/read_complete"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/wantToReadRB"
-                android:layout_width="50dp"
-                android:layout_height="19dp"
+                android:layout_width="64.908dp"
+                android:layout_height="24.66dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:gravity="center_horizontal"
-                android:paddingTop="3dp"
+                android:paddingTop="3.792dp"
                 android:text="@string/want_to_read"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
         </RadioGroup>
 
@@ -135,7 +162,8 @@
             android:id="@+id/bookListRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp" />
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="19.884dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
