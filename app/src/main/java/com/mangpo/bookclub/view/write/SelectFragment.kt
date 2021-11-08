@@ -8,33 +8,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.util.HorizontalItemDecorator
 import com.mangpo.bookclub.util.VerticalItemDecorator
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
     private lateinit var callback: OnBackPressedCallback
 
-    private var isNewBook: Boolean = false
-
-    private val bookViewModel: BookViewModel by activityViewModels()
+    private val bookViewModel: BookViewModel by sharedViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e("SelectFragment", "onAttach")
 
         //뒤로가기 콜백: 기록하기 화면으로 전환.
         callback = object : OnBackPressedCallback(true) {
@@ -47,9 +42,8 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("SelectBook", "onCreate")
+
         bookAdapter = BookAdapter(this)
-        bookViewModel.updateSelectedBookReadType(0)
     }
 
     override fun onCreateView(
@@ -57,90 +51,67 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSelectBookBinding.inflate(inflater, container, false)
-        Log.e("SelectBook", "onCreateView")
 
         //뒤로가기 아이콘 누르면 -> 기록하기 화면
         binding.toolbar.setNavigationOnClickListener {
-//            (requireParentFragment() as WriteFragment).moveToRecord()
             parentFragmentManager.popBackStack()
         }
 
         //책 검색 EditText에 TextChanged 리스너 등록
         binding.searchBookET.addTextChangedListener(this)
 
-        //읽는중, 완독, 읽고 싶은 체크박스를 클릭하면 BookViewModel의 readType이 변경된다.
+        //Recycler View 어댑터 설정
+        bookAdapter.setBooks(bookViewModel.getBookList("NOW"))
+        binding.bookListRV.adapter = bookAdapter
+        binding.bookListRV.layoutManager = GridLayoutManager(this.context, 3)
+        binding.bookListRV.addItemDecoration(VerticalItemDecorator(60))
+
+        //읽는중, 완독, 읽고 싶은 체크박스를 클릭하면 book recycler view UI 업데이트
         binding.readTypeRG.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                binding.readingRB.id -> bookViewModel.updateSelectedBookReadType(0)
-                binding.readCompleteRB.id -> bookViewModel.updateSelectedBookReadType(1)
-                binding.wantToReadRB.id -> bookViewModel.updateSelectedBookReadType(2)
+                binding.readingRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("NOW"))
+                binding.readCompleteRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("AFTER"))
+                binding.wantToReadRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("BEFORE"))
             }
         }
 
-        //Recycler View 어댑터 설정
-        binding.bookListRV.adapter = bookAdapter
-        binding.bookListRV.layoutManager = GridLayoutManager(this.context, 3)
-        binding.bookListRV.addItemDecoration(VerticalItemDecorator(50))
-        binding.bookListRV.addItemDecoration(HorizontalItemDecorator(20))
-
-        //BookViewModel 의 readType 이 변경되면 recycler view 의 책 목록이 업데이트 된다.
-        bookViewModel.selectedBookReadType.observe(viewLifecycleOwner, Observer {
-            Log.e("selectedBookReadType observe", it.toString())
-
-            (requireActivity() as MainActivity).hideKeyBord(this.requireView()) //키보드가 위로 올라와 있다면 키보드 내리기
-
-            when (it) {
-                0 -> {
-                    bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
-                }
-                1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
-                2 ->
-                    bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
-            }
-
-        })
-
-        //검색어에 따라 searchedBooks가 업데이트 되면 recycler view도 변경.
-        bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
-            if (binding.searchBookET.text.toString()!="")   //책 검색창이 비어 있으면 읽고 싶은 책, 아니면 검색 결과 목록으로
-                bookAdapter.setKakaoBooks(it)
-        })
-
-        //읽고 싶은 책 목록이 업데이트 되면(아마 읽고 싶은에 책이 추가됐을 때만 그럴 것 같음) recycler view 의 책 목록을 업데이트 한다.
-        /*bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
-            Log.e("beforeBooks observe", it.toString())
-            bookAdapter.setBooks(it)
-        })*/
+        observe()
 
         return binding.root
     }
 
     override fun onPause() {
         super.onPause()
-        Log.e("SelectBook", "onPause")
-//        (requireParentFragment() as WriteFragment).moveToRecord()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        callback.remove()
     }
 
     override fun onClick(position: Int) {
+        val selectedBook : BookModel    //선택한 책
+
         //책을 등록하는 bottom sheet 을 띄운다.
-        if (isNewBook) {    //새로운 책을 클릭한 상황이면
+        if (binding.readTypeRG.visibility == View.GONE) {    //새로운 책을 클릭한 상황이면
             //클릭된 책 제목을 SelectBookViewModel의 selectedBookTitle 변수에 업데이트
-            val selectedBook = bookViewModel.searchedBooks.value!![position]
-            bookViewModel.updateSelectedBook(
-                BookModel(
-                name = selectedBook.title,
-                isbn = selectedBook.isbn
+            selectedBook = BookModel(
+                name = bookViewModel.searchedBooks.value!![position].title,
+                isbn = bookViewModel.searchedBooks.value!![position].isbn,
+                imgPath = bookViewModel.searchedBooks.value!![position].thumbnail
             )
-            )
+
             val bottomSheet: AddBookBottomSheetFragment = AddBookBottomSheetFragment {
                 when (it) {
                     //읽는 중, 완독이면 -> 기록하기 화면으로 이동
                     "NOW", "AFTER" -> {
+                        selectedBook.category = it
+                        bookViewModel.setSelectedBook(selectedBook)
                         parentFragmentManager.popBackStack()
-//                        (requireParentFragment() as WriteFragment).moveToRecord()
                     }
                     //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
-                    "BEFORE" -> {
+                    /*"BEFORE" -> {
                         Log.e("Select", bookViewModel.selectedBook.value.toString())
 
                         CoroutineScope(Dispatchers.Main).launch {
@@ -154,27 +125,28 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                                     (requireActivity() as MainActivity).goToBeforeLibrary()
                                 }
                                 400 -> {
-                                    Toast.makeText(context, "이미 등록된 책입니다.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "이미 등록된 책입니다.", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                             }
                         }
 
-                        /*bookViewModel.updateBeforeBook(selectedBookViewModel.createdBook.value!!)
+                        bookViewModel.updateBeforeBook(selectedBookViewModel.createdBook.value!!)
                         binding.selectBookTV.visibility = View.VISIBLE
                         binding.readTypeRG.visibility = View.VISIBLE
-                        binding.wantToReadRB.isChecked = true*/
-                    }
+                        binding.wantToReadRB.isChecked = true
+                    }*/
                 }
             }
             bottomSheet.show((activity as MainActivity).supportFragmentManager, bottomSheet.tag)
         } else {    //기존 책을 클릭한 상황이면
-            when (bookViewModel.selectedBookReadType.value) {
-                0 -> bookViewModel.updateSelectedBook(bookViewModel.nowBooks.value!![position])
-                1 -> bookViewModel.updateSelectedBook(bookViewModel.afterBooks.value!![position])
-                2 -> bookViewModel.updateSelectedBook(bookViewModel.beforeBooks.value!![position])
+            selectedBook = when (binding.readTypeRG.checkedRadioButtonId) {
+                binding.readingRB.id -> bookViewModel.nowBooks.value!![position]
+                binding.readCompleteRB.id -> bookViewModel.afterBooks.value!![position]
+                else -> bookViewModel.beforeBooks.value!![position]
             }
+            bookViewModel.setSelectedBook(selectedBook)
             parentFragmentManager.popBackStack()
-//            (requireParentFragment() as WriteFragment).moveToRecord()
         }
     }
 
@@ -183,26 +155,26 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (count == 0) { //검색어가 비어있으면
-            isNewBook = false    //기존 책을 보고 있는 중이라는 flag 로 변경.
-
             //내 책장에서 선택하기, 읽기 유형 선택 화면 VISIBLE
             binding.selectBookTV.visibility = View.VISIBLE
             binding.readTypeRG.visibility = View.VISIBLE
+            binding.searchResultTv.visibility = View.GONE
+            binding.searchResultLine.visibility = View.GONE
 
-            when (bookViewModel.selectedBookReadType.value) {    //선택돼 있는 읽는 유형에 따라 책 목록 보이도록 설정
-                0 -> bookAdapter.setBooks(bookViewModel.nowBooks.value!!)
-                1 -> bookAdapter.setBooks(bookViewModel.afterBooks.value!!)
-                2 -> bookAdapter.setBooks(bookViewModel.beforeBooks.value!!)
+            when (binding.readTypeRG.checkedRadioButtonId) {    //선택돼 있는 읽는 유형에 따라 책 목록 보이도록 설정
+                binding.readingRB.id -> bookAdapter.setBooks(bookViewModel.nowBooks.value)
+                binding.readCompleteRB.id -> bookAdapter.setBooks(bookViewModel.afterBooks.value)
+                binding.wantToReadRB.id -> bookAdapter.setBooks(bookViewModel.beforeBooks.value)
             }
         } else {    //검색어가 입력돼 있으면
-            isNewBook = true    //새로운 책을 검색중이라는 flag 로 변경.
-
             //내 책장에서 선택하기, 읽기 유형 선택 화면 INVISIBLE
-            binding.selectBookTV.visibility = View.INVISIBLE
-            binding.readTypeRG.visibility = View.INVISIBLE
+            binding.selectBookTV.visibility = View.GONE
+            binding.readTypeRG.visibility = View.GONE
+            binding.searchResultTv.visibility = View.VISIBLE
+            binding.searchResultLine.visibility = View.VISIBLE
 
             CoroutineScope(Dispatchers.IO).launch { //입력된 검색어에 따라 책 목록 보이도록
-                bookViewModel.updateSearchBookTitle(s.toString())
+                bookViewModel.getSearchedBooks(s.toString())
             }
         }
     }
@@ -211,9 +183,11 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        Log.e("Select", "onDetach")
-        callback.remove()
+    private fun observe() {
+        //책 검색 시 book recycler view UI 가 업데이트됨.
+        bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
+            if (binding.searchBookET.text.isNotBlank())
+                bookAdapter.setKakaoBooks(it)
+        })
     }
 }

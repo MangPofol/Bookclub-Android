@@ -25,6 +25,7 @@ import java.lang.Exception
 import com.mangpo.bookclub.model.PostReqModel
 import com.mangpo.bookclub.view.main.MainActivity
 import kotlinx.coroutines.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.*
 
 
@@ -33,13 +34,15 @@ class RecordFragment : Fragment(), OnItemClick {
     private lateinit var callback: OnBackPressedCallback
 
     private val recordImgAdapter: RecordImgAdapter = RecordImgAdapter(this)
-    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
-    private val postViewModel: PostViewModel by activityViewModels<PostViewModel>()
-    private val permissions: Array<String> = arrayOf(
+    private val bookVm: BookViewModel by sharedViewModel()
+
+//    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
+//    private val postViewModel: PostViewModel by activityViewModels<PostViewModel>()
+    /*private val permissions: Array<String> = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA
-    )
+    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,14 @@ class RecordFragment : Fragment(), OnItemClick {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
         Log.d("Record", "onCreateView")
 
+        if (bookVm.getSelectedBook()!=null) {
+            binding.selectBookBtn.text = bookVm.getSelectedBook()!!.name
+        } else {
+            Log.d("Record", "selectedBook is null!")
+        }
+
         //뒤로가기 콜백
-        callback = object : OnBackPressedCallback(true) {
+        /*callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (binding.selectedBookTv.visibility == View.INVISIBLE && !binding.memoRB.isChecked &&
                     !binding.topicRB.isChecked && postViewModel.imgUriList.value==null &&
@@ -63,11 +72,11 @@ class RecordFragment : Fragment(), OnItemClick {
                 } else    //기록 내용이 있으면 -> 모든 값 초기화
                     init()
             }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        }*/
+        //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         //selectedBook observer
-        bookViewModel.selectedBook.observe(viewLifecycleOwner, Observer {
+        /*bookViewModel.selectedBook.observe(viewLifecycleOwner, Observer {
             if (it.name == "") { //빈값이면 책 선택 버튼에 "기록할 책을 선택하세요"
                 binding.selectBookBtn.visibility = View.VISIBLE
                 binding.selectedBookTv.visibility = View.INVISIBLE
@@ -77,7 +86,7 @@ class RecordFragment : Fragment(), OnItemClick {
                 binding.selectedBookTv.visibility = View.VISIBLE
                 binding.selectedBookTv.text = it.name
             }
-        })
+        })*/
 
         //책 선택 버튼을 누르면 SelectBookFragment로 이동
         binding.selectBookBtn.setOnClickListener {
@@ -85,7 +94,7 @@ class RecordFragment : Fragment(), OnItemClick {
         }
 
         //올리기 버튼을 클릭 리스너
-        binding.recordUploadIv.setOnClickListener {
+        /*binding.nextBtn.setOnClickListener {
             //모든 필수 항목을 다 입력했는지 유효성 검사
             if (checkEmpty()) {
                 try {
@@ -100,7 +109,7 @@ class RecordFragment : Fragment(), OnItemClick {
                                     //postViewModel.imgUriList.value == null -> createPost()
 
                                     //이미지가 한 개일 때 -> test 성공
-                                    /*postViewModel.imgUriList.value!!.size==1 -> {
+                                    *//*postViewModel.imgUriList.value!!.size==1 -> {
                                         CoroutineScope(Dispatchers.IO).launch {
                                             try {
                                                 val imgUrl = postViewModel.uploadImg(createCopyAndReturnRealPath(requireContext(), postViewModel.imgUriList.value!![0]))
@@ -112,10 +121,10 @@ class RecordFragment : Fragment(), OnItemClick {
                                                 Log.e("Record", "한 개의 이미지를 서버에 업로드 하는 과정 중 오류 발생 -> ${e.message}")
                                             }
                                         }
-                                    }*/
+                                    }*//*
 
                                     //이미지가 여러개일 때 -> test 성공
-                                    /*postViewModel.imgUriList.value!!.size>1 -> {
+                                    *//*postViewModel.imgUriList.value!!.size>1 -> {
                                         CoroutineScope(Dispatchers.IO).launch {
                                             try {
                                                 val paths: MutableList<String> = mutableListOf(
@@ -127,11 +136,11 @@ class RecordFragment : Fragment(), OnItemClick {
                                                 Log.e("Record", "여러 개의 이미지를 서버에 업로드 하는 과정 중 오류 발생 -> \n ${e.message}")
                                             }
                                         }
-                                    }*/
+                                    }*//*
 
-                                    /*else -> {
+                                    *//*else -> {
                                         createPost()
-                                    }*/
+                                    }*//*
 
                                 }
 
@@ -147,14 +156,14 @@ class RecordFragment : Fragment(), OnItemClick {
                 }
             }
 
-        }
+        }*/
 
         //사진 추가이미지 버튼 클릭 리스너
-        binding.addImgView.setOnClickListener {
-            saveRecord()    //postViewModel temporaryPost에 지금까지 기록된 데이터 임시저장하기
-            //ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
-            requestGalleryPermission()  //갤러리로 이동
-        }
+//        binding.addImgView.setOnClickListener {
+//            saveRecord()    //postViewModel temporaryPost에 지금까지 기록된 데이터 임시저장하기
+//            //ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+//            requestGalleryPermission()  //갤러리로 이동
+//        }
 
         //선택한 이미지를 보여주는 recycler view 어댑터 설정
         binding.recordImgRv.layoutManager = GridLayoutManager(requireContext(), 4)
@@ -175,16 +184,16 @@ class RecordFragment : Fragment(), OnItemClick {
         super.onResume()
         Log.d("Record", "onResume")
 
-        if (postViewModel.temporaryPost.value==null)    //임시저장 기록 데이터 null 이면 초기화
+       /* if (postViewModel.temporaryPost.value==null)    //임시저장 기록 데이터 null 이면 초기화
             postViewModel.initTemtporaryPost()
         else
-            uiUpdate()
+            //uiUpdate()
 
         if (postViewModel.imgUriList.value != null) {   //갤러리에서 이미지 선택하고 온 경우
             binding.imgCntTv.text = postViewModel.imgUriList.value!!.size.toString()
             recordImgAdapter.setData(postViewModel.imgUriList.value!!)
         } else  //선택한 이미지가 없으면 imgCnt를 0으로
-            binding.imgCntTv.text = "0"
+            binding.imgCntTv.text = "0"*/
     }
 
     override fun onPause() {
@@ -204,7 +213,7 @@ class RecordFragment : Fragment(), OnItemClick {
     }
 
     //기록하기 입력창 유효성 검사 함수
-    private fun checkEmpty(): Boolean {
+    /*private fun checkEmpty(): Boolean {
         if (binding.selectBookBtn.visibility == View.VISIBLE) {
             Toast.makeText(
                 context,
@@ -240,14 +249,14 @@ class RecordFragment : Fragment(), OnItemClick {
         } else {
             return true
         }
-    }
+    }*/
 
-    private fun requestGalleryPermission() {
-        (requireActivity() as MainActivity).galleryPermissionCallback.launch(permissions)
-    }
+//    private fun requestGalleryPermission() {
+//        (requireActivity() as MainActivity).galleryPermissionCallback.launch(permissions)
+//    }
 
     //갤러리 이동했다가 다시 돌아왔을 때 기록 데이터가 계속 유지될 수 있도록
-    private fun saveRecord() {
+    /*private fun saveRecord() {
         val record: PostReqModel = PostReqModel()
 
         record.title = binding.postTitleET.text.toString()
@@ -264,7 +273,7 @@ class RecordFragment : Fragment(), OnItemClick {
             record.type = ""
 
         postViewModel.setTemporaryPost(record)
-    }
+    }*/
 
     //이미지를 실제 경로로 변경하는 함수
     private fun createCopyAndReturnRealPath(context: Context, uri: Uri?): String {
@@ -291,7 +300,7 @@ class RecordFragment : Fragment(), OnItemClick {
     }
 
     //기록 데이터를 서버에 전송하기
-    private fun createPost() {
+    /*private fun createPost() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val createdPost: PostModel? = postViewModel.createPost(postViewModel.temporaryPost.value!!)
@@ -305,10 +314,10 @@ class RecordFragment : Fragment(), OnItemClick {
                 Log.e("Record", "createPost ERROR!! -> ${e.message}")
             }
         }
-    }
+    }*/
 
     //기록하기 화면 초기화(내용이 있으면 뒤로가기 버튼 눌렀을 때 모든 내용 삭제)
-    private fun init() {
+    /*private fun init() {
         binding.selectBookBtn.visibility = View.VISIBLE
         binding.selectedBookTv.visibility = View.INVISIBLE
         binding.memoTopicRG.clearCheck()
@@ -319,9 +328,9 @@ class RecordFragment : Fragment(), OnItemClick {
         postViewModel.updateImgUriList(null)
         postViewModel.setTemporaryPost(null)
         recordImgAdapter.setData(null)
-    }
+    }*/
 
-    private fun uiUpdate() {
+    /*private fun uiUpdate() {
         val record = postViewModel.temporaryPost.value!!
 
         binding.postTitleET.setText(record.title)
@@ -331,6 +340,6 @@ class RecordFragment : Fragment(), OnItemClick {
             "MEMO" -> binding.memoRB.isChecked = true
             "TOPIC" -> binding.topicRB.isChecked = true
         }
-    }
+    }*/
 
 }
