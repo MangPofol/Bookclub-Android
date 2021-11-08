@@ -35,6 +35,7 @@ class RecordFragment : Fragment(), OnItemClick {
 
     private val recordImgAdapter: RecordImgAdapter = RecordImgAdapter(this)
     private val bookVm: BookViewModel by sharedViewModel()
+    private val bottomSheet: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment()
 
 //    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
 //    private val postViewModel: PostViewModel by activityViewModels<PostViewModel>()
@@ -60,6 +61,10 @@ class RecordFragment : Fragment(), OnItemClick {
             binding.selectBookBtn.text = bookVm.getSelectedBook()!!.name
         } else {
             Log.d("Record", "selectedBook is null!")
+        }
+
+        binding.addImgView.setOnClickListener {
+            bottomSheet.show((activity as MainActivity).supportFragmentManager, bottomSheet.tag)
         }
 
         //뒤로가기 콜백
