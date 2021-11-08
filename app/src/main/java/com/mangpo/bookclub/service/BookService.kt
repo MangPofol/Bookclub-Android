@@ -1,7 +1,7 @@
 package com.mangpo.bookclub.service
 
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.model.BookResData
+import com.mangpo.bookclub.model.BooksModel
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -11,7 +11,7 @@ interface BookService {
     suspend fun getBooks(
         @Query("email") email: String,
         @Query("category") category: String
-    ): Response<BookResData>
+    ): Response<BooksModel>
 
     @Headers("Content-Type: application/json")
     @POST("/books")
