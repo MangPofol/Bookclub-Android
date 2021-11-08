@@ -27,10 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textStyle="bold"
+                android:fontFamily="@font/poppins_extra_bold"
                 android:text="@string/my_library"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/main_blue"
+                android:textSize="21.6sp" />
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -51,102 +51,124 @@
                 android:id="@+id/readTypeTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                app:tabIndicatorColor="@color/main_blue"
-                app:tabSelectedTextColor="@color/main_blue"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabBackground="@drawable/my_library_tab_selector"
+                app:tabIndicatorColor="@color/transparent"
+                app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/tab_text"
-                app:tabTextColor="@color/black" />
+                app:tabTextColor="@color/main_blue" />
 
-            <LinearLayout
+            <!--<LinearLayout
+                android:id="@+id/tab_line"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_height="2.4dp"
+                android:layout_marginHorizontal="24dp"
                 android:background="@color/grey2"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/readTypeTabLayout"/>-->
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mainFilterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="11dp"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="18dp"
+                app:layout_constraintTop_toBottomOf="@+id/tab_line">
 
                 <CheckBox
                     android:id="@+id/searchButton"
-                    android:layout_width="60dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_width="72dp"
+                    android:layout_height="28.8dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:drawableEnd="@drawable/filter_checkbox_drawable_end"
-                    android:drawablePadding="0dp"
-                    android:gravity="center"
-                    android:paddingHorizontal="12dp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="3dp"
                     android:text="@string/search"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="10sp" />
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/clubButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="9.6dp"
+                    android:layout_height="9.6dp"
+                    android:layout_marginEnd="18dp"
+                    android:src="@drawable/search_filter_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/searchButton"
+                    app:layout_constraintEnd_toEndOf="@+id/searchButton"
+                    app:layout_constraintTop_toTopOf="@+id/searchButton" />
 
                 <CheckBox
                     android:id="@+id/clubButton"
-                    android:layout_width="60dp"
-                    android:layout_height="25dp"
+                    android:layout_width="72dp"
+                    android:layout_height="28.8dp"
+                    android:layout_marginHorizontal="6dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
                     android:gravity="center_horizontal"
-                    android:paddingTop="5dp"
+                    android:paddingTop="6dp"
                     android:text="@string/book_club_kr"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="10sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/searchButton"
+                    app:layout_constraintEnd_toStartOf="@+id/sortButton"
+                    app:layout_constraintStart_toEndOf="@+id/searchButton"
+                    app:layout_constraintTop_toTopOf="@+id/searchButton" />
 
                 <CheckBox
                     android:id="@+id/sortButton"
-                    android:layout_width="60dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="72dp"
+                    android:layout_height="28.8dp"
+                    android:layout_marginLeft="6dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
                     android:gravity="center_horizontal"
-                    android:paddingTop="5dp"
+                    android:paddingTop="6dp"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="10sp" />
-            </LinearLayout>
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/clubButton"
+                    app:layout_constraintStart_toEndOf="@+id/clubButton"
+                    app:layout_constraintTop_toTopOf="@+id/clubButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:background="@color/grey5">
+                android:layout_height="78dp"
+                android:background="@color/grey5"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/mainFilterLayout">
 
                 <include
                     android:id="@+id/search_layout"
                     layout="@layout/fragment_search"
-                    android:visibility="gone"/>
-                <include layout="@layout/fragment_book_club_filter"
-                    android:id="@+id/book_club_filter_layout"
-                    android:visibility="gone"/>
-                <include layout="@layout/fragment_sort_filter"
-                    android:id="@+id/sort_filter_layout"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
-                <!--<FrameLayout
-                    android:id="@+id/filterLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/bookListRecyclerView"
-                    app:layout_constraintTop_toTopOf="parent" />-->
+                <include
+                    android:id="@+id/book_club_filter_layout"
+                    layout="@layout/fragment_book_club_filter"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/sort_filter_layout"
+                    layout="@layout/fragment_sort_filter"
+                    android:visibility="gone" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
-                android:paddingTop="35dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grey5"/>
+                android:background="@color/grey5">
+
+            </androidx.viewpager2.widget.ViewPager2>
 
         </LinearLayout>
 
