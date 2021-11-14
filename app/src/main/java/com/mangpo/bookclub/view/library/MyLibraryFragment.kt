@@ -3,19 +3,16 @@ package com.mangpo.bookclub.view.library
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyLibraryBinding
-import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.view.adapter.BookAdapter
-import com.mangpo.bookclub.view.adapter.BookClubFilterAdapter
 import com.mangpo.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
@@ -158,6 +155,8 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             }
         }
 
+        observe()
+
         return binding.root
     }
 
@@ -190,6 +189,16 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     /*private fun setVisibilityClubButton(visibility: Int) {
         binding.clubButton.visibility = visibility
     }*/
+
+    private fun observe() {
+        bookViewModel.readType.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                "NOW" -> binding.viewPager.currentItem = 0
+                "AFTER" -> binding.viewPager.currentItem = 1
+                else -> binding.viewPager.currentItem = 2
+            }
+        })
+    }
 
 }
 
