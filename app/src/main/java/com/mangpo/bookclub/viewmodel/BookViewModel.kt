@@ -1,18 +1,15 @@
 package com.mangpo.bookclub.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
 import com.mangpo.bookclub.repository.BookRepository
 import com.mangpo.bookclub.repository.KakaoBookRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
