@@ -35,4 +35,7 @@ val ViewModelModule = module {
     viewModel<BookViewModel> {
         BookViewModel(get(), get(), get())
     }
+    viewModel<PostViewModel> {
+        PostViewModel()
+    }
 }
