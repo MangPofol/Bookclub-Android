@@ -1,22 +1,45 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.net.Uri
-import android.util.Log
+import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.model.PostModel
-import com.mangpo.bookclub.model.PostReqModel
-import com.mangpo.bookclub.repository.FileRepository
-import com.mangpo.bookclub.repository.PostRespository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PostViewModel(): ViewModel() {
-    private val postRepository: PostRespository = PostRespository()
+    private val _imgs: MutableLiveData<List<Bitmap>> = MutableLiveData()
+
+    private var title: String? = null
+    private var content: String? = null
+    private var bookId: Long? = null
+
+    val imgs: LiveData<List<Bitmap>> get() = _imgs
+
+    fun setImgs(bitmaps: List<Bitmap>) {
+        _imgs.value = bitmaps
+    }
+
+    fun removeImg(position: Int) {
+        (_imgs.value as ArrayList).removeAt(position)
+    }
+
+    fun setTitle(title: String?) {
+        this.title = title
+    }
+
+    fun getTitle(): String? = title
+
+    fun setContent(content: String?) {
+        this.content = content
+    }
+
+    fun getContent(): String? = content
+
+    fun setBookId(bookId: Long?) {
+        this.bookId = bookId
+    }
+
+    fun getBookId(): Long? = this.bookId
+    /*private val postRepository: PostRespository = PostRespository()
     private val fileRepository: FileRepository = FileRepository()
 
     private val _imgUriList: MutableLiveData<MutableList<Uri>?> =
@@ -36,7 +59,7 @@ class PostViewModel(): ViewModel() {
 
     fun setTemporaryPost(post: PostReqModel?) {
         _temporaryPost.value = post
-    }
+    }*/
 
     /*suspend fun updateBooksLatestPostDate(books: MutableList<BookModel>) {
         for (book in books) {
@@ -55,7 +78,7 @@ class PostViewModel(): ViewModel() {
         }
     }*/
 
-    suspend fun createPost(newPost: PostReqModel): PostModel? {
+    /*suspend fun createPost(newPost: PostReqModel): PostModel? {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             postRepository.createPost(newPost)
         }
@@ -77,5 +100,5 @@ class PostViewModel(): ViewModel() {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             fileRepository.uploadFile(path)
         }
-    }
+    }*/
 }
