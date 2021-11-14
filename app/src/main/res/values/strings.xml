@@ -97,17 +97,26 @@
     <string name="max_image_desc">이미지는 최대 4장까지 첨부할 수 있습니다.</string>
 
     <!-- record_scope_bottom_sheet -->
-    <string name="record_scope_title">공개 설정</string>
     <string name="record_kr">기록하기</string>
 
     <string name="complete">완료</string>
     <string name="next">다음</string>
     <string name="content_hint">내용을 입력해주세요.</string>
     <string name="set_nickname_info">특수문자, 한글, 영어 혼용 가능 (최대 10자)</string>
-    
+
     <!--  Camera Gallery Bottom Sheet Fragment  -->
     <string name="photo_registration">사진 등록</string>
     <string name="take_a_photo">사진 촬영하기</string>
     <string name="get_to_gallery">사진첩에서 가져오기</string>
+
+    <!-- WritingSettingFragment -->
+    <string name="writing_setting">글 설정</string>
+    <string name="read_where">어디서 책을 읽었나요?</string>
+    <string name="read_time">책 읽은 시간대는?</string>
+    <string name="read_time_hint">점심시간 / 13:34</string>
+    <string name="link">함께 첨부하고 싶은 링크가 있다면?</string>
+    <string name="link_title_hint">링크 제목</string>
+    <string name="link_hint">https://drive.google.com/drive/u/0/starred</string>
+    <string name="public_setting">공개 설정</string>
 
 </resources>
