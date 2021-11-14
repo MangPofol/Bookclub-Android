@@ -1,7 +1,7 @@
 package com.mangpo.bookclub.view.write
 
-import android.Manifest
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,45 +9,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
-import com.mangpo.bookclub.model.PostModel
-import com.mangpo.bookclub.view.adapter.OnItemClick
-import com.mangpo.bookclub.view.adapter.RecordImgAdapter
+import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
-import com.mangpo.bookclub.viewmodel.PostViewModel
-import java.lang.Exception
-import com.mangpo.bookclub.model.PostReqModel
 import com.mangpo.bookclub.view.main.MainActivity
-import kotlinx.coroutines.*
+import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.*
 
 
-class RecordFragment : Fragment(), OnItemClick {
+class RecordFragment : Fragment() {
     private lateinit var binding: FragmentRecordBinding
 //    private lateinit var callback: OnBackPressedCallback
 
-    private val recordImgAdapter: RecordImgAdapter = RecordImgAdapter(this)
+    private val recordImgRVAdapter: RecordImgRVAdapter = RecordImgRVAdapter()
     private val bookVm: BookViewModel by sharedViewModel()
-    private val bottomSheet: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment()
-
-//    private val bookViewModel: BookViewModel by activityViewModels<BookViewModel>()
-//    private val postViewModel: PostViewModel by activityViewModels<PostViewModel>()
-    /*private val permissions: Array<String> = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA
-    )*/
+    private val postVm: PostViewModel by sharedViewModel()
+    private val cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Record", "onCreate")
+        Log.d("RecordFragment", "onCreate")
     }
 
     override fun onCreateView(
@@ -55,17 +39,45 @@ class RecordFragment : Fragment(), OnItemClick {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
-        Log.d("Record", "onCreateView")
+        Log.d("RecordFragment", "onCreateView")
+
+        observe()
 
         if (bookVm.getSelectedBook()!=null) {
             binding.selectBookBtn.text = bookVm.getSelectedBook()!!.name
         } else {
-            Log.d("Record", "selectedBook is null!")
+            Log.d("RecordFragment", "selectedBook is null!")
         }
 
+        //이미지 선택하기 클릭 리스너
         binding.addImgView.setOnClickListener {
-            bottomSheet.show((activity as MainActivity).supportFragmentManager, bottomSheet.tag)
+            setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
+            cameraGalleryBottomSheet.show((activity as MainActivity).supportFragmentManager, cameraGalleryBottomSheet.tag)
         }
+
+        //책 선택 버튼을 누르면 SelectBookFragment로 이동
+        binding.selectBookBtn.setOnClickListener {
+            (activity as MainActivity).hideKeyBord(requireView())   //키보드 올라와 있으면 키보드 내리기
+            setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
+            (requireParentFragment() as WriteFragment).moveToSelectBook()
+        }
+
+        //선택한 이미지를 보여주는 recycler view 어댑터 설정
+        binding.recordImgRv.adapter = recordImgRVAdapter
+        //RecordImgRVAdapter MyItemClickListener 인터페이스의 removeItem 메서드 구현 -> PostViewModel의 imgs 라이브 데이터도 삭제된 후 데이터로 업데이트
+        recordImgRVAdapter.setMyItemClickListener(object : RecordImgRVAdapter.MyItemClickListener {
+            override fun removeItem(position: Int) {
+                postVm.removeImg(position)
+            }
+        })
+
+        //다음 버튼 클릭 리스너 -> 글 설정 프래그먼트로 이동하기
+        binding.nextBtn.setOnClickListener {
+            setPost()
+            (requireParentFragment() as WriteFragment).moveToWritingSetting()
+        }
+
+        return binding.root
 
         //뒤로가기 콜백
         /*callback = object : OnBackPressedCallback(true) {
@@ -92,11 +104,6 @@ class RecordFragment : Fragment(), OnItemClick {
                 binding.selectedBookTv.text = it.name
             }
         })*/
-
-        //책 선택 버튼을 누르면 SelectBookFragment로 이동
-        binding.selectBookBtn.setOnClickListener {
-            (requireParentFragment() as WriteFragment).moveToSelectBook()
-        }
 
         //올리기 버튼을 클릭 리스너
         /*binding.nextBtn.setOnClickListener {
@@ -169,25 +176,22 @@ class RecordFragment : Fragment(), OnItemClick {
 //            //ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
 //            requestGalleryPermission()  //갤러리로 이동
 //        }
-
-        //선택한 이미지를 보여주는 recycler view 어댑터 설정
-        binding.recordImgRv.layoutManager = GridLayoutManager(requireContext(), 4)
-        binding.recordImgRv.adapter = recordImgAdapter
-
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Record", "onViewCreated")
+        Log.d("RecordFragment", "onViewCreated")
 
-        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
+        binding.toolbar.setNavigationIcon(R.drawable.back_icon_small)  //navigation icon 설정
+//        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
+//        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("Record", "onResume")
+        Log.d("RecordFragment", "onResume")
+
+        bindTitleAndContent()   //책 선택 or 이미지 선택/촬영하기 전에 작성한 제목, 내용 불러오기
 
        /* if (postViewModel.temporaryPost.value==null)    //임시저장 기록 데이터 null 이면 초기화
             postViewModel.initTemtporaryPost()
@@ -203,18 +207,46 @@ class RecordFragment : Fragment(), OnItemClick {
 
     override fun onPause() {
         super.onPause()
-        Log.d("Record", "onPause")
+        Log.d("RecordFragment", "onPause")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("Record", "onDetach")
+        Log.d("RecordFragment", "onDetach")
 
 //        callback.remove()
     }
 
-    override fun onClick(size: Int) {   //선택된 이미지 삭제하면 이미지 cnt 변경되도록
-        binding.imgCntTv.text = size.toString()
+    private fun observe() {
+        //기록 이미지 observer
+        postVm.imgs.observe(viewLifecycleOwner, Observer {
+            Log.d("RecordFragment", "Observe!!")
+            recordImgRVAdapter.setData(it)
+        })
+    }
+
+    private fun setPost() {
+        if (binding.postTitleET.text.isBlank())
+            postVm.setTitle(null)
+        else
+            postVm.setTitle(binding.postTitleET.text.toString())
+
+        if (binding.contentET.text.isBlank())
+            postVm.setContent(null)
+        else
+            postVm.setContent(binding.contentET.text.toString())
+
+        if (bookVm.getSelectedBook()==null)
+            postVm.setBookId(null)
+        else {
+            postVm.setBookId(bookVm.getSelectedBook()!!.id)
+        }
+
+    }
+
+    private fun bindTitleAndContent() {
+        binding.postTitleET.setText(postVm.getTitle())
+        binding.contentET.setText(postVm.getContent())
     }
 
     //기록하기 입력창 유효성 검사 함수
@@ -279,6 +311,22 @@ class RecordFragment : Fragment(), OnItemClick {
 
         postViewModel.setTemporaryPost(record)
     }*/
+
+    private fun getAbsolutePathByBitmap(bitmap: Bitmap): String {
+        val path = (requireContext().applicationInfo.dataDir + File.separator + System.currentTimeMillis())
+        val file = File(path)
+        var out: OutputStream? = null
+
+        try {
+            file.createNewFile()
+            out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        } finally {
+            out?.close()
+        }
+
+        return file.absolutePath
+    }
 
     //이미지를 실제 경로로 변경하는 함수
     private fun createCopyAndReturnRealPath(context: Context, uri: Uri?): String {
