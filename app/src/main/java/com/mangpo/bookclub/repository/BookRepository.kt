@@ -32,11 +32,16 @@ class BookRepository(
             books = body.books
 
             for (book in books) {
-                var image: String? = bookImageDao.getImage(book.isbn!!)
+                var image: String = bookImageDao.getImage(book.isbn!!)
 
                 if (image == null) {
-                    image = kakaoBookService.getKakaoBooks(book.isbn!!, "isbn", 1)
-                        .body()!!.documents[0].thumbnail
+                    try {
+                        image = kakaoBookService.getKakaoBooks(book.isbn!!, "isbn", 1)
+                            .body()!!.documents[0].thumbnail!!
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                     bookImageDao.insertBook(
                         BookImageModel(
                             isbn = book.isbn,
