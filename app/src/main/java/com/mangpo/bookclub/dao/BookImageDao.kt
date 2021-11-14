@@ -11,5 +11,5 @@ interface BookImageDao {
     fun insertBook(vararg bookImg: BookImageModel)
 
     @Query("SELECT image FROM BookImageModel WHERE isbn = :isbn")
-    fun getImage(isbn: String): String?
+    fun getImage(isbn: String): String
 }
