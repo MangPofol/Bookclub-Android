@@ -43,6 +43,12 @@ class WriteFragment : Fragment() {
             .replace(binding.frameLayout.id, SelectFragment()).addToBackStack("selectBook").commit()
     }
 
+    fun moveToWritingSetting() {
+        binding.frameLayout.removeAllViews()
+        childFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, WritingSettingFragment()).addToBackStack("writingSetting").commit()
+    }
+
     override fun onPause() {
         super.onPause()
         Log.e("WriteFragment", "onPause")
