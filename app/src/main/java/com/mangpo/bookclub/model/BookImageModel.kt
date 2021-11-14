@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class BookImageModel(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "isbn") val isbn: String,
-    @ColumnInfo(name = "image") val image: String? = null
+    @ColumnInfo(name = "image") val image: String = ""
 )
