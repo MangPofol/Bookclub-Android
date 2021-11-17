@@ -81,7 +81,7 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
 
     fun getSelectedBook(): BookModel? = _selectedBook
 
-    fun setSelectedBook(book: BookModel) {
+    fun setSelectedBook(book: BookModel?) {
         _selectedBook = book
     }
 
