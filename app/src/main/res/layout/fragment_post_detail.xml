@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.write.PostDetailFragment">
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26.4dp"
+        android:layout_marginTop="27.6dp"
+        android:src="@drawable/back_icon_small"
+        app:layout_constraintBottom_toTopOf="@+id/book_name_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/book_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34.8dp"
+        android:layout_marginTop="40.8dp"
+        android:text="책 이름"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/line_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_iv" />
+
+    <TextView
+        android:id="@+id/update_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="@string/update"
+        android:textColor="@color/main_blue"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/book_name_tv"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="2.4dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="4.8dp"
+        android:background="@color/main_blue"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_view"
+        app:layout_constraintTop_toBottomOf="@+id/book_name_tv" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="26.4dp"
+        android:background="@drawable/layout_gradation"
+        android:paddingHorizontal="28.8dp"
+        android:paddingVertical="21.6dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/record_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인생의 다음 단계로 넘어가 보자."
+                android:textColor="@color/main_blue"
+                android:textSize="19.2sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/record_content_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/record_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27.6dp"
+                android:lineSpacingExtra="18dp"
+                android:text="이 소설은 한남자의 불행을 중심으로 사실과 진실사이의 미묘한 차이를 보여주고 있다.\n\n전직 프로야구선수 최현수는 어릴적 아버지의 폭력과 불행한 가정환경속에서도 자신의 삶에 최선을 다하며 바르게 살고자하는 착한 남자이다. 그러나 어린시절의 불행은 늘 그에게 보이지 않는 그늘처럼 남아서 야구선수로 제대로 실력을 발휘하기 힘든 스트레스 주고 있었다. 그는 억척스런 아내를 맞아 씩씩하고 착한 아들 서원을 키우면서 스트레스로 한쪽 팔이 마비되는 증세도 사라졌다고 생각했다."
+                android:textColor="@color/light_blue"
+                android:textSize="16.8sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/record_title_tv" />
+
+            <ImageView
+                android:id="@+id/record_img_iv"
+                android:layout_width="match_parent"
+                android:layout_height="384dp"
+                android:layout_marginTop="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/location_icon_iv"
+                app:layout_constraintTop_toBottomOf="@+id/record_content_tv" />
+
+            <ImageView
+                android:id="@+id/location_icon_iv"
+                android:layout_width="13.2dp"
+                android:layout_height="16.8dp"
+                android:layout_marginTop="16.872dp"
+                android:src="@drawable/location_grey_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/record_img_iv" />
+
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10.8dp"
+                android:text="우리집"
+                android:textColor="@color/grey12"
+                android:textSize="14.4sp"
+                app:layout_constraintBottom_toBottomOf="@+id/location_icon_iv"
+                app:layout_constraintEnd_toStartOf="@+id/location_icon_iv"
+                app:layout_constraintTop_toTopOf="@+id/location_icon_iv" />
+
+            <ImageView
+                android:id="@+id/clock_icon_iv"
+                android:layout_width="13.2dp"
+                android:layout_height="16.8dp"
+                android:layout_marginTop="16.872dp"
+                android:src="@drawable/clock_grey_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location_icon_iv" />
+
+            <TextView
+                android:id="@+id/clock_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10.8dp"
+                android:text="점심 먹을 때"
+                android:textColor="@color/grey12"
+                android:textSize="14.4sp"
+                app:layout_constraintBottom_toBottomOf="@+id/clock_icon_iv"
+                app:layout_constraintEnd_toStartOf="@+id/clock_icon_iv"
+                app:layout_constraintTop_toTopOf="@+id/clock_icon_iv" />
+
+            <View
+                android:id="@+id/line_view2"
+                android:layout_width="match_parent"
+                android:layout_height="1.2dp"
+                android:layout_marginTop="14.4dp"
+                android:background="@color/grey12"
+                app:layout_constraintTop_toBottomOf="@+id/clock_tv" />
+
+            <ImageView
+                android:id="@+id/like_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/like_off_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_view2" />
+
+            <TextView
+                android:id="@+id/like_cnt_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="4"
+                android:textColor="@color/main_blue"
+                android:textSize="14.4sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/like_iv"
+                app:layout_constraintStart_toEndOf="@+id/like_iv"
+                app:layout_constraintTop_toTopOf="@+id/like_iv" />
+
+            <ImageView
+                android:id="@+id/comment_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13.2dp"
+                android:src="@drawable/comment_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/like_iv"
+                app:layout_constraintStart_toEndOf="@+id/like_cnt_tv"
+                app:layout_constraintTop_toTopOf="@+id/like_iv" />
+
+            <TextView
+                android:id="@+id/comment_cnt_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="4"
+                android:textColor="@color/main_blue"
+                android:textSize="14.4sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/comment_iv"
+                app:layout_constraintStart_toEndOf="@+id/comment_iv"
+                app:layout_constraintTop_toTopOf="@+id/comment_iv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comment_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="28.56dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/like_iv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

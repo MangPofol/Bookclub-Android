@@ -119,4 +119,7 @@
     <string name="link_hint">https://drive.google.com/drive/u/0/starred</string>
     <string name="public_setting">공개 설정</string>
 
+    <!-- PostDetailFragment -->
+    <string name="update">수정하기</string>
+
 </resources>
