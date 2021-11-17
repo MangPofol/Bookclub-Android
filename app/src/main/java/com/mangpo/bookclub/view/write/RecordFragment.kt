@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
+import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.view.main.MainActivity
@@ -27,7 +28,8 @@ class RecordFragment : Fragment() {
     private val recordImgRVAdapter: RecordImgRVAdapter = RecordImgRVAdapter()
     private val bookVm: BookViewModel by sharedViewModel()
     private val postVm: PostViewModel by sharedViewModel()
-    private val cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment()
+    private val cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment =
+        CameraGalleryBottomSheetFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class RecordFragment : Fragment() {
 
         observe()
 
-        if (bookVm.getSelectedBook()!=null) {
+        if (bookVm.getSelectedBook() != null) {
             binding.selectBookBtn.text = bookVm.getSelectedBook()!!.name
         } else {
             Log.d("RecordFragment", "selectedBook is null!")
@@ -51,15 +53,24 @@ class RecordFragment : Fragment() {
 
         //이미지 선택하기 클릭 리스너
         binding.addImgView.setOnClickListener {
-            setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
-            cameraGalleryBottomSheet.show((activity as MainActivity).supportFragmentManager, cameraGalleryBottomSheet.tag)
+            if (binding.postTitleET.text.isNotBlank() || binding.contentET.text.isNotBlank()) {
+                setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
+            }
+
+            cameraGalleryBottomSheet.show(
+                (activity as MainActivity).supportFragmentManager,
+                cameraGalleryBottomSheet.tag
+            )
         }
 
         //책 선택 버튼을 누르면 SelectBookFragment로 이동
         binding.selectBookBtn.setOnClickListener {
+            if (binding.postTitleET.text.isNotBlank() || binding.contentET.text.isNotBlank()) {
+                setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
+            }
+
             (activity as MainActivity).hideKeyBord(requireView())   //키보드 올라와 있으면 키보드 내리기
-            setPost()    //title이랑 content를 작성했으면 우선 postViewModel에 저장해놓기
-            (requireParentFragment() as WriteFragment).moveToSelectBook()
+            (requireParentFragment() as PostFragment).moveToSelectBook()
         }
 
         //선택한 이미지를 보여주는 recycler view 어댑터 설정
@@ -74,7 +85,8 @@ class RecordFragment : Fragment() {
         //다음 버튼 클릭 리스너 -> 글 설정 프래그먼트로 이동하기
         binding.nextBtn.setOnClickListener {
             setPost()
-            (requireParentFragment() as WriteFragment).moveToWritingSetting()
+            (activity as MainActivity).hideKeyBord(requireView())
+            (requireParentFragment() as PostFragment).moveToWritingSetting()
         }
 
         return binding.root
@@ -193,16 +205,16 @@ class RecordFragment : Fragment() {
 
         bindTitleAndContent()   //책 선택 or 이미지 선택/촬영하기 전에 작성한 제목, 내용 불러오기
 
-       /* if (postViewModel.temporaryPost.value==null)    //임시저장 기록 데이터 null 이면 초기화
-            postViewModel.initTemtporaryPost()
-        else
-            //uiUpdate()
+        /* if (postViewModel.temporaryPost.value==null)    //임시저장 기록 데이터 null 이면 초기화
+             postViewModel.initTemtporaryPost()
+         else
+             //uiUpdate()
 
-        if (postViewModel.imgUriList.value != null) {   //갤러리에서 이미지 선택하고 온 경우
-            binding.imgCntTv.text = postViewModel.imgUriList.value!!.size.toString()
-            recordImgAdapter.setData(postViewModel.imgUriList.value!!)
-        } else  //선택한 이미지가 없으면 imgCnt를 0으로
-            binding.imgCntTv.text = "0"*/
+         if (postViewModel.imgUriList.value != null) {   //갤러리에서 이미지 선택하고 온 경우
+             binding.imgCntTv.text = postViewModel.imgUriList.value!!.size.toString()
+             recordImgAdapter.setData(postViewModel.imgUriList.value!!)
+         } else  //선택한 이미지가 없으면 imgCnt를 0으로
+             binding.imgCntTv.text = "0"*/
     }
 
     override fun onPause() {
@@ -226,27 +238,70 @@ class RecordFragment : Fragment() {
     }
 
     private fun setPost() {
-        if (binding.postTitleET.text.isBlank())
-            postVm.setTitle(null)
-        else
-            postVm.setTitle(binding.postTitleET.text.toString())
-
-        if (binding.contentET.text.isBlank())
-            postVm.setContent(null)
-        else
-            postVm.setContent(binding.contentET.text.toString())
-
-        if (bookVm.getSelectedBook()==null)
-            postVm.setBookId(null)
-        else {
-            postVm.setBookId(bookVm.getSelectedBook()!!.id)
+        val imgPaths: MutableList<String> = ArrayList<String>()
+        if (postVm.imgs.value != null) {
+            for (img in postVm.imgs.value!!) {
+                imgPaths.add(getAbsolutePathByBitmap(img))
+            }
         }
 
+        val post: PostModel = PostModel(
+            bookId = bookVm.getSelectedBook()?.id,
+            isIncomplete = false,
+            postImgLocations = imgPaths,
+            title = binding.postTitleET.text.toString(),
+            content = binding.contentET.text.toString()
+        )
+
+        postVm.setPost(post)
     }
 
     private fun bindTitleAndContent() {
-        binding.postTitleET.setText(postVm.getTitle())
-        binding.contentET.setText(postVm.getContent())
+        if (postVm.getPost() != null) {
+            binding.postTitleET.setText(postVm.getPost()!!.title)
+            binding.contentET.setText(postVm.getPost()!!.content)
+        }
+    }
+
+    private fun getAbsolutePathByBitmap(bitmap: Bitmap): String {
+        val path =
+            (requireContext().applicationInfo.dataDir + File.separator + System.currentTimeMillis())
+        val file = File(path)
+        var out: OutputStream? = null
+
+        try {
+            file.createNewFile()
+            out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        } finally {
+            out?.close()
+        }
+
+        return file.absolutePath
+    }
+
+    //이미지를 실제 경로로 변경하는 함수
+    private fun createCopyAndReturnRealPath(context: Context, uri: Uri?): String {
+        val contentResolver = context.contentResolver
+
+        // 파일 경로를 만듬
+        val filePath = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
+        try {
+            // 매개변수로 받은 uri 를 통해  이미지에 필요한 데이터를 불러 들인다.
+            val inputStream = contentResolver.openInputStream(uri!!)
+            // 이미지 데이터를 다시 내보내면서 file 객체에  만들었던 경로를 이용한다.
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream!!.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream!!.close()
+        } catch (ignore: IOException) {
+            return ""
+        }
+        return file.absolutePath
     }
 
     //기록하기 입력창 유효성 검사 함수
@@ -311,46 +366,6 @@ class RecordFragment : Fragment() {
 
         postViewModel.setTemporaryPost(record)
     }*/
-
-    private fun getAbsolutePathByBitmap(bitmap: Bitmap): String {
-        val path = (requireContext().applicationInfo.dataDir + File.separator + System.currentTimeMillis())
-        val file = File(path)
-        var out: OutputStream? = null
-
-        try {
-            file.createNewFile()
-            out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        } finally {
-            out?.close()
-        }
-
-        return file.absolutePath
-    }
-
-    //이미지를 실제 경로로 변경하는 함수
-    private fun createCopyAndReturnRealPath(context: Context, uri: Uri?): String {
-        val contentResolver = context.contentResolver
-
-        // 파일 경로를 만듬
-        val filePath = (context.applicationInfo.dataDir + File.separator
-                + System.currentTimeMillis())
-        val file = File(filePath)
-        try {
-            // 매개변수로 받은 uri 를 통해  이미지에 필요한 데이터를 불러 들인다.
-            val inputStream = contentResolver.openInputStream(uri!!)
-            // 이미지 데이터를 다시 내보내면서 file 객체에  만들었던 경로를 이용한다.
-            val outputStream: OutputStream = FileOutputStream(file)
-            val buf = ByteArray(1024)
-            var len: Int
-            while (inputStream!!.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-            outputStream.close()
-            inputStream!!.close()
-        } catch (ignore: IOException) {
-            return ""
-        }
-        return file.absolutePath
-    }
 
     //기록 데이터를 서버에 전송하기
     /*private fun createPost() {
