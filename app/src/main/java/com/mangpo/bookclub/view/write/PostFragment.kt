@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mangpo.bookclub.databinding.FragmentWriteBinding
+import com.mangpo.bookclub.databinding.FragmentPostBinding
+import com.mangpo.bookclub.viewmodel.BookViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class WriteFragment : Fragment() {
-    private lateinit var binding: FragmentWriteBinding
+class PostFragment : Fragment() {
+    private lateinit var binding: FragmentPostBinding
+
+    private val bookVm: BookViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +25,7 @@ class WriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.e("WriteFragment", "onCreateView")
-        binding = FragmentWriteBinding.inflate(inflater, container, false)
+        binding = FragmentPostBinding.inflate(inflater, container, false)
 
         binding.frameLayout.removeAllViewsInLayout()
         //기본 화면을 기록하기 화면으로 설정
@@ -46,7 +50,32 @@ class WriteFragment : Fragment() {
     fun moveToWritingSetting() {
         binding.frameLayout.removeAllViews()
         childFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, WritingSettingFragment()).addToBackStack("writingSetting").commit()
+            .replace(binding.frameLayout.id, WritingSettingFragment())
+            .addToBackStack("writingSetting").commit()
+    }
+
+    /*supportFragmentManager.beginTransaction().replace(
+    R.id.fragment_my_container,
+    MyFragment().apply {
+        arguments = Bundle().apply {
+            putString("KEY", "value")
+        }
+    }
+    ).commit()*/
+
+    fun moveToPostDetail() {
+        binding.frameLayout.removeAllViews()
+
+        childFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, PostDetailFragment().apply {
+                        arguments = Bundle().apply {
+                            putLong("bookId", bookVm.getSelectedBook()!!.id!!)
+                            putString("bookName", bookVm.getSelectedBook()!!.name)
+                        }
+            })
+            .addToBackStack("postDetail").commit()
+
+        bookVm.setSelectedBook(null)
     }
 
     override fun onPause() {
