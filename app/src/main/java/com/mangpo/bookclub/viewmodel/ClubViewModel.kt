@@ -22,7 +22,7 @@ class ClubViewModel: ViewModel() {
     val clubs: LiveData<MutableList<ClubModel>> get() = _clubs
     val selectedClubIdx: LiveData<Int> get() = _selectedClubIdx
 
-    suspend fun createClub(newClub: ClubModel): Response<ClubModel> {
+    /*suspend fun createClub(newClub: ClubModel): Response<ClubModel> {
         val res = withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             clubRepository.createClub(newClub)
         }
@@ -35,16 +35,16 @@ class ClubViewModel: ViewModel() {
         }
 
         return res
-    }
+    }*/
 
-    suspend fun getClubsByUser() {
+    /*suspend fun getClubsByUser() {
         val clubList = viewModelScope.async(Dispatchers.IO) {
             clubRepository.getClubsByUser().body()!!.clubs
         }
         _clubs.value = clubList.await()
-    }
+    }*/
 
-    suspend fun addClub(newClub: ClubModel) {
+    /*suspend fun addClub(newClub: ClubModel) {
         if (clubs.value==null) {
             getClubsByUser()
         }
@@ -54,7 +54,7 @@ class ClubViewModel: ViewModel() {
         _clubs.postValue(tempClubs)
         Log.e("ClubViewModel", _clubs.value.toString())
         _selectedClubIdx.value = _clubs.value!!.size-1
-    }
+    }*/
 
     fun updateSelectedClub(position: Int) {
         _selectedClubIdx.value = position

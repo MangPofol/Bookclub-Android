@@ -27,7 +27,7 @@ class ClubAdapter(clubs: MutableList<ClubModel>, selectedClub: Int, itemClick: O
 
     override fun onBindViewHolder(holder: ClubViewHolder, position: Int) {
         holder.clubName.text = clubs[position].name
-        holder.clubDesc.text = clubs[position].description
+//        holder.clubDesc.text = clubs[position].description
 
         if (selectedClub==position) {
             holder.clubName.setTextColor(getColor(holder.clubName.context, R.color.light_red))

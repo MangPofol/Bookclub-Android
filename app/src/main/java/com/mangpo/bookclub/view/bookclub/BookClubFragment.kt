@@ -36,9 +36,9 @@ class BookClubFragment : Fragment(), TextWatcher {
         Log.e("BookClub", "onCreate")
 
         //사용자가 소속된 클럽 정보 가져오기
-        job = CoroutineScope(Dispatchers.Main).async {
+        /*job = CoroutineScope(Dispatchers.Main).async {
             clubViewModel.getClubsByUser()
-        }
+        }*/
     }
 
     override fun onCreateView(
@@ -51,7 +51,7 @@ class BookClubFragment : Fragment(), TextWatcher {
         bottomSheet = ClubSelectBottomSheetFragment()
 
         //클럽 정보를 받아올 때까지 기다리고, 클럽 소개 부분 화면 구성하기
-        CoroutineScope(Dispatchers.Main).launch {
+        /*CoroutineScope(Dispatchers.Main).launch {
             job.await()
 
             //클럽 정보를 가져오는 처리가 완료될때까지 기다렸다가 클럽 정보 세팅하기
@@ -64,7 +64,7 @@ class BookClubFragment : Fragment(), TextWatcher {
                     setClubView(clubViewModel.clubs.value!![0])
                 }
             }
-        }
+        }*/
 
         //클럽 변경 시 bottom sheet dialog 띄우기
         binding.toolbar.setOnMenuItemClickListener {
@@ -155,17 +155,17 @@ class BookClubFragment : Fragment(), TextWatcher {
         }
     }
 
-    fun addClub(club: ClubModel) {
+    /*fun addClub(club: ClubModel) {
         CoroutineScope(Dispatchers.Main).launch {
             clubViewModel.addClub(club)
             setClubView(club)
         }
-    }
+    }*/
 
     private fun setClubView(club: ClubModel) {
         binding.clubNameTV.text = club.name
-        binding.levelBtn.text = "${club.level}단계"
-        binding.descriptionTV.text = "\"${club.description}\""
+//        binding.levelBtn.text = "${club.level}단계"
+//        binding.descriptionTV.text = "\"${club.description}\""
     }
 
 

@@ -21,12 +21,12 @@ class CreateClubContract : ActivityResultContract<Any, ClubModel>() {
             val newClub: ClubModel = ClubModel(
                 bundle.getLong("id"),
                 bundle.getString("name")!!,
-                bundle.getString("colorSet")!!,
-                bundle.getInt("level"),
-                bundle.getLong("presidentId"),
-                bundle.getString("description")!!,
-                bundle.getString("createdDate")!!,
-                bundle.getString("modifiedDate")!!
+//                bundle.getString("colorSet")!!,
+//                bundle.getInt("level"),
+//                bundle.getLong("presidentId"),
+//                bundle.getString("description")!!,
+//                bundle.getString("createdDate")!!,
+//                bundle.getString("modifiedDate")!!
             )
             Log.e("CreateClubContract", "클럽 생성 완료! -> ${newClub.toString()}")
 

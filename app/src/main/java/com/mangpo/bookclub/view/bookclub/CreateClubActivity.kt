@@ -41,7 +41,7 @@ class CreateClubActivity : AppCompatActivity() {
         }
 
         //확인 버튼 누르면 -> 서버에 클럽 생성 요청 보내기
-        binding.confirmTV.setOnClickListener {
+        /*binding.confirmTV.setOnClickListener {
             val clubName: String = binding.clubNameET.text.toString()
             val clubInfo: String = binding.clubInfoET.text.toString()
 
@@ -93,7 +93,7 @@ class CreateClubActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        }*/
 
         //club colorSet 이미지뷰 클릭할 때마다 colorSet 데이터가 변경되도록
         binding.clubPatternIV1.setOnClickListener {
