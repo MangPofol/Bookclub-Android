@@ -39,6 +39,5 @@ object ApiClient {
     }
 
     val clubService: ClubService = retrofit.create(ClubService::class.java)
-    val fileService: FileService = retrofit.create(FileService::class.java)
 
 }
