@@ -122,4 +122,8 @@
     <!-- PostDetailFragment -->
     <string name="update">수정하기</string>
 
+    <!-- BookDescFragment -->
+    <string name="end">END</string>
+    <string name="memo_list">MEMO LIST</string>
+
 </resources>
