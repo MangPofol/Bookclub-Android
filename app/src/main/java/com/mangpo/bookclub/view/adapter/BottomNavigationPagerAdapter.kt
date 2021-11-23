@@ -4,14 +4,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.mangpo.bookclub.view.bookclub.BookClubFragment
-import com.mangpo.bookclub.view.library.MyLibraryFragment
+import com.mangpo.bookclub.view.library.LibraryMainFragment
 import com.mangpo.bookclub.view.write.PostFragment
 
 class BottomNavigationPagerAdapter(fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     private val fragmentManager: FragmentManager = fm
     private val postFragment: PostFragment = PostFragment()
-    private val myLibraryFragment: MyLibraryFragment = MyLibraryFragment()
+    private val libraryMainFragment: LibraryMainFragment = LibraryMainFragment()
     private val bookClubFragment: BookClubFragment = BookClubFragment()
 
     override fun getCount(): Int {
@@ -21,7 +21,7 @@ class BottomNavigationPagerAdapter(fm: FragmentManager) :
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> postFragment
-            1 -> myLibraryFragment
+            1 -> libraryMainFragment
             else -> bookClubFragment
         }
     }
