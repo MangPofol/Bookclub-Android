@@ -19,15 +19,17 @@
 
     <TextView
         android:id="@+id/book_name_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="34.8dp"
         android:layout_marginTop="40.8dp"
+        android:layout_marginEnd="10dp"
         android:text="책 이름"
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/line_view"
+        app:layout_constraintEnd_toStartOf="@id/update_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_iv" />
 
@@ -92,22 +94,116 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/record_title_tv" />
 
-            <ImageView
-                android:id="@+id/record_img_iv"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/img_layout"
                 android:layout_width="match_parent"
-                android:layout_height="384dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                app:layout_constraintBottom_toTopOf="@+id/location_icon_iv"
-                app:layout_constraintTop_toBottomOf="@+id/record_content_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/record_content_tv">
+
+                <ImageView
+                    android:id="@+id/one_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="384dp"
+                    android:layout_marginBottom="15.6dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginBottom="15.6dp" />-->
+
+                <ImageView
+                    android:id="@+id/two_iv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="192dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/two_iv_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="192dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toBottomOf="@+id/two_iv_1" />
+
+                <ImageView
+                    android:id="@+id/three_iv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="192dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/three_iv_2"
+                    android:layout_width="0dp"
+                    android:layout_height="126dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toStartOf="@+id/three_iv_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/three_iv_1" />
+
+                <ImageView
+                    android:id="@+id/three_iv_3"
+                    android:layout_width="0dp"
+                    android:layout_height="126dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@+id/three_iv_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/three_iv_2"
+                    app:layout_constraintTop_toTopOf="@+id/three_iv_2" />
+
+                <ImageView
+                    android:id="@+id/four_iv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="254dp"
+                    android:background="@color/black"
+                    android:scaleType="fitXY"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/four_iv_2"
+                    android:layout_width="0dp"
+                    android:layout_height="126dp"
+                    android:background="@color/main_blue"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toStartOf="@+id/four_iv_3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/four_iv_1" />
+
+                <ImageView
+                    android:id="@+id/four_iv_3"
+                    android:layout_width="0dp"
+                    android:layout_height="126dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/red1"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@+id/four_iv_2"
+                    app:layout_constraintEnd_toStartOf="@+id/four_iv_4"
+                    app:layout_constraintStart_toEndOf="@+id/four_iv_2"
+                    app:layout_constraintTop_toTopOf="@+id/four_iv_2" />
+
+                <ImageView
+                    android:id="@+id/four_iv_4"
+                    android:layout_width="0dp"
+                    android:layout_height="126dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/light_red"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="@+id/four_iv_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/four_iv_3"
+                    app:layout_constraintTop_toTopOf="@+id/four_iv_2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/location_icon_iv"
                 android:layout_width="13.2dp"
                 android:layout_height="16.8dp"
-                android:layout_marginTop="16.872dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/location_grey_icon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/record_img_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/img_layout" />
 
             <TextView
                 android:id="@+id/location_tv"
@@ -146,9 +242,9 @@
                 android:id="@+id/line_view2"
                 android:layout_width="match_parent"
                 android:layout_height="1.2dp"
-                android:layout_marginTop="14.4dp"
+                android:layout_marginTop="18dp"
                 android:background="@color/grey12"
-                app:layout_constraintTop_toBottomOf="@+id/clock_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/clock_icon_iv" />
 
             <ImageView
                 android:id="@+id/like_iv"
@@ -195,13 +291,6 @@
                 app:layout_constraintStart_toEndOf="@+id/comment_iv"
                 app:layout_constraintTop_toTopOf="@+id/comment_iv" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/comment_rv"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="28.56dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/like_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
