@@ -9,16 +9,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.databinding.FragmentBookListBinding
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.util.HorizontalItemDecorator
-import com.mangpo.bookclub.util.VerticalItemDecorator
 import com.mangpo.bookclub.view.adapter.BookAdapter
+import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class BookListFragment : Fragment() {
+class BookListFragment : Fragment(), OnItemClick {
     private lateinit var binding: FragmentBookListBinding
 
-    private val bookAdapter: BookAdapter = BookAdapter()
+    private val bookAdapter: BookAdapter = BookAdapter(this)
     private val bookVm: BookViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,15 +69,25 @@ class BookListFragment : Fragment() {
                 else -> bookVm.beforeBooks.value
             }
 
-            if (books!=null && books.isNotEmpty()) {
+            if (books != null && books.isNotEmpty()) {
                 when (it) {
-                    "Latest" -> bookAdapter.setBooks(books.sortedWith(compareBy { it.modifiedDate }).reversed() as MutableList<BookModel>)
+                    "Latest" -> bookAdapter.setBooks(
+                        books.sortedWith(compareBy { it.modifiedDate })
+                            .reversed() as MutableList<BookModel>
+                    )
                     "Old" -> bookAdapter.setBooks(books.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>)
                     "Name" -> bookAdapter.setBooks(books.sortedWith(compareBy { it.name }) as MutableList<BookModel>)
                     else -> bookAdapter.setBooks(books)
                 }
             }
         })
+    }
+
+    override fun onClick(position: Int) {
+        var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
+        (requireActivity().supportFragmentManager.fragments.find { it ->
+            it.javaClass.toString().contains("LibraryMainFragment")
+        } as LibraryMainFragment).moveToBookDesc(book)
     }
 
 }
