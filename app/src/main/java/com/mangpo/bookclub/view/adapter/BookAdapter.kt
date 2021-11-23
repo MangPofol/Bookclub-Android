@@ -14,6 +14,7 @@ class BookAdapter() :
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     private lateinit var binding: BookItemBinding
     private lateinit var itemClick: OnItemClick
+
     private var books: MutableList<Any> = ArrayList<Any>()
     private var type: String = "library"
 
