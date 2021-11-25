@@ -2,6 +2,7 @@ package com.mangpo.bookclub.view.main
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -12,6 +13,8 @@ import androidx.viewpager.widget.ViewPager
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.view.adapter.BottomNavigationPagerAdapter
+import com.mangpo.bookclub.view.write.PostFragment
+import com.mangpo.bookclub.view.write.RecordFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,13 +39,7 @@ class MainActivity : AppCompatActivity() {
         mPreferences = getSharedPreferences("emailPreferences", AppCompatActivity.MODE_PRIVATE)
         email = mPreferences.getString("email", "")!!
 
-        CoroutineScope(Dispatchers.Main).launch {
-            bookViewModel.requestBookList(email, "NOW")
-            bookViewModel.requestBookList(email, "AFTER")
-            bookViewModel.requestBookList(email, "BEFORE")
-
-            setBottom()
-        }
+        initBookList()
 
         //뷰페이저 어댑터 설정&페이지 변환 리스너 설정
         binding.bottomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -91,10 +88,30 @@ class MainActivity : AppCompatActivity() {
         //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawers()
-        else {
+        else if (supportFragmentManager.fragments[0].javaClass == PostFragment::class.java && supportFragmentManager.fragments[0].childFragmentManager.fragments[0].javaClass != RecordFragment::class.java) {
+            supportFragmentManager.fragments[0].childFragmentManager.popBackStackImmediate()
+            (supportFragmentManager.fragments[0] as PostFragment).moveToRecord()
+        } else {
             super.onBackPressed()
+            supportFragmentManager.popBackStackImmediate()
         }
 
+    }
+
+    private fun setBottom() {
+        binding.bottomViewPager.adapter = bottomNavigationPagerAdapter
+        binding.bottomNavigation.selectedItemId = R.id.write
+        binding.bottomViewPager.currentItem = 0
+    }
+
+    private fun initBookList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            bookViewModel.requestBookList(email, "NOW")
+            bookViewModel.requestBookList(email, "AFTER")
+            bookViewModel.requestBookList(email, "BEFORE")
+
+            setBottom()
+        }
     }
 
     //navigation drawer 설정
@@ -122,9 +139,14 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    private fun setBottom() {
-        binding.bottomViewPager.adapter = bottomNavigationPagerAdapter
-        binding.bottomNavigation.selectedItemId = R.id.write
+    fun goBookDesc(bookId: Long, bookName: String) {
         binding.bottomViewPager.currentItem = 0
+        (supportFragmentManager.fragments[0] as PostFragment).moveToPostDetail(bookId, bookName)
+    }
+
+    fun getEmail(): String = email
+
+    fun backFragment() {
+        Log.d("MainActivity", supportFragmentManager.fragments.toString())
     }
 }
