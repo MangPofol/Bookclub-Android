@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
@@ -84,9 +85,12 @@ class RecordFragment : Fragment() {
 
         //다음 버튼 클릭 리스너 -> 글 설정 프래그먼트로 이동하기
         binding.nextBtn.setOnClickListener {
-            setPost()
             (activity as MainActivity).hideKeyBord(requireView())
-            (requireParentFragment() as PostFragment).moveToWritingSetting()
+
+            if (validate()) {
+                setPost()
+                (requireParentFragment() as PostFragment).moveToWritingSetting()
+            }
         }
 
         return binding.root
@@ -194,7 +198,7 @@ class RecordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("RecordFragment", "onViewCreated")
 
-        binding.toolbar.setNavigationIcon(R.drawable.back_icon_small)  //navigation icon 설정
+//        binding.toolbar.setNavigationIcon(R.drawable.back_icon_small)  //navigation icon 설정
 //        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
 //        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
     }
@@ -302,6 +306,24 @@ class RecordFragment : Fragment() {
             return ""
         }
         return file.absolutePath
+    }
+
+    private fun validate(): Boolean {
+        if (binding.selectBookBtn.text.toString() == getString(R.string.book_select)) {
+            Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
+
+            return false
+        } else if (binding.postTitleET.text.isBlank()) {
+            Toast.makeText(requireContext(), "메모 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
+
+            return false
+        } else if (binding.contentET.text.isBlank()) {
+            Toast.makeText(requireContext(), "메모 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+
+            return false
+        }
+
+        return true
     }
 
     //기록하기 입력창 유효성 검사 함수
