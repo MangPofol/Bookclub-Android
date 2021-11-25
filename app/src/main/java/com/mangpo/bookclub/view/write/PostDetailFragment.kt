@@ -36,6 +36,10 @@ class PostDetailFragment : Fragment() {
 
         setUI()
 
+        binding.backIv.setOnClickListener {
+            parentFragmentManager.popBackStackImmediate()
+        }
+
         return binding.root
     }
 
