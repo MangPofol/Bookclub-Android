@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.service
 
+import com.mangpo.bookclub.model.AllPostModel
 import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.PostDetailModel
 import okhttp3.MultipartBody
@@ -9,9 +10,9 @@ import retrofit2.http.*
 interface PostService {
     @GET("/posts")
     suspend fun getPosts(
-        @Query("bookId") bookId: Int,
-        @Query("clubId") clubId: Int?
-    ): Response<PostDetailModel>
+        @Query("bookId") bookId: Long,
+        @Query("clubId") clubId: Long?
+    ): Response<AllPostModel>
 
     @POST("/posts")
     suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>
