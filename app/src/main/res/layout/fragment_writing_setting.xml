@@ -58,11 +58,11 @@
         android:id="@+id/back_iv"
         android:layout_width="10dp"
         android:layout_height="0dp"
-        android:src="@drawable/back_icon"
         android:layout_marginStart="28.8dp"
-        app:layout_constraintTop_toTopOf="@+id/coordinateLayout"
+        android:src="@drawable/back_icon"
         app:layout_constraintBottom_toBottomOf="@+id/coordinateLayout"
-        app:layout_constraintStart_toStartOf="@+id/coordinateLayout" />
+        app:layout_constraintStart_toStartOf="@+id/coordinateLayout"
+        app:layout_constraintTop_toTopOf="@+id/coordinateLayout" />
 
     <View
         android:id="@+id/full_screen_view"
@@ -269,6 +269,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="13.2dp"
         android:background="@drawable/writing_setting_public_scope_setting_view"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/link_view" />
