@@ -9,7 +9,6 @@ import com.mangpo.bookclub.model.BookImageModel
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.service.BookService
 import com.mangpo.bookclub.service.KakaoBookService
-import retrofit2.Response
 import java.lang.Exception
 
 class BookRepository(
@@ -75,6 +74,17 @@ class BookRepository(
             e.printStackTrace()
 
             return null
+        }
+    }
+
+    suspend fun updateBook(bookId: Long, categoryJson: JsonObject): Boolean {
+        val result = bookService.updateBook(bookId, categoryJson)
+
+        return if (result.isSuccessful) {
+            true
+        } else {
+            Log.e("BookRepository", "updateBook error!\n code: ${result.code()}\nerror message: ${result.message()}")
+            false
         }
     }
 }
