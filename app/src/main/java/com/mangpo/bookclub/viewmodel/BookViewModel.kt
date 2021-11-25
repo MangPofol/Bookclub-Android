@@ -5,11 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
 import com.mangpo.bookclub.repository.BookRepository
 import com.mangpo.bookclub.repository.KakaoBookRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -30,11 +32,6 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
     private var _selectedBook: BookModel? = null
     private var _email: String = ""
 
-//    private val _createdBook: MutableLiveData<BookModel?> = MutableLiveData<BookModel?>() //방금 추가된 책
-
-//    private var books: MutableList<BookModel> = ArrayList()
-
-//    val selectedBook: LiveData<BookModel> get() = _selectedBook
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
     val beforeBooks: LiveData<MutableList<BookModel>> get() = _beforeBooks
     val afterBooks: LiveData<MutableList<BookModel>> get() = _afterBooks
@@ -42,34 +39,6 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
     val readType: LiveData<String> get() = _readType
     val myLibrarySearch: LiveData<String> get() = _myLibrarySearch
     val myLibrarySort: LiveData<String> get() = _myLibrarySort
-
-    /*val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
-    val createdBook: LiveData<BookModel?> get() = _createdBook*/
-
-    suspend fun requestBookList(email: String, category: String) {
-        _email = email
-
-        val books = withContext(Dispatchers.IO) {
-            bookRepository.getBooks(email, category)
-        }
-
-        when (category) {
-            "NOW" -> {
-                _nowBooks.value = books
-                _nowBooks.value
-            }
-            "AFTER" -> {
-                _afterBooks.value = books
-                _afterBooks.value
-            }
-            "BEFORE" -> {
-                _beforeBooks.value = books
-                _beforeBooks.value
-            }
-
-            else -> null
-        }
-    }
 
     fun getBookList(category: String): MutableList<BookModel>? {
         return when (category) {
@@ -97,7 +66,71 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
         _myLibrarySort.value = filter
     }
 
+    suspend fun requestBookList(email: String, category: String) {
+        _email = email
 
+        val books = withContext(Dispatchers.IO) {
+            bookRepository.getBooks(email, category)
+        }
+
+        when (category) {
+            "NOW" -> {
+                _nowBooks.value = books
+                _nowBooks.value
+            }
+            "AFTER" -> {
+                _afterBooks.value = books
+                _afterBooks.value
+            }
+            "BEFORE" -> {
+                _beforeBooks.value = books
+                _beforeBooks.value
+            }
+
+            else -> null
+        }
+    }
+
+    suspend fun getSearchedBooks(title: String) {
+        viewModelScope.launch {
+            _searchedBooks.value = kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
+        }
+
+    }
+
+    suspend fun createBook(book: BookModel) {
+        if (book.isbn!!.split(" ").size!=1) {
+            book.isbn = book.isbn!!.split(" ")[1]
+        }
+
+        viewModelScope.launch {
+            val newBook = bookRepository.createBook(book)
+
+            if (newBook!=null)
+                requestBookList(_email, newBook.category)
+        }
+    }
+
+    suspend fun updateBook(bookId: Long, category: String): Boolean {
+        val categoryObj: JsonObject = JsonObject()
+        categoryObj.addProperty("category", category)
+
+        val result = viewModelScope.async {
+            bookRepository.updateBook(bookId, categoryObj)
+        }
+
+        return result.await()
+    }
+
+
+    //    private val _createdBook: MutableLiveData<BookModel?> = MutableLiveData<BookModel?>() //방금 추가된 책
+
+//    private var books: MutableList<BookModel> = ArrayList()
+
+//    val selectedBook: LiveData<BookModel> get() = _selectedBook
+
+    /*val selectedBookReadType: LiveData<Int> get() = _selectedBookReadType
+    val createdBook: LiveData<BookModel?> get() = _createdBook*/
 
     /*fun updateSelectedBookReadType(readType: Int) {
         _selectedBookReadType.value = readType
@@ -116,33 +149,15 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
         }
     }*/
 
-    suspend fun getSearchedBooks(title: String) {
-        viewModelScope.launch {
-            _searchedBooks.value = kakaoBookRepository.getKakaoBooks(title, "title", 20)!!.documents
-        }
-
-    }
-
-    fun clearSearchedBooks() {
+    /*fun clearSearchedBooks() {
         _searchedBooks.value!!.removeAll(_searchedBooks.value!!)
     }
 
     fun updateSearchedBooks(books: MutableList<KakaoBookModel>) {
         _searchedBooks.value = books
     }
+*/
 
-    suspend fun createBook(book: BookModel) {
-        if (book.isbn!!.split(" ").size!=1) {
-            book.isbn = book.isbn!!.split(" ")[1]
-        }
-
-        viewModelScope.launch {
-            val newBook = bookRepository.createBook(book)
-
-            if (newBook!=null)
-                requestBookList(_email, newBook.category)
-        }
-    }
 
     /*suspend fun createBeforeBook(newBook: BookModel): Int {
         try {
