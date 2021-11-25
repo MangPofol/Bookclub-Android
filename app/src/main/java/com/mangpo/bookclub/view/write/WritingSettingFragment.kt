@@ -52,6 +52,10 @@ class WritingSettingFragment : Fragment() {
             }
         }
 
+        binding.backIv.setOnClickListener {
+            parentFragmentManager.popBackStackImmediate()
+        }
+
         return binding.root
     }
 
@@ -68,7 +72,7 @@ class WritingSettingFragment : Fragment() {
                 postVm.clearImg()
                 postVm.setPost(null)
                 Log.d("WritingSettingFragment", "CreatePost is success!")
-                (parentFragment as PostFragment).moveToPostDetail()
+                (parentFragment as PostFragment).moveToPostDetail(null, null)
             } else {
                 Log.d("WritingSettingFragment", "CreatePost is fail!")
                 Toast.makeText(requireContext(), "게시글 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
@@ -113,6 +117,8 @@ class WritingSettingFragment : Fragment() {
             postVm.getPost()!!.location = binding.readWhereEt.text.toString()
         if (binding.readTimeEt.text.isNotBlank())
             postVm.getPost()!!.readTime = binding.readTimeEt.text.toString()
+        if (binding.linkTitleEt.text.isNotBlank())
+            postVm.getPost()!!.hyperlinkTitle = binding.linkTitleEt.text.toString()
         if (binding.linkEt.text.isNotBlank())
             postVm.getPost()!!.hyperlink = binding.linkEt.text.toString()
     }
