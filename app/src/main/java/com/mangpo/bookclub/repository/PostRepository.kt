@@ -9,6 +9,23 @@ import okhttp3.MultipartBody
 
 class PostRepository(private val postService: PostService) {
 
+    suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? {
+
+        return try {
+            val response = postService.getPosts(bookId, clubId)
+
+            if (response.isSuccessful && response.code() == 200)
+                response.body()!!.data
+            else {
+                Log.e("PostRepository-getPost", response.code().toString())
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("PostRepository-getPost", "Fail! -> ${e.message}")
+            null
+        }
+    }
+
     suspend fun createPost(newPost: PostModel): PostDetailModel? {
         val response = postService.createPost(newPost)
 
@@ -54,20 +71,5 @@ class PostRepository(private val postService: PostService) {
             null
         }
     }
-    /*suspend fun getPost(bookId: Int, clubId: Int?): ArrayList<PostModel>? {
 
-        return try {
-            val response = postService.getPosts(bookId, clubId)
-
-            if (response.isSuccessful && response.code()==200)
-                response.body()!!.posts
-            else {
-                Log.e("PostRepository-getPost", response.code().toString())
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("PostRepository-getPost", "Fail! -> ${e.message}")
-            null
-        }
-    }*/
 }
