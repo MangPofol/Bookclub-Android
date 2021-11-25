@@ -40,7 +40,14 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
     fun getPost(): PostModel? = this.post
 
+    fun setPostDetail(postDetail: PostDetailModel) {
+        this.postDetail = postDetail
+    }
+
     fun getPostDetail(): PostDetailModel? = this.postDetail
+
+    suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? =
+        repository.getPosts(bookId, clubId)
 
     suspend fun createPost(post: PostModel): PostDetailModel? {
         val job = viewModelScope.async(Dispatchers.Main) {
