@@ -1,6 +1,7 @@
 package com.mangpo.bookclub.view.library
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,8 @@ class BookListFragment : Fragment(), OnItemClick {
 
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정
+
+        Log.d("BookListFragment", requireParentFragment().javaClass.toString())
 
         observe()
 
