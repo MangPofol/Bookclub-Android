@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.util.VerticalItemDecorator
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.view.main.MainActivity
@@ -35,7 +34,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         //뒤로가기 콜백: 기록하기 화면으로 전환.
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                parentFragmentManager.popBackStack()
+                parentFragmentManager.popBackStackImmediate()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -92,7 +91,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     }
 
     override fun onClick(position: Int) {
-        val selectedBook : BookModel    //선택한 책
+        val selectedBook: BookModel    //선택한 책
 
         //책을 등록하는 bottom sheet 을 띄운다.
         if (binding.readTypeRG.visibility == View.GONE) {    //새로운 책을 클릭한 상황이면
@@ -173,7 +172,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         })
 
         bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
-            if (viewLifecycleOwner.lifecycle.currentState== Lifecycle.State.RESUMED) {
+            if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
                 (activity as MainActivity).moveBottomPager(1)
                 bookViewModel.setReadType("BEFORE")
             }
