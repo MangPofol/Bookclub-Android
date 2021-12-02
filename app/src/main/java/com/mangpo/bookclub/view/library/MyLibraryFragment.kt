@@ -3,6 +3,7 @@ package com.mangpo.bookclub.view.library
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,19 +25,20 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
 
     private val bookViewModel: BookViewModel by sharedViewModel()
+    private val fragments: List<BookListFragment> = listOf(BookListFragment(), BookListFragment(), BookListFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
-        myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity)
+        myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity, fragments)
+
         binding.viewPager.adapter = myLibraryPagerAdapter  //어댑터 설정
 
         binding.searchLayout.searchBookET.addTextChangedListener(this)
@@ -164,7 +166,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_black)  //navigation icon 설정
+        binding.toolbar.setNavigationIcon(R.drawable.my_library_filter_icon)  //navigation icon 설정
 
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
             when (position) {
@@ -174,6 +176,11 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 else -> null
             }
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("MyLibraryFragment", "onDestroyView")
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
