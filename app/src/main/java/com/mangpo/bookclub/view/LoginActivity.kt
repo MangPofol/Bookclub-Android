@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
+import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.SHA256
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import gun0912.tedimagepicker.util.ToastUtil.context
@@ -24,16 +26,6 @@ class LoginActivity : AppCompatActivity() {
     private val mainVm: MainViewModel by viewModel()
     private val loginEditJson: JsonObject = JsonObject()
 
-    /*private val networkCallBack = object : ConnectivityManager.NetworkCallback() {
-        override fun onAvailable(network: Network) {
-        }
-
-        override fun onLost(network: Network) {
-            // 네트워크가 끊길 때 호출됩니다.
-            Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
-        }
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,8 +34,19 @@ class LoginActivity : AppCompatActivity() {
 
         observe()
 
+        if (AccountSharedPreference.getUserEmail(context).isNotBlank() || AccountSharedPreference.getUserPass(context).isNotBlank()) {
+            loginEditJson.addProperty("email", AccountSharedPreference.getUserEmail(context))
+            loginEditJson.addProperty("password", AccountSharedPreference.getUserPass(context))
+
+            Log.d("LoginActivity", "$loginEditJson")
+
+            CoroutineScope(Dispatchers.Main).launch {
+                mainVm.login(loginEditJson)
+            }
+        }
+
         binding.loginSigninTv.setOnClickListener {  //회원가입 화면으로 이동
-            if (checkNetwork()==null) {
+            if (checkNetwork() == null) {
                 Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             } else {
                 val intent: Intent = Intent(this, SignInActivity::class.java)
@@ -56,12 +59,15 @@ class LoginActivity : AppCompatActivity() {
         binding.loginBtn.setOnClickListener {   //로그인 버튼 클릭 이벤트 리스너
             downKeyboard()  //키보드 내리기
 
-            if (checkNetwork()==null)   //네트워크 연결 상태 확인
+            if (checkNetwork() == null)   //네트워크 연결 상태 확인
                 Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             else if (validationLogin()) {    //로그인 유효성 검사
                 //로그인 입력값 JSON 객체로 저장
                 loginEditJson.addProperty("email", binding.loginIdEt.text.toString())
-                loginEditJson.addProperty("password", binding.loginPasswordEt.text.toString())
+                loginEditJson.addProperty(
+                    "password",
+                    SHA256.encryptPassword(binding.loginPasswordEt.text.toString())
+                )
 
                 //로그인 요청 api 전송
                 CoroutineScope(Dispatchers.Main).launch {
@@ -75,12 +81,10 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //registerNetworkCallback()
     }
 
     override fun onStop() {
         super.onStop()
-        //terminateNetworkCallback()
     }
 
     private fun goToMain() {
@@ -101,6 +105,8 @@ class LoginActivity : AppCompatActivity() {
         mainVm.loginCode.observe(this, Observer {
             when (it) {
                 200 -> {
+                    AccountSharedPreference.setUserEmail(this, loginEditJson.get("email").asString)
+                    AccountSharedPreference.setUserPass(this, loginEditJson.get("password").asString)
                     goToMain()
                 }
                 -1 -> {
@@ -113,20 +119,6 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    // 콜백을 등록하는 함수
-   /* private fun registerNetworkCallback() {
-        val networkRequest = NetworkRequest.Builder()
-            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .build()
-        connectivityManager.registerNetworkCallback(networkRequest, networkCallBack)
-    }*/
-
-    // 콜백을 해제하는 함수
-    /*private fun terminateNetworkCallback() {
-        connectivityManager.unregisterNetworkCallback(networkCallBack)
-    }*/
-
     private fun checkNetwork(): Network? {
         val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
@@ -134,7 +126,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun downKeyboard() {
-        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.loginIdEt.windowToken, 0)
     }
 }
