@@ -1,12 +1,11 @@
 package com.mangpo.bookclub.util
 
-import android.util.Log
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
+import okhttp3.*
 
 object ImgUtil {
 
@@ -25,8 +24,11 @@ object ImgUtil {
 
     fun getImageMultipartBody(key: String, uri: String): MultipartBody.Part {
         val file = File(uri)
-        Log.d("ImgUtil", "getImageMultipartBody 파일 크기: ${file.readBytes()}")
+
+        if (!file.exists())
+            file.mkdir()
 
         return MultipartBody.Part.createFormData("data", file.name, file.asRequestBody("image/*".toMediaType()))
     }
+
 }
