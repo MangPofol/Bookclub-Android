@@ -61,6 +61,9 @@ class BookRepository(
             val result = bookService.createBook(book)
 
             return if (result.isSuccessful) {
+                val locationSplit = result.headers()["Location"]!!.split('/')
+                book.id = locationSplit[locationSplit.size-1].toLong()
+                Log.d("BookRepository", book.toString())
                 book
             } else {
                 Log.e(
