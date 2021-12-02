@@ -1,23 +1,29 @@
 package com.mangpo.bookclub.view.write
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mangpo.bookclub.BuildConfig
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentCameraGalleryBottomSheetBinding
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.MediaType
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.io.File
 import kotlin.collections.ArrayList
 
 class CameraGalleryBottomSheetFragment() : BottomSheetDialogFragment() {
@@ -27,34 +33,52 @@ class CameraGalleryBottomSheetFragment() : BottomSheetDialogFragment() {
     private val postVm: PostViewModel by sharedViewModel()
     private val pictures: ArrayList<Bitmap> = ArrayList<Bitmap>()   //사진 찍거나 갤러리에서 선택한 이미지를 담는 리스트
 
-    //카메라 권한 런처
-    private val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
-        if (it) {
-            cameraLauncher.launch(null)
-        } else {
-            Toast.makeText(requireContext(), "설정에서 카메라 권한을 승인해주세요", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    //카메라 런처
-    private val cameraLauncher =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { it ->
-            pictures.add(it)
-            postVm.setImgs(pictures)
-            dismiss()
-        }
-
-    //갤러리 관련 권한 런처
-    private val galleryPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        if (it["android.permission.READ_EXTERNAL_STORAGE"]!!&&it["android.permission.WRITE_EXTERNAL_STORAGE"]!!) {
-            goToGallery()
-        } else {
-            Toast.makeText(requireContext(), "설정에서 갤러리 권한을 승인해주세요", Toast.LENGTH_SHORT).show()
-        }
-    }
+    private var cameraPermissionLauncher: ActivityResultLauncher<String>? = null
+    private var galleryPermissionLauncher: ActivityResultLauncher<Array<String>>? = null
+    private var cameraLauncher: ActivityResultLauncher<Uri>? = null
+    private var tmpUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if (it) {
+                //tmpUri = getTmpFileUri()
+
+                val intent: Intent = Intent(requireContext(), CameraActivity::class.java)
+                startActivity(intent)
+
+                dismiss()
+//                cameraLauncher!!.launch(tmpUri)
+            } else {
+                Toast.makeText(requireContext(), "설정에서 카메라 권한을 승인해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        galleryPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if (it["android.permission.READ_EXTERNAL_STORAGE"]!!&&it["android.permission.WRITE_EXTERNAL_STORAGE"]!!) {
+                goToGallery()
+            } else {
+                Toast.makeText(requireContext(), "설정에서 갤러리 권한을 승인해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //카메라 런처
+        cameraLauncher =
+            registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+                if (isSuccess) {
+                    Log.d("CameraGalleryBottomSheetFragment", "cameraLauncher success")
+//                    pictures.add(uriToBitmap(tmpUri!!))
+                    pictures.add(uriToBitmap(tmpUri!!))
+                    postVm.setImgs(pictures)
+                    dismiss()
+                } else {
+                    Log.d("CameraGalleryBottomSheetFragment", "cameraLauncher fail")
+                }
+                /*pictures.add(it)
+                postVm.setImgs(pictures)
+                dismiss()*/
+            }
 
     }
 
@@ -66,21 +90,21 @@ class CameraGalleryBottomSheetFragment() : BottomSheetDialogFragment() {
 
         //카메라를 선택하면 카메라 권한을 확인 or 요청하는 런처를 실행한다.
         binding.cameraIv.setOnClickListener {
-            cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            cameraPermissionLauncher!!.launch(android.Manifest.permission.CAMERA)
         }
         binding.cameraTv.setOnClickListener {
-            cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            cameraPermissionLauncher!!.launch(android.Manifest.permission.CAMERA)
         }
 
         //갤러리를 선택하면 갤러리 권한을 확인 or 요청하는 런처를 실행한다.
         binding.galleryIv.setOnClickListener {
-            galleryPermissionLauncher.launch(arrayOf(
+            galleryPermissionLauncher!!.launch(arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
             ))
         }
         binding.galleryTv.setOnClickListener {
-            galleryPermissionLauncher.launch(arrayOf(
+            galleryPermissionLauncher!!.launch(arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
             ))
@@ -113,6 +137,15 @@ class CameraGalleryBottomSheetFragment() : BottomSheetDialogFragment() {
                 postVm.setImgs(pictures)
                 dismiss()
             }
+    }
+
+    private fun getTmpFileUri(): Uri {
+        val tmpFile = File.createTempFile("tmp_image_file", ".png", requireContext().getExternalFilesDir("my_images")).apply {
+            createNewFile()
+            deleteOnExit()
+        }
+
+        return FileProvider.getUriForFile(requireContext(), "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {
