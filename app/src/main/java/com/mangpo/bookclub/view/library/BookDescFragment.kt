@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookDescBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
@@ -48,26 +49,52 @@ class BookDescFragment : Fragment() {
         initAdapter()
 
         binding.backIv.setOnClickListener {
-            Log.d(
-                "BookDescFragment",
-                requireParentFragment().childFragmentManager.fragments.toString()
-            )
             requireParentFragment().childFragmentManager.popBackStackImmediate()
         }
 
         binding.readCompleteView.setOnClickListener {
+
             CoroutineScope(Dispatchers.Main).launch {
-                val result = CoroutineScope(Dispatchers.IO).async {
-                    bookVm.updateBook(book.id!!, "AFTER")
+                if (book.category == "AFTER") {
+                    val result = CoroutineScope(Dispatchers.IO).async {
+                        bookVm.updateBook(book.id!!, "NOW")
+                    }
+
+                    if (result.await()) {
+                        binding.readCompleteView.background =
+                            requireContext().getDrawable(R.drawable.book_desc_read_not_complete_view)
+                        Toast.makeText(
+                            this@BookDescFragment.context,
+                            "책 완독을 취소했습니다!",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        initBookList()
+                    } else {
+                        Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } else {
+                    val result = CoroutineScope(Dispatchers.IO).async {
+                        bookVm.updateBook(book.id!!, "AFTER")
+                    }
+
+                    if (result.await()) {
+                        binding.readCompleteView.background =
+                            requireContext().getDrawable(R.drawable.book_desc_read_complete_view)
+                        Toast.makeText(
+                            this@BookDescFragment.context,
+                            "첵을 완독하셧습니다.",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        initBookList()
+                    } else {
+                        Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
 
-                if (result.await()) {
-                    Toast.makeText(this@BookDescFragment.context, "책을 완독했습니다!", Toast.LENGTH_SHORT)
-                        .show()
-                    initBookList()
-                } else {
-                    Toast.makeText(requireContext(), "책 완독 처리를 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
             }
         }
 
@@ -86,6 +113,14 @@ class BookDescFragment : Fragment() {
         binding.bookNameTv.text = book.name
         binding.bookIv.clipToOutline = true
         Glide.with(this).load(book.imgPath).into(binding.bookIv)
+
+        if (book.category == "AFTER") {
+            binding.readCompleteView.background =
+                requireContext().getDrawable(R.drawable.book_desc_read_complete_view)
+        } else {
+            binding.readCompleteView.background =
+                requireContext().getDrawable(R.drawable.book_desc_read_not_complete_view)
+        }
     }
 
     private fun initAdapter() {
