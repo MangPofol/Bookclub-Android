@@ -1,6 +1,7 @@
 package com.mangpo.bookclub.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -98,17 +99,20 @@ class BookViewModel(application: Application, private val bookRepository: BookRe
 
     }
 
-    suspend fun createBook(book: BookModel) {
+    suspend fun createBook(book: BookModel): BookModel? {
         if (book.isbn!!.split(" ").size!=1) {
             book.isbn = book.isbn!!.split(" ")[1]
         }
 
-        viewModelScope.launch {
-            val newBook = bookRepository.createBook(book)
-
-            if (newBook!=null)
-                requestBookList(_email, newBook.category)
+        val newBook = viewModelScope.async {
+            bookRepository.createBook(book)
         }
+
+        if (newBook.await()!=null) {
+            requestBookList(_email, newBook.await()!!.category)
+        }
+
+        return newBook.await()
     }
 
     suspend fun updateBook(bookId: Long, category: String): Boolean {
