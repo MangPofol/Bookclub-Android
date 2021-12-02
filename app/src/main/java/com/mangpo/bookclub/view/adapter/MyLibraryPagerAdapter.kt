@@ -5,21 +5,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.mangpo.bookclub.view.library.BookListFragment
 
-class MyLibraryPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+class MyLibraryPagerAdapter(fa: FragmentActivity, val fragments: List<BookListFragment>): FragmentStateAdapter(fa) {
     private val NUM_PAGES = 3
-    private val nowBookListFragment: BookListFragment = BookListFragment()
-    private val afterBookListFragment: BookListFragment = BookListFragment()
-    private val beforeBookListFragment: BookListFragment = BookListFragment()
 
     override fun getItemCount(): Int {
         return NUM_PAGES
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> nowBookListFragment
-            1 -> afterBookListFragment
-            else -> beforeBookListFragment
-        }
-    }
+    override fun createFragment(position: Int): Fragment = fragments[position]
+
 }
