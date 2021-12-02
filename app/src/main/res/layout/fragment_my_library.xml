@@ -23,14 +23,31 @@
             android:background="@color/white"
             android:elevation="0dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/poppins_extra_bold"
-                android:text="@string/my_library"
-                android:textColor="@color/main_blue"
-                android:textSize="21.6sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/alarm_iv"
+                    android:layout_width="19.2dp"
+                    android:layout_height="19.2dp"
+                    android:layout_marginEnd="21.6dp"
+                    android:src="@drawable/alarm_main_blue_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_iv"
+                    app:layout_constraintEnd_toStartOf="@+id/search_iv"
+                    app:layout_constraintTop_toTopOf="@id/search_iv" />
+
+                <ImageView
+                    android:id="@+id/search_iv"
+                    android:layout_width="19.2dp"
+                    android:layout_height="19.2dp"
+                    android:layout_marginEnd="26.4dp"
+                    android:src="@drawable/search_main_blue_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -53,21 +70,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/read_type_tab_layout_view"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/my_library_tab_selector"
                 app:tabIndicatorColor="@color/transparent"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextAppearance="@style/tab_text"
                 app:tabTextColor="@color/main_blue" />
-
-            <!--<LinearLayout
-                android:id="@+id/tab_line"
-                android:layout_width="match_parent"
-                android:layout_height="2.4dp"
-                android:layout_marginHorizontal="24dp"
-                android:background="@color/grey2"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/readTypeTabLayout"/>-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mainFilterLayout"
