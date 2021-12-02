@@ -35,8 +35,6 @@ class BookListFragment : Fragment(), OnItemClick {
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
         binding.bookListRecyclerView.layoutManager = GridLayoutManager(this.context, 3) //레이아웃 설정
 
-        Log.d("BookListFragment", requireParentFragment().javaClass.toString())
-
         observe()
 
         return binding.root
@@ -44,6 +42,11 @@ class BookListFragment : Fragment(), OnItemClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("BookListFragment", "onDetach")
     }
 
     private fun observe() {
@@ -88,6 +91,9 @@ class BookListFragment : Fragment(), OnItemClick {
 
     override fun onClick(position: Int) {
         var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
+
+        bookVm.setSelectedBook(book)
+
         (requireActivity().supportFragmentManager.fragments.find { it ->
             it.javaClass.toString().contains("LibraryMainFragment")
         } as LibraryMainFragment).moveToBookDesc(book)
