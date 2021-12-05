@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.write.WriteInitFragment">
+
+    <ImageView
+        android:id="@+id/hamburger_ib"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="25.2dp"
+        android:layout_marginTop="21.6dp"
+        android:src="@drawable/hamburger_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/background_iv"
+        android:layout_width="0dp"
+        android:layout_height="206.4dp"
+        android:layout_marginTop="100.8dp"
+        android:src="@drawable/write_init_background_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/write_init_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="165.6dp"
+        android:layout_marginEnd="30dp"
+        android:text="닉네임님,\n오늘도 힘차게 기록해봅시다."
+        android:textColor="@color/main_blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/next_iv"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/write_init_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/write_init_title_tv" />
+
+    <View
+        android:id="@+id/total_pages_view"
+        android:layout_width="122.4dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="25.2dp"
+        android:layout_marginTop="20.4dp"
+        android:background="@drawable/write_init_fragment_blue_view"
+        app:layout_constraintEnd_toStartOf="@+id/date_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/write_init_title_tv" />
+
+    <TextView
+        android:id="@+id/total_pages_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="total 396 pages"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/total_pages_view"
+        app:layout_constraintEnd_toEndOf="@+id/total_pages_view"
+        app:layout_constraintStart_toStartOf="@+id/total_pages_view"
+        app:layout_constraintTop_toTopOf="@+id/total_pages_view" />
+
+    <View
+        android:id="@+id/date_view"
+        android:layout_width="192dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="7.2dp"
+        android:background="@drawable/write_init_fragment_blue_view"
+        app:layout_constraintBottom_toBottomOf="@+id/total_pages_view"
+        app:layout_constraintStart_toEndOf="@+id/total_pages_view"
+        app:layout_constraintTop_toTopOf="@+id/total_pages_view" />
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="The record for October 20."
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/date_view"
+        app:layout_constraintEnd_toEndOf="@+id/date_view"
+        app:layout_constraintStart_toStartOf="@+id/date_view"
+        app:layout_constraintTop_toTopOf="@+id/date_view" />
+
+    <View
+        android:id="@+id/reading_goal_view"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/write_init_fragment_grey13_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_iv" />
+
+    <TextView
+        android:id="@+id/reading_goal_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20.4dp"
+        android:layout_marginEnd="10.2dp"
+        android:text="1년에 10권 읽고 기록하기"
+        android:textColor="@color/main_blue"
+        android:textSize="14.4sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/reading_goal_view"
+        app:layout_constraintEnd_toStartOf="@+id/reading_goal_next_iv"
+        app:layout_constraintStart_toStartOf="@+id/reading_goal_view"
+        app:layout_constraintTop_toTopOf="@+id/reading_goal_view" />
+
+    <ImageView
+        android:id="@+id/reading_goal_next_iv"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="20.4dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/reading_goal_tv"
+        app:layout_constraintEnd_toEndOf="@+id/reading_goal_view"
+        app:layout_constraintTop_toTopOf="@+id/reading_goal_tv" />
+
+    <View
+        android:id="@+id/go_post_view"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="14.4dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/write_init_fragment_light_red_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reading_goal_view" />
+
+    <TextView
+        android:id="@+id/go_post_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20.4dp"
+        android:layout_marginEnd="10.2dp"
+        android:text="@string/go_post"
+        android:textColor="@color/white"
+        android:textSize="14.4sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/go_post_view"
+        app:layout_constraintEnd_toStartOf="@+id/go_post_iv"
+        app:layout_constraintStart_toStartOf="@+id/go_post_view"
+        app:layout_constraintTop_toTopOf="@+id/go_post_view" />
+
+    <ImageView
+        android:id="@+id/go_post_iv"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="20.4dp"
+        android:src="@drawable/write_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/go_post_tv"
+        app:layout_constraintEnd_toEndOf="@+id/go_post_view"
+        app:layout_constraintTop_toTopOf="@+id/go_post_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
