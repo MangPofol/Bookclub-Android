@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SettingActivity">
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="28.8dp"
+        android:layout_marginTop="21.6dp"
+        android:src="@drawable/back_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/setting_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13.2sp"
+        android:text="@string/setting"
+        android:textColor="@color/main_blue"
+        android:textSize="21.6sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="13.2dp"
+        android:background="@drawable/layout_gradation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_title_tv" />
+
+    <TextView
+        android:id="@+id/resetting_password_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="27.6dp"
+        android:text="@string/resetting_password"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintStart_toStartOf="@+id/background_view"
+        app:layout_constraintTop_toTopOf="@+id/background_view" />
+
+    <ImageView
+        android:id="@+id/resetting_password_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/resetting_password_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/resetting_password_tv" />
+
+    <View
+        android:id="@+id/resetting_password_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="2.4dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="19.2dp"
+        android:background="@color/grey13"
+        app:layout_constraintTop_toBottomOf="@+id/resetting_password_tv" />
+
+    <TextView
+        android:id="@+id/notice_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20.4dp"
+        android:text="@string/notice"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/resetting_password_line_view"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/notice_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/notice_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/notice_tv" />
+
+    <TextView
+        android:id="@+id/question_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/question"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/notice_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/question_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/question_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/question_tv" />
+
+    <TextView
+        android:id="@+id/terms_conditions_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/terms_conditions"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/question_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/terms_conditions_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/terms_conditions_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/terms_conditions_tv" />
+
+    <TextView
+        android:id="@+id/version_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/version"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/version_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="2.4dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="19.2dp"
+        android:background="@color/grey13"
+        app:layout_constraintTop_toBottomOf="@+id/version_tv" />
+
+    <TextView
+        android:id="@+id/logout_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20.4dp"
+        android:text="@string/logout"
+        android:textColor="@color/light_red"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/version_line_view"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/quit_membership_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/quit_membership"
+        android:textColor="@color/light_red"
+        android:textSize="16.8sp"
+        app:layout_constraintTop_toBottomOf="@+id/logout_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
