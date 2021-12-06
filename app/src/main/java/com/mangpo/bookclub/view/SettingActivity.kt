@@ -1,26 +1,41 @@
 package com.mangpo.bookclub.view
 
-import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
+import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
+import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
 
+    private val mainVm: MainViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("SettingActivity", "onCreate")
+
+        observe()
 
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.backIv.setOnClickListener {
             finish()
+        }
+
+        binding.logoutTv.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                mainVm.logout()
+            }
         }
     }
 
@@ -52,5 +67,12 @@ class SettingActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         Log.d("SettingActivity", "onRestart")
+    }
+
+    private fun observe() {
+        mainVm.logoutCode.observe(this, Observer {
+            AccountSharedPreference.clearUser(this)
+            startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+        })
     }
 }
