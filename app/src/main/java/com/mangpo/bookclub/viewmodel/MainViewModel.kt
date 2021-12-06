@@ -26,20 +26,6 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
     val logoutCode: LiveData<Int> get() = _logoutCode
 
-    /*fun getUser(user: HashMap<String, Any>): UserModel {
-        return userRepository.createUser(user)
-    }
-
-    fun login(user: HashMap<String, String>) = viewModelScope.launch {
-        val result = userRepository.login(user)
-        Log.e("viewModel-로그인", result.toString())
-    }
-
-    fun logout() = viewModelScope.launch {
-        val result = userRepository.logout()
-        Log.e("viewModel-로그아웃", result.toString())
-    }*/
-
     suspend fun login(user: JsonObject) {
         viewModelScope.launch {
             _loginCode.value = repository.login(user)

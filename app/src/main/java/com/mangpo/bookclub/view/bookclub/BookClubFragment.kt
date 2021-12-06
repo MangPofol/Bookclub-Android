@@ -115,9 +115,6 @@ class BookClubFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_more_vert_36_white)  //navigation icon 설정
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
