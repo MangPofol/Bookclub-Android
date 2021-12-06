@@ -87,6 +87,11 @@ class LoginActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
+
     private fun goToMain() {
         val mPreferences = getSharedPreferences("emailPreferences", MODE_PRIVATE)
         val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
