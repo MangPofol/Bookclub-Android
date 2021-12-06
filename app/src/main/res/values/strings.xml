@@ -68,6 +68,11 @@
     <string name="club_info">클럽 한줄 소개</string>
     <string name="club_info_hint">클럽 소개글을 입력해주세요</string>
 
+    <!-- write init fragment -->
+    <string name="go_post">기록 쓰러가기</string>
+    <string name="checklist">CHECK LIST</string>
+    <string name="write_checklist">눌러서 작성하세요.</string>
+
     <!-- record fragment -->
     <string name="record_en">Record</string>
     <string name="posting">올리기</string>
@@ -125,5 +130,16 @@
     <!-- BookDescFragment -->
     <string name="end">END</string>
     <string name="memo_list">MEMO LIST</string>
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+
+    <!-- SettingActivity -->
+    <string name="setting">설정</string>
+    <string name="resetting_password">비밀번호 재설정</string>
+    <string name="notice">공지사항</string>
+    <string name="question">1:1 문의 / 요청</string>
+    <string name="terms_conditions">이용약관</string>
+    <string name="version">버전 1.0.0</string>
+    <string name="logout">로그아웃</string>
+    <string name="quit_membership">계정 탈퇴하기</string>
 
 </resources>
