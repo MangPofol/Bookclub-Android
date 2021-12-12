@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.my_info.YourTasteActivity">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbar_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_taste"
+        android:textColor="@color/main_blue"
+        android:textSize="21.6sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="13.2dp"
+        android:layout_marginStart="26.4dp"
+        android:src="@drawable/back_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/complete_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:text="@string/complete"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_tv"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_tv" />
+
+    <View
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/layout_gradation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/update_genre_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="37dp"
+        android:text="@string/update_genre_title"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/layout_view"
+        app:layout_constraintTop_toTopOf="@+id/layout_view" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/genre_cg"
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintTop_toBottomOf="@+id/update_genre_tv" />
+
+    <TextView
+        android:id="@+id/update_reading_style_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/update_reading_style"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/layout_view"
+        app:layout_constraintTop_toBottomOf="@+id/genre_cg" />
+
+    <RadioGroup
+        android:id="@+id/style_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/update_reading_style_tv">
+
+        <RadioButton
+            android:id="@+id/style_rb1"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:text="독서 시간이 정해져 있는 계획파"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="13.2sp" />
+
+        <RadioButton
+            android:id="@+id/style_rb2"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:text="자투리 시간에 책을 읽는 틈틈이파"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="13.2sp" />
+
+        <RadioButton
+            android:id="@+id/style_rb3"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/reading_style_rb_selector"
+            android:button="@null"
+            android:paddingHorizontal="12dp"
+            android:text="열심히 기록하며 보는 끄적파"
+            android:textColor="@drawable/reading_style_text_selector"
+            android:textSize="13.2sp" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/style_et"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/login_book_profile_et"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:hint="@string/self_reading_style_hint"
+        android:maxLength="30"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/grey12"
+        android:textColorHint="@color/grey12"
+        android:textSize="13.2sp"
+        app:layout_constraintTop_toBottomOf="@+id/style_rg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
