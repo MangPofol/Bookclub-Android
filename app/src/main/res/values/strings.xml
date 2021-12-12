@@ -147,7 +147,6 @@
     <string name="favorite_genre">좋아하는 장르</string>
     <string name="reading_style">책 읽는 스타일</string>
     <string name="reading_routine">책 루틴</string>
-    <string name="goal_management">목표 관리</string>
     <string name="checklist_management">체크리스트 관리</string>
 
     <!-- YourTasteActivity -->
@@ -157,4 +156,9 @@
     <!-- MyInfoActivity, YourTasteActivity -->
     <string name="your_taste">당신의 취향</string>
 
+    <!-- MyInfoActivity, GoalManagementActivity -->
+    <string name="goal_management">목표 관리</string>
+
+    <!-- GoalManagementActivity -->
+    <string name="update_reading_goal">독서 목표를 수정해주세요.</string>
 </resources>
