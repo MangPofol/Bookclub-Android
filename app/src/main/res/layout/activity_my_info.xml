@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.my_info.MyInfoActivity">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbar_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_info"
+        android:textColor="@color/main_blue"
+        android:textSize="21.6sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="13.2dp"
+        android:layout_marginStart="26.4dp"
+        android:src="@drawable/back_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/layout_gradation">
+
+            <ImageView
+                android:id="@+id/profile_iv"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/light_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/profile_image_setting_view"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:background="@drawable/circle_main_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_iv"
+                app:layout_constraintEnd_toEndOf="@+id/profile_iv" />
+
+            <ImageView
+                android:id="@+id/profile_image_setting_iv"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="3dp"
+                android:src="@drawable/setting_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_image_setting_view"
+                app:layout_constraintEnd_toEndOf="@+id/profile_image_setting_view"
+                app:layout_constraintStart_toStartOf="@+id/profile_image_setting_view"
+                app:layout_constraintTop_toTopOf="@+id/profile_image_setting_view" />
+
+            <TextView
+                android:id="@+id/nickname_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="요를레히히"
+                android:textColor="@color/main_blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image_setting_view" />
+
+            <TextView
+                android:id="@+id/id_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kkkkkkkkkkkk"
+                android:textColor="@color/main_blue"
+                android:textSize="14.4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nickname_tv" />
+
+            <View
+                android:id="@+id/introduce_view"
+                android:layout_width="match_parent"
+                android:layout_height="38.4dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="29dp"
+                android:background="@drawable/my_info_grey13_view"
+                app:layout_constraintTop_toBottomOf="@+id/id_tv" />
+
+            <TextView
+                android:id="@+id/introduce_tv"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="저는 책을 좋아하는 사람입니다."
+                android:textColor="@color/main_blue"
+                android:textSize="14.4sp"
+                app:layout_constraintBottom_toBottomOf="@+id/introduce_view"
+                app:layout_constraintEnd_toEndOf="@id/introduce_view"
+                app:layout_constraintStart_toStartOf="@id/introduce_view"
+                app:layout_constraintTop_toTopOf="@+id/introduce_view" />
+
+            <View
+                android:id="@+id/taste_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="15dp"
+                android:background="@drawable/my_info_grey13_view"
+                app:layout_constraintBottom_toTopOf="@+id/routine_view"
+                app:layout_constraintTop_toBottomOf="@+id/introduce_view" />
+
+            <TextView
+                android:id="@+id/your_taste_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16.8dp"
+                android:text="@string/your_taste"
+                android:textColor="@color/main_blue"
+                android:textSize="14.4sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/taste_view"
+                app:layout_constraintTop_toTopOf="@+id/taste_view" />
+
+            <View
+                android:id="@+id/genre_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/my_info_white_view"
+                app:layout_constraintBottom_toTopOf="@+id/style_view"
+                app:layout_constraintEnd_toEndOf="@id/taste_view"
+                app:layout_constraintStart_toStartOf="@+id/taste_view"
+                app:layout_constraintTop_toBottomOf="@+id/your_taste_tv" />
+
+            <TextView
+                android:id="@+id/genre_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/favorite_genre"
+                android:textColor="@color/main_blue"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/genre_rv"
+                app:layout_constraintStart_toStartOf="@+id/genre_view"
+                app:layout_constraintTop_toTopOf="@+id/genre_view" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/genre_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="4.8dp"
+                android:layout_marginBottom="15.6dp"
+                app:chipSpacingVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/genre_view"
+                app:layout_constraintEnd_toStartOf="@id/genre_next_iv"
+                app:layout_constraintStart_toStartOf="@+id/genre_view"
+                app:layout_constraintTop_toBottomOf="@+id/genre_tv">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26.4dp"
+                    android:text="경제/경영"
+                    android:textColor="@color/white"
+                    android:textSize="9.6sp"
+                    app:chipBackgroundColor="@color/main_blue"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="19.2dp"
+                    app:chipMinTouchTargetSize="0dp"
+                    app:chipStartPadding="19.2dp"
+                    app:chipStrokeColor="@color/main_blue"
+                    app:rippleColor="@android:color/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26.4dp"
+                    android:text="경제/경영"
+                    android:textColor="@color/white"
+                    android:textSize="9.6sp"
+                    app:chipBackgroundColor="@color/main_blue"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="19.2dp"
+                    app:chipMinTouchTargetSize="0dp"
+                    app:chipStartPadding="19.2dp"
+                    app:chipStrokeColor="@color/main_blue"
+                    app:rippleColor="@android:color/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26.4dp"
+                    android:text="경제/경영"
+                    android:textColor="@color/white"
+                    android:textSize="9.6sp"
+                    app:chipBackgroundColor="@color/main_blue"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="19.2dp"
+                    app:chipMinTouchTargetSize="0dp"
+                    app:chipStartPadding="19.2dp"
+                    app:chipStrokeColor="@color/main_blue"
+                    app:rippleColor="@android:color/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26.4dp"
+                    android:text="경제/경영"
+                    android:textColor="@color/white"
+                    android:textSize="9.6sp"
+                    app:chipBackgroundColor="@color/main_blue"
+                    app:chipCornerRadius="12dp"
+                    app:chipEndPadding="19.2dp"
+                    app:chipMinTouchTargetSize="0dp"
+                    app:chipStartPadding="19.2dp"
+                    app:chipStrokeColor="@color/main_blue"
+                    app:rippleColor="@android:color/transparent" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <ImageView
+                android:id="@+id/genre_next_iv"
+                android:layout_width="7.2dp"
+                android:layout_height="13.2dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/next_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/genre_rv"
+                app:layout_constraintEnd_toEndOf="@id/genre_view"
+                app:layout_constraintStart_toEndOf="@+id/genre_rv"
+                app:layout_constraintTop_toTopOf="@+id/genre_rv" />
+
+            <View
+                android:id="@+id/style_view"
+                android:layout_width="0dp"
+                android:layout_height="34.8dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/my_info_white_view"
+                app:layout_constraintBottom_toBottomOf="@+id/taste_view"
+                app:layout_constraintEnd_toEndOf="@id/taste_view"
+                app:layout_constraintStart_toStartOf="@+id/taste_view"
+                app:layout_constraintTop_toBottomOf="@+id/genre_view" />
+
+            <TextView
+                android:id="@+id/style_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/reading_style"
+                android:textColor="@color/main_blue"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/style_view"
+                app:layout_constraintEnd_toStartOf="@+id/style_next_iv"
+                app:layout_constraintStart_toStartOf="@+id/style_view"
+                app:layout_constraintTop_toTopOf="@+id/style_view" />
+
+            <ImageView
+                android:id="@+id/style_next_iv"
+                android:layout_width="7.2dp"
+                android:layout_height="13.2dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/next_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/style_tv"
+                app:layout_constraintEnd_toEndOf="@id/style_view"
+                app:layout_constraintStart_toEndOf="@+id/style_tv"
+                app:layout_constraintTop_toTopOf="@+id/style_tv" />
+
+            <View
+                android:id="@+id/routine_view"
+                android:layout_width="match_parent"
+                android:layout_height="154.8dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="136.8dp"
+                android:background="@drawable/my_info_grey13_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/taste_view" />
+
+            <TextView
+                android:id="@+id/routine_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16.8dp"
+                android:text="@string/reading_routine"
+                android:textColor="@color/main_blue"
+                android:textSize="14.4sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/routine_view"
+                app:layout_constraintTop_toTopOf="@+id/routine_view" />
+
+            <View
+                android:id="@+id/goal_management_view"
+                android:layout_width="0dp"
+                android:layout_height="34.8dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/my_info_white_view"
+                app:layout_constraintEnd_toEndOf="@id/routine_view"
+                app:layout_constraintStart_toStartOf="@+id/routine_view"
+                app:layout_constraintTop_toBottomOf="@+id/routine_tv" />
+
+            <TextView
+                android:id="@+id/goal_management_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/goal_management"
+                android:textColor="@color/main_blue"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/goal_management_view"
+                app:layout_constraintEnd_toStartOf="@+id/goal_management_iv"
+                app:layout_constraintStart_toStartOf="@+id/goal_management_view"
+                app:layout_constraintTop_toTopOf="@+id/goal_management_view" />
+
+            <ImageView
+                android:id="@+id/goal_management_iv"
+                android:layout_width="7.2dp"
+                android:layout_height="13.2dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/next_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/goal_management_tv"
+                app:layout_constraintEnd_toEndOf="@id/goal_management_view"
+                app:layout_constraintStart_toEndOf="@+id/goal_management_tv"
+                app:layout_constraintTop_toTopOf="@+id/goal_management_tv" />
+
+            <View
+                android:id="@+id/checklist_management_view"
+                android:layout_width="0dp"
+                android:layout_height="34.8dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/my_info_white_view"
+                app:layout_constraintEnd_toEndOf="@id/routine_view"
+                app:layout_constraintStart_toStartOf="@+id/routine_view"
+                app:layout_constraintTop_toBottomOf="@+id/goal_management_view" />
+
+            <TextView
+                android:id="@+id/checklist_management_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/checklist_management"
+                android:textColor="@color/main_blue"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/checklist_management_view"
+                app:layout_constraintEnd_toStartOf="@+id/checklist_management_iv"
+                app:layout_constraintStart_toStartOf="@+id/checklist_management_view"
+                app:layout_constraintTop_toTopOf="@+id/checklist_management_view" />
+
+            <ImageView
+                android:id="@+id/checklist_management_iv"
+                android:layout_width="7.2dp"
+                android:layout_height="13.2dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/next_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/checklist_management_tv"
+                app:layout_constraintEnd_toEndOf="@id/checklist_management_view"
+                app:layout_constraintStart_toEndOf="@+id/checklist_management_tv"
+                app:layout_constraintTop_toTopOf="@+id/checklist_management_tv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
