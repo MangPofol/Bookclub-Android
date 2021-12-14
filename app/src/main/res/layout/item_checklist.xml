@@ -24,13 +24,15 @@
         app:layout_constraintStart_toStartOf="@+id/checklist_view"
         app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
-    <TextView
-        android:id="@+id/checklist_tv"
+    <EditText
+        android:id="@+id/checklist_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16.8dp"
-        android:text="@string/write_checklist"
-        android:textColor="@color/grey14"
+        android:background="@color/transparent"
+        android:hint="@string/write_checklist"
+        android:textColor="@color/main_blue"
+        android:textColorHint="@color/grey14"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/check_iv"
         app:layout_constraintEnd_toEndOf="@+id/checklist_view"
