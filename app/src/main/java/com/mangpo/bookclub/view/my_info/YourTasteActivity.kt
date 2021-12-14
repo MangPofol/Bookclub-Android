@@ -13,5 +13,9 @@ class YourTasteActivity : AppCompatActivity() {
         binding = ActivityYourTasteBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        binding.backIvView.setOnClickListener {
+            finish()
+        }
     }
 }

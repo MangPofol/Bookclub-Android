@@ -13,5 +13,9 @@ class GoalManagementActivity : AppCompatActivity() {
         binding = ActivityGoalManagementBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        binding.backIvView.setOnClickListener {
+            finish()
+        }
     }
 }

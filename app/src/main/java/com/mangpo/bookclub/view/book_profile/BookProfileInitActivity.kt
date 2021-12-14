@@ -3,7 +3,6 @@ package com.mangpo.bookclub.view.book_profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -40,14 +39,15 @@ class BookProfileInitActivity : AppCompatActivity() {
         observe()
         bindUser()
 
-        binding.backIv.setOnClickListener { //뒤로가기 이미지 버튼 클릭 리스너
+        binding.backIvView.setOnClickListener { //뒤로가기 이미지 버튼 클릭 리스너
             backFragment()
         }
 
         binding.nextBtn.outlineProvider = null  //다음 버튼 그림자 제거
 
         //frameLayout의 초기 화면 설정
-        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
 
         binding.nextBtn.setOnClickListener {    //다음 버튼 클릭 리스너
             goToNextStep(false)
@@ -87,22 +87,28 @@ class BookProfileInitActivity : AppCompatActivity() {
                 finish()
             }
             SetNicknameFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
             }
             SetGenderAndBirthFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetNicknameFragment()).commit()
             }
             ExpressMeFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
             }
             SetGenreFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, ExpressMeFragment()).commit()
             }
             ReadingStyleFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetGenreFragment()).commit()
             }
             ReadingGoalFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
             }
         }
     }
@@ -135,7 +141,7 @@ class BookProfileInitActivity : AppCompatActivity() {
                 mainVm.createUser()
             }
 
-            if (mainVm.getUser()==null) {
+            if (mainVm.getUser() == null) {
                 Toast.makeText(context, "회원가입 실패. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
@@ -176,35 +182,48 @@ class BookProfileInitActivity : AppCompatActivity() {
 
         when (supportFragmentManager.fragments[0].javaClass) {
             BookProfileDescFragment::class.java -> {
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetNicknameFragment()).commit()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetNicknameFragment()).commit()
             }
             SetNicknameFragment::class.java -> {
-                user.nickname = (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+                user.nickname =
+                    (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
             }
             SetGenderAndBirthFragment::class.java -> {
-                user.sex = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getGender()
-                user.birthdate = (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+                user.sex =
+                    (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getGender()
+                user.birthdate =
+                    (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, ExpressMeFragment()).commit()
             }
             ExpressMeFragment::class.java -> {
                 if (!isSkip)
-                    user.introduce = (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, SetGenreFragment()).commit()
+                    user.introduce =
+                        (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, SetGenreFragment()).commit()
             }
             SetGenreFragment::class.java -> {
                 if (!isSkip)
-                    user.genres = (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+                    user.genres =
+                        (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
             }
             ReadingStyleFragment::class.java -> {
                 if (!isSkip)
-                    user.style = (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
-                supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
+                    user.style =
+                        (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
             }
             ReadingGoalFragment::class.java -> {
                 if (!isSkip)
-                    user.goal = (supportFragmentManager.fragments[0] as ReadingGoalFragment).getGoal()
+                    user.goal =
+                        (supportFragmentManager.fragments[0] as ReadingGoalFragment).getGoal()
                 signIn()
             }
         }

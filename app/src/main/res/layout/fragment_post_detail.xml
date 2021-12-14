@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".view.write.PostDetailFragment">
 
+    <View
+        android:id="@+id/back_iv_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
+        app:layout_constraintEnd_toEndOf="@id/back_iv"
+        app:layout_constraintStart_toStartOf="@+id/back_iv"
+        app:layout_constraintTop_toTopOf="@+id/back_iv" />
+
     <ImageView
         android:id="@+id/back_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26.4dp"
         android:layout_marginTop="27.6dp"
-        android:src="@drawable/back_icon_small"
+        android:src="@drawable/back"
         app:layout_constraintBottom_toTopOf="@+id/book_name_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -156,7 +165,6 @@
                     android:id="@+id/four_iv_1"
                     android:layout_width="match_parent"
                     android:layout_height="254dp"
-                    android:background="@color/black"
                     android:scaleType="fitXY"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -164,7 +172,6 @@
                     android:id="@+id/four_iv_2"
                     android:layout_width="0dp"
                     android:layout_height="126dp"
-                    android:background="@color/main_blue"
                     android:scaleType="fitXY"
                     app:layout_constraintEnd_toStartOf="@+id/four_iv_3"
                     app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +182,6 @@
                     android:layout_width="0dp"
                     android:layout_height="126dp"
                     android:adjustViewBounds="true"
-                    android:background="@color/red1"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="@+id/four_iv_2"
                     app:layout_constraintEnd_toStartOf="@+id/four_iv_4"
@@ -187,7 +193,6 @@
                     android:layout_width="0dp"
                     android:layout_height="126dp"
                     android:adjustViewBounds="true"
-                    android:background="@color/light_red"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="@+id/four_iv_2"
                     app:layout_constraintEnd_toEndOf="parent"

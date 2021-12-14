@@ -54,12 +54,21 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <View
+        android:id="@+id/back_iv_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
+        app:layout_constraintEnd_toEndOf="@id/back_iv"
+        app:layout_constraintStart_toStartOf="@+id/back_iv"
+        app:layout_constraintTop_toTopOf="@+id/back_iv" />
+
     <ImageView
         android:id="@+id/back_iv"
-        android:layout_width="10dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="28.8dp"
-        android:src="@drawable/back_icon"
+        android:src="@drawable/back"
         app:layout_constraintBottom_toBottomOf="@+id/coordinateLayout"
         app:layout_constraintStart_toStartOf="@+id/coordinateLayout"
         app:layout_constraintTop_toTopOf="@+id/coordinateLayout" />
