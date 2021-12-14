@@ -65,7 +65,7 @@
         android:focusableInTouchMode="true"
         android:gravity="center_vertical"
         android:hint="@string/self_reading_style_hint"
-        android:maxLength="30"
+        android:maxLength="20"
         android:paddingHorizontal="12dp"
         android:textColor="@color/grey12"
         android:textColorHint="@color/grey12"
