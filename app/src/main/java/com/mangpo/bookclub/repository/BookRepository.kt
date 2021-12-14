@@ -56,23 +56,26 @@ class BookRepository(
         return books
     }
 
-    suspend fun createBook(book: BookModel): BookModel? {
+    suspend fun createBook(book: BookModel): HashMap<String, Any>? {
         try {
             val result = bookService.createBook(book)
+            val hm: HashMap<String, Any> = hashMapOf()
 
-            return if (result.isSuccessful) {
+            if (result.isSuccessful) {
                 val locationSplit = result.headers()["Location"]!!.split('/')
                 book.id = locationSplit[locationSplit.size-1].toLong()
-                Log.d("BookRepository", book.toString())
-                book
+                hm["code"] = result.code()
+                hm["book"] = book
             } else {
                 Log.e(
                     "BookRepository",
                     "createBook 에러\ncode: ${result.code()}, message: ${result.body().toString()}"
                 )
 
-                null
+                hm["code"] = result.code()
             }
+
+            return hm
         } catch (e: Exception) {
             e.printStackTrace()
 
