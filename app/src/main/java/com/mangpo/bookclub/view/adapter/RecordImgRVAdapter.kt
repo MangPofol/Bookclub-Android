@@ -1,8 +1,6 @@
 package com.mangpo.bookclub.view.adapter
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +12,11 @@ import java.io.ByteArrayOutputStream
 
 class RecordImgRVAdapter() :
     RecyclerView.Adapter<RecordImgRVAdapter.RecordImgHolder>() {
+
     private lateinit var binding: ItemRecordImgBinding
 
     private lateinit var mItemClick: MyItemClickListener
-    private val pictures: ArrayList<Bitmap> = ArrayList<Bitmap>()
+    private val pictures: ArrayList<Uri> = ArrayList<Uri>()
 
     interface MyItemClickListener {
         fun removeItem(position: Int)
@@ -41,8 +40,7 @@ class RecordImgRVAdapter() :
         val stream = ByteArrayOutputStream()
 
         holder.iv.clipToOutline = true
-        pictures[position].compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        Glide.with(holder.itemView).asBitmap().load(stream.toByteArray()).into(holder.iv)
+        Glide.with(holder.itemView).load(pictures[position]).into(holder.iv)
 
         //삭제 아이콘 누르면 이미지 삭제하기
         holder.removeBtn.setOnClickListener {
@@ -56,7 +54,7 @@ class RecordImgRVAdapter() :
         return pictures.size
     }
 
-    fun setData(uriList: List<Bitmap>) {
+    fun setData(uriList: List<Uri>) {
         pictures.clear()
         pictures.addAll(uriList)
         notifyDataSetChanged()
@@ -67,4 +65,5 @@ class RecordImgRVAdapter() :
         val iv: ImageView = itemView.recordIv
         val removeBtn: View = itemView.removeImgView
     }
+
 }
