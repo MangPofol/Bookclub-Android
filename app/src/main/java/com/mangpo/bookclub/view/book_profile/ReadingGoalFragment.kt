@@ -14,9 +14,9 @@ class ReadingGoalFragment : Fragment() {
 
     private lateinit var binding: FragmentReadingGoalBinding
 
-    private val periodNumList = (1..30).toList().map { it.toString() }
+    private val periodNumList = (0..30).toList().map { it.toString() }
     private val periodUnitList = listOf<String>("년", "개월", "일")
-    private val bookCntList = (1..100).toList().map { it.toString() }
+    private val bookCntList = (0..100).toList().map { it.toString() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,19 @@ class ReadingGoalFragment : Fragment() {
     ): View? {
         binding = FragmentReadingGoalBinding.inflate(inflater, container, false)
 
-        (activity as BookProfileInitActivity).visibleSkipTV()
+        (activity as BookProfileInitActivity).visibleSkipTV()   //건너띄기 텍스트뷰 보이도록
+        (activity as BookProfileInitActivity).unEnableNextBtn() //다음 버튼 비활성화
+
+        //NumberPicker 값 변경되면 다음 버튼 활성화 시키기
+        binding.periodNumberNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            (activity as BookProfileInitActivity).enableNextBtn()
+        }
+        binding.periodUnitNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            (activity as BookProfileInitActivity).enableNextBtn()
+        }
+        binding.bookCntNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            (activity as BookProfileInitActivity).enableNextBtn()
+        }
 
         return binding.root
     }
