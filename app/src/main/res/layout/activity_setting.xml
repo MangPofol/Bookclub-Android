@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".view.SettingActivity">
 
+    <View
+        android:id="@+id/back_iv_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
+        app:layout_constraintEnd_toEndOf="@id/back_iv"
+        app:layout_constraintStart_toStartOf="@+id/back_iv"
+        app:layout_constraintTop_toTopOf="@+id/back_iv" />
+
     <ImageView
         android:id="@+id/back_iv"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="28.8dp"
         android:layout_marginTop="21.6dp"
-        android:src="@drawable/back_icon"
+        android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,8 +87,8 @@
         android:text="@string/notice"
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/resetting_password_line_view"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetting_password_line_view" />
 
     <ImageView
         android:id="@+id/notice_next_iv"
@@ -100,8 +109,8 @@
         android:text="@string/question"
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/notice_tv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notice_tv" />
 
     <ImageView
         android:id="@+id/question_iv"
@@ -122,8 +131,8 @@
         android:text="@string/terms_conditions"
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/question_tv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_tv" />
 
     <ImageView
         android:id="@+id/terms_conditions_iv"
@@ -144,8 +153,8 @@
         android:text="@string/version"
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv" />
 
     <View
         android:id="@+id/version_line_view"
@@ -165,8 +174,8 @@
         android:text="@string/logout"
         android:textColor="@color/light_red"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/version_line_view"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/version_line_view" />
 
     <TextView
         android:id="@+id/quit_membership_tv"
@@ -177,7 +186,7 @@
         android:text="@string/quit_membership"
         android:textColor="@color/light_red"
         android:textSize="16.8sp"
-        app:layout_constraintTop_toBottomOf="@+id/logout_tv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logout_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,11 +20,11 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/photo_view_vp"
         android:layout_width="match_parent"
-        android:layout_height="384dp"
-        android:layout_marginHorizontal="24dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginVertical="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/photo_view_indicator"
+        app:layout_constraintTop_toBottomOf="@+id/exit_iv" />
 
     <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
         android:id="@+id/photo_view_indicator"
@@ -33,15 +33,15 @@
         android:layout_marginBottom="24dp"
         app:dampingRatio="0.5"
         app:dotsColor="@color/white"
-        app:dotsStrokeColor="@color/white"
         app:dotsCornerRadius="10dp"
         app:dotsSize="12dp"
         app:dotsSpacing="6dp"
+        app:dotsStrokeColor="@color/white"
         app:dotsStrokeWidth="2dp"
-        app:stiffness="300"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:stiffness="300" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
