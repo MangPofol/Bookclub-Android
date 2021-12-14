@@ -12,7 +12,7 @@
         android:title="@string/book_club_en"/>
     <item
         android:id="@+id/myBookclub"
-        android:enabled="true"
+        android:enabled="false"
         android:icon="@drawable/bookclub_navi_icon"
         android:title="@string/my_bookclub"/>
 </menu>
