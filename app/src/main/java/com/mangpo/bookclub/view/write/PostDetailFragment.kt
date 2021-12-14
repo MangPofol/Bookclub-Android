@@ -9,7 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
+import com.mangpo.bookclub.model.BookModel
+import com.mangpo.bookclub.model.PostDetailModel
+import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.ArrayList
@@ -17,7 +21,10 @@ import java.util.ArrayList
 class PostDetailFragment : Fragment() {
 
     private val postVm: PostViewModel by sharedViewModel()
+    private val bookVm: BookViewModel by sharedViewModel()
 
+    private var bookId: Long? = null
+    private var bookName: String? = null
     private var isInit: Boolean = false
 
     private lateinit var binding: FragmentPostDetailBinding
@@ -26,33 +33,36 @@ class PostDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d("PostDetailFragment", "onCreate")
 
+        bookId = arguments?.getLong("bookId")
+        bookName = arguments?.getString("bookName")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPostDetailBinding.inflate(inflater, container, false)
         Log.d("PostDetailFragment", "onCreateView")
 
-        setUI()
+        binding = FragmentPostDetailBinding.inflate(inflater, container, false)
 
-        binding.backIv.setOnClickListener {
+        setUI() //화면 디자인 함수 호출
+
+        binding.backIvView.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStackImmediate()
-
-            if (isInit) {
-                postVm.setPostDetail(null)
-                arguments?.remove("bookId")
-                arguments?.remove("bookName")
-            }
         }
 
         binding.updateTv.setOnClickListener {
-            isInit = false
-            (requireParentFragment() as PostFragment).moveToRecord()
+            setBook()
+            setPost()
+            (requireParentFragment() as WriteFrameFragment).moveToRecord(true)
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("PostDetailFragment", "onResume")
     }
 
     override fun onStop() {
@@ -81,9 +91,9 @@ class PostDetailFragment : Fragment() {
         Log.d("PostDetailFragment", "onDetach")
     }
 
+    //화면 디자인 함수
     private fun setUI() {
         val post = postVm.getPostDetail()!!
-        Log.d("PostDetailFragment", "post: $post")
 
         binding.bookNameTv.text = arguments?.getString("bookName")
 
@@ -94,7 +104,7 @@ class PostDetailFragment : Fragment() {
 
         binding.recordTitleTv.text = post.title
         binding.recordContentTv.text = post.content
-        setImg(post.postImgLocations)
+        setImg(post.postImgLocations)   //이미지 개수에 따라 ImageView 구성을 바꾸는 함수 호출
 
         binding.locationTv.text = post.location
         binding.clockTv.text = post.readTime
@@ -102,6 +112,7 @@ class PostDetailFragment : Fragment() {
         binding.commentCntTv.text = post.commentsDto.size.toString()*/
     }
 
+    //이미지 개수에 따라 ImageView 구성을 바꾸는 함수
     private fun setImg(imgs: List<String>) {
 
         when {
@@ -111,7 +122,7 @@ class PostDetailFragment : Fragment() {
                 setVisibilityThreeIV(View.GONE)
                 setVisibilityFourIV(View.GONE)
             }
-            imgs.size==1 -> {
+            imgs.size == 1 -> {
                 setVisibilityOneIV(View.VISIBLE)
                 setVisibilityTwoIV(View.GONE)
                 setVisibilityThreeIV(View.GONE)
@@ -119,7 +130,7 @@ class PostDetailFragment : Fragment() {
 
                 Glide.with(requireContext()).load(imgs[0]).into(binding.oneIv)
             }
-            imgs.size==2 -> {
+            imgs.size == 2 -> {
                 setVisibilityOneIV(View.GONE)
                 setVisibilityTwoIV(View.VISIBLE)
                 setVisibilityThreeIV(View.GONE)
@@ -128,7 +139,7 @@ class PostDetailFragment : Fragment() {
                 Glide.with(requireContext()).load(imgs[0]).into(binding.twoIv1)
                 Glide.with(requireContext()).load(imgs[1]).into(binding.twoIv2)
             }
-            imgs.size==3 -> {
+            imgs.size == 3 -> {
                 setVisibilityOneIV(View.GONE)
                 setVisibilityTwoIV(View.GONE)
                 setVisibilityThreeIV(View.VISIBLE)
@@ -208,11 +219,37 @@ class PostDetailFragment : Fragment() {
         }
     }
 
+    private fun setBook() {
+        val book: BookModel = BookModel(id = bookId!!, name = bookName!!)
+        bookVm.setBook(book)
+    }
+
+    private fun setPost() {
+        val postDetail: PostDetailModel = postVm.getPostDetail()!!
+        val post: PostModel = PostModel(
+            bookId,
+            postDetail.scope,
+            false,
+            postDetail.location,
+            postDetail.readTime,
+            postDetail.hyperlinkTitle,
+            postDetail.hyperlink,
+            postDetail.title,
+            postDetail.content,
+            postDetail.postImgLocations
+        )
+
+        postVm.setPost(post)
+    }
+
     private fun goPhotoViewActivity(position: Int) {
         isInit = false
 
         val intent: Intent = Intent(requireContext(), PhotoViewActivity::class.java)
-        intent.putStringArrayListExtra("imgs", postVm.getPostDetail()!!.postImgLocations as ArrayList<String>)
+        intent.putStringArrayListExtra(
+            "imgs",
+            postVm.getPostDetail()!!.postImgLocations as ArrayList<String>
+        )
         intent.putExtra("currentItem", position)
         startActivity(intent)
 
