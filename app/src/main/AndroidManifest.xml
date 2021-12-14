@@ -18,6 +18,18 @@
         android:theme="@style/Theme.Bookclub"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.my_info.ChecklistManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.my_info.GoalManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.my_info.YourTasteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.my_info.MyInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.SettingActivity"
             android:exported="false" />
         <activity
