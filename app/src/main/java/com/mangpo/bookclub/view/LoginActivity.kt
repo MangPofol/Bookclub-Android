@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.*
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import androidx.lifecycle.Observer
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.util.AccountSharedPreference
-import com.mangpo.bookclub.util.SHA256
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import gun0912.tedimagepicker.util.ToastUtil.context
@@ -37,8 +35,6 @@ class LoginActivity : AppCompatActivity() {
         if (AccountSharedPreference.getUserEmail(context).isNotBlank() || AccountSharedPreference.getUserPass(context).isNotBlank()) {
             loginEditJson.addProperty("email", AccountSharedPreference.getUserEmail(context))
             loginEditJson.addProperty("password", AccountSharedPreference.getUserPass(context))
-
-            Log.d("LoginActivity", "$loginEditJson")
 
             CoroutineScope(Dispatchers.Main).launch {
                 mainVm.login(loginEditJson)
@@ -66,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 loginEditJson.addProperty("email", binding.loginIdEt.text.toString())
                 loginEditJson.addProperty(
                     "password",
-                    SHA256.encryptPassword(binding.loginPasswordEt.text.toString())
+                    binding.loginPasswordEt.text.toString()
                 )
 
                 //로그인 요청 api 전송
