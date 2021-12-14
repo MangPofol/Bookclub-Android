@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.library
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyLibraryBinding
+import com.mangpo.bookclub.view.SettingActivity
 import com.mangpo.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
@@ -25,21 +27,27 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
 
     private val bookViewModel: BookViewModel by sharedViewModel()
-    private val fragments: List<BookListFragment> = listOf(BookListFragment(), BookListFragment(), BookListFragment())
+    private val fragments: List<BookListFragment> =
+        listOf(BookListFragment(), BookListFragment(), BookListFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
         myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity, fragments)
 
         binding.viewPager.adapter = myLibraryPagerAdapter  //어댑터 설정
+
+        //햄버거 아이콘 클릭 리스너 -> SettingActivity 화면으로 이동
+        binding.hamburgerIb.setOnClickListener {
+            startActivity(Intent(requireContext(), SettingActivity::class.java))
+        }
 
         binding.searchLayout.searchBookET.addTextChangedListener(this)
 
@@ -164,9 +172,6 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as MainActivity).setDrawer(binding.toolbar)   //navigation drawer 등록
-        binding.toolbar.setNavigationIcon(R.drawable.my_library_filter_icon)  //navigation icon 설정
 
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
             when (position) {
