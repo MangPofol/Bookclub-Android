@@ -33,6 +33,7 @@ class BookDescFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("BookDescFragment", "onCreate")
 
         book = Gson().fromJson<BookModel>(arguments?.getString("book"), BookModel::class.java)
 
@@ -42,18 +43,18 @@ class BookDescFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("BookDescFragment", "onCreateView")
 
         binding = FragmentBookDescBinding.inflate(inflater, container, false)
 
-        initUI(book)
-        initAdapter()
+        initUI(book)    //book 데이터를 가지고 바인딩 할 수 있는 UI 업데이트 함수 호출
+        initAdapter()   //메모 리사이클러뷰 UI 업데이트 함수 호출
 
-        binding.backIv.setOnClickListener {
+        binding.backIvView.setOnClickListener {
             requireParentFragment().childFragmentManager.popBackStackImmediate()
         }
 
         binding.readCompleteView.setOnClickListener {
-
             CoroutineScope(Dispatchers.Main).launch {
                 if (book.category == "AFTER") {
                     val result = CoroutineScope(Dispatchers.IO).async {
@@ -61,14 +62,14 @@ class BookDescFragment : Fragment() {
                     }
 
                     if (result.await()) {
+                        book.category = "NOW"
                         binding.readCompleteView.background =
                             requireContext().getDrawable(R.drawable.book_desc_read_not_complete_view)
                         Toast.makeText(
                             this@BookDescFragment.context,
                             "책 완독을 취소했습니다!",
                             Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        ).show()
                         initBookList()
                     } else {
                         Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
@@ -80,14 +81,14 @@ class BookDescFragment : Fragment() {
                     }
 
                     if (result.await()) {
+                        book.category = "AFTER"
                         binding.readCompleteView.background =
                             requireContext().getDrawable(R.drawable.book_desc_read_complete_view)
                         Toast.makeText(
                             this@BookDescFragment.context,
                             "첵을 완독하셧습니다.",
                             Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        ).show()
                         initBookList()
                     } else {
                         Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
@@ -109,6 +110,7 @@ class BookDescFragment : Fragment() {
         }
     }
 
+    //book 데이터를 가지고 바인딩 할 수 있는 UI 업데이트 함수
     private fun initUI(book: BookModel) {
         binding.bookNameTv.text = book.name
         binding.bookIv.clipToOutline = true
@@ -123,17 +125,10 @@ class BookDescFragment : Fragment() {
         }
     }
 
+    //메모 리사이클러뷰 UI 업데이트 함수
     private fun initAdapter() {
         val postAdapter: PostAdapter = PostAdapter()
         binding.memoListRv.adapter = postAdapter
-
-        postAdapter.setMyItemClickListener(object : PostAdapter.MyItemClickListener {
-            override fun goPostDetail(post: PostDetailModel) {
-                postVm.setPostDetail(post)
-                (requireActivity() as MainActivity).goBookDesc(book.id!!, book.name)
-            }
-
-        })
 
         CoroutineScope(Dispatchers.Main).launch {
             val posts = CoroutineScope(Dispatchers.IO).async {
@@ -142,6 +137,13 @@ class BookDescFragment : Fragment() {
 
             postAdapter.setData(posts.await()!!.sortedByDescending { it.createdDate })
         }
-    }
 
+        postAdapter.setMyItemClickListener(object : PostAdapter.MyItemClickListener {
+            override fun goPostDetail(post: PostDetailModel) {
+                postVm.setPostDetail(post)
+                (requireActivity() as MainActivity).setBookBundle(book)
+                (requireActivity() as MainActivity).changeBottomNavigation(0)
+            }
+        })
+    }
 }
