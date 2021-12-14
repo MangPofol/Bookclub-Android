@@ -20,6 +20,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.view.adapter.ChecklistRVAdapter
+import com.mangpo.bookclub.view.main.MainActivity
 
 class WriteInitFragment : Fragment() {
 
@@ -85,6 +86,21 @@ class WriteInitFragment : Fragment() {
                 )
                 binding.checklistHiddenRv.visibility = View.VISIBLE
             }
+        }
+
+        //체크리스트 설정 이미지 클릭 리스너 -> ChecklistManagementActivity 화면으로 이동
+        binding.checklistSettingIv.setOnClickListener {
+            (requireActivity() as MainActivity).goChecklistManagement()
+        }
+
+        //프로필 관리 화면으로 이동하는 이미지 클릭 리스너 -> MyInfoActivity 화면으로 이동
+        binding.goMyInfoIv.setOnClickListener {
+            (requireActivity() as MainActivity).goMyInfo()
+        }
+
+        //독서 목표 관리 화면으로 이동하는 이미지 클릭 리스너 -> GoalManagementActivity 화면으로 이동
+        binding.readingGoalNextIv.setOnClickListener {
+            (requireActivity() as MainActivity).goGoalManagement()
         }
 
         return binding.root
