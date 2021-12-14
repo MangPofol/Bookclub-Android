@@ -1,6 +1,7 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,37 +14,27 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
-    private val _imgs: MutableLiveData<List<Bitmap>> = MutableLiveData()
+    private val _imgUriList: MutableLiveData<List<Uri>> = MutableLiveData()
+    private val _post: MutableLiveData<PostModel> = MutableLiveData()
 
-    private var post: PostModel? = null
     private var postDetail: PostDetailModel? = null
 
-    val imgs: LiveData<List<Bitmap>> get() = _imgs
+    val imgUriList: LiveData<List<Uri>> get() = _imgUriList
+    val post: LiveData<PostModel> get() = _post
 
-
-    fun setImgs(bitmaps: List<Bitmap>) {
-        _imgs.value = bitmaps
+    fun setImgUriList(imgUriList: List<Uri>) {
+        _imgUriList.value = imgUriList
     }
+    fun getImgUriList(): List<Uri>? = _imgUriList.value
 
-    fun removeImg(position: Int) {
-        (_imgs.value as ArrayList).removeAt(position)
+    fun setPost(post: PostModel) {
+        _post.value = post
     }
+    fun getPost(): PostModel? = _post.value
 
-    fun clearImg() {
-        if (_imgs.value != null)
-            (_imgs.value as ArrayList).clear()
-    }
-
-    fun setPost(post: PostModel?) {
-        this.post = post
-    }
-
-    fun getPost(): PostModel? = this.post
-
-    fun setPostDetail(postDetail: PostDetailModel) {
+    fun setPostDetail(postDetail: PostDetailModel?) {
         this.postDetail = postDetail
     }
-
     fun getPostDetail(): PostDetailModel? = this.postDetail
 
     suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? =
@@ -57,6 +48,21 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         postDetail = job.await()
 
         return postDetail
+    }
+
+    suspend fun updatePost(postId: Long, post: PostModel): Boolean {
+
+        val isUpdate = viewModelScope.async {
+            val code = repository.updatePost(postId, post!!)
+
+            Log.d("PostViewModel", "updatePost code -> $code")
+            when (code) {
+                204 -> true
+                else -> false
+            }
+        }
+
+        return isUpdate.await()
     }
 
     suspend fun uploadImg(imgPath: String): String? {
