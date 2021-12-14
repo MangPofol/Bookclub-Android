@@ -1,39 +1,44 @@
 package com.mangpo.bookclub.view.main
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
+import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
+import com.mangpo.bookclub.model.BookModel
+import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.view.bookclub.BookClubFragment
-import com.mangpo.bookclub.view.library.LibraryMainFragment
+import com.mangpo.bookclub.view.library.LibraryInitFragment
 import com.mangpo.bookclub.view.library.MyLibraryFragment
-import com.mangpo.bookclub.view.write.PostDetailFragment
-import com.mangpo.bookclub.view.write.PostFragment
-import com.mangpo.bookclub.view.write.RecordFragment
+import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
+import com.mangpo.bookclub.view.my_info.GoalManagementActivity
+import com.mangpo.bookclub.view.my_info.MyInfoActivity
+import com.mangpo.bookclub.view.write.WriteFrameFragment
+import com.mangpo.bookclub.view.write.WriteInitFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
+import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mDrawerToggle: ActionBarDrawerToggle
     private lateinit var mPreferences: SharedPreferences
 
-    private val postFragment: PostFragment = PostFragment()
-    private val libraryMainFragment: LibraryMainFragment = LibraryMainFragment()
+    private val writeFrameFragment: WriteFrameFragment = WriteFrameFragment()
+    private val libraryInitFragment: LibraryInitFragment = LibraryInitFragment()
     private val bookClubFragment: BookClubFragment = BookClubFragment()
 
     private var email: String = ""
     private var latestFragment: String = ""
 
-    private val bookViewModel: BookViewModel by viewModel()
+    private val bookVm: BookViewModel by viewModel()
+    private val postVm: PostViewModel by viewModel()
+    private val bookBundle: Bundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,18 +52,31 @@ class MainActivity : AppCompatActivity() {
 
         initBookList()
 
+        //bottom navigation 메뉴 선택 시 프래그먼트 전환
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.write -> {
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, postFragment).addToBackStack("post").commitAllowingStateLoss()
+                    if (bookBundle.getString("book")==null)
+                        writeFrameFragment.arguments = bookBundle
+
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, writeFrameFragment).addToBackStack("post").commitAllowingStateLoss()
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.library -> {
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, libraryMainFragment).addToBackStack("libraryMain").commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, libraryInitFragment).addToBackStack("libraryMain").commitAllowingStateLoss()
+                    postVm.setPost(PostModel())
+                    postVm.setImgUriList(listOf())
+                    bookVm.setBook(BookModel())
+
                     return@setOnItemSelectedListener true
                 }
                 R.id.myBookclub -> {
                     supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, bookClubFragment).addToBackStack("bookClub").commitAllowingStateLoss()
+                    postVm.setPost(PostModel())
+                    postVm.setImgUriList(listOf())
+                    bookVm.setBook(BookModel())
+
                     return@setOnItemSelectedListener true
                 }
             }
@@ -67,115 +85,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavigation.selectedItemId = R.id.write
-
-        //뷰페이저 어댑터 설정&페이지 변환 리스너 설정
-        /*binding.bottomViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(    //뷰페이저 스크롤 시 프래그먼트 전환되면서 bottom navigation 아이콘 체크 상태 변경
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                binding.bottomNavigation.menu.getItem(position).isChecked = true
-            }
-
-            override fun onPageSelected(position: Int) {
-
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })*/
-
-        //bottom navigation 메뉴 선택 시 프래그먼트 전환
-        /*binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.write -> {
-                    binding.bottomViewPager.currentItem = 0
-
-                    return@setOnItemSelectedListener true
-                }
-                R.id.library -> {
-                    binding.bottomViewPager.currentItem = 1
-
-                    return@setOnItemSelectedListener true
-                }
-                R.id.myBookclub -> {
-                    binding.bottomViewPager.currentItem = 2
-
-                    return@setOnItemSelectedListener true
-                }
-            }
-
-            return@setOnItemSelectedListener false
-        }*/
     }
 
     override fun onResume() {
         super.onResume()
         Log.d("MainActivity", "onResume")
 
-        if (latestFragment=="PostDetail") {
-            binding.bottomNavigation.selectedItemId = R.id.write
-            postFragment.moveToPostDetail(null, null)
-        }
     }
 
     override fun onBackPressed() {
-        //drawer layout이 열려 있는 상태면 -> drawer layout 부터 닫는다.
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
-            binding.drawerLayout.closeDrawers()
-        else if (binding.bottomNavigation.selectedItemId == R.id.write) {
-            when (postFragment.childFragmentManager.fragments[0].javaClass) {
-                RecordFragment::class.java -> finishAffinity()
-                PostDetailFragment::class.java -> {
-                    binding.bottomNavigation.selectedItemId = R.id.library
-                }
-                else -> postFragment.childFragmentManager.popBackStackImmediate()
-            }
-        } else if (binding.bottomNavigation.selectedItemId == R.id.library) {
-            if (libraryMainFragment.childFragmentManager.fragments[0].javaClass == MyLibraryFragment::class.java)
-                finishAffinity()
+        if (binding.bottomNavigation.selectedItemId == R.id.write) {
+            val fragments = writeFrameFragment.childFragmentManager.fragments
+
+            if (fragments[fragments.size-1].javaClass==WriteInitFragment::class.java)
+                finish()
             else
-                libraryMainFragment.childFragmentManager.popBackStackImmediate()
+                writeFrameFragment.childFragmentManager.popBackStackImmediate()
+        } else if (binding.bottomNavigation.selectedItemId == R.id.library) {
+            val fragments = libraryInitFragment.childFragmentManager.fragments
+            if (fragments[fragments.size-1].javaClass == MyLibraryFragment::class.java)
+                binding.bottomNavigation.selectedItemId = R.id.write
+            else
+                libraryInitFragment.childFragmentManager.popBackStackImmediate()
         } else {
             Log.d("MainActivity", "onBackPressed-BookClub -> ${bookClubFragment.childFragmentManager.fragments}")
         }
     }
 
-    /*private fun setBottom() {
-        binding.bottomViewPager.adapter = bottomNavigationPagerAdapter
-        binding.bottomNavigation.selectedItemId = R.id.write
-        binding.bottomViewPager.currentItem = 0
-    }*/
-
     private fun initBookList() {
         CoroutineScope(Dispatchers.Main).launch {
-            bookViewModel.requestBookList(email, "NOW")
-            bookViewModel.requestBookList(email, "AFTER")
-            bookViewModel.requestBookList(email, "BEFORE")
-
-            //setBottom()
+            bookVm.requestBookList(email, "NOW")
+            bookVm.requestBookList(email, "AFTER")
+            bookVm.requestBookList(email, "BEFORE")
         }
     }
-
-    //navigation drawer 설정
-    fun setDrawer(toolbar: Toolbar) {
-        var activity = MainActivity()
-
-        mDrawerToggle = ActionBarDrawerToggle(
-                activity,
-                binding.drawerLayout,
-                toolbar,
-                R.string.open,
-                R.string.close
-        )
-        mDrawerToggle!!.syncState()
-    }
-
-    /*fun moveBottomPager(currentItem: Int) {
-        binding.bottomViewPager.currentItem = currentItem
-    }*/
 
     //올라와 있는 키보드를 내리는 함수
     fun hideKeyBord(v: View) {
@@ -184,17 +127,40 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    fun goBookDesc(bookId: Long, bookName: String) {
-        binding.bottomNavigation.selectedItemId = R.id.write
-        postFragment.moveToPostDetail(bookId, bookName)
-    }
-
     fun getEmail(): String = email
 
     fun setLatestFragment(name: String) {
         latestFragment = name
     }
-    /*fun backFragment() {
-        Log.d("MainActivity", supportFragmentManager.fragments.toString())
-    }*/
+
+    fun moveToBookDesc(book: BookModel) {
+        libraryInitFragment.moveToBookDesc(book)
+    }
+
+    fun setBookBundle(book: BookModel) {
+        bookBundle.putString("book", Gson().toJson(book))
+    }
+
+    fun changeBottomNavigation(menu: Int) {
+        when (menu) {
+            0 -> binding.bottomNavigation.selectedItemId = R.id.write
+            1 -> binding.bottomNavigation.selectedItemId = R.id.library
+            else -> binding.bottomNavigation.selectedItemId = R.id.myBookclub
+        }
+    }
+
+    //ChecklistManagementActivity 화면으로 이동하는 함수
+    fun goChecklistManagement() {
+        startActivity(Intent(this, ChecklistManagementActivity::class.java))
+    }
+
+    //GoalManagementActivity 화면으로 이동하는 함수
+    fun goGoalManagement() {
+        startActivity(Intent(this, GoalManagementActivity::class.java))
+    }
+
+    //MyInfoActivity 화면으로 이동하는 함수
+    fun goMyInfo() {
+        startActivity(Intent(this, MyInfoActivity::class.java))
+    }
 }
