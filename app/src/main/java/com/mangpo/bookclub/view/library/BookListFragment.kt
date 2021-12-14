@@ -12,6 +12,7 @@ import com.mangpo.bookclub.databinding.FragmentBookListBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
+import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -92,11 +93,7 @@ class BookListFragment : Fragment(), OnItemClick {
     override fun onClick(position: Int) {
         var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
 
-        bookVm.setSelectedBook(book)
-
-        (requireActivity().supportFragmentManager.fragments.find { it ->
-            it.javaClass.toString().contains("LibraryMainFragment")
-        } as LibraryMainFragment).moveToBookDesc(book)
+        (requireActivity() as MainActivity).moveToBookDesc(book)
     }
 
 }
