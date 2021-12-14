@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,13 +12,11 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivitySignInBinding
-import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : AppCompatActivity(), TextWatcher {
