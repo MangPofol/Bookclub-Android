@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -26,10 +27,11 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     private lateinit var bookAdapter: BookAdapter
     private lateinit var callback: OnBackPressedCallback
 
-    private val bookViewModel: BookViewModel by sharedViewModel()
+    private val bookVm: BookViewModel by sharedViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d("SelectFragment", "onAttach")
 
         //뒤로가기 콜백: 기록하기 화면으로 전환.
         callback = object : OnBackPressedCallback(true) {
@@ -42,6 +44,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("SelectFragment", "onCreate")
 
         bookAdapter = BookAdapter(this)
     }
@@ -50,9 +53,11 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("SelectFragment", "onCreateView")
+
         binding = FragmentSelectBookBinding.inflate(inflater, container, false)
 
-        //뒤로가기 아이콘 누르면 -> 기록하기 화면
+        //뒤로가기 아이콘 누르면 -> RecordFragment 화면으로 이동
         binding.toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -61,16 +66,16 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         binding.searchBookET.addTextChangedListener(this)
 
         //Recycler View 어댑터 설정
-        bookAdapter.setBooks(bookViewModel.getBookList("NOW"))
+        bookAdapter.setBooks(bookVm.getBookList("NOW"))
         binding.bookListRV.adapter = bookAdapter
         binding.bookListRV.layoutManager = GridLayoutManager(this.context, 3)
 
         //읽는중, 완독, 읽고 싶은 체크박스를 클릭하면 book recycler view UI 업데이트
         binding.readTypeRG.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                binding.readingRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("NOW"))
-                binding.readCompleteRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("AFTER"))
-                binding.wantToReadRB.id -> bookAdapter.setBooks(bookViewModel.getBookList("BEFORE"))
+                binding.readingRB.id -> bookAdapter.setBooks(bookVm.getBookList("NOW"))
+                binding.readCompleteRB.id -> bookAdapter.setBooks(bookVm.getBookList("AFTER"))
+                binding.wantToReadRB.id -> bookAdapter.setBooks(bookVm.getBookList("BEFORE"))
             }
         }
 
@@ -79,8 +84,34 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.d("SelectFragment", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("SelectFragment", "onResume")
+    }
+
     override fun onPause() {
         super.onPause()
+        Log.d("SelectFragment", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("SelectFragment", "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("SelectFragment", "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("SelectFragment", "onDestroy")
     }
 
     override fun onDetach() {
@@ -96,9 +127,9 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         //책을 등록하는 bottom sheet 을 띄운다.
         if (binding.readTypeRG.visibility == View.GONE) {    //새로운 책을 클릭한 상황이면
             selectedBook = BookModel(
-                name = bookViewModel.searchedBooks.value!![position].title,
-                isbn = bookViewModel.searchedBooks.value!![position].isbn,
-                imgPath = bookViewModel.searchedBooks.value!![position].thumbnail
+                name = bookVm.searchedBooks.value!![position].title,
+                isbn = bookVm.searchedBooks.value!![position].isbn,
+                imgPath = bookVm.searchedBooks.value!![position].thumbnail
             )
 
             val bottomSheet: AddBookBottomSheetFragment = AddBookBottomSheetFragment {
@@ -107,13 +138,21 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                 when (it) {
                     //읽는 중, 완독이면 -> 기록하기 화면으로 이동
                     "NOW", "AFTER" -> {
-                        bookViewModel.setSelectedBook(selectedBook)
-                        parentFragmentManager.popBackStack()
+                        bookVm.setBook(selectedBook)
+                        parentFragmentManager.popBackStackImmediate()
                     }
                     //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
                     "BEFORE" -> {
                         CoroutineScope(Dispatchers.Main).launch {
-                            bookViewModel.createBook(selectedBook)
+                            val code = bookVm.createBook(selectedBook)
+
+                            if (code==null)
+                                Toast.makeText(requireContext(), "책 등록 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                            else {
+                                Toast.makeText(requireContext(), "책이 등록됐습니다!", Toast.LENGTH_SHORT).show()
+                                bookVm.setBook(BookModel())
+                                parentFragmentManager.popBackStackImmediate()
+                            }
                         }
                     }
                 }
@@ -122,12 +161,12 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
             bottomSheet.show((activity as MainActivity).supportFragmentManager, bottomSheet.tag)
         } else {    //기존 책을 클릭한 상황이면
             selectedBook = when (binding.readTypeRG.checkedRadioButtonId) {
-                binding.readingRB.id -> bookViewModel.nowBooks.value!![position]
-                binding.readCompleteRB.id -> bookViewModel.afterBooks.value!![position]
-                else -> bookViewModel.beforeBooks.value!![position]
+                binding.readingRB.id -> bookVm.nowBooks.value!![position]
+                binding.readCompleteRB.id -> bookVm.afterBooks.value!![position]
+                else -> bookVm.beforeBooks.value!![position]
             }
-            bookViewModel.setSelectedBook(selectedBook)
-            parentFragmentManager.popBackStack()
+            bookVm.setBook(selectedBook)
+            parentFragmentManager.popBackStackImmediate()
         }
     }
 
@@ -143,9 +182,9 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
             binding.searchResultLine.visibility = View.GONE
 
             when (binding.readTypeRG.checkedRadioButtonId) {    //선택돼 있는 읽는 유형에 따라 책 목록 보이도록 설정
-                binding.readingRB.id -> bookAdapter.setBooks(bookViewModel.nowBooks.value)
-                binding.readCompleteRB.id -> bookAdapter.setBooks(bookViewModel.afterBooks.value)
-                binding.wantToReadRB.id -> bookAdapter.setBooks(bookViewModel.beforeBooks.value)
+                binding.readingRB.id -> bookAdapter.setBooks(bookVm.nowBooks.value)
+                binding.readCompleteRB.id -> bookAdapter.setBooks(bookVm.afterBooks.value)
+                binding.wantToReadRB.id -> bookAdapter.setBooks(bookVm.beforeBooks.value)
             }
         } else {    //검색어가 입력돼 있으면
             //내 책장에서 선택하기, 읽기 유형 선택 화면 INVISIBLE
@@ -155,7 +194,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
             binding.searchResultLine.visibility = View.VISIBLE
 
             CoroutineScope(Dispatchers.IO).launch { //입력된 검색어에 따라 책 목록 보이도록
-                bookViewModel.getSearchedBooks(s.toString())
+                bookVm.getSearchedBooks(s.toString())
             }
         }
     }
@@ -166,15 +205,15 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
     private fun observe() {
         //책 검색 시 book recycler view UI 가 업데이트됨.
-        bookViewModel.searchedBooks.observe(viewLifecycleOwner, Observer {
+        bookVm.searchedBooks.observe(viewLifecycleOwner, Observer {
             if (binding.searchBookET.text.isNotBlank())
                 bookAdapter.setKakaoBooks(it)
         })
 
-        bookViewModel.beforeBooks.observe(viewLifecycleOwner, Observer {
+        bookVm.beforeBooks.observe(viewLifecycleOwner, Observer {
             if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                (activity as MainActivity).moveBottomPager(1)
-                bookViewModel.setReadType("BEFORE")
+                //(activity as MainActivity).moveBottomPager(1)
+                bookVm.setReadType("BEFORE")
             }
         })
     }
