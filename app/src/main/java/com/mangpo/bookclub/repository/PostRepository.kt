@@ -32,7 +32,7 @@ class PostRepository(private val postService: PostService) {
         return if (!response.isSuccessful) {
             Log.e(
                 "PostRepository",
-                "createPost 실패\ncode: ${response.code()}\nerror: ${response.message()}"
+                "createPost 실패\ncode: ${response.code()}\nerror: ${response.message()}\npost: $newPost"
             )
 
             null
@@ -40,6 +40,8 @@ class PostRepository(private val postService: PostService) {
             response.body()
         }
     }
+
+    suspend fun updatePost(postId: Long, post: PostModel): Int = postService.updatePost(postId, post).code()
 
     suspend fun uploadImgFile(imgPath: String): String? {
         val multipartBody: MultipartBody.Part = ImgUtil.getImageMultipartBody("data", imgPath)
