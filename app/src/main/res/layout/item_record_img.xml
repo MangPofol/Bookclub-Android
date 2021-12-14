@@ -29,7 +29,7 @@
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginStart="36dp"
-        android:background="@drawable/ic_baseline_close_10_white"
+        android:background="@drawable/close_icon"
         app:layout_constraintStart_toStartOf="@+id/record_iv"
         app:layout_constraintTop_toTopOf="parent"/>
 

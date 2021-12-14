@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/favorite"
-        android:icon="@drawable/ic_baseline_height_48_white"
+        android:icon="@drawable/next_icon"
         android:title="@string/other_club"
         app:showAsAction="ifRoom" />
 </menu>
