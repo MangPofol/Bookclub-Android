@@ -72,6 +72,7 @@ class SettingActivity : AppCompatActivity() {
     private fun observe() {
         mainVm.logoutCode.observe(this, Observer {
             AccountSharedPreference.clearUser(this)
+            AccountSharedPreference.setJWT("")
             startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
         })
     }
