@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.service
 
+import com.mangpo.bookclub.util.AuthInterceptor
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -10,7 +11,8 @@ import java.net.CookieManager
 object BaseService {
 
     private val okHttpClient =
-        OkHttpClient.Builder().cookieJar(JavaNetCookieJar(CookieManager())).build()
+        OkHttpClient.Builder().cookieJar(JavaNetCookieJar(CookieManager()))
+            .addInterceptor(AuthInterceptor()).build()
 
     fun getClient(baseUrl: String): Retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
