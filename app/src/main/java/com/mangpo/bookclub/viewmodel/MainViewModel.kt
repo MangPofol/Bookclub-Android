@@ -1,15 +1,11 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
+import com.mangpo.bookclub.util.AccountSharedPreference
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,7 +24,12 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
 
     suspend fun login(user: JsonObject) {
         viewModelScope.launch {
-            _loginCode.value = repository.login(user)
+            val loginResult = repository.login(user)
+
+            if (loginResult.get("token")!=null)
+                AccountSharedPreference.setJWT(loginResult.get("token").asString)
+
+            _loginCode.value = loginResult.get("code").asInt
         }
     }
 
