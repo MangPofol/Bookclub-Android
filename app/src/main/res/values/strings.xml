@@ -11,9 +11,9 @@
     <string name="signin_id_alert">사용할 수 없는 아이디 입니다.</string>
     <string name="signin_password_alert">사용할 수 없는 비밀번호 입니다.</string>
     <string name="user_setting_desc">남겨주신 정보는 나의 소개로 북클럽원에게 들어갑니다.</string>
-    <string name="book_profile_start_title">나의 독서 프로필 채워보기</string>
-    <string name="book_profile_start_desc">프로필을 당신만의 독서취향으로 채워보세요.</string>
-    <string name="set_nickname_title">닉네임을 입력해주세요</string>
+    <string name="book_profile_start_title">독서의 순간을 함께 기록하는\nOur page에 오신 것을 환영합니다!</string>
+    <string name="book_profile_start_desc">독서 취향과 함께 당신을 소개해주세요.</string>
+    <string name="set_nickname_title">당신의 닉네임은?</string>
     <string name="set_gender_title">성별을 선택해주세요.</string>
     <string name="set_birth_title">생년월일을 입력해주세요.</string>
     <string name="year">년</string>
@@ -21,13 +21,13 @@
     <string name="day">일</string>
     <string name="man">남성</string>
     <string name="woman">여성</string>
-    <string name="express_me_title">나를 30자로 표현해 본다면?</string>
+    <string name="express_me_title">책 읽는 당신을 30자로 표현해 본다면?</string>
     <string name="express_me_hint">나는 책을 정말 좋아하는 사람입니다.</string>
     <string name="skip">건너뛰기</string>
-    <string name="set_genre_title">좋아하는 장르를 선택해주세요.</string>
-    <string name="reading_style_title">책 읽는 스타일을 선택해주세요.</string>
-    <string name="self_reading_style_hint">+ 직접 입력하기 (최대 30자)</string>
-    <string name="reading_goal_title">독서 목표를 설정해주세요.</string>
+    <string name="set_genre_title">좋아하는 장르를 자유롭게 선택해주세요.</string>
+    <string name="reading_style_title">거의 다왔어요!\n당신의 독서 스타일은 어떤가요?</string>
+    <string name="self_reading_style_hint">+ 나만의 스타일로 소개하기 (최대 20자)</string>
+    <string name="reading_goal_title">마지막으로\n당신의 독서 목표를 알려주세요!</string>
 
     <!-- main activity -->
     <string name="open">open</string>
@@ -147,7 +147,6 @@
     <string name="favorite_genre">좋아하는 장르</string>
     <string name="reading_style">책 읽는 스타일</string>
     <string name="reading_routine">책 루틴</string>
-    <string name="checklist_management">체크리스트 관리</string>
 
     <!-- YourTasteActivity -->
     <string name="update_genre_title">좋아하는 장르를 수정해주세요.</string>
@@ -161,4 +160,7 @@
 
     <!-- GoalManagementActivity -->
     <string name="update_reading_goal">독서 목표를 수정해주세요.</string>
+
+    <!-- MyInfoActivity, ChecklistManagementActivity -->
+    <string name="checklist_management">체크리스트 관리</string>
 </resources>
