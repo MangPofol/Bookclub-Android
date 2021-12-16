@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface UserService {
 
-    @POST("/auth")
+    @POST("/auth/login")
     suspend fun login(@Body user: JsonObject): Response<JsonObject>
 
     @POST("/users/validate-duplicate")
