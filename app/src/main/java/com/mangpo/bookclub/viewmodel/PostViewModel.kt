@@ -11,30 +11,36 @@ import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
     private val _imgUriList: MutableLiveData<List<Uri>> = MutableLiveData()
     private val _post: MutableLiveData<PostModel> = MutableLiveData()
+    private val _totalCnt: MutableLiveData<Int> = MutableLiveData()
 
     private var postDetail: PostDetailModel? = null
 
     val imgUriList: LiveData<List<Uri>> get() = _imgUriList
     val post: LiveData<PostModel> get() = _post
+    val totalCnt: LiveData<Int> get() = _totalCnt
 
     fun setImgUriList(imgUriList: List<Uri>) {
         _imgUriList.value = imgUriList
     }
+
     fun getImgUriList(): List<Uri>? = _imgUriList.value
 
     fun setPost(post: PostModel) {
         _post.value = post
     }
+
     fun getPost(): PostModel? = _post.value
 
     fun setPostDetail(postDetail: PostDetailModel?) {
         this.postDetail = postDetail
     }
+
     fun getPostDetail(): PostDetailModel? = this.postDetail
 
     suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? =
@@ -74,6 +80,12 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     suspend fun uploadMultiImg(imgPaths: List<String>): List<String>? {
         return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             repository.uploadMultiImgFile(imgPaths)
+        }
+    }
+
+    suspend fun getTotalPostCnt() {
+        viewModelScope.launch {
+            _totalCnt.value = repository.getTotalPostCnt()
         }
     }
 }

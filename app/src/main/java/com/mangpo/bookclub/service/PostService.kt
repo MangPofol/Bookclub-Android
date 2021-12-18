@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.service
 
+import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.AllPostModel
 import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.PostDetailModel
@@ -13,6 +14,9 @@ interface PostService {
         @Query("bookId") bookId: Long,
         @Query("clubId") clubId: Long?
     ): Response<AllPostModel>
+
+    @GET("/posts/total-count")
+    suspend fun getTotalPostCnt(): Response<JsonObject>
 
     @POST("/posts")
     suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>

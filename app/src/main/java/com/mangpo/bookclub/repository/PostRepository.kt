@@ -74,4 +74,13 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
+    suspend fun getTotalPostCnt(): Int {
+        val result = postService.getTotalPostCnt()
+
+        return if (result.isSuccessful)
+            result.body()!!.get("data").asInt
+        else
+            -1
+    }
+
 }
