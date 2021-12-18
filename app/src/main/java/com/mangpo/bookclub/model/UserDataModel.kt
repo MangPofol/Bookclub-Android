@@ -17,7 +17,7 @@ data class UserModel(
     var nickname: String? = null,
 
     @SerializedName("password")
-    val password: String? = null,
+    var password: String? = null,
 
     @SerializedName("sex")
     var sex: String? = null,
