@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivityGoalManagementBinding
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +75,8 @@ class GoalManagementActivity : AppCompatActivity() {
         "${periodNumList[binding.periodNumberNp.value]}${periodUnitList[binding.periodUnitNp.value]} 동안 ${bookCntList[binding.bookCntNp.value]}권의 책을 기록하기"
 
     private fun updateGoal(user: UserModel) {
+        user.password = AccountSharedPreference.getUserPass(applicationContext)
+
         CoroutineScope(Dispatchers.IO).launch {
             mainVm.updateUser(user)
         }
