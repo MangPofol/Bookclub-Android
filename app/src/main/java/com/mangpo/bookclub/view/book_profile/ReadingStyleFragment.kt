@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentReadingStyleBinding
 
@@ -34,34 +33,22 @@ class ReadingStyleFragment : Fragment(), TextWatcher {
         (activity as BookProfileInitActivity).setKeyboardStatePan()
 
         binding.styleRg.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId==-1) {
-                Log.d("ReadingStyleFragment", "라디오버튼 미선택")
+            when (checkedId) {
+                R.id.style_rb1, R.id.style_rb2, R.id.style_rb3 -> {
+                    Log.d("ReadingStyleFragment", "라디오버튼 선택")
 
-                judgeIsEnabledNextBtn()
-            } else {
-                Log.d("ReadingStyleFragment", "라디오버튼 선택")
+                    binding.styleEt.setText("")
+                    binding.styleEt.clearFocus()
 
-                val imm: InputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.styleEt.windowToken, 0)
+                    val imm: InputMethodManager =
+                        requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.styleEt.windowToken, 0)
 
-                binding.styleEt.clearFocus()
-
-                (activity as BookProfileInitActivity).enableNextBtn()
-            }
-        }
-
-        binding.styleEt.setOnFocusChangeListener { v, hasFocus ->
-            Log.d("ReadingStyleFragment", hasFocus.toString())
-
-            judgeIsEnabledNextBtn()
-
-            if (hasFocus) {
-                binding.styleRg.clearCheck()
-                binding.styleEt.background = ContextCompat.getDrawable(requireContext(), R.drawable.reading_profile_style_et_blue)
-                binding.styleEt.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            } else {
-                binding.styleEt.background = ContextCompat.getDrawable(requireContext(), R.drawable.login_book_profile_et)
-                binding.styleEt.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey12))
+                    (activity as BookProfileInitActivity).enableNextBtn()
+                }
+                R.id.style_rb4 -> {
+                    (activity as BookProfileInitActivity).enableNextBtn()
+                }
             }
         }
 
@@ -75,36 +62,22 @@ class ReadingStyleFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (count>0)
-            (activity as BookProfileInitActivity).enableNextBtn()
-        else
-            (activity as BookProfileInitActivity).unEnableNextBtn()
+        Log.d("ReadingStyleFragment", "onTextChanged length: ${s?.length}")
+        if (s?.length != 0) {
+            binding.styleRb4.isChecked = true
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
 
     }
 
-    private fun judgeIsEnabledNextBtn() {
-        if (binding.styleEt.text.isBlank()) {
-            Log.d("ReadingStyleFragment", "비어 있다.")
-            (activity as BookProfileInitActivity).unEnableNextBtn()
-        } else {
-            Log.d("ReadingStyleFragment", "비어 있지 않다.")
-            (activity as BookProfileInitActivity).enableNextBtn()
-        }
-    }
-
     fun getReadingStyle(): String {
-        return if (binding.styleRg.checkedRadioButtonId==-1) {
-            binding.styleEt.text.toString()
-        } else {
-            when (binding.styleRg.checkedRadioButtonId) {
-                binding.styleRb1.id -> binding.styleRb1.text.toString()
-                binding.styleRb2.id -> binding.styleRb2.text.toString()
-                binding.styleRb3.id -> binding.styleRb3.text.toString()
-                else -> ""
-            }
+        return when (binding.styleRg.checkedRadioButtonId) {
+            binding.styleRb1.id -> binding.styleRb1.text.toString()
+            binding.styleRb2.id -> binding.styleRb2.text.toString()
+            binding.styleRb3.id -> binding.styleRb3.text.toString()
+            else -> binding.styleEt.text.toString()
         }
     }
 

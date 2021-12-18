@@ -2,12 +2,17 @@ package com.mangpo.bookclub.view.my_info
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityYourTasteBinding
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +24,24 @@ class YourTasteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityYourTasteBinding
     private lateinit var user: UserModel
 
-    private val mainVm: MainViewModel by viewModel()
     private var clickedGenres: ArrayList<String> = arrayListOf()
+
+    private val mainVm: MainViewModel by viewModel()
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (s?.length != 0) {
+                binding.styleRb4.isChecked = true
+            }
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            binding.styleEt.removeTextChangedListener(this)
+            binding.styleEt.addTextChangedListener(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +52,25 @@ class YourTasteActivity : AppCompatActivity() {
 
         getUser()
 
+        binding.completeTv.setOnClickListener {
+            setUser()
+            updateUser(user)
+        }
+
         binding.backIvView.setOnClickListener {
             finish()
+        }
+
+        binding.styleEt.addTextChangedListener(textWatcher)
+
+        binding.styleRg.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.style_rb1, R.id.style_rb2, R.id.style_rb3 -> {
+                    hideKeyBord(group)
+                    binding.styleEt.setText("")
+                    binding.styleEt.clearFocus()
+                }
+            }
         }
     }
 
@@ -58,6 +96,7 @@ class YourTasteActivity : AppCompatActivity() {
             "기타"
         )
 
+        binding.genreCg.removeAllViews()
         for (genre in genres) {
             val chip: Chip =
                 layoutInflater.inflate(R.layout.genre_chip, binding.genreCg, false) as Chip
@@ -92,18 +131,7 @@ class YourTasteActivity : AppCompatActivity() {
             "자투리 시간에 책을 읽는 틈틈이파" -> binding.styleRb2.isChecked = true
             "열심히 기록하며 보는 끄적파" -> binding.styleRb3.isChecked = true
             else -> {
-                binding.styleEt.setBackgroundColor(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.main_blue
-                    )
-                )
-                binding.styleEt.setTextColor(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.white
-                    )
-                )
+                binding.styleRb4.isChecked = true
                 binding.styleEt.setText(style)
             }
         }
@@ -115,6 +143,30 @@ class YourTasteActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateUser(user: UserModel) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.updateUser(user)
+        }
+    }
+
+    private fun setUser() {
+        when (binding.styleRg.checkedRadioButtonId) {
+            R.id.style_rb1 -> user.style = "독서 시간이 정해져 있는 계획파"
+            R.id.style_rb2 -> user.style = "자투리 시간에 책을 읽는 틈틈이파"
+            R.id.style_rb3 -> user.style = "열심히 기록하며 보는 끄적파"
+            R.id.style_rb4 -> user.style = binding.styleEt.text.toString()
+        }
+
+        user.password = AccountSharedPreference.getUserPass(applicationContext)
+    }
+
+    //올라와 있는 키보드를 내리는 함수
+    private fun hideKeyBord(v: View) {
+        val imm: InputMethodManager =
+            getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
     private fun observe() {
         mainVm.user.observe(this, Observer {
             user = it
@@ -123,6 +175,17 @@ class YourTasteActivity : AppCompatActivity() {
 
             if (user.style != "")
                 setStyleView(user.style)
+        })
+
+        mainVm.updateUserCode.observe(this, Observer {
+            when (it) {
+                204 -> {
+                    Toast.makeText(this, "취향이 수정되었습니다!", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                else -> Toast.makeText(this, "오류가 발생했습니다. 다시 한 번 시도해주세요.", Toast.LENGTH_SHORT)
+                    .show()
+            }
         })
     }
 

@@ -145,6 +145,17 @@
                     android:text="열심히 기록하며 보는 끄적파"
                     android:textColor="@drawable/reading_style_text_selector"
                     android:textSize="13.2sp" />
+
+                <RadioButton
+                    android:id="@+id/style_rb4"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/reading_style_rb_selector"
+                    android:button="@null"
+                    android:paddingHorizontal="12dp"
+                    android:textColor="@drawable/reading_style_text_selector"
+                    android:textSize="13.2sp" />
             </RadioGroup>
 
             <EditText
@@ -153,16 +164,16 @@
                 android:layout_height="36dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_book_profile_et"
+                android:background="@color/transparent"
                 android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:hint="@string/self_reading_style_hint"
                 android:maxLength="30"
                 android:paddingHorizontal="12dp"
-                android:textColor="@color/grey12"
+                android:textColor="@color/white"
                 android:textColorHint="@color/grey12"
                 android:textSize="13.2sp"
-                app:layout_constraintTop_toBottomOf="@+id/style_rg" />
+                app:layout_constraintBottom_toBottomOf="@+id/style_rg" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
