@@ -7,6 +7,9 @@ data class UserDataModel(
 )
 
 data class UserModel(
+    @SerializedName("userId")
+    val userId: Long? = null,
+
     @SerializedName("email")
     val email: String? = null,
 
