@@ -3,6 +3,7 @@ package com.mangpo.bookclub.view.my_info
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
@@ -23,6 +24,7 @@ class MyInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyInfoActivity", "onCreate")
 
         binding = ActivityMyInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,6 +53,13 @@ class MyInfoActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("MyInfoActivity", "onResume")
+
+        getUser()
+    }
+
     private fun getUser() {
         CoroutineScope(Dispatchers.IO).launch {
             mainVm.getUser()
@@ -67,15 +76,20 @@ class MyInfoActivity : AppCompatActivity() {
             binding.introduceTv.text = user.introduce
 
         if (user.genres.isEmpty()) {
+            binding.genreCg.removeAllViews()
+            binding.genreCg.visibility = View.INVISIBLE
             binding.selectGenreTv.visibility = View.VISIBLE
         } else {
-            binding.selectGenreTv.visibility = View.GONE
+            binding.genreCg.visibility = View.VISIBLE
+            binding.selectGenreTv.visibility = View.INVISIBLE
             addGenreChip(user.genres)
         }
 
     }
 
     private fun addGenreChip(genres: List<String>) {
+        binding.genreCg.removeAllViews()
+
         for (genre in genres) {
             val chip: Chip =
                 layoutInflater.inflate(R.layout.my_info_genre_chip, binding.genreCg, false) as Chip
