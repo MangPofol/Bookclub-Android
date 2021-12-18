@@ -44,4 +44,18 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/checklist_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/layout_gradation"
+        android:overScrollMode="never"
+        android:paddingTop="31.2dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:listitem="@layout/item_checklist_header" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
