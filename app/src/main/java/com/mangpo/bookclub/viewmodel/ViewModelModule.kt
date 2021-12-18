@@ -1,9 +1,6 @@
 package com.mangpo.bookclub.viewmodel
 
-import com.mangpo.bookclub.repository.BookRepository
-import com.mangpo.bookclub.repository.KakaoBookRepository
-import com.mangpo.bookclub.repository.PostRepository
-import com.mangpo.bookclub.repository.UserRepository
+import com.mangpo.bookclub.repository.*
 import com.mangpo.bookclub.service.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,6 +18,9 @@ val ViewModelModule = module {
     single<PostService> {
         ApiClient.postService
     }
+    single<ChecklistService> {
+        ApiClient.checklistService
+    }
     single<UserRepository> {
         UserRepository(get())
     }
@@ -33,6 +33,9 @@ val ViewModelModule = module {
     single<PostRepository> {
         PostRepository(get())
     }
+    single<ChecklistRepository> {
+        ChecklistRepository(get())
+    }
     viewModel<MainViewModel> {
         MainViewModel(get())
     }
@@ -41,5 +44,8 @@ val ViewModelModule = module {
     }
     viewModel<PostViewModel> {
         PostViewModel(get())
+    }
+    viewModel<ChecklistViewModel> {
+        ChecklistViewModel(get())
     }
 }
