@@ -3,6 +3,7 @@ package com.mangpo.bookclub.view.my_info
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivityChecklistManagementBinding
 import com.mangpo.bookclub.view.adapter.ChecklistHeaderRVAdapter
@@ -42,7 +43,15 @@ class ChecklistManagementActivity : AppCompatActivity() {
     private fun observe() {
         checklistVm.completedChecklists.observe(this, Observer {
             Log.d("ChecklistManagementActivity", "Observe!!\n${it.size}")
-            checklistHeaderAdapter.setChecklist(it)
+
+            if (it.size==0) {
+                binding.checklistRv.visibility = View.GONE
+                binding.noChecklistTv.visibility = View.VISIBLE
+            } else {
+                binding.checklistRv.visibility = View.VISIBLE
+                binding.noChecklistTv.visibility = View.GONE
+                checklistHeaderAdapter.setChecklist(it)
+            }
         })
     }
 
