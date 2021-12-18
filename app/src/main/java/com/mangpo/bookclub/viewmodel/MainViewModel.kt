@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.google.gson.JsonObject

@@ -37,6 +37,9 @@ data class UserModel(
     @SerializedName("profileImgLocation")
     var profileImgLocation: String = "",
 
+    @SerializedName("isDormant")
+    var isDormant: Boolean = false,
+
     @SerializedName("genres")
     var genres: List<String> = ArrayList<String>()
 )

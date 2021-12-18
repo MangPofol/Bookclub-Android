@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
+import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.view.my_info.ResettingPasswordActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
@@ -17,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
+    private lateinit var user: UserModel
 
     private val mainVm: MainViewModel by viewModel()
 
@@ -24,10 +26,11 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("SettingActivity", "onCreate")
 
-        observe()
-
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        observe()
+
+        getUser()
 
         //ResettingPasswordActivity 화면으로 이동
         binding.resettingPasswordNextView.setOnClickListener {
@@ -39,9 +42,11 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.logoutTv.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                mainVm.logout()
-            }
+            logout()
+        }
+
+        binding.quitMembershipTv.setOnClickListener {
+            quitMembership()
         }
     }
 
@@ -75,11 +80,42 @@ class SettingActivity : AppCompatActivity() {
         Log.d("SettingActivity", "onRestart")
     }
 
+    private fun getUser() {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.getUser()
+        }
+    }
+
+    private fun logout() {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.logout()
+        }
+    }
+
+    private fun quitMembership() {
+        CoroutineScope(Dispatchers.IO).launch {
+            user.password = AccountSharedPreference.getUserPass(this@SettingActivity)
+            user.isDormant = true
+            mainVm.updateUser(user)
+        }
+    }
+
     private fun observe() {
+        mainVm.user.observe(this, Observer {
+            user = it
+        })
+
         mainVm.logoutCode.observe(this, Observer {
             AccountSharedPreference.clearUser(this)
             AccountSharedPreference.setJWT("")
             startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+        })
+
+        mainVm.updateUserCode.observe(this, Observer {
+            Log.d("MainViewModel", "user Observe $user")
+            Log.d("MainViewModel", "updateUserCode Observe $it")
+            if (it == 204)
+                logout()
         })
     }
 }
