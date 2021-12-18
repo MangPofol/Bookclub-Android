@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.view.my_info.ResettingPasswordActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,11 @@ class SettingActivity : AppCompatActivity() {
 
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //ResettingPasswordActivity 화면으로 이동
+        binding.resettingPasswordNextView.setOnClickListener {
+            startActivity(Intent(this, ResettingPasswordActivity::class.java))
+        }
 
         binding.backIv.setOnClickListener {
             finish()
