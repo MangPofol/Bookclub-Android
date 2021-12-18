@@ -118,7 +118,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/write_init_fragment_grey13_view"
+                android:background="@drawable/grey13_round_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/background_iv" />
@@ -182,7 +182,7 @@
                             android:layout_height="42dp"
                             android:layout_marginStart="24dp"
                             android:layout_marginEnd="24dp"
-                            android:background="@drawable/write_init_fragment_grey13_view"
+                            android:background="@drawable/grey13_round_view"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -251,7 +251,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/fixed_layout"
                         tools:itemCount="5"
-                        tools:listitem="@layout/item_checklist" />
+                        tools:listitem="@layout/item_checklist_content" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
