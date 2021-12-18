@@ -141,7 +141,7 @@ class BookProfileInitActivity : AppCompatActivity() {
                 mainVm.createUser()
             }
 
-            if (mainVm.getUser() == null) {
+            if (mainVm.getNewUser() == null) {
                 Toast.makeText(context, "회원가입 실패. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
@@ -152,8 +152,8 @@ class BookProfileInitActivity : AppCompatActivity() {
 
     private fun login() {
         val loginReq: JsonObject = JsonObject()
-        loginReq.addProperty("email", mainVm.getUser()!!.email)
-        loginReq.addProperty("password", mainVm.getNewUser()!!.password)
+        loginReq.addProperty("email", user.email)
+        loginReq.addProperty("password", user.password)
 
         CoroutineScope(Dispatchers.Main).launch {
             mainVm.login(loginReq)
