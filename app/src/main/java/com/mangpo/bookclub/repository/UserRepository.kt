@@ -55,6 +55,19 @@ class UserRepository(private val userService: UserService) {
         }
     }
 
+    suspend fun getUser(): UserModel? {
+        val result = userService.getUser()
+
+        return if (result.isSuccessful) {
+            when (result.code()) {
+                200 -> result.body()!!.data
+                else -> null
+            }
+        } else {
+            null
+        }
+    }
+
     suspend fun logout(): Int {
         return try {
             userService.logout().code()
@@ -62,5 +75,33 @@ class UserRepository(private val userService: UserService) {
             e.printStackTrace()
             500
         }
+    }
+
+    suspend fun updateUser(user: UserModel): Int {
+        val result = userService.updateUser(user.userId!!, user)
+
+        if (result.isSuccessful) {
+            when (result.code()) {
+                204 -> {
+                    Log.d("UserRepository", "updateUser is Successful!")
+                }
+                else -> {
+                    Log.e(
+                        "UserRepository", "updateUser ERROR!\n" +
+                                "code: ${result.code()}\n" +
+                                "requestBody: $user"
+                    )
+                }
+            }
+        } else {
+            Log.e(
+                "UserRepository", "updateUser is not Successful!\n" +
+                        "code: ${result.code()}\n" +
+                        "requestBody: $user\n" +
+                        "message: ${result.message()}"
+            )
+        }
+
+        return result.code()
     }
 }
