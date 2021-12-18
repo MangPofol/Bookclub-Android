@@ -1,7 +1,10 @@
 package com.mangpo.bookclub.model
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
+
+data class UserDataModel(
+    val data: UserModel
+)
 
 data class UserModel(
     @SerializedName("email")
