@@ -3,17 +3,32 @@ package com.mangpo.bookclub.view.my_info
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.lifecycle.Observer
+import com.google.android.material.chip.Chip
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMyInfoBinding
+import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyInfoActivity : AppCompatActivity() {
+
+    private val mainVm: MainViewModel by viewModel()
 
     private lateinit var binding: ActivityMyInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyInfoBinding.inflate(layoutInflater)
 
+        binding = ActivityMyInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        observe()
+
+        getUser()
 
         binding.genreNextIv.setOnClickListener {
             goYourTaste()
@@ -36,6 +51,39 @@ class MyInfoActivity : AppCompatActivity() {
         }
     }
 
+    private fun getUser() {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.getUser()
+        }
+    }
+
+    private fun setUI(user: UserModel) {
+        binding.nicknameTv.text = user.nickname
+        binding.idTv.text = user.email
+
+        if (user.introduce == "")
+            binding.introduceTv.text = "나를 한 줄로 표현해보세요."
+        else
+            binding.introduceTv.text = user.introduce
+
+        if (user.genres.isEmpty()) {
+            binding.selectGenreTv.visibility = View.VISIBLE
+        } else {
+            binding.selectGenreTv.visibility = View.GONE
+            addGenreChip(user.genres)
+        }
+
+    }
+
+    private fun addGenreChip(genres: List<String>) {
+        for (genre in genres) {
+            val chip: Chip =
+                layoutInflater.inflate(R.layout.my_info_genre_chip, binding.genreCg, false) as Chip
+            chip.text = genre
+            binding.genreCg.addView(chip)
+        }
+    }
+
     //ChecklistManagementActivity 화면으로 이동하는 함수
     private fun goChecklistManagement() {
         startActivity(Intent(this, ChecklistManagementActivity::class.java))
@@ -49,5 +97,11 @@ class MyInfoActivity : AppCompatActivity() {
     //YourTasteActivity 화면으로 이동하는 함수
     private fun goYourTaste() {
         startActivity(Intent(this, YourTasteActivity::class.java))
+    }
+
+    private fun observe() {
+        mainVm.user.observe(this, Observer {
+            setUI(it)
+        })
     }
 }
