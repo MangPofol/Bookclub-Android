@@ -25,7 +25,7 @@ interface PostService {
     suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>
 
     @Multipart
-    @PUT("/files/upload-multiple-files")
+    @POST("/files/upload-multiple-files")
     suspend fun uploadMultiImgFile(@Part data: List<MultipartBody.Part>): Response<List<String>>
 
     @Multipart
