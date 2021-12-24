@@ -21,7 +21,7 @@
     <string name="day">일</string>
     <string name="man">남성</string>
     <string name="woman">여성</string>
-    <string name="express_me_title">책 읽는 당신을 30자로 표현해 본다면?</string>
+    <string name="express_me_title">책 읽는 당신을 20자로 표현해 본다면?</string>
     <string name="express_me_hint">나는 책을 정말 좋아하는 사람입니다.</string>
     <string name="skip">건너뛰기</string>
     <string name="set_genre_title">좋아하는 장르를 자유롭게 선택해주세요.</string>

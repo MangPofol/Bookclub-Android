@@ -22,7 +22,7 @@
         android:layout_marginTop="16.8dp"
         android:background="@drawable/login_book_profile_et"
         android:hint="@string/express_me_hint"
-        android:maxLength="30"
+        android:maxLength="20"
         android:paddingHorizontal="12dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey12"
