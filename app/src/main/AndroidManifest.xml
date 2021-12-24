@@ -18,6 +18,16 @@
         android:theme="@style/Theme.Bookclub"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".view.my_info.ResettingPasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -71,14 +81,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.LoginActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.bookclub.CreateClubActivity"
             android:exported="true"
