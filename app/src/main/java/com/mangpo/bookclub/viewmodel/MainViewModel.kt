@@ -74,6 +74,15 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
+    suspend fun changePW(password: String) {
+        val pwJsonObject = JsonObject()
+        pwJsonObject.addProperty("password", password)
+
+        viewModelScope.launch {
+            _updateUserCode.value = repository.changePW(pwJsonObject)
+        }
+    }
+
     fun updateNewUser(user: UserModel) {
         _newUser = user
     }

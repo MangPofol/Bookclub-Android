@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityResettingPasswordBinding
-import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResettingPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResettingPasswordBinding
-    private lateinit var user: UserModel
+    private var password: String = ""
 
     private val mainVm: MainViewModel by viewModel()
 
@@ -30,16 +29,8 @@ class ResettingPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
         observe()
 
-        getUser()
-
         binding.completeTv.setOnClickListener {
             validate()
-        }
-    }
-
-    private fun getUser() {
-        CoroutineScope(Dispatchers.IO).launch {
-            mainVm.getUser()
         }
     }
 
@@ -67,23 +58,21 @@ class ResettingPasswordActivity : AppCompatActivity() {
     }
 
     private fun updatePassword() {
-        user.password = binding.newPasswordEt.text.toString()
+        password = binding.newPasswordEt.text.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
-            mainVm.updateUser(user)
+            mainVm.changePW(password)
         }
     }
 
     private fun observe() {
-        mainVm.user.observe(this, Observer {
-            user = it
-        })
-
         mainVm.updateUserCode.observe(this, Observer {
             if (it == 204) {
-                AccountSharedPreference.setUserPass(this, user.password!!)
+                AccountSharedPreference.setUserPass(this, password)
                 Toast.makeText(this, "비밀번호 변경 완료.", Toast.LENGTH_SHORT).show()
                 finish()
+            } else {
+                Toast.makeText(this, "비밀번호 변경 중 오류 발생!\n다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
             }
         })
     }

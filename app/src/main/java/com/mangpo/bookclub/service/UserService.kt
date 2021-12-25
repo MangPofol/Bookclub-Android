@@ -23,6 +23,9 @@ interface UserService {
     @POST("/logout")
     suspend fun logout(): Response<String>
 
+    @POST("/users/change-pw")
+    suspend fun changePW(@Body pwJsonObject: JsonObject): Response<String>
+
     @PUT("/users/{userId}")
     suspend fun updateUser(@Path("userId") userId: Long, @Body user: UserModel): Response<String>
 }

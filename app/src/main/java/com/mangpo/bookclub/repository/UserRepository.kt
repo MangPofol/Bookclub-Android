@@ -61,9 +61,21 @@ class UserRepository(private val userService: UserService) {
         return if (result.isSuccessful) {
             when (result.code()) {
                 200 -> result.body()!!.data
-                else -> null
+                else -> {
+                    Log.e(
+                        "UserRepository",
+                        "getUser 실패! -> code: ${result.code()}, message: ${result.message()}}"
+                    )
+
+                    null
+                }
             }
         } else {
+            Log.e(
+                "UserRepository",
+                "getUser is not Successful! -> message: ${result.message()}}"
+            )
+
             null
         }
     }
@@ -103,5 +115,25 @@ class UserRepository(private val userService: UserService) {
         }
 
         return result.code()
+    }
+
+    suspend fun changePW(pwJsonObject: JsonObject): Int {
+        val result = userService.changePW(pwJsonObject)
+
+        return if (result.isSuccessful) {
+            Log.d(
+                "UserRepository", "changePW is Successful!\n" +
+                        "code: ${result.code()}"
+            )
+            result.code()
+        } else {
+            Log.e(
+                "UserRepository", "changePW is not Successful!\n" +
+                        "password: $pwJsonObject\n" +
+                        "message: ${result.message()}"
+            )
+
+            -1
+        }
     }
 }
