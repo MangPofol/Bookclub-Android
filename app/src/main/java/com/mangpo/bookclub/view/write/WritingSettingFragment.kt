@@ -18,13 +18,11 @@ import com.mangpo.bookclub.databinding.FragmentWritingSettingBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.view.LoadingDialogFragment
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -38,6 +36,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
+    private val loadingDialogFragment = LoadingDialogFragment()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -65,12 +64,13 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         //완료 버튼 클릭 리스너
         binding.completeBtn.setOnClickListener {
             (requireActivity() as MainActivity).hideKeyBord(requireView())
+            loadingDialogFragment.show(requireActivity().supportFragmentManager, null)
             addRecordData() //기록 데이터 저장하는 함수 호출
 
             Log.d("WritingSettingFragment", "addRecordData -> $post")
 
             if (post.postImgLocations.isEmpty()) {    //이미지가 없는 경우
-                if (post.bookId==null)
+                if (post.bookId == null)
                     createBook()
                 else if (isUpdate)
                     updatePost(post)
@@ -146,14 +146,14 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 bookVm.createBook(bookVm.getBook()!!)
             }
 
-            if (code.await()==201) {  //책이 등록됐으면
+            if (code.await() == 201) {  //책이 등록됐으면
                 post.bookId = book.id    //post 의 bookId 저장
 
                 if (isUpdate)
                     updatePost(post)
                 else
                     createPost(post)  //기록 추가 함수 호출
-            } else if (code.await()==400) {
+            } else if (code.await() == 400) {
                 Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStackImmediate()
             } else {
@@ -169,11 +169,16 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val postDetail = postVm.createPost(post)
 
+            loadingDialogFragment.dismiss()
+
             if (postDetail != null) {
                 Log.d("WritingSettingFragment", "CreatePost is success!\npostDetail: $postDetail")
 
                 postVm.setPostDetail(postDetail)
-                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(post.bookId, book.name)
+                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(
+                    post.bookId,
+                    book.name
+                )
 
                 bookVm.setBook(BookModel())
                 postVm.setPost(PostModel())
@@ -191,10 +196,15 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.id, post)
 
+            loadingDialogFragment.dismiss()
+
             if (isUpdate) {
                 Log.d("WritingSettingFragment", "updatePost -> Success")
                 setPostDetail()
-                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(post.bookId, book.name)
+                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(
+                    post.bookId,
+                    book.name
+                )
 
                 bookVm.setBook(BookModel())
                 postVm.setPost(PostModel())
@@ -242,7 +252,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         }
 
         CoroutineScope(Dispatchers.Main).launch {
-            if (imgList.size!=0) {
+            if (imgList.size != 0) {
                 val path = CoroutineScope(Dispatchers.IO).async {
                     postVm.uploadMultiImg(imgList)
                 }
@@ -256,7 +266,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             post.postImgLocations = finalImgList
 
             when {
-                post.bookId == null  -> createBook()    //post 의 bookId 가 존재하지 않으면 책 등록부터 하기
+                post.bookId == null -> createBook()    //post 의 bookId 가 존재하지 않으면 책 등록부터 하기
                 isUpdate -> updatePost(post)
                 else -> createPost(post)    //post 의 bookId 가 존재하면 기록 추가
             }
@@ -347,4 +357,5 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
         postVm.setPostDetail(postDetail)
     }
+
 }
