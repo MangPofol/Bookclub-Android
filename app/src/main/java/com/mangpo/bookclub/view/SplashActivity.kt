@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
 import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.view.main.MainActivity
@@ -34,6 +36,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         observe()
 
+        Glide.with(this).load(R.drawable.loading).into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
+
         if (checkNetwork() == null) { //네트워크 연결 상태 확인
             Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             finish()
@@ -55,7 +59,7 @@ class SplashActivity : AppCompatActivity() {
             )
 
             CoroutineScope(Dispatchers.Main).launch {
-                delay(1000L)
+                delay(2000L)
                 mainVm.login(loginEditJson)
             }
         } else {
@@ -66,7 +70,7 @@ class SplashActivity : AppCompatActivity() {
     //2초 기다린 후 LoginActivity 로 이동하는 함수
     private fun waitMain() {
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1000L)
+            delay(2000L)
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
         }
     }
@@ -99,4 +103,5 @@ class SplashActivity : AppCompatActivity() {
 
         return connectivityManager.activeNetwork
     }
+
 }
