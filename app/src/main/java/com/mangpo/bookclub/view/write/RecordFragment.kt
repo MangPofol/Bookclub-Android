@@ -28,7 +28,6 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
         CameraGalleryBottomSheetFragment()
 
     private var post: PostModel = PostModel()
-    //private var book: BookModel = BookModel()
     private var imgList: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
