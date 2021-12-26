@@ -14,3 +14,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/res/drawable/*.jpg
+/app/src/main/res/drawable/*.png
+/app/src/main/res/drawable/*.gif
+/app/src/main/res/drawable/close_icon.xml
+/app/src/main/res/drawable/close_icon_light_red.xml
