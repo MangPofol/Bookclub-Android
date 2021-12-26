@@ -26,7 +26,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     private lateinit var myLibraryPagerAdapter: MyLibraryPagerAdapter
     //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
 
-    private val bookViewModel: BookViewModel by sharedViewModel()
+    private val bookVm: BookViewModel by sharedViewModel()
     private val fragments: List<BookListFragment> =
         listOf(BookListFragment(), BookListFragment(), BookListFragment())
 
@@ -66,15 +66,15 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 when (position) {
                     0 -> {
                         //setVisibilityClubButton(View.VISIBLE)
-                        bookViewModel.setReadType("NOW")
+                        bookVm.setReadType("NOW")
                     }
                     1 -> {
                         //setVisibilityClubButton(View.VISIBLE)
-                        bookViewModel.setReadType("AFTER")
+                        bookVm.setReadType("AFTER")
                     }
                     2 -> {
                         //setVisibilityClubButton(View.GONE)
-                        bookViewModel.setReadType("BEFORE")
+                        bookVm.setReadType("BEFORE")
                     }
                 }
             }
@@ -137,9 +137,9 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             if (isChecked) {
                 binding.sortFilterLayout.oldOrder.isChecked = false
                 binding.sortFilterLayout.nameOrder.isChecked = false
-                bookViewModel.setMyLibrarySort("Latest")
+                bookVm.setMyLibrarySort("Latest")
             } else {
-                bookViewModel.setMyLibrarySort("")
+                bookVm.setMyLibrarySort("")
             }
         }
 
@@ -148,9 +148,9 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             if (isChecked) {
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.nameOrder.isChecked = false
-                bookViewModel.setMyLibrarySort("Old")
+                bookVm.setMyLibrarySort("Old")
             } else {
-                bookViewModel.setMyLibrarySort("")
+                bookVm.setMyLibrarySort("")
             }
         }
 
@@ -159,9 +159,9 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             if (isChecked) {
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.oldOrder.isChecked = false
-                bookViewModel.setMyLibrarySort("Name")
+                bookVm.setMyLibrarySort("Name")
             } else {
-                bookViewModel.setMyLibrarySort("")
+                bookVm.setMyLibrarySort("")
             }
         }
 
@@ -192,7 +192,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        bookViewModel.setMyLibrarySearch(s.toString())
+        bookVm.setMyLibrarySearch(s.toString())
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -203,7 +203,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     }*/
 
     private fun observe() {
-        bookViewModel.readType.observe(viewLifecycleOwner, Observer {
+        bookVm.readType.observe(viewLifecycleOwner, Observer {
             when (it) {
                 "NOW" -> binding.viewPager.currentItem = 0
                 "AFTER" -> binding.viewPager.currentItem = 1

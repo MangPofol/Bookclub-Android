@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
@@ -35,7 +36,10 @@ class SettingActivity : AppCompatActivity() {
 
         //ResettingPasswordActivity 화면으로 이동
         binding.resettingPasswordNextView.setOnClickListener {
-            startActivity(Intent(this, ResettingPasswordActivity::class.java))
+            val userJson = Gson().toJson(user)
+            val intent = Intent(this, ResettingPasswordActivity::class.java)
+            intent.putExtra("user", userJson)
+            startActivity(intent)
         }
 
         binding.backIv.setOnClickListener {
@@ -103,8 +107,7 @@ class SettingActivity : AppCompatActivity() {
 
     //로그아웃 or 계정 탈퇴 시 사용하는 함수 -> 사용자 관련 sharedPreferences clear, JWT 빈값으로
     private fun clearUser() {
-        AccountSharedPreference.clearUser(this)
-        AccountSharedPreference.setJWT("")
+        AccountSharedPreference.clearJWT(this)
     }
 
     private fun observe() {

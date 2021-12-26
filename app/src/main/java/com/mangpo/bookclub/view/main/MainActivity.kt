@@ -1,7 +1,6 @@
 package com.mangpo.bookclub.view.main
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,14 +11,13 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.view.bookclub.BookClubFragment
 import com.mangpo.bookclub.view.library.LibraryInitFragment
-import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
 import com.mangpo.bookclub.view.my_info.GoalManagementActivity
 import com.mangpo.bookclub.view.my_info.MyInfoActivity
 import com.mangpo.bookclub.view.write.WriteFrameFragment
-import com.mangpo.bookclub.view.write.WriteInitFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.*
@@ -27,13 +25,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mPreferences: SharedPreferences
+    private lateinit var user: UserModel
 
     private val writeFrameFragment: WriteFrameFragment = WriteFrameFragment()
     private val libraryInitFragment: LibraryInitFragment = LibraryInitFragment()
     private val bookClubFragment: BookClubFragment = BookClubFragment()
 
-    private var email: String = ""
     private var latestFragment: String = ""
 
     private val bookVm: BookViewModel by viewModel()
@@ -47,9 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mPreferences = getSharedPreferences("emailPreferences", AppCompatActivity.MODE_PRIVATE)
-        email = mPreferences.getString("email", "")!!
-
+        user = Gson().fromJson(intent.getStringExtra("user"), UserModel::class.java)
         initBookList()
 
         //bottom navigation 메뉴 선택 시 프래그먼트 전환
@@ -94,12 +89,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (binding.bottomNavigation.selectedItemId == R.id.write) {
+        supportFragmentManager.popBackStackImmediate()
+        /*if (binding.bottomNavigation.selectedItemId == R.id.write) {
             val fragments = writeFrameFragment.childFragmentManager.fragments
 
             if (fragments[fragments.size-1].javaClass==WriteInitFragment::class.java)
                 finish()
-            else
+            else if (fragments[fragments.size-1].javaClass==PostDetailFragment::class.java) {
+                binding.bottomNavigation.selectedItemId = R.id.library
+                libraryInitFragment.childFragmentManager.popBackStackImmediate()
+//                val fragments = libraryInitFragment.childFragmentManager.fragments
+//                Log.d("MainActivity", "fragments: $fragments")
+            } else
                 writeFrameFragment.childFragmentManager.popBackStackImmediate()
         } else if (binding.bottomNavigation.selectedItemId == R.id.library) {
             val fragments = libraryInitFragment.childFragmentManager.fragments
@@ -109,14 +110,14 @@ class MainActivity : AppCompatActivity() {
                 libraryInitFragment.childFragmentManager.popBackStackImmediate()
         } else {
             Log.d("MainActivity", "onBackPressed-BookClub -> ${bookClubFragment.childFragmentManager.fragments}")
-        }
+        }*/
     }
 
     private fun initBookList() {
         CoroutineScope(Dispatchers.Main).launch {
-            bookVm.requestBookList(email, "NOW")
-            bookVm.requestBookList(email, "AFTER")
-            bookVm.requestBookList(email, "BEFORE")
+            bookVm.requestBookList(user.email!!, "NOW")
+            bookVm.requestBookList(user.email!!, "AFTER")
+            bookVm.requestBookList(user.email!!, "BEFORE")
         }
     }
 
@@ -127,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    fun getEmail(): String = email
+    fun getEmail(): String = user.email!!
 
     fun setLatestFragment(name: String) {
         latestFragment = name

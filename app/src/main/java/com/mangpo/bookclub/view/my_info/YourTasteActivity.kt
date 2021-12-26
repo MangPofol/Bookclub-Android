@@ -12,7 +12,6 @@ import com.google.android.material.chip.Chip
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityYourTasteBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -156,8 +155,6 @@ class YourTasteActivity : AppCompatActivity() {
             R.id.style_rb3 -> user.style = "열심히 기록하며 보는 끄적파"
             R.id.style_rb4 -> user.style = binding.styleEt.text.toString()
         }
-
-        user.password = AccountSharedPreference.getUserPass(applicationContext)
     }
 
     //올라와 있는 키보드를 내리는 함수

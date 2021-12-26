@@ -9,13 +9,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.google.gson.JsonObject
+import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
-import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
-import gun0912.tedimagepicker.util.ToastUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -26,7 +24,6 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
     private val mainVm: MainViewModel by viewModel()
-    private val loginEditJson: JsonObject = JsonObject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,56 +40,28 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
 
-        //로그인 기록이 있으면 MainActivity 로 이동하고, 없으면 2초 후 LoginActivity 화면으로 이동한다.
-        if (AccountSharedPreference.getUserEmail(ToastUtil.context)
-                .isNotBlank() || AccountSharedPreference.getUserPass(
-                ToastUtil.context
-            ).isNotBlank()
-        ) {
-            loginEditJson.addProperty(
-                "email",
-                AccountSharedPreference.getUserEmail(ToastUtil.context)
-            )
-            loginEditJson.addProperty(
-                "password",
-                AccountSharedPreference.getUserPass(ToastUtil.context)
-            )
-
-            CoroutineScope(Dispatchers.Main).launch {
-                delay(2000L)
-                mainVm.login(loginEditJson)
-            }
-        } else {
-            waitMain()
-        }
-    }
-
-    //2초 기다린 후 LoginActivity 로 이동하는 함수
-    private fun waitMain() {
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(2000L)
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.getUser()
         }
     }
 
     private fun observe() {
-        mainVm.loginCode.observe(this, Observer {
-            when (it) {
-                200 -> {
-                    AccountSharedPreference.setUserEmail(this, loginEditJson.get("email").asString)
-                    AccountSharedPreference.setUserPass(
-                        this,
-                        loginEditJson.get("password").asString
-                    )
-                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                }
-                -1 -> {
-                    Toast.makeText(baseContext, "인터넷 연결이 필요합니다.", Toast.LENGTH_SHORT).show()
+        mainVm.user.observe(this, Observer {
+            //로그인 기록이 있으면 MainActivity 로 이동하고, 없으면 2초 후 LoginActivity 화면으로 이동한다.
+            if (it.userId!=null) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(2000L)
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    val userStr = Gson().toJson(it)
+                    intent.putExtra("user", userStr)
+                    startActivity(intent)
                     finish()
                 }
-                else -> {
-                    Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+            } else {
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(2000L)
                     startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                    finish()
                 }
             }
         })

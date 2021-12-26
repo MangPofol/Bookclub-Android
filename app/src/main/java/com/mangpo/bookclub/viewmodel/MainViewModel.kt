@@ -1,12 +1,11 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.repository.UserRepository
-import com.mangpo.bookclub.util.AccountSharedPreference
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -28,15 +27,17 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     val updateUserCode: LiveData<Int> get() = _updateUserCode
     val quitMembershipCode: LiveData<Int> get() = _quitMembershipCode
 
-    suspend fun login(user: JsonObject) {
-        viewModelScope.launch {
+    suspend fun login(user: JsonObject): String? {
+        val token = viewModelScope.async {
             val loginResult = repository.login(user)
+            val token = loginResult.get("token")
 
-            if (loginResult.get("token") != null)
-                AccountSharedPreference.setJWT(loginResult.get("token").asString)
-
-            _loginCode.value = loginResult.get("code").asInt
+            if (token != null)
+                loginResult.get("token").asString
+            else null
         }
+
+        return token.await()
     }
 
     suspend fun validateEmail(email: JsonObject) {
@@ -57,7 +58,12 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
     suspend fun getUser() {
         viewModelScope.launch {
-            _user.value = repository.getUser()!!
+            val user = repository.getUser()
+
+            if (user!=null)
+                _user.value = user!!
+            else
+                _user.value = UserModel()
         }
     }
 

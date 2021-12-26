@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.*
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.util.AccountSharedPreference
@@ -59,7 +59,14 @@ class LoginActivity : AppCompatActivity() {
 
                     //로그인 요청 api 전송
                     CoroutineScope(Dispatchers.Main).launch {
-                        mainVm.login(loginEditJson)
+                        val token = mainVm.login(loginEditJson)
+
+                        if (token != null) {
+                            AccountSharedPreference.setJWT(this@LoginActivity, token)
+                            mainVm.getUser()
+                        } else {
+                            Toast.makeText(baseContext, "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 else -> {
@@ -84,38 +91,16 @@ class LoginActivity : AppCompatActivity() {
         finishAffinity()
     }
 
-    private fun goToMain() {
-        val mPreferences = getSharedPreferences("emailPreferences", MODE_PRIVATE)
-        val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
-        preferencesEditor.putString("email", loginEditJson.get("email").asString)
-        preferencesEditor.apply()
-
-        val intent: Intent = Intent(this, MainActivity::class.java)
-        finish()
-        startActivity(intent)
-    }
-
     private fun validationLogin(): Boolean =
         !(binding.loginIdEt.text.isBlank() || binding.loginPasswordEt.text.isBlank())
 
     private fun observe() {
-        mainVm.loginCode.observe(this, Observer {
-            when (it) {
-                200 -> {
-                    AccountSharedPreference.setUserEmail(this, loginEditJson.get("email").asString)
-                    AccountSharedPreference.setUserPass(
-                        this,
-                        loginEditJson.get("password").asString
-                    )
-                    goToMain()
-                }
-                -1 -> {
-                    Toast.makeText(baseContext, "인터넷 연결이 필요합니다.", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
-                }
-            }
+        mainVm.user.observe(this, Observer {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val userStr = Gson().toJson(it)
+            intent.putExtra("user", userStr)
+            startActivity(intent)
+            finish()
         })
     }
 
