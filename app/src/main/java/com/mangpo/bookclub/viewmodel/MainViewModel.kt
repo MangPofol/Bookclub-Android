@@ -17,6 +17,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _logoutCode = MutableLiveData<Int>()
     private val _user = MutableLiveData<UserModel>()
     private val _updateUserCode = MutableLiveData<Int>()
+    private val _quitMembershipCode = MutableLiveData<Int>()
 
     private var _newUser = UserModel()
 
@@ -25,6 +26,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     val logoutCode: LiveData<Int> get() = _logoutCode
     val user: LiveData<UserModel> get() = _user
     val updateUserCode: LiveData<Int> get() = _updateUserCode
+    val quitMembershipCode: LiveData<Int> get() = _quitMembershipCode
 
     suspend fun login(user: JsonObject) {
         viewModelScope.launch {
@@ -80,6 +82,12 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
         viewModelScope.launch {
             _updateUserCode.value = repository.changePW(pwJsonObject)
+        }
+    }
+
+    suspend fun quitMembership(userId: Long) {
+        viewModelScope.launch {
+            _quitMembershipCode.value = repository.quitMembership(userId)
         }
     }
 

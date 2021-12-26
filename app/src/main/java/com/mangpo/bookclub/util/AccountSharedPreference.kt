@@ -10,7 +10,6 @@ object AccountSharedPreference {
 
     fun setJWT(token: String) {
         this.token = token
-
     }
 
     fun getJWT(): String = token

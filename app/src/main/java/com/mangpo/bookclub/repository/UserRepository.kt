@@ -136,4 +136,24 @@ class UserRepository(private val userService: UserService) {
             -1
         }
     }
+
+    suspend fun quitMembership(userId: Long): Int {
+        val result = userService.changeUserDormant(userId)
+
+        if (result.isSuccessful) {
+            Log.d(
+                "UserRepository", "quitMembership is Successful!\n" +
+                        "code: ${result.code()}"
+            )
+        } else {
+            Log.e(
+                "UserRepository", "changePW is not Successful!\n" +
+                        "code: ${result.code()}\n" +
+                        "message: ${result.message()}"
+            )
+        }
+
+        return result.code()
+
+    }
 }

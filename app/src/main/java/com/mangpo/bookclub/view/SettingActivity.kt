@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
@@ -45,6 +46,7 @@ class SettingActivity : AppCompatActivity() {
             logout()
         }
 
+        //계정 탈퇴하기 클릭 리스너
         binding.quitMembershipTv.setOnClickListener {
             quitMembership()
         }
@@ -92,12 +94,17 @@ class SettingActivity : AppCompatActivity() {
         }
     }
 
+    //계정 탈퇴 함수
     private fun quitMembership() {
         CoroutineScope(Dispatchers.IO).launch {
-            user.password = AccountSharedPreference.getUserPass(this@SettingActivity)
-            user.isDormant = true
-            mainVm.updateUser(user)
+            mainVm.quitMembership(user.userId!!)
         }
+    }
+
+    //로그아웃 or 계정 탈퇴 시 사용하는 함수 -> 사용자 관련 sharedPreferences clear, JWT 빈값으로
+    private fun clearUser() {
+        AccountSharedPreference.clearUser(this)
+        AccountSharedPreference.setJWT("")
     }
 
     private fun observe() {
@@ -106,16 +113,26 @@ class SettingActivity : AppCompatActivity() {
         })
 
         mainVm.logoutCode.observe(this, Observer {
-            AccountSharedPreference.clearUser(this)
-            AccountSharedPreference.setJWT("")
+            clearUser()
             startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
         })
 
         mainVm.updateUserCode.observe(this, Observer {
-            Log.d("MainViewModel", "user Observe $user")
-            Log.d("MainViewModel", "updateUserCode Observe $it")
             if (it == 204)
                 logout()
+        })
+
+        mainVm.quitMembershipCode.observe(this, Observer {
+            if (it == 204) {
+                clearUser()
+                startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+            } else {
+                Toast.makeText(
+                    this@SettingActivity,
+                    "계정탈퇴 중 오류 발생. 다시 시도해 주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         })
     }
 }
