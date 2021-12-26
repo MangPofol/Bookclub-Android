@@ -9,7 +9,7 @@
     <string name="sign_in">회원가입</string>
     <string name="find_password">비밀번호 찾기</string>
     <string name="signin_id_alert">사용할 수 없는 아이디 입니다.</string>
-    <string name="signin_password_alert">사용할 수 없는 비밀번호 입니다.</string>
+    <string name="signin_password_alert">사용할 수 없는 비밀번호 입니다. (6자~12자)</string>
     <string name="user_setting_desc">남겨주신 정보는 나의 소개로 북클럽원에게 들어갑니다.</string>
     <string name="book_profile_start_title">독서의 순간을 함께 기록하는\nOur page에 오신 것을 환영합니다!</string>
     <string name="book_profile_start_desc">독서 취향과 함께 당신을 소개해주세요.</string>

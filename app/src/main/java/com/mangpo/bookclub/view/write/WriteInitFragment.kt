@@ -183,7 +183,7 @@ class WriteInitFragment : Fragment() {
         binding.writeInitTitleTv.text = "${user.nickname}님,\n오늘도 힘차게 기록해봅시다."
 
         if (user.goal == "") {
-            binding.readingGoalTv.text = "독서 목표를 입력해주세요."
+            binding.readingGoalTv.text = "목표를 설정해주세요."
         } else {
             binding.readingGoalTv.text = user.goal
         }
