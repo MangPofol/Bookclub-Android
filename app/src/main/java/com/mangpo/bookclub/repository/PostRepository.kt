@@ -41,7 +41,8 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    suspend fun updatePost(postId: Long, post: PostModel): Int = postService.updatePost(postId, post).code()
+    suspend fun updatePost(postId: Long, post: PostModel): Int =
+        postService.updatePost(postId, post).code()
 
     suspend fun uploadImgFile(imgPath: String): String? {
         val multipartBody: MultipartBody.Part = ImgUtil.getImageMultipartBody("data", imgPath)
@@ -82,5 +83,7 @@ class PostRepository(private val postService: PostService) {
         else
             -1
     }
+
+    suspend fun deleteImg(img: String) = postService.deleteImgFile(img)
 
 }

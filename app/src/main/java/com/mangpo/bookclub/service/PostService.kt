@@ -21,14 +21,17 @@ interface PostService {
     @POST("/posts")
     suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>
 
-    @PUT("/posts/{postId}")
-    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>
-
     @Multipart
     @POST("/files/upload-multiple-files")
     suspend fun uploadMultiImgFile(@Part data: List<MultipartBody.Part>): Response<List<String>>
 
+    @PUT("/posts/{postId}")
+    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>
+
     @Multipart
     @PUT("/files/upload")
     suspend fun uploadImgFile(@Part data: MultipartBody.Part): Response<String>
+
+    @DELETE("/files/delete")
+    suspend fun deleteImgFile(@Query("imageLocation") imageLocation: String): Response<String>
 }
