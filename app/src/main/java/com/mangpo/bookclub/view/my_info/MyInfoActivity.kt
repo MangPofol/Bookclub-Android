@@ -25,7 +25,7 @@ class MyInfoActivity : AppCompatActivity() {
     private val mainVm: MainViewModel by viewModel()
     private val postVm: PostViewModel by viewModel()
     private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment2 =
-        CameraGalleryBottomSheetFragment2(1) {
+        CameraGalleryBottomSheetFragment2.newInstance(1) {
             profileImgCallback(it[0])
         }
 
