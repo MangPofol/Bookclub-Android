@@ -34,6 +34,14 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
     private var cameraPermissionLauncher: ActivityResultLauncher<String>? = null
     private var galleryPermissionLauncher: ActivityResultLauncher<Array<String>>? = null
 
+    companion object {
+        fun newInstance(
+            imgCnt: Int, callback: (List<String>) -> Unit
+        ): CameraGalleryBottomSheetFragment2 {
+            return CameraGalleryBottomSheetFragment2(imgCnt, callback)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("CameraGalleryBottomSheetFragment2", "onCreate")

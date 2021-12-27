@@ -13,6 +13,7 @@
     <string name="user_setting_desc">남겨주신 정보는 나의 소개로 북클럽원에게 들어갑니다.</string>
     <string name="book_profile_start_title">독서의 순간을 함께 기록하는\nOur page에 오신 것을 환영합니다!</string>
     <string name="book_profile_start_desc">독서 취향과 함께 당신을 소개해주세요.</string>
+    <string name="select_profile_image">프로필 사진을 선택해주세요.</string>
     <string name="set_nickname_title">당신의 닉네임은?</string>
     <string name="set_gender_title">성별을 선택해주세요.</string>
     <string name="set_birth_title">생년월일을 입력해주세요.</string>

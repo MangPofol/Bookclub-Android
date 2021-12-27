@@ -8,19 +8,17 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
+import com.mangpo.bookclub.viewmodel.PostViewModel
 import gun0912.tedimagepicker.util.ToastUtil.context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BookProfileInitActivity : AppCompatActivity() {
@@ -29,6 +27,7 @@ class BookProfileInitActivity : AppCompatActivity() {
     private lateinit var user: UserModel
 
     private val mainVm: MainViewModel by viewModel()
+    private val postVm: PostViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +35,6 @@ class BookProfileInitActivity : AppCompatActivity() {
         binding = ActivityBookProfileInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        observe()
         bindUser()
 
         binding.backIvView.setOnClickListener { //뒤로가기 이미지 버튼 클릭 리스너
@@ -47,7 +45,7 @@ class BookProfileInitActivity : AppCompatActivity() {
 
         //frameLayout의 초기 화면 설정
         supportFragmentManager.beginTransaction()
-            .replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+            .replace(binding.frameLayout.id, BookProfileDescFragment()).commitAllowingStateLoss()
 
         binding.nextBtn.setOnClickListener {    //다음 버튼 클릭 리스너
             goToNextStep(false)
@@ -88,27 +86,31 @@ class BookProfileInitActivity : AppCompatActivity() {
             }
             SetNicknameFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, BookProfileDescFragment()).commit()
+                    .replace(binding.frameLayout.id, BookProfileDescFragment())
+                    .commitAllowingStateLoss()
             }
             SetGenderAndBirthFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetNicknameFragment()).commit()
+                    .replace(binding.frameLayout.id, SetNicknameFragment())
+                    .commitAllowingStateLoss()
             }
             ExpressMeFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment())
+                    .commitAllowingStateLoss()
             }
             SetGenreFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+                    .replace(binding.frameLayout.id, ExpressMeFragment()).commitAllowingStateLoss()
             }
             ReadingStyleFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetGenreFragment()).commit()
+                    .replace(binding.frameLayout.id, SetGenreFragment()).commitAllowingStateLoss()
             }
             ReadingGoalFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+                    .replace(binding.frameLayout.id, ReadingStyleFragment())
+                    .commitAllowingStateLoss()
             }
         }
     }
@@ -125,56 +127,34 @@ class BookProfileInitActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
-    fun setKeyboardStateResize() {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
-    private fun goToMain() {
-        val intent: Intent = Intent(this, MainActivity::class.java)
-        finish()
-        startActivity(intent)
-    }
-
     private fun signIn() {
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            //프로필 이미지가 있으면 우선 프로필 이미지부터 업로드한다.
+            if (user.profileImgLocation != "") {
+                val url = postVm.uploadImg(user.profileImgLocation)
+                if (url == null) {
+                    Toast.makeText(
+                        this@BookProfileInitActivity,
+                        "이미지 업로드 중 오류 발생. 다시 시도해 주세요.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@launch
+                } else {
+                    mainVm.createUser()
+                }
+            } else {
                 mainVm.createUser()
             }
 
             if (mainVm.getNewUser() == null) {
                 Toast.makeText(context, "회원가입 실패. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
             } else {
+                //회원가입이 완료되면 사용자가 직접 로그인하도록 LoginActivity 로 이동.
                 Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
-                login()
+                startActivity(Intent(this@BookProfileInitActivity, LoginActivity::class.java))
+                finish()
             }
         }
-    }
-
-    private fun login() {
-        val loginReq: JsonObject = JsonObject()
-        loginReq.addProperty("email", user.email)
-        loginReq.addProperty("password", user.password)
-
-        CoroutineScope(Dispatchers.Main).launch {
-            mainVm.login(loginReq)
-        }
-    }
-
-    private fun observe() {
-        mainVm.loginCode.observe(this, Observer {
-            when (it) {
-                200 -> {
-                    mainVm.updateNewUser(UserModel())
-                    goToMain()
-                }
-                -1 -> {
-                    Toast.makeText(baseContext, "인터넷 연결이 필요합니다.", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(baseContext, "로그인 실패", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 
     private fun goToNextStep(isSkip: Boolean) {
@@ -183,13 +163,17 @@ class BookProfileInitActivity : AppCompatActivity() {
         when (supportFragmentManager.fragments[0].javaClass) {
             BookProfileDescFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetNicknameFragment()).commit()
+                    .replace(binding.frameLayout.id, SetNicknameFragment())
+                    .commitAllowingStateLoss()
             }
             SetNicknameFragment::class.java -> {
+                user.profileImgLocation =
+                    (supportFragmentManager.fragments[0] as SetNicknameFragment).getProfileImg()
                 user.nickname =
                     (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment()).commit()
+                    .replace(binding.frameLayout.id, SetGenderAndBirthFragment())
+                    .commitAllowingStateLoss()
             }
             SetGenderAndBirthFragment::class.java -> {
                 user.sex =
@@ -197,28 +181,30 @@ class BookProfileInitActivity : AppCompatActivity() {
                 user.birthdate =
                     (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ExpressMeFragment()).commit()
+                    .replace(binding.frameLayout.id, ExpressMeFragment()).commitAllowingStateLoss()
             }
             ExpressMeFragment::class.java -> {
                 if (!isSkip)
                     user.introduce =
                         (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetGenreFragment()).commit()
+                    .replace(binding.frameLayout.id, SetGenreFragment()).commitAllowingStateLoss()
             }
             SetGenreFragment::class.java -> {
                 if (!isSkip)
                     user.genres =
                         (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ReadingStyleFragment()).commit()
+                    .replace(binding.frameLayout.id, ReadingStyleFragment())
+                    .commitAllowingStateLoss()
             }
             ReadingStyleFragment::class.java -> {
                 if (!isSkip)
                     user.style =
                         (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ReadingGoalFragment()).commit()
+                    .replace(binding.frameLayout.id, ReadingGoalFragment())
+                    .commitAllowingStateLoss()
             }
             ReadingGoalFragment::class.java -> {
                 if (!isSkip)
