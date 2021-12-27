@@ -18,6 +18,7 @@ import androidx.transition.TransitionManager
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.model.CheckListModel
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.ChecklistContentRVAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.ChecklistViewModel
@@ -71,7 +72,9 @@ class WriteInitFragment : Fragment() {
 
         //기록 쓰러가기 클릭 리스너 -> RecordFragment 로 이동
         binding.goPostView.setOnClickListener {
-            (requireParentFragment() as WriteFrameFragment).moveToRecord(false)
+            val fragment = RecordFragment(false)
+            BackStackManager.pushFragment(0, fragment)
+            (requireActivity() as MainActivity).changeFragment(fragment)
         }
 
         //체크리스트의 arrow_down 이미지뷰 클릭 리스너

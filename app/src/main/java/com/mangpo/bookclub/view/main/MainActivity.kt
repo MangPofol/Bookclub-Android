@@ -6,17 +6,21 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.view.bookclub.BookClubFragment
+import com.mangpo.bookclub.util.BackStackManager
+import com.mangpo.bookclub.view.library.BookDescFragment
 import com.mangpo.bookclub.view.library.LibraryInitFragment
 import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
 import com.mangpo.bookclub.view.my_info.GoalManagementActivity
 import com.mangpo.bookclub.view.my_info.MyInfoActivity
+import com.mangpo.bookclub.view.write.PostDetailFragment
 import com.mangpo.bookclub.view.write.WriteFrameFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -29,9 +33,10 @@ class MainActivity : AppCompatActivity() {
 
     private val writeFrameFragment: WriteFrameFragment = WriteFrameFragment()
     private val libraryInitFragment: LibraryInitFragment = LibraryInitFragment()
-    private val bookClubFragment: BookClubFragment = BookClubFragment()
 
     private var latestFragment: String = ""
+    private var isMenuItemSelectListenerEnable: Boolean =
+        false  //bottom navigation menu select 이벤트 리스너를 실행할건지 체크하기 위한 변수
 
     private val bookVm: BookViewModel by viewModel()
     private val postVm: PostViewModel by viewModel()
@@ -49,34 +54,41 @@ class MainActivity : AppCompatActivity() {
 
         //bottom navigation 메뉴 선택 시 프래그먼트 전환
         binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.write -> {
-                    if (bookBundle.getString("book")==null)
-                        writeFrameFragment.arguments = bookBundle
+            if (isMenuItemSelectListenerEnable) {
+                isMenuItemSelectListenerEnable = false
+            } else {
+                val fm = supportFragmentManager
+                val transaction = fm.beginTransaction()
 
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, writeFrameFragment).addToBackStack("post").commitAllowingStateLoss()
+                when (it.itemId) {
+                    R.id.write -> {
+                        val fragment = BackStackManager.switchFragment(0)
+                        transaction.replace(binding.frameLayout.id, fragment)
+                            .commitAllowingStateLoss()
 
-                    return@setOnItemSelectedListener true
+                        if (bookBundle.getString("book") == null)
+                            writeFrameFragment.arguments = bookBundle
+                    }
+                    R.id.library -> {
+                        val fragment = BackStackManager.switchFragment(1)
+                        transaction.replace(binding.frameLayout.id, fragment)
+                            .commitAllowingStateLoss()
+
+                        postVm.setPost(PostModel())
+                        postVm.setImgUriList(listOf())
+                        bookVm.setBook(BookModel())
+                    }
+                    R.id.myBookclub -> {
+                        val fragment = BackStackManager.switchFragment(2)
+                        transaction.replace(binding.frameLayout.id, fragment)
+                            .commitAllowingStateLoss()
+                    }
                 }
-                R.id.library -> {
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, libraryInitFragment).addToBackStack("libraryMain").commitAllowingStateLoss()
-                    postVm.setPost(PostModel())
-                    postVm.setImgUriList(listOf())
-                    bookVm.setBook(BookModel())
 
-                    return@setOnItemSelectedListener true
-                }
-                R.id.myBookclub -> {
-                    supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, bookClubFragment).addToBackStack("bookClub").commitAllowingStateLoss()
-                    postVm.setPost(PostModel())
-                    postVm.setImgUriList(listOf())
-                    bookVm.setBook(BookModel())
-
-                    return@setOnItemSelectedListener true
-                }
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             }
 
-            return@setOnItemSelectedListener false
+            return@setOnItemSelectedListener true
         }
 
         binding.bottomNavigation.selectedItemId = R.id.write
@@ -89,28 +101,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        supportFragmentManager.popBackStackImmediate()
-        /*if (binding.bottomNavigation.selectedItemId == R.id.write) {
-            val fragments = writeFrameFragment.childFragmentManager.fragments
+        var fragment = BackStackManager.popFragment()
 
-            if (fragments[fragments.size-1].javaClass==WriteInitFragment::class.java)
-                finish()
-            else if (fragments[fragments.size-1].javaClass==PostDetailFragment::class.java) {
-                binding.bottomNavigation.selectedItemId = R.id.library
-                libraryInitFragment.childFragmentManager.popBackStackImmediate()
-//                val fragments = libraryInitFragment.childFragmentManager.fragments
-//                Log.d("MainActivity", "fragments: $fragments")
-            } else
-                writeFrameFragment.childFragmentManager.popBackStackImmediate()
-        } else if (binding.bottomNavigation.selectedItemId == R.id.library) {
-            val fragments = libraryInitFragment.childFragmentManager.fragments
-            if (fragments[fragments.size-1].javaClass == MyLibraryFragment::class.java)
-                binding.bottomNavigation.selectedItemId = R.id.write
-            else
-                libraryInitFragment.childFragmentManager.popBackStackImmediate()
-        } else {
-            Log.d("MainActivity", "onBackPressed-BookClub -> ${bookClubFragment.childFragmentManager.fragments}")
-        }*/
+        if (fragment == null)
+            finishAffinity()
+        //pop 된 프래그먼트랑 현재 프래그먼트랑 같은 경우가 있어서 그럴 땐 프래그먼트를 한번 더 pop 한다.
+        else if (supportFragmentManager.findFragmentById(binding.frameLayout.id)?.javaClass == fragment.javaClass) {
+            fragment = BackStackManager.popFragment()
+        }
+
+        //pop 이후에 fragment 가 null 이 되는 경우가 발생 -> 그럴 땐 종료하면 됨.
+        if (fragment == null)
+            finishAffinity()
+        else {
+            supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment)
+                .commitAllowingStateLoss()
+            changeBottomNavigation(BackStackManager.getMenu())
+        }
+    }
+
+    fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
     }
 
     private fun initBookList() {
@@ -121,10 +133,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun changeBottomNavigation(menu: Int) {
+        isMenuItemSelectListenerEnable = true
+
+        when (menu) {
+            0 -> binding.bottomNavigation.selectedItemId = R.id.write
+            1 -> binding.bottomNavigation.selectedItemId = R.id.library
+            else -> binding.bottomNavigation.selectedItemId = R.id.myBookclub
+        }
+    }
+
     //올라와 있는 키보드를 내리는 함수
     fun hideKeyBord(v: View) {
         val imm: InputMethodManager =
-                getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
@@ -135,19 +157,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun moveToBookDesc(book: BookModel) {
-        libraryInitFragment.moveToBookDesc(book)
-    }
-
-    fun setBookBundle(book: BookModel) {
-        bookBundle.putString("book", Gson().toJson(book))
-    }
-
-    fun changeBottomNavigation(menu: Int) {
-        when (menu) {
-            0 -> binding.bottomNavigation.selectedItemId = R.id.write
-            1 -> binding.bottomNavigation.selectedItemId = R.id.library
-            else -> binding.bottomNavigation.selectedItemId = R.id.myBookclub
+        val fragment = BookDescFragment().apply {
+            arguments = Bundle().apply {
+                putString("book", Gson().toJson(book))
+            }
         }
+        supportFragmentManager.beginTransaction()
+            .replace(binding.frameLayout.id, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
+
+        BackStackManager.pushFragment(1, fragment)
+        BackStackManager.pushFragment(1, fragment)
+    }
+
+    fun moveToPostDetail(book: BookModel) {
+        bookBundle.putString("book", Gson().toJson(book))
+
+        val fragment = PostDetailFragment().apply {
+            arguments = Bundle().apply {
+                putLong("bookId", book.id!!)
+                putString("bookName", book.name)
+            }
+        }
+        changeFragment(fragment)
+        BackStackManager.pushFragment(0, fragment)
     }
 
     //ChecklistManagementActivity 화면으로 이동하는 함수

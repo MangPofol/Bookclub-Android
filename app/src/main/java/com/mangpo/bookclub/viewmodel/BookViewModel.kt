@@ -55,8 +55,8 @@ class BookViewModel(
 
     fun getBook(): BookModel? = _book.value
 
-    fun setBook(book: BookModel?) {
-        _book.value = book!!
+    fun setBook(book: BookModel) {
+        _book.value = book
     }
 
     fun setReadType(readType: String) {

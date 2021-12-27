@@ -11,14 +11,16 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
+import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class RecordFragment(private val isUpdate: Boolean) : Fragment() {
+class RecordFragment(private var isUpdate: Boolean) : Fragment() {
     private lateinit var binding: FragmentRecordBinding
 
     private val recordImgRVAdapter: RecordImgRVAdapter = RecordImgRVAdapter()
@@ -48,13 +50,16 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
         binding.selectBookBtn.setOnClickListener {
             setPost()    //지금까지 기록된 post 저장하기
             (activity as MainActivity).hideKeyBord(requireView())   //키보드 올라와 있으면 키보드 내리기
-            (requireParentFragment() as WriteFrameFragment).moveToSelect()
+            val fragment = SelectFragment()
+            BackStackManager.pushFragment(0, fragment)
+            (requireActivity() as MainActivity).changeFragment(fragment)
         }
 
         //이미지 선택하기 클릭 리스너
         binding.addImgView.setOnClickListener {
-            if (checkPictureCnt()==4) {
-                Toast.makeText(requireContext(), "사진은 최대 4장까지 첨부할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            if (checkPictureCnt() == 4) {
+                Toast.makeText(requireContext(), "사진은 최대 4장까지 첨부할 수 있습니다.", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 setPost()    //지금까지 기록된 post 저장하기
 
@@ -84,8 +89,10 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
 
             if (validate()) {   //필수 데이터를 다 기록했는지 유효성 검사
                 setPost()   //다시 한 번 기록한 데이터 저장
-                Log.d("RecordFragment", "next click! -> post: $post")
-                (requireParentFragment() as WriteFrameFragment).moveToWritingSetting(isUpdate)  //WritingSettingFragment 화면으로 이동하는 함수 호출
+
+                val fragment = WritingSettingFragment(isUpdate)
+                (requireActivity() as MainActivity).changeFragment(fragment)
+                BackStackManager.pushFragment(0, fragment)
             }
         }
 
@@ -100,8 +107,6 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("RecordFragment", "onResume")
-
-        Log.d("RecordFragment", "imgList: $imgList")
     }
 
     override fun onPause() {
@@ -127,27 +132,29 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
     override fun onDetach() {
         super.onDetach()
         Log.d("RecordFragment", "onDetach")
+
+        //Detach 되면 데이터 초기화
+        isUpdate = false
+        bookVm.setBook(BookModel())
+        postVm.setPost(PostModel())
+        postVm.setImgUriList(listOf())
     }
 
     private fun observe() {
         //BookViewModel book observer
         bookVm.book.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordFragment", "book observe!! -> book: $it")
             if (it.name.isBlank())    //book.name 이 비어 있으면 selectedBtn.text = 기록할 책을 선택해주세요.
                 binding.selectBookBtn.text = getString(R.string.book_select)
             else {  //book.id 가 null 이 아니면
                 post.bookId = it.id
                 binding.selectBookBtn.text = it.name
             }
-            Log.d("RecordFragment", "book observe!! -> post: $post")
         })
 
         //기록 이미지 observer
         postVm.imgUriList.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordFragment", "imgUriList observe -> $it")
             recordImgRVAdapter.setData(it)
             uriToString(it)
-            Log.d("RecordFragment", "imgUriList observe -> imgList: $imgList")
         })
 
         postVm.post.observe(viewLifecycleOwner, Observer {
@@ -204,7 +211,7 @@ class RecordFragment(private val isUpdate: Boolean) : Fragment() {
         binding.postTitleET.setText(post.title)
         binding.contentET.setText(post.content)
 
-        if (post.postImgLocations!=null) {
+        if (post.postImgLocations != null) {
             val uriList: ArrayList<Uri> = ArrayList()
             for (postImgLocation in post!!.postImgLocations) {
                 uriList.add(Uri.parse(postImgLocation))

@@ -18,6 +18,7 @@ import com.mangpo.bookclub.databinding.FragmentWritingSettingBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.LoadingDialogFragment
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
@@ -84,7 +85,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         }
 
         binding.backIvView.setOnClickListener {
-            parentFragmentManager.popBackStackImmediate()
+            (requireActivity() as MainActivity).changeFragment(BackStackManager.popFragment()!!)
         }
 
         return binding.root

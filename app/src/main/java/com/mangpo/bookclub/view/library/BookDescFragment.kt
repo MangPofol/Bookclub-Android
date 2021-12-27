@@ -13,6 +13,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookDescBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
+import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.PostAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
@@ -51,7 +52,13 @@ class BookDescFragment : Fragment() {
         initAdapter()   //메모 리사이클러뷰 UI 업데이트 함수 호출
 
         binding.backIvView.setOnClickListener {
-            requireParentFragment().childFragmentManager.popBackStackImmediate()
+            var fragment = BackStackManager.popFragment()!!
+
+            //pop 했을 때 BookDescFragment 로 똑같은 경우 한번 더 pop 한다.
+            if (fragment.javaClass == BookDescFragment::class.java)
+                (requireActivity() as MainActivity).changeFragment(BackStackManager.popFragment()!!)
+            else
+                (requireActivity() as MainActivity).changeFragment(fragment)
         }
 
         binding.readCompleteView.setOnClickListener {
@@ -147,7 +154,7 @@ class BookDescFragment : Fragment() {
         postAdapter.setMyItemClickListener(object : PostAdapter.MyItemClickListener {
             override fun goPostDetail(post: PostDetailModel) {
                 postVm.setPostDetail(post)
-                (requireActivity() as MainActivity).setBookBundle(book)
+                (requireActivity() as MainActivity).moveToPostDetail(book)
                 (requireActivity() as MainActivity).changeBottomNavigation(0)
             }
         })
