@@ -25,7 +25,6 @@ class ExpressMeFragment : Fragment(), TextWatcher {
     ): View? {
         binding = FragmentExpressMeBinding.inflate(inflater, container, false)
 
-        (activity as BookProfileInitActivity).setKeyboardStateResize()
         (activity as BookProfileInitActivity).visibleSkipTV()
         (activity as BookProfileInitActivity).unEnableNextBtn()
 

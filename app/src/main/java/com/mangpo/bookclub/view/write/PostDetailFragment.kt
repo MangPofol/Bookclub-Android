@@ -128,7 +128,7 @@ class PostDetailFragment : Fragment() {
                 setVisibilityThreeIV(View.GONE)
                 setVisibilityFourIV(View.GONE)
 
-                Glide.with(requireContext()).load(imgs[0]).into(binding.oneIv)
+                Glide.with(requireContext().applicationContext).load(imgs[0]).into(binding.oneIv)
             }
             imgs.size == 2 -> {
                 setVisibilityOneIV(View.GONE)
@@ -136,8 +136,8 @@ class PostDetailFragment : Fragment() {
                 setVisibilityThreeIV(View.GONE)
                 setVisibilityFourIV(View.GONE)
 
-                Glide.with(requireContext()).load(imgs[0]).into(binding.twoIv1)
-                Glide.with(requireContext()).load(imgs[1]).into(binding.twoIv2)
+                Glide.with(requireContext().applicationContext).load(imgs[0]).into(binding.twoIv1)
+                Glide.with(requireContext().applicationContext).load(imgs[1]).into(binding.twoIv2)
             }
             imgs.size == 3 -> {
                 setVisibilityOneIV(View.GONE)
@@ -145,9 +145,9 @@ class PostDetailFragment : Fragment() {
                 setVisibilityThreeIV(View.VISIBLE)
                 setVisibilityFourIV(View.GONE)
 
-                Glide.with(requireContext()).load(imgs[0]).into(binding.threeIv1)
-                Glide.with(requireContext()).load(imgs[1]).into(binding.threeIv2)
-                Glide.with(requireContext()).load(imgs[2]).into(binding.threeIv3)
+                Glide.with(requireContext().applicationContext).load(imgs[0]).into(binding.threeIv1)
+                Glide.with(requireContext().applicationContext).load(imgs[1]).into(binding.threeIv2)
+                Glide.with(requireContext().applicationContext).load(imgs[2]).into(binding.threeIv3)
             }
             else -> {
                 setVisibilityOneIV(View.GONE)
@@ -155,10 +155,10 @@ class PostDetailFragment : Fragment() {
                 setVisibilityThreeIV(View.GONE)
                 setVisibilityFourIV(View.VISIBLE)
 
-                Glide.with(requireContext()).load(imgs[0]).into(binding.fourIv1)
-                Glide.with(requireContext()).load(imgs[1]).into(binding.fourIv2)
-                Glide.with(requireContext()).load(imgs[2]).into(binding.fourIv3)
-                Glide.with(requireContext()).load(imgs[3]).into(binding.fourIv4)
+                Glide.with(requireContext().applicationContext).load(imgs[0]).into(binding.fourIv1)
+                Glide.with(requireContext().applicationContext).load(imgs[1]).into(binding.fourIv2)
+                Glide.with(requireContext().applicationContext).load(imgs[2]).into(binding.fourIv3)
+                Glide.with(requireContext().applicationContext).load(imgs[3]).into(binding.fourIv4)
             }
         }
 

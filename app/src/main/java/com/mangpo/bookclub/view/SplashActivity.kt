@@ -33,7 +33,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         observe()
 
-        Glide.with(this).load(R.drawable.loading).into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
+        Glide.with(applicationContext).load(R.drawable.loading)
+            .into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
 
         if (checkNetwork() == null) { //네트워크 연결 상태 확인
             Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
@@ -48,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
     private fun observe() {
         mainVm.user.observe(this, Observer {
             //로그인 기록이 있으면 MainActivity 로 이동하고, 없으면 2초 후 LoginActivity 화면으로 이동한다.
-            if (it.userId!=null) {
+            if (it.userId != null) {
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(2000L)
                     val intent = Intent(this@SplashActivity, MainActivity::class.java)

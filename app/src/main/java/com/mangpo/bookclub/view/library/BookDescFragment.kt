@@ -102,6 +102,12 @@ class BookDescFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        initUI(book)
+    }
+
     private fun initBookList() {
         val email: String = (requireActivity() as MainActivity).getEmail()
         CoroutineScope(Dispatchers.Main).launch {
@@ -114,7 +120,7 @@ class BookDescFragment : Fragment() {
     private fun initUI(book: BookModel) {
         binding.bookNameTv.text = book.name
         binding.bookIv.clipToOutline = true
-        Glide.with(this).load(book.imgPath).into(binding.bookIv)
+        Glide.with(requireActivity().applicationContext).load(book.imgPath).into(binding.bookIv)
 
         if (book.category == "AFTER") {
             binding.readCompleteView.background =

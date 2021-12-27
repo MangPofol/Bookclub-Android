@@ -27,7 +27,7 @@ class LoadingDialogFragment : DialogFragment() {
     ): View? {
         binding = FragmentLoadingDialogBinding.inflate(inflater, container, false)
 
-        Glide.with(this).load(R.drawable.loading).into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
+        Glide.with(requireActivity().applicationContext).load(R.drawable.loading).into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
 
         return binding.root
     }

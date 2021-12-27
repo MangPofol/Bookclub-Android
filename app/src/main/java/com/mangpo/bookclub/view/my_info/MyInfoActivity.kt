@@ -103,9 +103,9 @@ class MyInfoActivity : AppCompatActivity() {
         }
 
         if (user.profileImgLocation == "")
-            Glide.with(this).load(R.drawable.no_profile_img).into(binding.profileIv)
+            Glide.with(applicationContext).load(R.drawable.no_profile_img).into(binding.profileIv)
         else
-            Glide.with(this).load(user.profileImgLocation).circleCrop().into(binding.profileIv)
+            Glide.with(applicationContext).load(user.profileImgLocation).circleCrop().into(binding.profileIv)
     }
 
     private fun addGenreChip(genres: List<String>) {

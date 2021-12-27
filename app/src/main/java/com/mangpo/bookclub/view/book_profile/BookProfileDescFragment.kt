@@ -23,7 +23,6 @@ class BookProfileDescFragment : Fragment() {
     ): View? {
         binding = FragmentBookProfileDescBinding.inflate(inflater, container, false)
 
-        (activity as BookProfileInitActivity).setKeyboardStateResize()
         (activity as BookProfileInitActivity).invisibleSkipTV()
         (activity as BookProfileInitActivity).enableNextBtn()
 

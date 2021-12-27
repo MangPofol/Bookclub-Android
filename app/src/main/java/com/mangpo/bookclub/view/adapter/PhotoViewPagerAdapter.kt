@@ -22,7 +22,7 @@ class PhotoViewPagerAdapter(private val photos: ArrayList<String>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: PhotoViewPagerAdapter.PagerViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(photos[position]).into(holder.postImg)
+        Glide.with(binding.root.context.applicationContext).load(photos[position]).into(holder.postImg)
     }
 
     override fun getItemCount(): Int = photos.size

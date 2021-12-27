@@ -40,7 +40,7 @@ class RecordImgRVAdapter() :
         val stream = ByteArrayOutputStream()
 
         holder.iv.clipToOutline = true
-        Glide.with(holder.itemView).load(pictures[position]).into(holder.iv)
+        Glide.with(binding.root.context.applicationContext).load(pictures[position]).into(holder.iv)
 
         //삭제 아이콘 누르면 이미지 삭제하기
         holder.removeBtn.setOnClickListener {

@@ -46,7 +46,7 @@ class BookAdapter() :
     private fun libraryViewBinding(position: Int, holder: BookViewHolder) {
         val book: BookModel = books[position] as BookModel
 
-        Glide.with(holder.bookImg)
+        Glide.with(binding.root.context.applicationContext)
             .load(book.imgPath)
             .into(holder.bookImg)
 
@@ -56,7 +56,7 @@ class BookAdapter() :
     private fun writeViewBinding(position: Int, holder: BookViewHolder) {
         val book: KakaoBookModel = books[position] as KakaoBookModel
 
-        Glide.with(holder.bookImg)
+        Glide.with(binding.root.context.applicationContext)
             .load(book.thumbnail)
             .into(holder.bookImg)
 
@@ -84,7 +84,7 @@ class BookAdapter() :
     }
 
     fun setBooks(bookList: MutableList<BookModel>?) {
-        if (bookList!=null) {
+        if (bookList != null) {
             books = bookList.toMutableList()
         } else {
             books.removeAll(books)
