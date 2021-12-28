@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         observe()
 
-        binding.loginSigninTv.setOnClickListener {  //회원가입 화면으로 이동
+        binding.loginSigninClickView.setOnClickListener {  //회원가입 화면으로 이동
             if (checkNetwork() == null) {
                 Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             } else {
