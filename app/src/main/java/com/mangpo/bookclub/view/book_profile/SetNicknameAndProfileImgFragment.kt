@@ -3,20 +3,22 @@ package com.mangpo.bookclub.view.book_profile
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mangpo.bookclub.R
-import com.mangpo.bookclub.databinding.FragmentSetNicknameBinding
+import com.mangpo.bookclub.databinding.FragmentSetNicknameAndProfileImgBinding
 import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
 
-class SetNicknameFragment : Fragment(), TextWatcher {
+class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
 
     private var profileImgUrl: String = ""
+    private var isProfileImgSetting: Boolean = false
 
-    private lateinit var binding: FragmentSetNicknameBinding
+    private lateinit var binding: FragmentSetNicknameAndProfileImgBinding
 
     private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment2 = CameraGalleryBottomSheetFragment2.newInstance(1) {
         profileImgUrl = it[0]
@@ -33,7 +35,7 @@ class SetNicknameFragment : Fragment(), TextWatcher {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSetNicknameBinding.inflate(inflater, container, false)
+        binding = FragmentSetNicknameAndProfileImgBinding.inflate(inflater, container, false)
 
         (activity as BookProfileInitActivity).invisibleSkipTV()
         (activity as BookProfileInitActivity).unEnableNextBtn()     //다음 버튼 비활성화
@@ -54,8 +56,11 @@ class SetNicknameFragment : Fragment(), TextWatcher {
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         if (count == 0) { //입력값이 없으면 다음 버튼 비활성화
             (activity as BookProfileInitActivity).unEnableNextBtn()
-        } else {    //입력값이 있으면 다음 버튼 활성화
-            (activity as BookProfileInitActivity).enableNextBtn()
+        } else {
+            if (isProfileImgSetting) //입력값이 있고 프로필 이미지를 설정했으면 다음 버튼 활성화
+                (activity as BookProfileInitActivity).enableNextBtn()
+            else    //입력값이 있고 프로필 이미지를 설정하지 않았으면 다음 버튼 비활성화
+                (activity as BookProfileInitActivity).unEnableNextBtn()
         }
     }
 
@@ -66,6 +71,7 @@ class SetNicknameFragment : Fragment(), TextWatcher {
     private fun updateProfileImg() {
         Glide.with(requireActivity().applicationContext).load(profileImgUrl).circleCrop().into(binding.profileIv)
         binding.plusIv.setImageResource(R.drawable.setting_icon_white)
+        isProfileImgSetting = true
     }
 
     fun getNickname():String = binding.nicknameEt.text.toString()

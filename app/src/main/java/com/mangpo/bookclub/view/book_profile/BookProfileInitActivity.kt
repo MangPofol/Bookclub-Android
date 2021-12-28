@@ -84,14 +84,14 @@ class BookProfileInitActivity : AppCompatActivity() {
             BookProfileDescFragment::class.java -> {
                 finish()
             }
-            SetNicknameFragment::class.java -> {
+            SetNicknameAndProfileImgFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameLayout.id, BookProfileDescFragment())
                     .commitAllowingStateLoss()
             }
             SetGenderAndBirthFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetNicknameFragment())
+                    .replace(binding.frameLayout.id, SetNicknameAndProfileImgFragment())
                     .commitAllowingStateLoss()
             }
             ExpressMeFragment::class.java -> {
@@ -163,14 +163,14 @@ class BookProfileInitActivity : AppCompatActivity() {
         when (supportFragmentManager.fragments[0].javaClass) {
             BookProfileDescFragment::class.java -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetNicknameFragment())
+                    .replace(binding.frameLayout.id, SetNicknameAndProfileImgFragment())
                     .commitAllowingStateLoss()
             }
-            SetNicknameFragment::class.java -> {
+            SetNicknameAndProfileImgFragment::class.java -> {
                 user.profileImgLocation =
-                    (supportFragmentManager.fragments[0] as SetNicknameFragment).getProfileImg()
+                    (supportFragmentManager.fragments[0] as SetNicknameAndProfileImgFragment).getProfileImg()
                 user.nickname =
-                    (supportFragmentManager.fragments[0] as SetNicknameFragment).getNickname()
+                    (supportFragmentManager.fragments[0] as SetNicknameAndProfileImgFragment).getNickname()
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameLayout.id, SetGenderAndBirthFragment())
                     .commitAllowingStateLoss()
