@@ -48,6 +48,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(Intent(this@SettingActivity, NoticeActivity::class.java))
         }
 
+        //QuestionActivity 화면으로 이동
+        binding.questionNextView.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, QuestionActivity::class.java))
+        }
+
         binding.backIv.setOnClickListener {
             finish()
         }

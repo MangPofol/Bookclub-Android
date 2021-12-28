@@ -18,6 +18,10 @@
         android:theme="@style/Theme.Bookclub"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.setting.QuestionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -82,7 +86,7 @@
         <activity
             android:name=".view.LoginActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.bookclub.CreateClubActivity"
             android:exported="true"

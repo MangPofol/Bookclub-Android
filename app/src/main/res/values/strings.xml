@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Our page</string>
+    <string name="email">kyeongeh424@gmail.com</string>
 
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
@@ -135,7 +136,6 @@
 
     <!-- SettingActivity -->
     <string name="setting">설정</string>
-    <string name="question">1:1 문의 / 요청</string>
     <string name="terms_conditions">이용약관</string>
     <string name="version">버전 1.0.0</string>
     <string name="logout">로그아웃</string>
@@ -174,4 +174,12 @@
 
     <!-- SettingActivity, NoticeActivity -->
     <string name="notice">공지사항</string>
+
+    <!-- SettingActivity, QuestionActivity -->
+    <string name="question">1:1 문의 / 요청</string>
+
+    <!-- QuestionActivity -->
+    <string name="contact_us">Contact us</string>
+    <string name="contact_desc">Our page 사용 중 문의사항이 있다면\n언제든지 편하게 문의해주세요!</string>
+    <string name="send_email">이메일 보내기</string>
 </resources>
