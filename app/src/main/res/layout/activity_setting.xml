@@ -181,6 +181,37 @@
         app:layout_constraintTop_toTopOf="@+id/terms_conditions_tv" />
 
     <TextView
+        android:id="@+id/open_source_license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/open_source_license"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv" />
+
+    <View
+        android:id="@+id/open_source_license_next_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/open_source_license_next_iv"
+        app:layout_constraintEnd_toEndOf="@id/open_source_license_next_iv"
+        app:layout_constraintStart_toStartOf="@+id/open_source_license_next_iv"
+        app:layout_constraintTop_toTopOf="@+id/open_source_license_next_iv" />
+
+    <ImageView
+        android:id="@+id/open_source_license_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/open_source_license_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/open_source_license_tv" />
+
+    <TextView
         android:id="@+id/version_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -190,7 +221,7 @@
         android:textColor="@color/main_blue"
         android:textSize="16.8sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/open_source_license_tv" />
 
     <View
         android:id="@+id/version_line_view"

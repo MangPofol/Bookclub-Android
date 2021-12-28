@@ -58,6 +58,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(Intent(this@SettingActivity, TermsConditionActivity::class.java))
         }
 
+        //OpenSourceActivity 화면으로 이동
+        binding.openSourceLicenseNextView.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, OpenSourceActivity::class.java))
+        }
+
         binding.backIv.setOnClickListener {
             finish()
         }
