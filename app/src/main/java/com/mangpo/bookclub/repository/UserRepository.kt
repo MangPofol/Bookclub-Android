@@ -1,8 +1,6 @@
 package com.mangpo.bookclub.repository
 
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.service.UserService
@@ -31,26 +29,21 @@ class UserRepository(private val userService: UserService) {
     suspend fun validateEmail(email: JsonObject): Int = userService.validateEmail(email).code()
 
     suspend fun createUser(newUser: UserModel): UserModel? {
-        val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-
         try {
             val res = userService.createUser(newUser)
 
             return if (res.isSuccessful) {
                 Log.d("UserRepository", "회원가입 성공! -> ${res.body()}")
-
-                gson.fromJson(res.body()!!.get("data"), UserModel::class.java)
+                res.body()!!.data
             } else {
                 Log.d(
                     "UserRepository",
                     "회원가입 실패! -> code: ${res.code()}, message: ${res.errorBody()}}"
                 )
-
                 null
             }
         } catch (e: Exception) {
             Log.d("UserRepository", "회원가입 코드 에러 발생! -> ${e.printStackTrace()}")
-
             return null
         }
     }

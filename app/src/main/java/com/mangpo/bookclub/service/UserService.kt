@@ -18,7 +18,7 @@ interface UserService {
     suspend fun validateEmail(@Body email: JsonObject): Response<JsonObject>
 
     @POST("/auth/signup")
-    suspend fun createUser(@Body newUser: UserModel): Response<JsonObject>
+    suspend fun createUser(@Body newUser: UserModel): Response<UserDataModel>
 
     @POST("/logout")
     suspend fun logout(): Response<String>

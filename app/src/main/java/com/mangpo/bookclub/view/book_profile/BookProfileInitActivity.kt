@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.view.LoadingDialogFragment
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -28,6 +29,7 @@ class BookProfileInitActivity : AppCompatActivity() {
 
     private val mainVm: MainViewModel by viewModel()
     private val postVm: PostViewModel by viewModel()
+    private val loadingDialogFragment: LoadingDialogFragment = LoadingDialogFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +65,6 @@ class BookProfileInitActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
         backFragment()
     }
 
@@ -128,6 +129,8 @@ class BookProfileInitActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
+        loadingDialogFragment.show(supportFragmentManager, null)    //로딩 프래그먼트 띄우기
+
         CoroutineScope(Dispatchers.Main).launch {
             //프로필 이미지가 있으면 우선 프로필 이미지부터 업로드한다.
             if (user.profileImgLocation != "") {
@@ -151,9 +154,11 @@ class BookProfileInitActivity : AppCompatActivity() {
             } else {
                 //회원가입이 완료되면 사용자가 직접 로그인하도록 LoginActivity 로 이동.
                 Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@BookProfileInitActivity, LoginActivity::class.java))
                 finish()
+                startActivity(Intent(this@BookProfileInitActivity, LoginActivity::class.java))
             }
+
+            loadingDialogFragment.dismiss() //로딩 프래그먼트 종료
         }
     }
 
