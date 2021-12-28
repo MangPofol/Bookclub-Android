@@ -164,6 +164,15 @@
         app:layout_constraintStart_toEndOf="@+id/login_facebook_iv"
         app:layout_constraintTop_toTopOf="@+id/login_naver_iv" />
 
+    <View
+        android:id="@+id/login_signin_click_view"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/login_signin_tv"
+        app:layout_constraintEnd_toEndOf="@+id/login_signin_tv"
+        app:layout_constraintStart_toStartOf="@+id/login_signin_tv"
+        app:layout_constraintTop_toTopOf="@+id/login_signin_tv" />
+
     <TextView
         android:id="@+id/login_signin_tv"
         android:layout_width="wrap_content"
@@ -188,6 +197,15 @@
         app:layout_constraintEnd_toStartOf="@+id/login_find_password_tv"
         app:layout_constraintStart_toEndOf="@+id/login_signin_tv"
         app:layout_constraintTop_toTopOf="@+id/login_signin_tv" />
+
+    <View
+        android:id="@+id/login_find_password_click_view"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/login_find_password_tv"
+        app:layout_constraintEnd_toEndOf="@+id/login_find_password_tv"
+        app:layout_constraintStart_toStartOf="@+id/login_find_password_tv"
+        app:layout_constraintTop_toTopOf="@+id/login_find_password_tv" />
 
     <TextView
         android:id="@+id/login_find_password_tv"
