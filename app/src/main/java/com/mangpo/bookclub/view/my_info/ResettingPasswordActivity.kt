@@ -32,6 +32,12 @@ class ResettingPasswordActivity : AppCompatActivity() {
 
         user = Gson().fromJson(intent.getStringExtra("user"), UserModel::class.java)
 
+        //뒤로가기 버튼 클릭 리스너
+        binding.backIvView.setOnClickListener {
+            finish()
+        }
+
+        //완료 버튼 클릭 리스너
         binding.completeTv.setOnClickListener {
             validate()
         }
@@ -62,8 +68,12 @@ class ResettingPasswordActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             val token = mainVm.login(loginJson) //기존 비밀번호가 일치하는지 확인
 
-            if (token==null) {
-                Toast.makeText(this@ResettingPasswordActivity, "기존 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            if (token == null) {
+                Toast.makeText(
+                    this@ResettingPasswordActivity,
+                    "기존 비밀번호가 일치하지 않습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 mainVm.changePW(password)
             }
