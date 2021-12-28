@@ -53,6 +53,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(Intent(this@SettingActivity, QuestionActivity::class.java))
         }
 
+        //TermsConditionActivity 화면으로 이동
+        binding.termsConditionsNextView.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, TermsConditionActivity::class.java))
+        }
+
         binding.backIv.setOnClickListener {
             finish()
         }

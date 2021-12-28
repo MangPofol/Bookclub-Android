@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.setting.TermsConditionActivity">
+
+    <View
+        android:id="@+id/back_iv_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
+        app:layout_constraintEnd_toEndOf="@id/back_iv"
+        app:layout_constraintStart_toStartOf="@+id/back_iv"
+        app:layout_constraintTop_toTopOf="@+id/back_iv" />
+
+    <ImageView
+        android:id="@+id/back_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28.8dp"
+        android:layout_marginTop="21.6dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/setting_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13.2sp"
+        android:text="@string/terms_conditions"
+        android:textColor="@color/main_blue"
+        android:textSize="21.6sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="13.2dp"
+        android:background="@drawable/layout_gradation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_title_tv" />
+
+    <TextView
+        android:id="@+id/terms_of_service_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="27.6dp"
+        android:text="@string/terms_of_service"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintStart_toStartOf="@+id/background_view"
+        app:layout_constraintTop_toTopOf="@+id/background_view" />
+
+    <View
+        android:id="@+id/terms_of_service_next_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/terms_of_service_next_iv"
+        app:layout_constraintEnd_toEndOf="@id/terms_of_service_next_iv"
+        app:layout_constraintStart_toStartOf="@+id/terms_of_service_next_iv"
+        app:layout_constraintTop_toTopOf="@+id/terms_of_service_next_iv" />
+
+    <ImageView
+        android:id="@+id/terms_of_service_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/terms_of_service_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/terms_of_service_tv" />
+
+    <TextView
+        android:id="@+id/privacy_policy_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_of_service_tv" />
+
+    <View
+        android:id="@+id/privacy_policy_next_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/privacy_policy_next_iv"
+        app:layout_constraintEnd_toEndOf="@id/privacy_policy_next_iv"
+        app:layout_constraintStart_toStartOf="@+id/privacy_policy_next_iv"
+        app:layout_constraintTop_toTopOf="@+id/privacy_policy_next_iv" />
+
+    <ImageView
+        android:id="@+id/privacy_policy_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/privacy_policy_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/privacy_policy_tv" />
+
+    <View
+        android:id="@+id/privacy_policy_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="2.4dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="19.2dp"
+        android:background="@color/grey13"
+        app:layout_constraintTop_toBottomOf="@+id/privacy_policy_tv" />
+
+    <TextView
+        android:id="@+id/receive_marketing_information_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="26.4dp"
+        android:text="@string/receive_marketing_information"
+        android:textColor="@color/main_blue"
+        android:textSize="16.8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacy_policy_line_view" />
+
+    <View
+        android:id="@+id/receive_marketing_information_next_view"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/receive_marketing_information_next_iv"
+        app:layout_constraintEnd_toEndOf="@id/receive_marketing_information_next_iv"
+        app:layout_constraintStart_toStartOf="@+id/receive_marketing_information_next_iv"
+        app:layout_constraintTop_toTopOf="@+id/receive_marketing_information_next_iv" />
+
+    <ImageView
+        android:id="@+id/receive_marketing_information_next_iv"
+        android:layout_width="7.2dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/next_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/receive_marketing_information_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/receive_marketing_information_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

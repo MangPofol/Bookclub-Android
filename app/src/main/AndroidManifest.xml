@@ -18,6 +18,10 @@
         android:theme="@style/Theme.Bookclub"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.setting.TermsConditionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.setting.QuestionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
