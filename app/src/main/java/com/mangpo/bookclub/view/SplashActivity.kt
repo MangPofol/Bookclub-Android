@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
         observe()
 
         Glide.with(applicationContext).load(R.drawable.loading)
-            .into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
+            .into(binding.logoIv)   //이미지뷰에 gif 파일 넣기
 
         if (checkNetwork() == null) { //네트워크 연결 상태 확인
             Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
