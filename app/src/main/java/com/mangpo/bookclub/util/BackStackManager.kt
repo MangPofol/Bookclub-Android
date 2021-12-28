@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.mangpo.bookclub.view.bookclub.BookClubFragment
 import com.mangpo.bookclub.view.library.LibraryInitFragment
-import com.mangpo.bookclub.view.write.WriteInitFragment
+import com.mangpo.bookclub.view.write.MainFragment
 import java.util.*
 
 object BackStackManager {
@@ -21,7 +21,7 @@ object BackStackManager {
         when (idx) {
             0 -> {
                 if (writeBackStack.isEmpty()) {
-                    fragment = WriteInitFragment()
+                    fragment = MainFragment()
                     writeBackStack.push(fragment)
                 } else {
                     fragment = writeBackStack.peek()

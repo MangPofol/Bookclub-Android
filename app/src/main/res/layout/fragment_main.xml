@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.write.WriteInitFragment">
+    tools:context=".view.write.MainFragment">
 
     <ImageView
         android:id="@+id/hamburger_ib"
@@ -52,6 +52,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/go_my_info_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/go_my_info_iv"
+                app:layout_constraintEnd_toEndOf="@id/go_my_info_iv"
+                app:layout_constraintStart_toStartOf="@+id/go_my_info_iv"
+                app:layout_constraintTop_toTopOf="@+id/go_my_info_iv" />
 
             <ImageView
                 android:id="@+id/go_my_info_iv"
@@ -138,6 +147,15 @@
                 app:layout_constraintStart_toStartOf="@+id/reading_goal_view"
                 app:layout_constraintTop_toTopOf="@+id/reading_goal_view" />
 
+            <View
+                android:id="@+id/reading_goal_next_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/reading_goal_next_iv"
+                app:layout_constraintEnd_toEndOf="@id/reading_goal_next_iv"
+                app:layout_constraintStart_toStartOf="@+id/reading_goal_next_iv"
+                app:layout_constraintTop_toTopOf="@+id/reading_goal_next_iv" />
+
             <ImageView
                 android:id="@+id/reading_goal_next_iv"
                 android:layout_width="15dp"
@@ -202,6 +220,15 @@
                             app:layout_constraintStart_toStartOf="@+id/checklist_view"
                             app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
+                        <View
+                            android:id="@+id/checklist_setting_click_view"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/checklist_setting_iv"
+                            app:layout_constraintEnd_toEndOf="@id/checklist_setting_iv"
+                            app:layout_constraintStart_toStartOf="@+id/checklist_setting_iv"
+                            app:layout_constraintTop_toTopOf="@+id/checklist_setting_iv" />
+
                         <ImageView
                             android:id="@+id/checklist_setting_iv"
                             android:layout_width="12dp"
@@ -223,6 +250,15 @@
                             app:layout_constraintEnd_toStartOf="@+id/arrow_down_iv"
                             app:layout_constraintStart_toEndOf="@+id/checklist_setting_iv"
                             app:layout_constraintTop_toTopOf="@+id/checklist_view" />
+
+                        <View
+                            android:id="@+id/arrow_down_click_view"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/arrow_down_iv"
+                            app:layout_constraintEnd_toEndOf="@id/arrow_down_iv"
+                            app:layout_constraintStart_toStartOf="@+id/arrow_down_iv"
+                            app:layout_constraintTop_toTopOf="@+id/arrow_down_iv" />
 
                         <ImageView
                             android:id="@+id/arrow_down_iv"

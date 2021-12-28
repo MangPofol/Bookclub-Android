@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mangpo.bookclub.databinding.FragmentWriteInitBinding
 import com.mangpo.bookclub.view.SettingActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -16,6 +15,7 @@ import java.util.*
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.mangpo.bookclub.R
+import com.mangpo.bookclub.databinding.FragmentMainBinding
 import com.mangpo.bookclub.model.CheckListModel
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.BackStackManager
@@ -27,9 +27,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WriteInitFragment : Fragment() {
+class MainFragment : Fragment() {
 
-    private lateinit var binding: FragmentWriteInitBinding
+    private lateinit var binding: FragmentMainBinding
 
     private val postVm: PostViewModel by sharedViewModel()
     private val mainVm: MainViewModel by sharedViewModel()
@@ -54,7 +54,7 @@ class WriteInitFragment : Fragment() {
 
         Log.d("WriteInitFragment", "onCreateView")
 
-        binding = FragmentWriteInitBinding.inflate(layoutInflater, container, false)
+        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
         initAdapter()
         observe()
@@ -78,7 +78,7 @@ class WriteInitFragment : Fragment() {
         }
 
         //체크리스트의 arrow_down 이미지뷰 클릭 리스너
-        binding.arrowDownIv.setOnClickListener {
+        binding.arrowDownClickView.setOnClickListener {
             //체크리스트 목록 뷰가 열려 있으면 -> 닫기
             if (binding.checklistHiddenRv.visibility == View.VISIBLE) {
                 //체크리스트 고정뷰의 모든 코너를 둥글게
@@ -102,17 +102,17 @@ class WriteInitFragment : Fragment() {
         }
 
         //체크리스트 설정 이미지 클릭 리스너 -> ChecklistManagementActivity 화면으로 이동
-        binding.checklistSettingIv.setOnClickListener {
+        binding.checklistSettingClickView.setOnClickListener {
             (requireActivity() as MainActivity).goChecklistManagement()
         }
 
         //프로필 관리 화면으로 이동하는 이미지 클릭 리스너 -> MyInfoActivity 화면으로 이동
-        binding.goMyInfoIv.setOnClickListener {
+        binding.goMyInfoClickView.setOnClickListener {
             (requireActivity() as MainActivity).goMyInfo()
         }
 
         //독서 목표 관리 화면으로 이동하는 이미지 클릭 리스너 -> GoalManagementActivity 화면으로 이동
-        binding.readingGoalNextIv.setOnClickListener {
+        binding.readingGoalNextClickView.setOnClickListener {
             (requireActivity() as MainActivity).goGoalManagement()
         }
 

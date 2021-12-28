@@ -29,7 +29,7 @@ class WriteFrameFragment : Fragment() {
         //bundle 에 book 객체가 있으면 BookDescFragment 에서 온 거고 객체가 없으면 WritingSettingFragment 에서 온 것
         val bookStr = arguments?.getString("book")
         if (bookStr==null)
-            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, WriteInitFragment())
+            childFragmentManager.beginTransaction().replace(binding.frameLayout.id, MainFragment())
                 .addToBackStack(null).commitAllowingStateLoss()
         else {
             val bookObj = Gson().fromJson(bookStr, BookModel::class.java)
