@@ -49,19 +49,19 @@ class MyInfoActivity : AppCompatActivity() {
             cameraGalleryBottomSheetFragment.show(supportFragmentManager, null)
         }
 
-        binding.genreNextIv.setOnClickListener {
+        binding.genreNextClickView.setOnClickListener {
             goYourTaste()
         }
 
-        binding.styleNextIv.setOnClickListener {
+        binding.styleNextClickView.setOnClickListener {
             goYourTaste()
         }
 
-        binding.goalManagementIv.setOnClickListener {
+        binding.goalManagementClickView.setOnClickListener {
             goGoalManagement()
         }
 
-        binding.checklistManagementIv.setOnClickListener {
+        binding.checklistManagementClickView.setOnClickListener {
             goChecklistManagement()
         }
 

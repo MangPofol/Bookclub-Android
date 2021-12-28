@@ -210,6 +210,15 @@
 
             </com.google.android.material.chip.ChipGroup>
 
+            <View
+                android:id="@+id/genre_next_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/genre_next_iv"
+                app:layout_constraintEnd_toEndOf="@id/genre_next_iv"
+                app:layout_constraintStart_toStartOf="@+id/genre_next_iv"
+                app:layout_constraintTop_toTopOf="@+id/genre_next_iv" />
+
             <ImageView
                 android:id="@+id/genre_next_iv"
                 android:layout_width="7.2dp"
@@ -247,6 +256,15 @@
                 app:layout_constraintEnd_toStartOf="@+id/style_next_iv"
                 app:layout_constraintStart_toStartOf="@+id/style_view"
                 app:layout_constraintTop_toTopOf="@+id/style_view" />
+
+            <View
+                android:id="@+id/style_next_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/style_next_iv"
+                app:layout_constraintEnd_toEndOf="@id/style_next_iv"
+                app:layout_constraintStart_toStartOf="@+id/style_next_iv"
+                app:layout_constraintTop_toTopOf="@+id/style_next_iv" />
 
             <ImageView
                 android:id="@+id/style_next_iv"
@@ -308,6 +326,15 @@
                 app:layout_constraintStart_toStartOf="@+id/goal_management_view"
                 app:layout_constraintTop_toTopOf="@+id/goal_management_view" />
 
+            <View
+                android:id="@+id/goal_management_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/goal_management_iv"
+                app:layout_constraintEnd_toEndOf="@id/goal_management_iv"
+                app:layout_constraintStart_toStartOf="@+id/goal_management_iv"
+                app:layout_constraintTop_toTopOf="@+id/goal_management_iv" />
+
             <ImageView
                 android:id="@+id/goal_management_iv"
                 android:layout_width="7.2dp"
@@ -344,6 +371,15 @@
                 app:layout_constraintEnd_toStartOf="@+id/checklist_management_iv"
                 app:layout_constraintStart_toStartOf="@+id/checklist_management_view"
                 app:layout_constraintTop_toTopOf="@+id/checklist_management_view" />
+
+            <View
+                android:id="@+id/checklist_management_click_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@+id/checklist_management_iv"
+                app:layout_constraintEnd_toEndOf="@id/checklist_management_iv"
+                app:layout_constraintStart_toStartOf="@+id/checklist_management_iv"
+                app:layout_constraintTop_toTopOf="@+id/checklist_management_iv" />
 
             <ImageView
                 android:id="@+id/checklist_management_iv"
