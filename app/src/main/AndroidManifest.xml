@@ -48,7 +48,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.SettingActivity"
+            android:name=".view.setting.SettingActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -92,6 +92,10 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".view.setting.NoticeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

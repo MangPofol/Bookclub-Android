@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyLibraryBinding
-import com.mangpo.bookclub.view.SettingActivity
+import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.view.adapter.MyLibraryPagerAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel

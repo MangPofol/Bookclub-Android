@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mangpo.bookclub.view.SettingActivity
+import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat

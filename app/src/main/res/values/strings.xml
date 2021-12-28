@@ -135,7 +135,6 @@
 
     <!-- SettingActivity -->
     <string name="setting">설정</string>
-    <string name="notice">공지사항</string>
     <string name="question">1:1 문의 / 요청</string>
     <string name="terms_conditions">이용약관</string>
     <string name="version">버전 1.0.0</string>
@@ -172,4 +171,7 @@
     <string name="new_password">새로운 비밀번호</string>
     <string name="reenter_new_password">새로운 비밀번호 재입력</string>
     <string name="password_condition">영문, 숫자, 특수문자 중 2개 조합 10자 이상</string>
+
+    <!-- SettingActivity, NoticeActivity -->
+    <string name="notice">공지사항</string>
 </resources>

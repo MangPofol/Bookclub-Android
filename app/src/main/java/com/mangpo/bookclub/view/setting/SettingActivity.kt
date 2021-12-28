@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view
+package com.mangpo.bookclub.view.setting
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.view.my_info.ResettingPasswordActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -40,6 +41,11 @@ class SettingActivity : AppCompatActivity() {
             val intent = Intent(this, ResettingPasswordActivity::class.java)
             intent.putExtra("user", userJson)
             startActivity(intent)
+        }
+
+        //NoticeActivity 화면으로 이동
+        binding.noticeNextView.setOnClickListener {
+            startActivity(Intent(this@SettingActivity, NoticeActivity::class.java))
         }
 
         binding.backIv.setOnClickListener {
