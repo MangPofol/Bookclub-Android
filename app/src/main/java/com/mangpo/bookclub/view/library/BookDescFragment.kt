@@ -63,7 +63,7 @@ class BookDescFragment : Fragment() {
 
         binding.readCompleteView.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                if (book.category == "AFTER") {
+                if (book.category == "AFTER") { //완독 -> 읽는중으로 변경
                     val result = CoroutineScope(Dispatchers.IO).async {
                         bookVm.updateBook(book.id!!, "NOW")
                     }
@@ -82,7 +82,7 @@ class BookDescFragment : Fragment() {
                         Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
                             .show()
                     }
-                } else {
+                } else {    //읽는중 -> 완독으로 변경
                     val result = CoroutineScope(Dispatchers.IO).async {
                         bookVm.updateBook(book.id!!, "AFTER")
                     }

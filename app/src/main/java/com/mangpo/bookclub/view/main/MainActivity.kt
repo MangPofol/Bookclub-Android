@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
     }
 
-    private fun initBookList() {
+    fun initBookList() {
         CoroutineScope(Dispatchers.Main).launch {
             bookVm.requestBookList(user.email!!, "NOW")
             bookVm.requestBookList(user.email!!, "AFTER")

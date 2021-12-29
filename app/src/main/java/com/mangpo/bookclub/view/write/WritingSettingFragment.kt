@@ -173,6 +173,11 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             loadingDialogFragment.dismiss()
 
             if (postDetail != null) {
+                if (book.category == "BEFORE") {  //책 카테고리가 "읽고 싶은" 이면 "읽는 중" 으로 변경하기
+                    bookVm.updateBook(book.id!!, "NOW")
+                    (requireActivity() as MainActivity).initBookList()
+                }
+
                 postVm.setPostDetail(postDetail)
                 (requireActivity() as MainActivity).moveToPostDetail(book)
             } else {
@@ -245,7 +250,11 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                     finalImgList.addAll(path.await()!!)
                 else {
                     loadingDialogFragment.dismiss()
-                    Toast.makeText(requireContext(), "이미지 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        "이미지 업로드 중 오류 발생. 다시 시도해 주세요.",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
