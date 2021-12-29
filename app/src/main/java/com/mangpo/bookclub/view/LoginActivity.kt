@@ -42,6 +42,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        //비밀번호 찾기 클릭 리스너
+        binding.loginFindPasswordClickView.setOnClickListener {
+            Toast.makeText(baseContext, "개발 중인 기능입니다.", Toast.LENGTH_SHORT).show()
+        }
+
         binding.loginBtn.outlineProvider = null //로그인 버튼 그림자 제거
 
         binding.loginBtn.setOnClickListener {   //로그인 버튼 클릭 이벤트 리스너

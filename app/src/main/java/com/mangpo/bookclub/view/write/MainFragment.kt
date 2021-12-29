@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMainBinding
 import com.mangpo.bookclub.model.CheckListModel
 import com.mangpo.bookclub.model.UserModel
@@ -73,7 +71,8 @@ class MainFragment : Fragment() {
 
         //체크리스트의 arrow_down 이미지뷰 클릭 리스너
         binding.arrowDownClickView.setOnClickListener {
-            //체크리스트 목록 뷰가 열려 있으면 -> 닫기
+            Toast.makeText(requireContext(), "개발 중인 기능입니다.", Toast.LENGTH_SHORT).show()
+            /*//체크리스트 목록 뷰가 열려 있으면 -> 닫기
             if (binding.checklistHiddenRv.visibility == View.VISIBLE) {
                 //체크리스트 고정뷰의 모든 코너를 둥글게
                 binding.checklistView.setBackgroundResource(R.drawable.grey13_round_view)
@@ -92,7 +91,7 @@ class MainFragment : Fragment() {
                     AutoTransition()
                 )
                 binding.checklistHiddenRv.visibility = View.VISIBLE
-            }
+            }*/
         }
 
         //체크리스트 설정 이미지 클릭 리스너 -> ChecklistManagementActivity 화면으로 이동
