@@ -17,7 +17,7 @@ import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class PostDetailFragment : Fragment() {
 
@@ -250,15 +250,20 @@ class PostDetailFragment : Fragment() {
     private fun goPhotoViewActivity(position: Int) {
         isInit = false
 
+        //수정 후 사진 하나일 때 형변환 에러 해결을 위해
+        var postImgLocations =
+            if (postVm.getPostDetail()!!.postImgLocations.javaClass.toString() == "class java.util.Collections\$SingletonList")
+                arrayListOf(postVm.getPostDetail()!!.postImgLocations[0])
+            else
+                postVm.getPostDetail()!!.postImgLocations as ArrayList<String>
+
         val intent: Intent = Intent(requireContext(), PhotoViewActivity::class.java)
         intent.putStringArrayListExtra(
             "imgs",
-            postVm.getPostDetail()!!.postImgLocations as ArrayList<String>
+            postImgLocations
         )
         intent.putExtra("currentItem", position)
         startActivity(intent)
-
-        (requireActivity() as MainActivity).setLatestFragment("PostDetail")
     }
 
 }

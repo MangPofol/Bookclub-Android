@@ -16,12 +16,10 @@ import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.library.BookDescFragment
-import com.mangpo.bookclub.view.library.LibraryInitFragment
 import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
 import com.mangpo.bookclub.view.my_info.GoalManagementActivity
 import com.mangpo.bookclub.view.my_info.MyInfoActivity
 import com.mangpo.bookclub.view.write.PostDetailFragment
-import com.mangpo.bookclub.view.write.WriteFrameFragment
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.*
@@ -31,10 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var user: UserModel
 
-    private val writeFrameFragment: WriteFrameFragment = WriteFrameFragment()
-    private val libraryInitFragment: LibraryInitFragment = LibraryInitFragment()
-
-    private var latestFragment: String = ""
     private var isMenuItemSelectListenerEnable: Boolean =
         false  //bottom navigation menu select 이벤트 리스너를 실행할건지 체크하기 위한 변수
 
@@ -65,9 +59,6 @@ class MainActivity : AppCompatActivity() {
                         val fragment = BackStackManager.switchFragment(0)
                         transaction.replace(binding.frameLayout.id, fragment)
                             .commitAllowingStateLoss()
-
-                        if (bookBundle.getString("book") == null)
-                            writeFrameFragment.arguments = bookBundle
                     }
                     R.id.library -> {
                         val fragment = BackStackManager.switchFragment(1)
@@ -111,9 +102,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         //pop 이후에 fragment 가 null 이 되는 경우가 발생 -> 그럴 땐 종료하면 됨.
-        if (fragment == null)
+        if (fragment == null) {
+            BackStackManager.clear()
             finishAffinity()
-        else {
+        } else {
             supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment)
                 .commitAllowingStateLoss()
             changeBottomNavigation(BackStackManager.getMenu())
@@ -151,10 +143,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getEmail(): String = user.email!!
-
-    fun setLatestFragment(name: String) {
-        latestFragment = name
-    }
 
     fun moveToBookDesc(book: BookModel) {
         val fragment = BookDescFragment().apply {

@@ -62,10 +62,23 @@ class BookRepository(
             val hm: HashMap<String, Any> = hashMapOf()
 
             if (result.isSuccessful) {
-                val locationSplit = result.headers()["Location"]!!.split('/')
-                book.id = locationSplit[locationSplit.size-1].toLong()
+//                val locationSplit = result.headers()["Location"]!!.split('/')
+//                book.id = locationSplit[locationSplit.size-1].toLong()
                 hm["code"] = result.code()
-                hm["book"] = book
+
+                when (result.code()) {
+                    201 -> {
+                        val body = result.body()!!
+                        body.imgPath = book.imgPath
+                        hm["book"] = body
+                    }
+                    else -> {
+                        Log.e(
+                            "BookRepository",
+                            "createBook 에러\ncode: ${result.code()}, message: ${result.body().toString()}"
+                        )
+                    }
+                }
             } else {
                 Log.e(
                     "BookRepository",

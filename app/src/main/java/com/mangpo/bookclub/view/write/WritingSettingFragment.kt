@@ -68,8 +68,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             loadingDialogFragment.show(requireActivity().supportFragmentManager, null)
             addRecordData() //기록 데이터 저장하는 함수 호출
 
-            Log.d("WritingSettingFragment", "addRecordData -> $post")
-
             if (post.postImgLocations.isEmpty()) {    //이미지가 없는 경우
                 if (post.bookId == null)
                     createBook()
@@ -131,6 +129,11 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     override fun onDetach() {
         super.onDetach()
         Log.d("WritingSettingFragment", "onDetach")
+
+        //데이터 초기화
+        bookVm.setBook(BookModel())
+        postVm.setPost(PostModel())
+        postVm.setImgUriList(listOf())
     }
 
     private fun initUI(post: PostModel) {
@@ -156,36 +159,23 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                     createPost(post)  //기록 추가 함수 호출
             } else if (code.await() == 400) {
                 Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStackImmediate()
             } else {
                 Toast.makeText(requireContext(), "책 등록 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStackImmediate()
             }
         }
     }
 
     //기록 추가 함수
     private fun createPost(post: PostModel) {
-        Log.d("WritingSettingFragment", "createPost")
         CoroutineScope(Dispatchers.Main).launch {
             val postDetail = postVm.createPost(post)
 
             loadingDialogFragment.dismiss()
 
             if (postDetail != null) {
-                Log.d("WritingSettingFragment", "CreatePost is success!\npostDetail: $postDetail")
-
                 postVm.setPostDetail(postDetail)
-                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(
-                    post.bookId,
-                    book.name
-                )
-
-                bookVm.setBook(BookModel())
-                postVm.setPost(PostModel())
-                postVm.setImgUriList(listOf())
+                (requireActivity() as MainActivity).moveToPostDetail(book)
             } else {
-                Log.d("WritingSettingFragment", "CreatePost is fail!")
                 Toast.makeText(requireContext(), "게시글 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -193,25 +183,17 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     }
 
     private fun updatePost(post: PostModel) {
-        Log.d("WritingSettingFragment", "updatePost")
         CoroutineScope(Dispatchers.Main).launch {
-            val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.id, post)
+            val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.postId, post)
 
             loadingDialogFragment.dismiss()
 
             if (isUpdate) {
-                Log.d("WritingSettingFragment", "updatePost -> Success")
                 setPostDetail()
-                (requireParentFragment() as WriteFrameFragment).moveToPostDetail(
-                    post.bookId,
-                    book.name
-                )
-
-                bookVm.setBook(BookModel())
-                postVm.setPost(PostModel())
-                postVm.setImgUriList(listOf())
+                (requireActivity() as MainActivity).moveToPostDetail(book)
             } else
-                Log.d("WritingSettingFragment", "updatePost -> Fail")
+                Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                    .show()
         }
     }
 
@@ -233,8 +215,9 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 else
                     createPost(post)  //post 의 bookId 가 존재하면 기록 추가
             } else {
-                Log.d("WritingSettingFragment", "uploadImg error!")
-
+                loadingDialogFragment.dismiss()
+                Toast.makeText(requireContext(), "이미지 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -260,15 +243,18 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
                 if (path.await() != null)
                     finalImgList.addAll(path.await()!!)
-                else
-                    Log.d("WritingSettingFragment", "uploadMultiImg error!")
+                else {
+                    loadingDialogFragment.dismiss()
+                    Toast.makeText(requireContext(), "이미지 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
             post.postImgLocations = finalImgList
 
             when {
                 post.bookId == null -> createBook()    //post 의 bookId 가 존재하지 않으면 책 등록부터 하기
-                isUpdate -> updatePost(post)
+                isUpdate -> updatePost(post)    //isUpdate 가 True 이면 기록 수정
                 else -> createPost(post)    //post 의 bookId 가 존재하면 기록 추가
             }
         }
@@ -302,7 +288,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     }
 
     private fun uriToBitmap(uri: Uri): Bitmap {
-        Log.d("WritingSettingFragment", "uriToBitmap -> $uri")
         val bitmap = if (Build.VERSION.SDK_INT < 28) {
             MediaStore.Images.Media.getBitmap(
                 requireActivity().contentResolver,
@@ -333,17 +318,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         return file.absolutePath
     }
 
-    private fun observe() {
-        //BookViewModel book observer
-        bookVm.book.observe(viewLifecycleOwner, Observer {
-            book = it
-        })
-
-        postVm.post.observe(viewLifecycleOwner, Observer {
-            post = it
-        })
-    }
-
     private fun setPostDetail() {
         val postDetail: PostDetailModel = postVm.getPostDetail()!!
         postDetail.scope = post.scope!!
@@ -357,6 +331,16 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         postDetail.postImgLocations = post.postImgLocations
 
         postVm.setPostDetail(postDetail)
+    }
+
+    private fun observe() {
+        bookVm.book.observe(viewLifecycleOwner, Observer {
+            book = it
+        })
+
+        postVm.post.observe(viewLifecycleOwner, Observer {
+            post = it
+        })
     }
 
 }

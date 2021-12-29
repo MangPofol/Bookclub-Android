@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
-import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
@@ -132,12 +131,6 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
     override fun onDetach() {
         super.onDetach()
         Log.d("RecordFragment", "onDetach")
-
-        //Detach 되면 데이터 초기화
-        isUpdate = false
-        bookVm.setBook(BookModel())
-        postVm.setPost(PostModel())
-        postVm.setImgUriList(listOf())
     }
 
     private fun observe() {

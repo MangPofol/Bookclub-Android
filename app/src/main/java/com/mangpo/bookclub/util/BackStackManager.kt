@@ -104,4 +104,12 @@ object BackStackManager {
     }
 
     fun getMenu(): Int = menuIdx!!
+
+    fun clear() {
+        mainBackStack.clear()
+        writeBackStack.clear()
+        libraryBackStack.clear()
+        clubBackStack.clear()
+        menuIdx = null
+    }
 }

@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,21 +26,12 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
-    private lateinit var callback: OnBackPressedCallback
 
     private val bookVm: BookViewModel by sharedViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d("SelectFragment", "onAttach")
-
-        //뒤로가기 콜백: 기록하기 화면으로 전환.
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                parentFragmentManager.popBackStackImmediate()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,8 +109,6 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     override fun onDetach() {
         super.onDetach()
         Log.d("SelectFragment", "onDetach")
-
-        callback.remove()
     }
 
     override fun onClick(position: Int) {
@@ -229,7 +217,6 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
         bookVm.beforeBooks.observe(viewLifecycleOwner, Observer {
             if (viewLifecycleOwner.lifecycle.currentState == Lifecycle.State.RESUMED) {
-                //(activity as MainActivity).moveBottomPager(1)
                 bookVm.setReadType("BEFORE")
             }
         })

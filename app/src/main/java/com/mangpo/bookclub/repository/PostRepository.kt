@@ -51,7 +51,7 @@ class PostRepository(private val postService: PostService) {
         return if (response.isSuccessful) {
             response.body()!!
         } else {
-            Log.d(
+            Log.e(
                 "PostRepository",
                 "uploadImgFile 실패\ncode: ${response.code()}\nerror: ${response.message()}"
             )

@@ -5,10 +5,9 @@ data class AllPostModel(
 )
 
 data class PostDetailModel(
-    var id: Long,
+    var postId: Long,
     var scope: String,
     var isIncomplete: Boolean,
-    var imgLocation: String?,
     var title: String,
     var content: String,
     var createdDate: String,
