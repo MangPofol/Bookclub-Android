@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.*
@@ -65,7 +66,8 @@ class LoginActivity : AppCompatActivity() {
                             AccountSharedPreference.setJWT(this@LoginActivity, token)
                             mainVm.getUser()
                         } else {
-                            Toast.makeText(baseContext, "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(baseContext, "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
@@ -96,11 +98,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observe() {
         mainVm.user.observe(this, Observer {
+            BackStackManager.clear()
+
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             val userStr = Gson().toJson(it)
             intent.putExtra("user", userStr)
             startActivity(intent)
-            finish()
         })
     }
 
