@@ -3,7 +3,7 @@ package com.mangpo.bookclub.util
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.mangpo.bookclub.view.bookclub.BookClubFragment
-import com.mangpo.bookclub.view.library.LibraryInitFragment
+import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.view.write.MainFragment
 import java.util.*
 
@@ -29,7 +29,7 @@ object BackStackManager {
             }
             1 -> {
                 if (libraryBackStack.isEmpty()) {
-                    fragment = LibraryInitFragment()
+                    fragment = MyLibraryFragment()
                     libraryBackStack.push(fragment)
                 } else {
                     fragment = libraryBackStack.peek()

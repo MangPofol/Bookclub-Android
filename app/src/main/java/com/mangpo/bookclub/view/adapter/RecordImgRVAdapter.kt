@@ -37,8 +37,6 @@ class RecordImgRVAdapter() :
     }
 
     override fun onBindViewHolder(holder: RecordImgRVAdapter.RecordImgHolder, position: Int) {
-        val stream = ByteArrayOutputStream()
-
         holder.iv.clipToOutline = true
         Glide.with(binding.root.context.applicationContext).load(pictures[position]).into(holder.iv)
 

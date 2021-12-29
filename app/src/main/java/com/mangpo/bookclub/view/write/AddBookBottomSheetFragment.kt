@@ -14,11 +14,6 @@ class AddBookBottomSheetFragment(val callback: (String) -> Unit) : BottomSheetDi
 
     private var readType: String = "NOW"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

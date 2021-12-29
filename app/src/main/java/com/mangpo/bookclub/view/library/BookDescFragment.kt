@@ -154,6 +154,7 @@ class BookDescFragment : Fragment() {
         postAdapter.setMyItemClickListener(object : PostAdapter.MyItemClickListener {
             override fun goPostDetail(post: PostDetailModel) {
                 postVm.setPostDetail(post)
+                BackStackManager.pushFragment(1, this@BookDescFragment)
                 (requireActivity() as MainActivity).moveToPostDetail(book)
                 (requireActivity() as MainActivity).changeBottomNavigation(0)
             }

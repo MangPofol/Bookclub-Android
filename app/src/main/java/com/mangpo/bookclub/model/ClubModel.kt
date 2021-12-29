@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.model
 
+//베타 버전 출시 후 사용
 data class ClubModel(
     var id: Long? = null,
     var name: String = "",

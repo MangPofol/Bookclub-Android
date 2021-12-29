@@ -3,7 +3,6 @@ package com.mangpo.bookclub.view.book_profile
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +23,6 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
         profileImgUrl = it[0]
 
         updateProfileImg()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -72,6 +66,11 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
         Glide.with(requireActivity().applicationContext).load(profileImgUrl).circleCrop().into(binding.profileIv)
         binding.plusIv.setImageResource(R.drawable.setting_icon_white)
         isProfileImgSetting = true
+
+        if (binding.nicknameEt.text.isBlank())   //닉네임 입력창이 비어있으면 다음 버튼 비활성화
+            (activity as BookProfileInitActivity).unEnableNextBtn()
+        else    //닉네임 입력창이 비어있지 않으면 다음 버튼 활성화
+            (activity as BookProfileInitActivity).enableNextBtn()
     }
 
     fun getNickname():String = binding.nicknameEt.text.toString()

@@ -24,13 +24,14 @@ class BookListFragment : Fragment(), OnItemClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.d("BookListFragment", "onCreate")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("BookListFragment", "onCreateView")
         binding = FragmentBookListBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
         binding.bookListRecyclerView.adapter = bookAdapter    //어댑터 설정
@@ -43,6 +44,7 @@ class BookListFragment : Fragment(), OnItemClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("BookListFragment", "onViewCreated")
     }
 
     override fun onDetach() {

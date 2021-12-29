@@ -1,7 +1,6 @@
 package com.mangpo.bookclub.repository
 
 import com.mangpo.bookclub.model.KakaoDocumentsModel
-import com.mangpo.bookclub.service.ApiClient
 import com.mangpo.bookclub.service.KakaoBookService
 
 class KakaoBookRepository(private val kakaoBookService: KakaoBookService) {

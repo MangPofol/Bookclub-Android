@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentHotMemoTopicBinding
 
+//베타 버전 출시 후 사용
 class HotMemoTopicFragment(val type: String) : Fragment() {
     private val hotMemo: ArrayList<String> = arrayListOf("메모 제목", "메모 제목", "메모 제목")
     private val hotMemoBook: ArrayList<String> = arrayListOf("나미야 잡화점의 기적", "나미야 잡화점의 기적", "나미야 잡화점의 기적")

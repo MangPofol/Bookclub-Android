@@ -7,14 +7,14 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 
-class MyApplication: Application() {
+class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
         instance = this
 
-        startKoin{
+        startKoin {
             androidLogger(if (BuildConfig.DEBUG) org.koin.core.logger.Level.ERROR else org.koin.core.logger.Level.NONE)
             androidContext(applicationContext)
             modules(ViewModelModule)

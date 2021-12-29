@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +15,6 @@ import com.mangpo.bookclub.databinding.FragmentReadingStyleBinding
 class ReadingStyleFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentReadingStyleBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +29,6 @@ class ReadingStyleFragment : Fragment(), TextWatcher {
         binding.styleRg.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.style_rb1, R.id.style_rb2, R.id.style_rb3 -> {
-                    Log.d("ReadingStyleFragment", "라디오버튼 선택")
-
                     binding.styleEt.setText("")
                     binding.styleEt.clearFocus()
 
@@ -62,7 +54,6 @@ class ReadingStyleFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        Log.d("ReadingStyleFragment", "onTextChanged length: ${s?.length}")
         if (s?.length != 0) {
             binding.styleRb4.isChecked = true
         }

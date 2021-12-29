@@ -136,7 +136,7 @@
 
     <!-- SettingActivity -->
     <string name="setting">설정</string>
-    <string name="version">버전 1.0.0</string>
+    <string name="version">버전 0.0.1</string>
     <string name="logout">로그아웃</string>
     <string name="quit_membership">계정 탈퇴하기</string>
 

@@ -24,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class MyLibraryFragment : Fragment(), TextWatcher {
     private lateinit var binding: FragmentMyLibraryBinding
     private lateinit var myLibraryPagerAdapter: MyLibraryPagerAdapter
-    //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter
+    //private lateinit var bookClubFilterAdapter: BookClubFilterAdapter //베타 버전 출시 후 사용
 
     private val bookVm: BookViewModel by sharedViewModel()
     private val fragments: List<BookListFragment> =
@@ -32,12 +32,14 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyLibraryFragment", "onCreate")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("MyLibraryFragment", "onCreateView")
         binding = FragmentMyLibraryBinding.inflate(inflater, container, false)  //뷰바인딩 초기화
 
         myLibraryPagerAdapter = MyLibraryPagerAdapter(context as FragmentActivity, fragments)
@@ -94,7 +96,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
             }
         }
 
-        //main 북클럽 필터 버튼 클릭 리스너
+        //main 북클럽 필터 버튼 클릭 리스너 //베타 버전 출시 후 사용
         /*binding.clubButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.searchButton.isChecked = false
@@ -172,6 +174,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("MyLibraryFragment", "onViewCreated")
 
         TabLayoutMediator(binding.readTypeTabLayout, binding.viewPager) { tab, position ->
             when (position) {
@@ -198,6 +201,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
     override fun afterTextChanged(s: Editable?) {
     }
 
+    //베타 버전 출시 후 사용
     /*private fun setVisibilityClubButton(visibility: Int) {
         binding.clubButton.visibility = visibility
     }*/

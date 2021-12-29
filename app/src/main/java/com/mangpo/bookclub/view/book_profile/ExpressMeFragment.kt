@@ -7,17 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentExpressMeBinding
 
 class ExpressMeFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentExpressMeBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +31,7 @@ class ExpressMeFragment : Fragment(), TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (count==0)
+        if (count == 0)
             (activity as BookProfileInitActivity).unEnableNextBtn()
         else
             (activity as BookProfileInitActivity).enableNextBtn()

@@ -93,9 +93,4 @@ class BookAdapter() :
         notifyDataSetChanged()
         type = "library"
     }
-
-    fun setBooksClear() {
-        books.clear()
-        notifyDataSetChanged()
-    }
 }

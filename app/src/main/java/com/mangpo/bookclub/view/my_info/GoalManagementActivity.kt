@@ -2,6 +2,7 @@ package com.mangpo.bookclub.view.my_info
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ class GoalManagementActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("GoalManagementActivity", "onCreate")
 
         binding = ActivityGoalManagementBinding.inflate(layoutInflater)
         setContentView(binding.root)

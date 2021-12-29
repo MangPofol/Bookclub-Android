@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyBookClubListBinding
 import com.mangpo.bookclub.view.bookclub.CreateClubActivity
 
+//베타 버전 출시 후 사용
 class MyBookClubListFragment : Fragment() {
 
     private lateinit var binding: FragmentMyBookClubListBinding

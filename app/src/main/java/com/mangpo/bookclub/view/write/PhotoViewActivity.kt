@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.write
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.mangpo.bookclub.databinding.ActivityPhotoViewBinding
 import com.mangpo.bookclub.view.adapter.PhotoViewPagerAdapter
 

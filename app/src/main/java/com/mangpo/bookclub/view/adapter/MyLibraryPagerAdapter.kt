@@ -5,7 +5,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.mangpo.bookclub.view.library.BookListFragment
 
-class MyLibraryPagerAdapter(fa: FragmentActivity, val fragments: List<BookListFragment>): FragmentStateAdapter(fa) {
+class MyLibraryPagerAdapter(fa: FragmentActivity, private val fragments: List<BookListFragment>) :
+    FragmentStateAdapter(fa) {
     private val NUM_PAGES = 3
 
     override fun getItemCount(): Int {

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mangpo.bookclub.databinding.ItemOpenSourceBinding
 import com.mangpo.bookclub.model.OpenSourceModel
 import android.view.View.OnTouchListener
-import android.widget.ScrollView
 
 class OpenSourceRVAdapter() : RecyclerView.Adapter<OpenSourceRVAdapter.OpenSourceHolder>() {
     private lateinit var binding: ItemOpenSourceBinding

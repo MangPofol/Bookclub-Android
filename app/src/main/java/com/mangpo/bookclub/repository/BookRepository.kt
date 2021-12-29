@@ -62,8 +62,6 @@ class BookRepository(
             val hm: HashMap<String, Any> = hashMapOf()
 
             if (result.isSuccessful) {
-//                val locationSplit = result.headers()["Location"]!!.split('/')
-//                book.id = locationSplit[locationSplit.size-1].toLong()
                 hm["code"] = result.code()
 
                 when (result.code()) {
@@ -75,7 +73,9 @@ class BookRepository(
                     else -> {
                         Log.e(
                             "BookRepository",
-                            "createBook 에러\ncode: ${result.code()}, message: ${result.body().toString()}"
+                            "createBook 에러\ncode: ${result.code()}, message: ${
+                                result.body().toString()
+                            }"
                         )
                     }
                 }
@@ -102,7 +102,10 @@ class BookRepository(
         return if (result.isSuccessful) {
             true
         } else {
-            Log.e("BookRepository", "updateBook error!\n code: ${result.code()}\nerror message: ${result.message()}")
+            Log.e(
+                "BookRepository",
+                "updateBook error!\n code: ${result.code()}\nerror message: ${result.message()}"
+            )
             false
         }
     }

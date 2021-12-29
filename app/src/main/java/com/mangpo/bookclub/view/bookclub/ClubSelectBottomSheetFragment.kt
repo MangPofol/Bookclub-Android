@@ -15,6 +15,7 @@ import com.mangpo.bookclub.view.adapter.ClubAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 
+//베타 버전 출시 후 사용
 class ClubSelectBottomSheetFragment : BottomSheetDialogFragment(), OnItemClick {
     private lateinit var binding: FragmentClubSelectBottomSheetBinding
     private lateinit var clubAdapter: ClubAdapter

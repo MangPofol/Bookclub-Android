@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mangpo.bookclub.databinding.ClubFilterItemBinding
 import com.mangpo.bookclub.model.ClubModel
 
+//베타 버전 출시 후 사용
 class BookClubFilterAdapter(clubs: List<ClubModel>) :
     RecyclerView.Adapter<BookClubFilterAdapter.BookClubFilterViewHolder>() {
     private lateinit var binding: ClubFilterItemBinding

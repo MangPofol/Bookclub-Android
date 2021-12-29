@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import com.mangpo.bookclub.model.ClubModel
 import com.mangpo.bookclub.view.bookclub.CreateClubActivity
 
+//베타 버전 출시 후 사용
 class CreateClubContract : ActivityResultContract<Any, ClubModel>() {
     override fun createIntent(context: Context, input: Any?): Intent {
 

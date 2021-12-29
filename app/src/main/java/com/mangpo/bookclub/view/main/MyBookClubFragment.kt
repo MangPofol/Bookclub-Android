@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.mangpo.bookclub.databinding.FragmentMyBookClubBinding
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 
+//베타 버전 출시 후 사용
 class MyBookClubFragment : Fragment() {
 
     private lateinit var binding: FragmentMyBookClubBinding

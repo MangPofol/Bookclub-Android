@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -40,20 +39,6 @@ class ChecklistContentRVAdapter() :
         holder.checkIv.setOnClickListener {
             myChecklistContentRVAdapterListener.completeChecklist(position, checklist[position])
         }
-        /*holder.checklistEt.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (checklist[position].content==null) {
-                    myChecklistContentRVAdapterListener.addChecklist(position, s.toString())
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-        })*/
     }
 
     override fun getItemCount(): Int = 5    //무조건 5개로 고정
@@ -64,7 +49,6 @@ class ChecklistContentRVAdapter() :
     }
 
     fun setChecklist(checklist: ArrayList<CheckListModel>) {
-        Log.d("ChecklistContentRVAdapter", "$checklist")
         while (checklist.size < 5) {
             checklist.add(CheckListModel())
         }

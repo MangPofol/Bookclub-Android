@@ -8,7 +8,8 @@ import com.bumptech.glide.Glide
 import com.mangpo.bookclub.databinding.ItemPhotoViewBinding
 import java.util.ArrayList
 
-class PhotoViewPagerAdapter(private val photos: ArrayList<String>): RecyclerView.Adapter<PhotoViewPagerAdapter.PagerViewHolder>() {
+class PhotoViewPagerAdapter(private val photos: ArrayList<String>) :
+    RecyclerView.Adapter<PhotoViewPagerAdapter.PagerViewHolder>() {
 
     private lateinit var binding: ItemPhotoViewBinding
 
@@ -22,12 +23,14 @@ class PhotoViewPagerAdapter(private val photos: ArrayList<String>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: PhotoViewPagerAdapter.PagerViewHolder, position: Int) {
-        Glide.with(binding.root.context.applicationContext).load(photos[position]).into(holder.postImg)
+        Glide.with(binding.root.context.applicationContext).load(photos[position])
+            .into(holder.postImg)
     }
 
     override fun getItemCount(): Int = photos.size
 
-    inner class PagerViewHolder(itemView: ItemPhotoViewBinding): RecyclerView.ViewHolder(itemView.root) {
+    inner class PagerViewHolder(itemView: ItemPhotoViewBinding) :
+        RecyclerView.ViewHolder(itemView.root) {
         val postImg: ImageView = itemView.postIv
     }
 

@@ -38,13 +38,7 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("WriteInitFragment", "onCreate")
-    }
-
-    private fun getTotalPostCnt() {
-        CoroutineScope(Dispatchers.Main).launch {
-            postVm.getTotalPostCnt()
-        }
+        Log.d("MainFragment", "onCreate")
     }
 
     override fun onCreateView(
@@ -52,7 +46,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Log.d("WriteInitFragment", "onCreateView")
+        Log.d("MainFragment", "onCreateView")
 
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
@@ -121,7 +115,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("WriteInitFragment", "onResume")
+        Log.d("MainFragment", "onResume")
 
         getUser()
         getTotalPostCnt()
@@ -129,7 +123,13 @@ class MainFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("WriteInitFragment", "onDetach")
+        Log.d("MainFragment", "onDetach")
+    }
+
+    private fun getTotalPostCnt() {
+        CoroutineScope(Dispatchers.Main).launch {
+            postVm.getTotalPostCnt()
+        }
     }
 
     private fun initAdapter() {
@@ -162,7 +162,6 @@ class MainFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             val checklist = CheckListModel(content = content, isComplete = false)
             checklistVm.createChecklist(checklist)
-//            checklistContentAdapter.notifyItemRangeChanged(position, 1)
         }
     }
 
@@ -198,7 +197,7 @@ class MainFragment : Fragment() {
 
     private fun observe() {
         checklistVm.unCompletedChecklists.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.d("WriteInitFragment", "checklists observe!! -> $it")
+            Log.d("MainFragment", "checklists observe!! -> $it")
 
             checklistContentAdapter.setChecklist(it)
             checklistContentAdapter.notifyDataSetChanged()
@@ -206,12 +205,12 @@ class MainFragment : Fragment() {
         })
 
         mainVm.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.d("WriteInitFragment", "user observe!! -> $it")
+            Log.d("MainFragment", "user observe!! -> $it")
             setUI(it)
         })
 
         postVm.totalCnt.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.d("WriteInitFragment", "totalCnt observe!! -> $it")
+            Log.d("MainFragment", "totalCnt observe!! -> $it")
             setTotalPostCntUI(it)
         })
     }

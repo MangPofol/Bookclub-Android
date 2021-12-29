@@ -22,6 +22,7 @@ class ChecklistManagementActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ChecklistManagementActivity", "onCreate")
         binding = ActivityChecklistManagementBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

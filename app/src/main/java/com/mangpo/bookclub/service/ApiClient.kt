@@ -22,6 +22,7 @@ object ApiClient {
         BaseService.getClient(BASE_URL).create(ChecklistService::class.java)
     }
 
+    //베타 버전 출시 후 사용
     val clubService: ClubService by lazy {
         BaseService.getClient(BASE_URL).create(ClubService::class.java)
     }

@@ -1,9 +1,6 @@
 package com.mangpo.bookclub.model
 
-/*"userNickname": "rabbit",
-"content": "this is content2.",
-"createdDate": "2021-08-31T15:37:21",
-"modifiedDate": "2021-08-31T15:37:21"*/
+//베타 버전 출시 후 사용
 data class CommentModel(
     val userNickname: String = "",
     val content: String = "",

@@ -10,8 +10,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
-
-    private val _loginCode = MutableLiveData<Int>()
     private val _emailAlertVisibility = MutableLiveData<Int>()
     private val _logoutCode = MutableLiveData<Int>()
     private val _user = MutableLiveData<UserModel>()
@@ -20,7 +18,6 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
     private var _newUser = UserModel()
 
-    val loginCode: LiveData<Int> get() = _loginCode
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
     val logoutCode: LiveData<Int> get() = _logoutCode
     val user: LiveData<UserModel> get() = _user
@@ -60,7 +57,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             val user = repository.getUser()
 
-            if (user!=null)
+            if (user != null)
                 _user.value = user!!
             else
                 _user.value = UserModel()

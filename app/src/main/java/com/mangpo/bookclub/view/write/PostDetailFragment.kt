@@ -113,6 +113,8 @@ class PostDetailFragment : Fragment() {
 
         binding.locationTv.text = post.location
         binding.clockTv.text = post.readTime
+
+        //베타 버전 출시 후 사용
         /*binding.likeCntTv.text = post.likedList.size.toString()
         binding.commentCntTv.text = post.commentsDto.size.toString()*/
     }

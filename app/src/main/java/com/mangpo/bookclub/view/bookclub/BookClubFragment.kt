@@ -22,6 +22,7 @@ import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 import kotlinx.coroutines.*
 
+//베타 버전 출시 후 사용
 class BookClubFragment : Fragment(), TextWatcher {
     private lateinit var binding: FragmentBookClubBinding
     private lateinit var bottomSheet: ClubSelectBottomSheetFragment

@@ -1,7 +1,6 @@
 package com.mangpo.bookclub.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -59,10 +58,7 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     suspend fun updatePost(postId: Long, post: PostModel): Boolean {
 
         val isUpdate = viewModelScope.async {
-            val code = repository.updatePost(postId, post!!)
-
-            Log.d("PostViewModel", "updatePost code -> $code")
-            when (code) {
+            when (repository.updatePost(postId, post!!)) {
                 204 -> true
                 else -> false
             }

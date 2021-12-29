@@ -12,9 +12,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class ClubViewModel: ViewModel() {
+//베타 버전 출시 후 사용
+class ClubViewModel : ViewModel() {
     private val clubRepository: ClubRepository = ClubRepository()
-    private val _clubs: MutableLiveData<MutableList<ClubModel>> = MutableLiveData<MutableList<ClubModel>>()
+    private val _clubs: MutableLiveData<MutableList<ClubModel>> =
+        MutableLiveData<MutableList<ClubModel>>()
     private val _selectedClubIdx: MutableLiveData<Int> = MutableLiveData<Int>()
 
     private var tempClubs: MutableList<ClubModel> = ArrayList<ClubModel>()

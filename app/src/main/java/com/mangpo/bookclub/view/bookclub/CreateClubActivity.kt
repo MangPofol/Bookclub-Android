@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
+//베타 버전 출시 후 사용
 class CreateClubActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateClubBinding
     private val clubViewModel: ClubViewModel by viewModels<ClubViewModel>()

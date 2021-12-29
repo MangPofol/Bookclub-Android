@@ -16,25 +16,24 @@ class LoadingDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentLoadingDialogBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoadingDialogBinding.inflate(inflater, container, false)
 
-        Glide.with(requireActivity().applicationContext).load(R.drawable.loading).into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
+        Glide.with(requireActivity().applicationContext).load(R.drawable.loading)
+            .into(binding.loadingIv)   //이미지뷰에 gif 파일 넣기
 
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
     }

@@ -1,13 +1,10 @@
 package com.mangpo.bookclub.view.book_profile
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentSetGenreBinding
@@ -37,11 +34,6 @@ class SetGenreFragment : Fragment() {
         "컴퓨터/IT",
         "기타"
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
