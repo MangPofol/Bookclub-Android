@@ -17,7 +17,7 @@
         android:paddingTop="2.4dp"
         android:text="@string/latest_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4sp" />
+        android:textSize="14.4dp" />
 
     <CheckBox
         android:id="@+id/oldOrder"
@@ -30,7 +30,7 @@
         android:paddingTop="2.4dp"
         android:text="@string/old_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4sp" />
+        android:textSize="14.4dp" />
 
     <CheckBox
         android:id="@+id/nameOrder"
@@ -43,7 +43,7 @@
         android:paddingTop="2.4dp"
         android:text="@string/name_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4sp" />
+        android:textSize="14.4dp" />
 
     <CheckBox
         android:id="@+id/like_order"
@@ -56,7 +56,7 @@
         android:paddingTop="2.4dp"
         android:text="@string/like_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4sp"
+        android:textSize="14.4dp"
         android:visibility="gone" />
 
 </LinearLayout>

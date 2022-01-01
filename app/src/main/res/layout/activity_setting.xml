@@ -29,10 +29,10 @@
         android:id="@+id/setting_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13.2sp"
+        android:layout_marginTop="13.2dp"
         android:text="@string/setting"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         android:layout_marginTop="27.6dp"
         android:text="@string/resetting_password"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="@+id/background_view"
         app:layout_constraintTop_toTopOf="@+id/background_view" />
 
@@ -95,7 +95,7 @@
         android:layout_marginTop="20.4dp"
         android:text="@string/notice"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resetting_password_line_view" />
 
@@ -126,7 +126,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/question"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notice_tv" />
 
@@ -157,7 +157,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/terms_conditions"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question_tv" />
 
@@ -188,7 +188,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/open_source_license"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv" />
 
@@ -219,7 +219,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/version"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/open_source_license_tv" />
 
@@ -240,7 +240,7 @@
         android:layout_marginTop="20.4dp"
         android:text="@string/logout"
         android:textColor="@color/light_red"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/version_line_view" />
 
@@ -252,7 +252,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/quit_membership"
         android:textColor="@color/light_red"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logout_tv" />
 

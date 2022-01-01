@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/express_me_title"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold" />
 
     <EditText
@@ -26,6 +26,6 @@
         android:paddingHorizontal="12dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey12"
-        android:textSize="16.8sp" />
+        android:textSize="16.8dp" />
 
 </LinearLayout>

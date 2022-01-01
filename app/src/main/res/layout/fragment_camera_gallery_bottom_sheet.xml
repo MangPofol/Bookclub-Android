@@ -13,7 +13,7 @@
         android:layout_marginTop="13.2dp"
         android:text="@string/photo_registration"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/title_line_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
         android:layout_marginTop="21.6dp"
         android:text="@string/take_a_photo"
         android:textColor="@color/light_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintBottom_toTopOf="@+id/camera_line_view"
         app:layout_constraintStart_toEndOf="@+id/camera_iv"
         app:layout_constraintTop_toBottomOf="@+id/title_line_view" />
@@ -80,7 +80,7 @@
         android:layout_marginBottom="20.4dp"
         android:text="@string/get_to_gallery"
         android:textColor="@color/light_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/gallery_iv"
         app:layout_constraintTop_toBottomOf="@+id/camera_line_view" />

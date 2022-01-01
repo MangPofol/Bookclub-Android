@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
         android:textColor="@color/light_blue"
-        android:textSize="14.4sp"
+        android:textSize="14.4dp"
         app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
         app:layout_constraintStart_toStartOf="@+id/checklist_view"
         app:layout_constraintTop_toTopOf="@+id/checklist_view" />

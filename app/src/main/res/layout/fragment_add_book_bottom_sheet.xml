@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="@string/book_option"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
             android:paddingTop="7.2dp"
             android:text="@string/reading"
             android:textColor="@drawable/state_checked_text_white_grey1"
-            android:textSize="14.4sp" />
+            android:textSize="14.4dp" />
 
         <RadioButton
             android:id="@+id/readCompleteRB"
@@ -51,7 +51,7 @@
             android:paddingTop="7.2dp"
             android:text="@string/read_complete"
             android:textColor="@drawable/state_checked_text_white_grey1"
-            android:textSize="14.4sp" />
+            android:textSize="14.4dp" />
 
         <RadioButton
             android:id="@+id/wantToReadRB"
@@ -63,7 +63,7 @@
             android:paddingTop="7.2dp"
             android:text="@string/want_to_read"
             android:textColor="@drawable/state_checked_text_white_grey1"
-            android:textSize="14.4sp" />
+            android:textSize="14.4dp" />
 
     </RadioGroup>
 
@@ -78,7 +78,7 @@
         android:stateListAnimator="@null"
         android:text="@string/add_book"
         android:textColor="@color/black"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         android:textStyle="bold"
         app:backgroundTint="@color/grey4"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -16,6 +16,6 @@
         android:paddingHorizontal="5dp"
         android:drawableEnd="@drawable/bookclub_checkbox_drawable_end"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
 </LinearLayout>

@@ -29,10 +29,10 @@
         android:id="@+id/setting_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13.2sp"
+        android:layout_marginTop="13.2dp"
         android:text="@string/terms_conditions"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
         android:layout_marginTop="27.6dp"
         android:text="@string/terms_of_service"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="@+id/background_view"
         app:layout_constraintTop_toTopOf="@+id/background_view" />
 
@@ -86,7 +86,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/privacy_policy"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_of_service_tv" />
 
@@ -126,7 +126,7 @@
         android:layout_marginTop="26.4dp"
         android:text="@string/receive_marketing_information"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/privacy_policy_line_view" />
 

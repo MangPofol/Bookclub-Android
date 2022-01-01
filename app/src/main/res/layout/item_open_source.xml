@@ -10,9 +10,8 @@
         android:id="@+id/open_source_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="open_source_tv"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +23,7 @@
         android:layout_height="wrap_content"
         android:autoLink="web"
         android:linksClickable="true"
-        android:text="http://www.naver.com"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:theme="@style/HyperlinkBlueAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +33,8 @@
         android:id="@+id/license_desc_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="license_desc_tv"
         android:textColor="@color/grey8"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/url_tv" />
@@ -59,7 +56,7 @@
             android:padding="8dp"
             android:scrollbars="vertical"
             android:textColor="@color/grey8"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

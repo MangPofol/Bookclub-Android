@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/book_profile_start_title"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold" />
 
     <TextView
@@ -20,6 +20,6 @@
         android:layout_marginTop="12dp"
         android:text="@string/book_profile_start_desc"
         android:textColor="@color/main_blue"
-        android:textSize="16.8sp" />
+        android:textSize="16.8dp" />
 
 </LinearLayout>

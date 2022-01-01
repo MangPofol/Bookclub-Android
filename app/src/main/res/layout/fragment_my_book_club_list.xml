@@ -21,7 +21,7 @@
         android:layout_marginHorizontal="16dp"
         android:text="@string/add_book_club"
         android:textColor="@color/main_blue"
-        android:textSize="12sp"
+        android:textSize="12dp"
         android:backgroundTint="@color/grey13"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

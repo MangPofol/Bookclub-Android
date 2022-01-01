@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/reading_style_title"
         android:textColor="@color/main_blue"
-        android:textSize="21.6sp"
+        android:textSize="21.6dp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -34,7 +34,7 @@
             android:paddingHorizontal="12dp"
             android:text="독서 시간이 정해져 있는 계획파"
             android:textColor="@drawable/reading_style_text_selector"
-            android:textSize="16.8sp" />
+            android:textSize="16.8dp" />
 
         <RadioButton
             android:id="@+id/style_rb2"
@@ -46,7 +46,7 @@
             android:paddingHorizontal="12dp"
             android:text="자투리 시간에 책을 읽는 틈틈이파"
             android:textColor="@drawable/reading_style_text_selector"
-            android:textSize="16.8sp" />
+            android:textSize="16.8dp" />
 
         <RadioButton
             android:id="@+id/style_rb3"
@@ -58,7 +58,7 @@
             android:paddingHorizontal="12dp"
             android:text="열심히 기록하며 보는 끄적파"
             android:textColor="@drawable/reading_style_text_selector"
-            android:textSize="16.8sp" />
+            android:textSize="16.8dp" />
 
         <RadioButton
             android:id="@+id/style_rb4"
@@ -69,7 +69,7 @@
             android:button="@null"
             android:paddingHorizontal="12dp"
             android:textColor="@drawable/reading_style_text_selector"
-            android:textSize="16.8sp" />
+            android:textSize="16.8dp" />
 
     </RadioGroup>
 
@@ -86,7 +86,7 @@
         android:paddingHorizontal="12dp"
         android:textColor="@color/white"
         android:textColorHint="@color/grey12"
-        android:textSize="16.8sp"
+        android:textSize="16.8dp"
         app:layout_constraintBottom_toBottomOf="@+id/style_rg"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

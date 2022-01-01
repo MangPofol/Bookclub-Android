@@ -35,7 +35,7 @@
                     android:layout_gravity="center"
                     android:text="@string/select_book"
                     android:textColor="@color/black"
-                    android:textSize="21.6sp"
+                    android:textSize="21.6dp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -57,7 +57,7 @@
         android:paddingTop="4.8dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey1"
-        android:textSize="14.4sp"
+        android:textSize="14.4dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bookListLayout"
         app:layout_constraintTop_toBottomOf="@id/coordinateLayout" />
@@ -88,7 +88,7 @@
             android:layout_marginTop="19.2dp"
             android:text="@string/search_result"
             android:textColor="@color/light_blue"
-            android:textSize="15.6sp"
+            android:textSize="15.6dp"
             android:visibility="gone" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_marginTop="19.2dp"
             android:text="@string/select_in_library"
             android:textColor="@color/grey8"
-            android:textSize="15.6sp" />
+            android:textSize="15.6dp" />
 
         <View
             android:id="@+id/search_result_line"
@@ -129,7 +129,7 @@
                 android:paddingTop="3.792dp"
                 android:text="@string/reading"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <RadioButton
                 android:id="@+id/readCompleteRB"
@@ -142,7 +142,7 @@
                 android:paddingTop="3.792dp"
                 android:text="@string/read_complete"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <RadioButton
                 android:id="@+id/wantToReadRB"
@@ -154,7 +154,7 @@
                 android:paddingTop="3.792dp"
                 android:text="@string/want_to_read"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
         </RadioGroup>
 
