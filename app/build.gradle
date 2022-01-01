@@ -15,7 +15,7 @@ android {
         applicationId "com.mangpo.bookclub"
         minSdk 26
         targetSdk 30
-        versionCode 1
+        versionCode 4
         versionName "0.1.0"
 
         buildConfigField("String", "KAKAOBOOK_KEY", properties.getProperty("kakaobook.key"))
@@ -23,6 +23,17 @@ android {
         buildConfigField "String", "BASE_URL", properties["baseurl"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+
+        release {
+            storeFile file(properties['storeFile']) // 기준은 App 폴더 기준이다.
+            storePassword properties['storePassword']
+            keyAlias properties['keyAlias']
+            keyPassword properties['keyPassword']
+        }
+
     }
 
     dataBinding {
@@ -36,6 +47,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
