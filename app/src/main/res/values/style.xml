@@ -2,17 +2,17 @@
 <resources>
 
     <style name="tab_text" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">16.8sp</item>
+        <item name="android:textSize">16.8dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="hot_memo_topic_tab_text" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="navigation_view_tab_text" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">10dp</item>
     </style>
 
     <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
@@ -27,12 +27,22 @@
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorControlNormal">@android:color/transparent</item>
         <item name="android:textColor">@color/main_blue</item>
-        <item name="android:textSize">16.8sp</item>
+        <item name="android:textSize">16.8dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="HyperlinkBlueAccent" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">#0000FF</item>
+    </style>
+
+    <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">16.8dp</item>
+        <item name="android:fontFamily">@font/custom_font_family</item>
+    </style>
+
+    <style name="myInfoChipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">9.6dp</item>
+        <item name="android:fontFamily">@font/custom_font_family</item>
     </style>
 
 </resources>
