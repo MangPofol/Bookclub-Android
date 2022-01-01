@@ -293,6 +293,7 @@
         android:textColor="@color/white"
         android:textSize="14.4dp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/public_setting_view"
         app:layout_constraintTop_toTopOf="@+id/public_setting_view" />
 
