@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
 import com.mangpo.bookclub.model.PostModel
-import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.view.main.MainActivity
@@ -49,9 +48,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
         binding.selectBookBtn.setOnClickListener {
             setPost()    //지금까지 기록된 post 저장하기
             (activity as MainActivity).hideKeyBord(requireView())   //키보드 올라와 있으면 키보드 내리기
-            val fragment = SelectFragment()
-            BackStackManager.pushFragment(0, fragment)
-            (requireActivity() as MainActivity).changeFragment(fragment)
+            (requireActivity() as MainActivity).moveToSelect()
         }
 
         //이미지 선택하기 클릭 리스너
@@ -88,10 +85,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
 
             if (validate()) {   //필수 데이터를 다 기록했는지 유효성 검사
                 setPost()   //다시 한 번 기록한 데이터 저장
-
-                val fragment = WritingSettingFragment(isUpdate)
-                (requireActivity() as MainActivity).changeFragment(fragment)
-                BackStackManager.pushFragment(0, fragment)
+                (requireActivity() as MainActivity).moveToWritingSetting(isUpdate)  //WritingSettingFragment 로 이동
             }
         }
 

@@ -12,7 +12,6 @@ import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.model.PostModel
-import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -48,18 +47,16 @@ class PostDetailFragment : Fragment() {
 
         setUI() //화면 디자인 함수 호출
 
+        //뒤로가기 클릭 리스너
         binding.backIvView.setOnClickListener {
-            (requireActivity() as MainActivity).changeFragment(BackStackManager.popFragment()!!)
+            (requireActivity() as MainActivity).onBackPressed()
         }
 
-        //기록 수정 화면으로 이동
+        //수정하기 클릭 리스너
         binding.updateTv.setOnClickListener {
-            setBook()
-            setPost()
-
-            val fragment = RecordFragment(true)
-            (requireActivity() as MainActivity).changeFragment(fragment)
-            BackStackManager.pushFragment(0, fragment)
+            setBook()   //수정하고자 하는 책 데이터 저장
+            setPost()   //수정하고자 하는 기록 데이터 저장
+            (requireActivity() as MainActivity).moveToRecord(true)  //RecordFragment 화면으로 이동
         }
 
         return binding.root

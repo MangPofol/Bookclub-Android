@@ -14,10 +14,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.BookModel
-import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
-import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
@@ -51,7 +49,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
         //뒤로가기 아이콘 누르면 -> RecordFragment 화면으로 이동
         binding.toolbar.setNavigationOnClickListener {
-            (requireActivity() as MainActivity).changeFragment(BackStackManager.popFragment()!!)
+            (requireActivity() as MainActivity).onBackPressed()
         }
 
         //책 검색 EditText에 TextChanged 리스너 등록
@@ -129,7 +127,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                     //읽는 중, 완독이면 -> 기록하기 화면으로 이동
                     "NOW", "AFTER" -> {
                         bookVm.setBook(selectedBook)
-                        (requireActivity() as MainActivity).changeFragment(BackStackManager.popFragment()!!)
+                        (requireActivity() as MainActivity).moveToRecord(false)
                     }
                     //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
                     "BEFORE" -> {
@@ -148,10 +146,7 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                                 bookVm.setBook(BookModel())
 
                                 //책이 등록됐으면 내서재의 읽고싶은 탭 화면으로 이동.
-                                val fragment = MyLibraryFragment()
-                                BackStackManager.pushFragment(1, fragment)
-                                (requireActivity() as MainActivity).changeFragment(fragment)
-                                (requireActivity() as MainActivity).changeBottomNavigation(1)
+                                (requireActivity() as MainActivity).moveToMyLibrary()
                             }
                         }
                     }
@@ -160,18 +155,14 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
 
             bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
         } else {    //기존 책을 클릭한 상황이면
+            //BookViewModel 의 book 변수에 선택한 책 데이터 저장
             selectedBook = when (binding.readTypeRG.checkedRadioButtonId) {
                 binding.readingRB.id -> bookVm.nowBooks.value!![position]
                 binding.readCompleteRB.id -> bookVm.afterBooks.value!![position]
                 else -> bookVm.beforeBooks.value!![position]
             }
             bookVm.setBook(selectedBook)
-
-            //pop 했을 때 RecordFragment 가 아니면 한번 더 pop
-            var fragment = BackStackManager.popFragment()!!
-            if (fragment.javaClass != RecordFragment::class.java)
-                fragment = BackStackManager.popFragment()!!
-            (requireActivity() as MainActivity).changeFragment(fragment)
+            (requireActivity() as MainActivity).onBackPressed() //RecordFragment 로 이동
         }
     }
 

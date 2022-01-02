@@ -8,15 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.mangpo.bookclub.databinding.FragmentHomeBinding
 import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import com.mangpo.bookclub.databinding.FragmentMainBinding
 import com.mangpo.bookclub.model.CheckListModel
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.adapter.ChecklistContentRVAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.ChecklistViewModel
@@ -25,9 +24,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentHomeBinding
 
     private val postVm: PostViewModel by sharedViewModel()
     private val mainVm: MainViewModel by sharedViewModel()
@@ -46,7 +45,7 @@ class MainFragment : Fragment() {
 
         Log.d("MainFragment", "onCreateView")
 
-        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         initAdapter()
         observe()
@@ -64,9 +63,7 @@ class MainFragment : Fragment() {
 
         //기록 쓰러가기 클릭 리스너 -> RecordFragment 로 이동
         binding.goPostView.setOnClickListener {
-            val fragment = RecordFragment(false)
-            BackStackManager.pushFragment(0, fragment)
-            (requireActivity() as MainActivity).changeFragment(fragment)
+            (requireActivity() as MainActivity).moveToRecord(false)
         }
 
         //체크리스트의 arrow_down 이미지뷰 클릭 리스너
@@ -213,5 +210,4 @@ class MainFragment : Fragment() {
             setTotalPostCntUI(it)
         })
     }
-
 }
