@@ -110,10 +110,9 @@ class BookDescFragment : Fragment() {
     }
 
     private fun initBookList() {
-        val email: String = (requireActivity() as MainActivity).getEmail()
         CoroutineScope(Dispatchers.Main).launch {
-            bookVm.requestBookList(email, "NOW")
-            bookVm.requestBookList(email, "AFTER")
+            bookVm.requestBookList("NOW")
+            bookVm.requestBookList("AFTER")
         }
     }
 

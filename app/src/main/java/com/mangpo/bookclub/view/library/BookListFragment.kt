@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,7 +17,7 @@ import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class BookListFragment : Fragment(), OnItemClick {
+class BookListFragment(private val category: String) : Fragment(), OnItemClick {
     private lateinit var binding: FragmentBookListBinding
 
     private val bookAdapter: BookAdapter = BookAdapter(this)
@@ -25,6 +26,8 @@ class BookListFragment : Fragment(), OnItemClick {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("BookListFragment", "onCreate")
+
+        bookAdapter.setBooks(bookVm.getBookList(category))
     }
 
     override fun onCreateView(
@@ -52,6 +55,12 @@ class BookListFragment : Fragment(), OnItemClick {
         Log.d("BookListFragment", "onDetach")
     }
 
+    override fun onClick(position: Int) {
+        var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
+
+        (requireActivity() as MainActivity).moveToBookDesc(book)
+    }
+
     private fun observe() {
         bookVm.readType.observe(viewLifecycleOwner, Observer {
             bookAdapter.setBooks(bookVm.getBookList(it))
@@ -71,7 +80,7 @@ class BookListFragment : Fragment(), OnItemClick {
             } as MutableList<BookModel>)
         })
 
-        bookVm.myLibrarySort.observe(viewLifecycleOwner, Observer {
+        bookVm.myLibrarySort.observe(viewLifecycleOwner, Observer { it ->
             val books = when (bookVm.readType.value) {
                 "NOW" -> bookVm.nowBooks.value
                 "AFTER" -> bookVm.afterBooks.value
@@ -90,12 +99,14 @@ class BookListFragment : Fragment(), OnItemClick {
                 }
             }
         })
+
+        bookVm.getBooksCode.observe(viewLifecycleOwner, Observer {
+            if (it != 200)
+                Toast.makeText(
+                    requireContext(),
+                    "책 로딩 중 오류가 발생했습니다. 다시 시도해 주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+        })
     }
-
-    override fun onClick(position: Int) {
-        var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
-
-        (requireActivity() as MainActivity).moveToBookDesc(book)
-    }
-
 }

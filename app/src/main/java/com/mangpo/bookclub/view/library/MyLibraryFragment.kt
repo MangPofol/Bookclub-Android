@@ -28,7 +28,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
     private val bookVm: BookViewModel by sharedViewModel()
     private val fragments: List<BookListFragment> =
-        listOf(BookListFragment(), BookListFragment(), BookListFragment())
+        listOf(BookListFragment("NOW"), BookListFragment("AFTER"), BookListFragment("BEFORE"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

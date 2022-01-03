@@ -7,9 +7,8 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface BookService {
-    @GET("books")
+    @GET("/books")
     suspend fun getBooks(
-        @Query("email") email: String,
         @Query("category") category: String
     ): Response<BooksModel>
 

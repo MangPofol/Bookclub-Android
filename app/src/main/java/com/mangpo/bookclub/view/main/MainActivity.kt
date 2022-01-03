@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var user: UserModel
 
-    private val bookVm: BookViewModel by viewModel()
-
     private var beforeMenu: Int = R.id.main
+
+    private val bookVm: BookViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         user = Gson().fromJson(intent.getStringExtra("user"), UserModel::class.java)
-        initBookList()
+        initBook()  //책 데이터 불러오기
 
         //bottom navigation 메뉴 선택 시 프래그먼트 전환
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -184,11 +184,11 @@ class MainActivity : AppCompatActivity() {
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
     }
 
-    fun initBookList() {
+    private fun initBook() {
         CoroutineScope(Dispatchers.Main).launch {
-            bookVm.requestBookList(user.email!!, "NOW")
-            bookVm.requestBookList(user.email!!, "AFTER")
-            bookVm.requestBookList(user.email!!, "BEFORE")
+            bookVm.requestBookList("NOW")
+            bookVm.requestBookList("AFTER")
+            bookVm.requestBookList("BEFORE")
         }
     }
 
@@ -198,8 +198,6 @@ class MainActivity : AppCompatActivity() {
             getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
-
-    fun getEmail(): String = user.email!!
 
     fun moveToRecord(isUpdate: Boolean) {
         changeFragment(RecordFragment(isUpdate))

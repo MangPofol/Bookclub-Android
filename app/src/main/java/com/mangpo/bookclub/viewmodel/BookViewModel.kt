@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.BookModel
+import com.mangpo.bookclub.model.BooksModel
 import com.mangpo.bookclub.model.KakaoBookModel
 import com.mangpo.bookclub.repository.BookRepository
 import com.mangpo.bookclub.repository.KakaoBookRepository
@@ -33,8 +34,7 @@ class BookViewModel(
     private val _readType: MutableLiveData<String> = MutableLiveData<String>()
     private val _myLibrarySearch: MutableLiveData<String> = MutableLiveData<String>()
     private val _myLibrarySort: MutableLiveData<String> = MutableLiveData<String>()
-
-    private var _email: String = ""
+    private val _getBooksCode: MutableLiveData<Int> = MutableLiveData<Int>()    //getBooks req 응답코드
 
     val book: LiveData<BookModel> get() = _book
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
@@ -44,6 +44,7 @@ class BookViewModel(
     val readType: LiveData<String> get() = _readType
     val myLibrarySearch: LiveData<String> get() = _myLibrarySearch
     val myLibrarySort: LiveData<String> get() = _myLibrarySort
+    val getBooksCode: LiveData<Int> get() = _getBooksCode   //getBooks req 응답코드
 
     fun getBookList(category: String): MutableList<BookModel>? {
         return when (category) {
@@ -71,28 +72,29 @@ class BookViewModel(
         _myLibrarySort.value = filter
     }
 
-    suspend fun requestBookList(email: String, category: String) {
-        _email = email
-
-        val books = withContext(Dispatchers.IO) {
-            bookRepository.getBooks(email, category)
+    suspend fun requestBookList(category: String) {
+        val req = withContext(Dispatchers.IO) {
+            bookRepository.getBooks(category)
         }
 
-        when (category) {
-            "NOW" -> {
-                _nowBooks.value = books
-                _nowBooks.value
-            }
-            "AFTER" -> {
-                _afterBooks.value = books
-                _afterBooks.value
-            }
-            "BEFORE" -> {
-                _beforeBooks.value = books
-                _beforeBooks.value
-            }
+        _getBooksCode.value = req["code"] as Int
+        val books = req["books"] as BooksModel
 
-            else -> null
+        if (books != null) {
+            when (category) {
+                "NOW" -> {
+                    _nowBooks.value = books.books
+                    _nowBooks.value
+                }
+                "AFTER" -> {
+                    _afterBooks.value = books.books
+                    _afterBooks.value
+                }
+                "BEFORE" -> {
+                    _beforeBooks.value = books.books
+                    _beforeBooks.value
+                }
+            }
         }
     }
 
@@ -117,7 +119,7 @@ class BookViewModel(
 
             if (code == 201) {
                 _book.value = hashMap.await()!!["book"] as BookModel
-                requestBookList(_email, _book.value!!.category)
+                requestBookList(_book.value!!.category)
             }
 
             code

@@ -175,7 +175,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             if (postDetail != null) {
                 if (book.category == "BEFORE") {  //책 카테고리가 "읽고 싶은" 이면 "읽는 중" 으로 변경하기
                     bookVm.updateBook(book.id!!, "NOW")
-                    (requireActivity() as MainActivity).initBookList()
+                    initBook()  //읽는중, 읽고싶은 책 목록 업데이트
                 }
 
                 postVm.setPostDetail(postDetail)
@@ -340,6 +340,13 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         postDetail.postImgLocations = post.postImgLocations
 
         postVm.setPostDetail(postDetail)
+    }
+
+    private fun initBook() {
+        CoroutineScope(Dispatchers.Main).launch {
+            bookVm.requestBookList("BEFORE")
+            bookVm.requestBookList("NOW")
+        }
     }
 
     private fun observe() {
