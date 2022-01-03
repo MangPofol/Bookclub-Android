@@ -81,9 +81,30 @@ class GoalManagementActivity : AppCompatActivity() {
         }
     }
 
+    //기존 목표 데이터로 데이터 바인딩하는 함수
+    private fun bindGoal() {
+        val firstWord = user.goal.split(" ")[0]
+        val thirdWord = user.goal.split(" ")[2]
+
+        val periodNumber = firstWord.replace(("[^\\d.]").toRegex(), "").toInt()
+        binding.periodNumberNp.value = periodNumber
+
+        when {
+            firstWord.contains("년") -> binding.periodUnitNp.value = 0
+            firstWord.contains("개월") -> binding.periodUnitNp.value = 1
+            else -> binding.periodUnitNp.value = 2
+        }
+
+        val bookCnt = thirdWord.replace(("[^\\d.]").toRegex(), "").toInt()
+        binding.bookCntNp.value = bookCnt
+    }
+
     private fun observe() {
         mainVm.user.observe(this, Observer {
             user = it
+
+            if (user.goal!="")
+                bindGoal()
         })
 
         mainVm.updateUserCode.observe(this, Observer {
