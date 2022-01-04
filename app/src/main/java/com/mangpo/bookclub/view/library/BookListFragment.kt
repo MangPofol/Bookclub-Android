@@ -20,6 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class BookListFragment(private val category: String) : Fragment(), OnItemClick {
     private lateinit var binding: FragmentBookListBinding
 
+    private var books: MutableList<BookModel>? = null
+
     private val bookAdapter: BookAdapter = BookAdapter(this)
     private val bookVm: BookViewModel by sharedViewModel()
 
@@ -56,47 +58,47 @@ class BookListFragment(private val category: String) : Fragment(), OnItemClick {
     }
 
     override fun onClick(position: Int) {
-        var book: BookModel = bookVm.getBookList(bookVm.readType.value!!)!![position]
-
+        var book: BookModel = books!![position]
         (requireActivity() as MainActivity).moveToBookDesc(book)
     }
 
     private fun observe() {
         bookVm.readType.observe(viewLifecycleOwner, Observer {
-            bookAdapter.setBooks(bookVm.getBookList(it))
+            books = bookVm.getBookList(it)
+            bookAdapter.setBooks(books)
         })
 
         bookVm.myLibrarySearch.observe(viewLifecycleOwner, Observer {
             val search = it
-
-            val books = when (bookVm.readType.value) {
+            val defaultBooks = when (category) {
                 "NOW" -> bookVm.nowBooks.value
                 "AFTER" -> bookVm.afterBooks.value
                 else -> bookVm.beforeBooks.value
             }
 
-            bookAdapter.setBooks(books?.filter { it ->
+            books = defaultBooks?.filter { it ->
                 it.name!!.contains(search)
-            } as MutableList<BookModel>)
+            } as MutableList<BookModel>
+
+            bookAdapter.setBooks(books)
         })
 
         bookVm.myLibrarySort.observe(viewLifecycleOwner, Observer { it ->
-            val books = when (bookVm.readType.value) {
-                "NOW" -> bookVm.nowBooks.value
-                "AFTER" -> bookVm.afterBooks.value
-                else -> bookVm.beforeBooks.value
-            }
-
-            if (books != null && books.isNotEmpty()) {
-                when (it) {
-                    "Latest" -> bookAdapter.setBooks(
-                        books.sortedWith(compareBy { it.modifiedDate })
-                            .reversed() as MutableList<BookModel>
-                    )
-                    "Old" -> bookAdapter.setBooks(books.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>)
-                    "Name" -> bookAdapter.setBooks(books.sortedWith(compareBy { it.name }) as MutableList<BookModel>)
-                    else -> bookAdapter.setBooks(books)
+            if (books?.isNotEmpty() == true) {
+                val defaultBooks = when (category) {
+                    "NOW" -> bookVm.nowBooks.value
+                    "AFTER" -> bookVm.afterBooks.value
+                    else -> bookVm.beforeBooks.value
                 }
+
+                books = when (it) {
+                    "Latest" -> defaultBooks?.sortedWith(compareBy { it.modifiedDate })?.reversed() as MutableList<BookModel>
+                    "Old" -> defaultBooks?.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>
+                    "Name" -> defaultBooks?.sortedWith(compareBy { it.name }) as MutableList<BookModel>
+                    else -> defaultBooks
+                }
+
+                bookAdapter.setBooks(books)
             }
         })
 
