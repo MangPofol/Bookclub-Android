@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,21 +13,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
-    private val _imgUriList: MutableLiveData<List<Uri>> = MutableLiveData()
     private val _post: MutableLiveData<PostModel> = MutableLiveData()
     private val _totalCnt: MutableLiveData<Int> = MutableLiveData()
+    private val _imgLoading: MutableLiveData<Int> = MutableLiveData()
 
     private var postDetail: PostDetailModel? = null
 
-    val imgUriList: LiveData<List<Uri>> get() = _imgUriList
     val post: LiveData<PostModel> get() = _post
     val totalCnt: LiveData<Int> get() = _totalCnt
-
-    fun setImgUriList(imgUriList: List<Uri>) {
-        _imgUriList.value = imgUriList
-    }
-
-    fun getImgUriList(): List<Uri>? = _imgUriList.value
+    val imgLoading: LiveData<Int> get() = _imgLoading
 
     fun setPost(post: PostModel) {
         _post.value = post
@@ -41,6 +34,10 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     }
 
     fun getPostDetail(): PostDetailModel? = this.postDetail
+
+    fun setImgLoading(imgLoading: Int) {
+        _imgLoading.value = imgLoading
+    }
 
     suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? =
         repository.getPosts(bookId, clubId)
@@ -85,9 +82,17 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         }
     }
 
-    suspend fun deleteImg(img: String) {
-        viewModelScope.launch {
+    suspend fun deleteImg(img: String): Int {
+        val code = viewModelScope.async {
             repository.deleteImg(img)
+        }
+
+        return code.await()
+    }
+
+    suspend fun deleteMultiImg(imgList: List<String>) {
+        viewModelScope.launch {
+            repository.deleteMultiImg(imgList)
         }
     }
 }

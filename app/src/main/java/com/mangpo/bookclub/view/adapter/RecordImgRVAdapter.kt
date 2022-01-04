@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,18 +7,16 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mangpo.bookclub.databinding.ItemRecordImgBinding
-import java.io.ByteArrayOutputStream
 
 class RecordImgRVAdapter() :
     RecyclerView.Adapter<RecordImgRVAdapter.RecordImgHolder>() {
-
     private lateinit var binding: ItemRecordImgBinding
-
     private lateinit var mItemClick: MyItemClickListener
-    private val pictures: ArrayList<Uri> = ArrayList<Uri>()
+
+    private val pictures: ArrayList<String> = arrayListOf()
 
     interface MyItemClickListener {
-        fun removeItem(position: Int)
+        fun removeItem(path: String)
     }
 
     fun setMyItemClickListener(mItemClick: MyItemClickListener) {
@@ -42,9 +39,7 @@ class RecordImgRVAdapter() :
 
         //삭제 아이콘 누르면 이미지 삭제하기
         holder.removeBtn.setOnClickListener {
-            pictures.removeAt(position)
-            notifyDataSetChanged()
-            mItemClick.removeItem(position)
+            mItemClick.removeItem(pictures[position])
         }
     }
 
@@ -52,9 +47,9 @@ class RecordImgRVAdapter() :
         return pictures.size
     }
 
-    fun setData(uriList: List<Uri>) {
+    fun setData(imgList: List<String>) {
         pictures.clear()
-        pictures.addAll(uriList)
+        pictures.addAll(imgList)
         notifyDataSetChanged()
     }
 
@@ -63,5 +58,4 @@ class RecordImgRVAdapter() :
         val iv: ImageView = itemView.recordIv
         val removeBtn: View = itemView.removeImgView
     }
-
 }

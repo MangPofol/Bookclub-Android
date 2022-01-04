@@ -207,8 +207,17 @@ class MainActivity : AppCompatActivity() {
         changeFragment(SelectFragment())
     }
 
-    fun moveToWritingSetting(isUpdate: Boolean) {
-        changeFragment(WritingSettingFragment(isUpdate))
+    fun moveToWritingSetting(isUpdate: Boolean, delImgList: ArrayList<String>?) {
+        if (delImgList == null)
+            changeFragment(WritingSettingFragment(isUpdate))
+        else {
+            val fragment = WritingSettingFragment(isUpdate).apply {
+                arguments = Bundle().apply {
+                    putStringArrayList("delImgList", delImgList)
+                }
+            }
+            changeFragment(fragment)
+        }
     }
 
     fun moveToBookDesc(book: BookModel) {

@@ -1,12 +1,7 @@
 package com.mangpo.bookclub.view.write
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,9 +19,6 @@ import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 
 class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
@@ -63,21 +55,17 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
         //완료 버튼 클릭 리스너
         binding.completeBtn.setOnClickListener {
-            (requireActivity() as MainActivity).hideKeyBord(requireView())
             loadingDialogFragment.show(requireActivity().supportFragmentManager, null)
-            addRecordData() //기록 데이터 저장하는 함수 호출
+            CoroutineScope(Dispatchers.Main).launch {
+                (requireActivity() as MainActivity).hideKeyBord(requireView())
+                addRecordData() //기록 데이터 저장하는 함수 호출
 
-            if (post.postImgLocations.isEmpty()) {    //이미지가 없는 경우
-                if (post.bookId == null)
-                    createBook()
-                else if (isUpdate)
+                if (isUpdate)   //수정하기
                     updatePost(post)
-                else
+                else if (!isUpdate && post.bookId == null)  //새로운 책에 대한 기록하기
+                    createBook()
+                else    //기록 추가하기
                     createPost(post)
-            } else if (post.postImgLocations.size == 1 && !post.postImgLocations[0].startsWith("https://")) {   //이미지가 한개 있으면
-                uploadImg(post.postImgLocations[0])   //하나의 이미지를 업로드하는 함수 호출
-            } else {    //이미지가 여러개 있으면
-                uploadMultiImg(post.postImgLocations) //여러개의 이미지를 업로드하는 함수 호출
             }
         }
 
@@ -133,7 +121,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         //데이터 초기화
         bookVm.setBook(BookModel())
         postVm.setPost(PostModel())
-        postVm.setImgUriList(listOf())
     }
 
     private fun initUI(post: PostModel) {
@@ -187,84 +174,24 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         }
     }
 
+    //기록 수정하기
     private fun updatePost(post: PostModel) {
         CoroutineScope(Dispatchers.Main).launch {
             val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.postId, post)
 
-            loadingDialogFragment.dismiss()
-
             if (isUpdate) {
                 setPostDetail()
+
+                val delImgList = arguments?.getStringArrayList("delImgList")
+                if (delImgList!=null)
+                    deleteMultiImg(delImgList)
+
+                loadingDialogFragment.dismiss()
                 (requireActivity() as MainActivity).moveToPostDetail(book)
-            } else
-                Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
-                    .show()
-        }
-    }
-
-    //하나의 이미지를 업로드하는 함수
-    private fun uploadImg(imgPath: String) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val path = CoroutineScope(Dispatchers.IO).async {
-                postVm.uploadImg(getAbsolutePathByBitmap(uriToBitmap(Uri.parse(imgPath))))
-            }
-
-            if (path.await() != null) {
-                //post 의 postImgLocations 를 aws s3에 업로드한 주소로 저장.
-                post.postImgLocations = listOf(path.await()!!)
-
-                if (post.bookId == null)  //post 의 bookId 가 존재하지 않으면 책 등록부터 하기
-                    createBook()
-                else if (isUpdate)
-                    updatePost(post)
-                else
-                    createPost(post)  //post 의 bookId 가 존재하면 기록 추가
             } else {
                 loadingDialogFragment.dismiss()
-                Toast.makeText(requireContext(), "이미지 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
                     .show()
-            }
-        }
-    }
-
-    //여러개의 이미지를 업로드하는 함수
-    private fun uploadMultiImg(imgPaths: List<String>) {
-
-        val finalImgList = arrayListOf<String>()
-        val imgList = arrayListOf<String>()
-
-        for (path in imgPaths) {
-            if (path.startsWith("https"))
-                finalImgList.add(path)
-            else
-                imgList.add(getAbsolutePathByBitmap(uriToBitmap(Uri.parse(path))))
-        }
-
-        CoroutineScope(Dispatchers.Main).launch {
-            if (imgList.size != 0) {
-                val path = CoroutineScope(Dispatchers.IO).async {
-                    postVm.uploadMultiImg(imgList)
-                }
-
-                if (path.await() != null)
-                    finalImgList.addAll(path.await()!!)
-                else {
-                    loadingDialogFragment.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        "이미지 업로드 중 오류 발생. 다시 시도해 주세요.",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-            }
-
-            post.postImgLocations = finalImgList
-
-            when {
-                post.bookId == null -> createBook()    //post 의 bookId 가 존재하지 않으면 책 등록부터 하기
-                isUpdate -> updatePost(post)    //isUpdate 가 True 이면 기록 수정
-                else -> createPost(post)    //post 의 bookId 가 존재하면 기록 추가
             }
         }
     }
@@ -296,37 +223,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         postVm.setPost(post)
     }
 
-    private fun uriToBitmap(uri: Uri): Bitmap {
-        val bitmap = if (Build.VERSION.SDK_INT < 28) {
-            MediaStore.Images.Media.getBitmap(
-                requireActivity().contentResolver,
-                uri
-            )
-        } else {
-            val source = ImageDecoder.createSource(requireActivity().contentResolver, uri)
-            ImageDecoder.decodeBitmap(source)
-        }
-
-        return bitmap
-    }
-
-    private fun getAbsolutePathByBitmap(bitmap: Bitmap): String {
-        val path =
-            (requireContext().applicationInfo.dataDir + File.separator + System.currentTimeMillis())
-        val file = File(path)
-        var out: OutputStream? = null
-
-        try {
-            file.createNewFile()
-            out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, out)
-        } finally {
-            out?.close()
-        }
-
-        return file.absolutePath
-    }
-
     private fun setPostDetail() {
         val postDetail: PostDetailModel = postVm.getPostDetail()!!
         postDetail.scope = post.scope!!
@@ -346,6 +242,13 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             bookVm.requestBookList("BEFORE")
             bookVm.requestBookList("NOW")
+        }
+    }
+
+    //다중 이미지 삭제
+    private fun deleteMultiImg(imgList: ArrayList<String>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            postVm.deleteMultiImg(imgList)
         }
     }
 

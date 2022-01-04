@@ -84,6 +84,16 @@ class PostRepository(private val postService: PostService) {
             -1
     }
 
-    suspend fun deleteImg(img: String) = postService.deleteImgFile(img)
+    suspend fun deleteImg(img: String): Int {
+        val result = postService.deleteImgFile(img)
+        Log.d("PostRepository", "deleteImg code -> ${result.code()}")
+
+        return result.code()
+    }
+
+    suspend fun deleteMultiImg(imgList: List<String>) {
+        val result = postService.deleteMultiImgFile(imgList)
+        Log.d("PostRepository", "deleteMultiImg code -> ${result.code()}")
+    }
 
 }

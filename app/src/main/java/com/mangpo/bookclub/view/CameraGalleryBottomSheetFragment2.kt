@@ -19,8 +19,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentCameraGalleryBottomSheetBinding
 import com.mangpo.bookclub.view.write.CameraActivity
+import com.mangpo.bookclub.viewmodel.PostViewModel
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.MediaType
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -33,6 +35,8 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
 
     private var cameraPermissionLauncher: ActivityResultLauncher<String>? = null
     private var galleryPermissionLauncher: ActivityResultLauncher<Array<String>>? = null
+
+    private val postVm: PostViewModel by sharedViewModel()
 
     companion object {
         fun newInstance(
@@ -71,6 +75,7 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
         cameraLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
+                    postVm.setImgLoading(1)
                     val uri = Uri.parse(result.data?.getStringExtra("uri"))
                     val imgAbsolutePath = getAbsolutePathByBitmap(uriToBitmap(uri))
                     callback(listOf(imgAbsolutePath))
@@ -123,8 +128,6 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
 
     //이미지 선택하는 화면으로 이동하는 함수
     private fun goToGallery() {
-        val pictures = arrayListOf<Uri>()
-
         if (imgCnt == 1) {
             TedImagePicker.with(requireContext())
                 .mediaType(MediaType.IMAGE)
@@ -135,6 +138,7 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
                 .buttonTextColor(R.color.main_blue)
                 .dropDownAlbum()
                 .start { uri ->
+                    postVm.setImgLoading(1)
                     val imgAbsolutePath = getAbsolutePathByBitmap(uriToBitmap(uri))
                     callback(listOf(imgAbsolutePath))
                     dismiss()
@@ -144,12 +148,13 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
                 .mediaType(MediaType.IMAGE)
                 .cameraTileBackground(R.color.grey1)
                 .title(R.string.gallery_title)
-                .max(4, R.string.max_image_desc)
+                .max(imgCnt, R.string.max_image_desc)
                 .backButton(R.drawable.back_icon)
                 .buttonBackground(R.color.white)
                 .buttonTextColor(R.color.main_blue)
                 .dropDownAlbum()
                 .startMultiImage { uriList ->
+                    postVm.setImgLoading(1)
                     val imgAbsolutePaths = arrayListOf<String>()
                     for (uri in uriList) {
                         imgAbsolutePaths.add(getAbsolutePathByBitmap(uriToBitmap(uri)))

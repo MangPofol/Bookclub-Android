@@ -25,6 +25,9 @@ interface PostService {
     @POST("/files/upload-multiple-files")
     suspend fun uploadMultiImgFile(@Part data: List<MultipartBody.Part>): Response<List<String>>
 
+    @POST("/files/delete-multiple-files")
+    suspend fun deleteMultiImgFile(@Body imageLocations: List<String>): Response<String>
+
     @PUT("/posts/{postId}")
     suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>
 

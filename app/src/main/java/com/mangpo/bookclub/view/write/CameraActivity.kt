@@ -13,6 +13,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityCameraBinding
+import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -101,7 +102,7 @@ class CameraActivity : AppCompatActivity() {
 
                     val intent = Intent(
                         this@CameraActivity,
-                        CameraGalleryBottomSheetFragment::class.java
+                        CameraGalleryBottomSheetFragment2::class.java
                     ).apply {
                         putExtra("uri", savedUri.toString())
                     }
