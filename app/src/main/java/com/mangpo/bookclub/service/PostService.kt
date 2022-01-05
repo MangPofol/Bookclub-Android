@@ -2,7 +2,6 @@ package com.mangpo.bookclub.service
 
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.AllPostModel
-import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.model.PostDetailModel
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -18,8 +17,10 @@ interface PostService {
     @GET("/posts/total-count")
     suspend fun getTotalPostCnt(): Response<JsonObject>
 
+    /*@POST("/posts")
+    suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>*/
     @POST("/posts")
-    suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>
+    suspend fun createPost(@Body newPost: PostDetailModel): Response<PostDetailModel>
 
     @Multipart
     @POST("/files/upload-multiple-files")
@@ -28,8 +29,10 @@ interface PostService {
     @POST("/files/delete-multiple-files")
     suspend fun deleteMultiImgFile(@Body imageLocations: List<String>): Response<String>
 
+    /*@PUT("/posts/{postId}")
+    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>*/
     @PUT("/posts/{postId}")
-    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>
+    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostDetailModel): Response<String>
 
     @Multipart
     @PUT("/files/upload")

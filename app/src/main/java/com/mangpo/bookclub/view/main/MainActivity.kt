@@ -13,8 +13,10 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.model.BookModel
+import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.BackStackManager
+import com.mangpo.bookclub.util.OnBackPressedListener
 import com.mangpo.bookclub.view.library.BookDescFragment
 import com.mangpo.bookclub.view.library.MyLibraryFragment
 import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
@@ -120,38 +122,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        var currentFragment: Fragment? = null
+        var nextFragment: Fragment? = null
+
+        //현재 프래그먼트 구하기
+        currentFragment = when (binding.bottomNavigation.selectedItemId) {
+            R.id.main -> BackStackManager.peekFragment(0)
+            R.id.library -> BackStackManager.peekFragment(1)
+            else -> BackStackManager.peekFragment(2)
+        }
+
+        //현재 프래그먼트가 RecordFragment 이면 OnBackPressedListener 인터페이스의 onBackPressed 메서드 실행
+        if (currentFragment is RecordFragment) {
+            (currentFragment as OnBackPressedListener).onBackPressed()
+            return
+        }
+
+        //이전 프래그먼트 구하기
         when (binding.bottomNavigation.selectedItemId) {
             R.id.main -> {
                 BackStackManager.popFragment(0)
-                var fragment = BackStackManager.peekFragment(0)
-
-                if (fragment == null)
-                    popBackPressed()
-                else {
-                    supportFragmentManager.beginTransaction()
-                        .replace(binding.frameLayout.id, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commitAllowingStateLoss()
-                }
+                nextFragment = BackStackManager.peekFragment(0)
             }
 
             R.id.library -> {
                 BackStackManager.popFragment(1)
-                var fragment = BackStackManager.peekFragment(1)
-
-                if (fragment == null)
-                    popBackPressed()
-                else {
-                    supportFragmentManager.beginTransaction()
-                        .replace(binding.frameLayout.id, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commitAllowingStateLoss()
-                }
+                nextFragment = BackStackManager.peekFragment(1)
             }
 
             R.id.bookclub -> {
 
             }
+        }
+
+        if (nextFragment == null)   //이전 프래그먼트가 없으면 이전 bottom menu 가 뭐였는지 확인하는 함수 실행
+            popBackPressed()
+        else {  //이전 프래그먼트가 있으면 그 프래그먼트로 이동
+            supportFragmentManager.beginTransaction()
+                .replace(binding.frameLayout.id, nextFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commitAllowingStateLoss()
         }
     }
 
@@ -172,18 +182,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //bottom menu 별로 backstack 에 저장 후 프래그먼트 이동하는 함수
-    private fun changeFragment(fragment: Fragment) {
-        when (binding.bottomNavigation.selectedItemId) {
-            R.id.main -> BackStackManager.pushFragment(0, fragment)
-            R.id.library -> BackStackManager.pushFragment(1, fragment)
-            R.id.bookclub -> BackStackManager.pushFragment(2, fragment)
-        }
-
-        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
-    }
-
     private fun initBook() {
         CoroutineScope(Dispatchers.Main).launch {
             bookVm.requestBookList("NOW")
@@ -199,24 +197,36 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
+    /*fun moveToRecord(isUpdate: Boolean, post: PostDetailFragment?) {
+        if (post==null)
+            changeFragment(RecordFragment(isUpdate), true)
+        else {  //전달할 post 가 있으면 bundle 에 넣어서 post 를 전달한다.
+            val fragment = RecordFragment(isUpdate).apply {
+                arguments = Bundle().apply {
+                    putString("post", Gson().toJson(post))
+                }
+            }
+            changeFragment(fragment, true)
+        }
+    }*/
     fun moveToRecord(isUpdate: Boolean) {
-        changeFragment(RecordFragment(isUpdate))
+        changeFragment(RecordFragment(isUpdate), true)
     }
 
     fun moveToSelect() {
-        changeFragment(SelectFragment())
+        changeFragment(SelectFragment(), true)
     }
 
     fun moveToWritingSetting(isUpdate: Boolean, delImgList: ArrayList<String>?) {
         if (delImgList == null)
-            changeFragment(WritingSettingFragment(isUpdate))
+            changeFragment(WritingSettingFragment(isUpdate), true)
         else {
             val fragment = WritingSettingFragment(isUpdate).apply {
                 arguments = Bundle().apply {
                     putStringArrayList("delImgList", delImgList)
                 }
             }
-            changeFragment(fragment)
+            changeFragment(fragment, true)
         }
     }
 
@@ -226,21 +236,30 @@ class MainActivity : AppCompatActivity() {
                 putString("book", Gson().toJson(book))
             }
         }
-        changeFragment(fragment)
+        changeFragment(fragment, true)
     }
 
-    fun moveToPostDetail(book: BookModel) {
+    /*fun moveToPostDetail(book: BookModel) {
         val fragment = PostDetailFragment().apply {
             arguments = Bundle().apply {
                 putLong("bookId", book.id!!)
                 putString("bookName", book.name)
             }
         }
-        changeFragment(fragment)
+        changeFragment(fragment, true)
+    }*/
+    fun moveToPostDetail(post: PostDetailModel) {
+        Log.d("MainActivity", "moveToPostDetail $post")
+        val fragment = PostDetailFragment().apply {
+            arguments = Bundle().apply {
+                putString("post", Gson().toJson(post))
+            }
+        }
+        changeFragment(fragment, true)
     }
 
     fun moveToMyLibrary() {
-        changeFragment(MyLibraryFragment())
+        changeFragment(MyLibraryFragment(), true)
     }
 
     //ChecklistManagementActivity 화면으로 이동하는 함수
@@ -256,5 +275,28 @@ class MainActivity : AppCompatActivity() {
     //MyInfoActivity 화면으로 이동하는 함수
     fun goMyInfo() {
         startActivity(Intent(this, MyInfoActivity::class.java))
+    }
+
+    //현재 선택돼 있는 bottom menu 구하기
+    fun getMenuIdx(): Int {
+        return when(binding.bottomNavigation.selectedItemId) {
+            R.id.main -> 0
+            R.id.library -> 1
+            else -> 2
+        }
+    }
+
+    //store 이 true 이면 bottom menu 별로 backstack 에 저장 후 프래그먼트로 이동하고, false 이면 바로 이동한다.
+    fun changeFragment(fragment: Fragment, store: Boolean) {
+        if (store) {
+            when (binding.bottomNavigation.selectedItemId) {
+                R.id.main -> BackStackManager.pushFragment(0, fragment)
+                R.id.library -> BackStackManager.pushFragment(1, fragment)
+                R.id.bookclub -> BackStackManager.pushFragment(2, fragment)
+            }
+        }
+
+        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commitAllowingStateLoss()
     }
 }

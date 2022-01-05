@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
-import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
-import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -23,8 +22,6 @@ class PostDetailFragment : Fragment() {
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
 
-    private var bookId: Long? = null
-    private var bookName: String? = null
     private var isInit: Boolean = false
 
     private lateinit var binding: FragmentPostDetailBinding
@@ -32,9 +29,6 @@ class PostDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("PostDetailFragment", "onCreate")
-
-        bookId = arguments?.getLong("bookId")
-        bookName = arguments?.getString("bookName")
     }
 
     override fun onCreateView(
@@ -54,9 +48,9 @@ class PostDetailFragment : Fragment() {
 
         //수정하기 클릭 리스너
         binding.updateTv.setOnClickListener {
-            setBook()   //수정하고자 하는 책 데이터 저장
-            setPost()   //수정하고자 하는 기록 데이터 저장
-            (requireActivity() as MainActivity).moveToRecord(true)  //RecordFragment 화면으로 이동
+//            setBook()   //수정하고자 하는 책 데이터 저장
+            //수정하고자 하는 기록 데이터 저장 & RecordFragment 화면으로 이동
+            (requireActivity() as MainActivity).moveToRecord(true)
         }
 
         return binding.root
@@ -95,9 +89,10 @@ class PostDetailFragment : Fragment() {
 
     //화면 디자인 함수
     private fun setUI() {
-        val post = postVm.getPostDetail()!!
+        //현재 post 를 BookDescFragment 또는 WritingSettingFragment 로부터 전달받는다.
+        val post = Gson().fromJson(arguments?.getString("post"), PostDetailModel::class.java)
 
-        binding.bookNameTv.text = arguments?.getString("bookName")
+        binding.bookNameTv.text = post.book!!.name
 
         if (post.scope == "PRIVATE")
             binding.updateTv.visibility = View.VISIBLE
@@ -223,14 +218,15 @@ class PostDetailFragment : Fragment() {
         }
     }
 
-    private fun setBook() {
+    /*private fun setBook() {
         val book: BookModel = BookModel(id = bookId!!, name = bookName!!)
         bookVm.setBook(book)
-    }
+    }*/
 
-    private fun setPost() {
+    /*private fun getPost(): PostModel {
         val postDetail: PostDetailModel = postVm.getPostDetail()!!
-        val post: PostModel = PostModel(
+
+        return PostModel(
             bookId,
             postDetail.scope,
             false,
@@ -243,8 +239,8 @@ class PostDetailFragment : Fragment() {
             postDetail.postImgLocations
         )
 
-        postVm.setPost(post)
-    }
+//        postVm.setPost(post)
+    }*/
 
     private fun goPhotoViewActivity(position: Int) {
         isInit = false

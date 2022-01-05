@@ -2,7 +2,6 @@ package com.mangpo.bookclub.repository
 
 import android.util.Log
 import com.mangpo.bookclub.model.PostDetailModel
-import com.mangpo.bookclub.model.PostModel
 import com.mangpo.bookclub.service.PostService
 import com.mangpo.bookclub.util.ImgUtil
 import okhttp3.MultipartBody
@@ -26,7 +25,22 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    suspend fun createPost(newPost: PostModel): PostDetailModel? {
+    /*suspend fun createPost(newPost: PostModel): PostDetailModel? {
+        val response = postService.createPost(newPost)
+
+        return if (!response.isSuccessful) {
+            Log.e(
+                "PostRepository",
+                "createPost 실패\ncode: ${response.code()}\nerror: ${response.message()}\npost: $newPost"
+            )
+
+            null
+        } else {
+            response.body()
+        }
+    }*/
+
+    suspend fun createPost(newPost: PostDetailModel): PostDetailModel? {
         val response = postService.createPost(newPost)
 
         return if (!response.isSuccessful) {
@@ -41,7 +55,9 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    suspend fun updatePost(postId: Long, post: PostModel): Int =
+    /*suspend fun updatePost(postId: Long, post: PostModel): Int =
+        postService.updatePost(postId, post).code()*/
+    suspend fun updatePost(postId: Long, post: PostDetailModel): Int =
         postService.updatePost(postId, post).code()
 
     suspend fun uploadImgFile(imgPath: String): String? {

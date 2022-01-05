@@ -118,8 +118,13 @@ class BookViewModel(
             val code = hashMap.await()!!["code"] as Int
 
             if (code == 201) {
-                _book.value = hashMap.await()!!["book"] as BookModel
-                requestBookList(_book.value!!.category)
+                val book = hashMap.await()!!["book"] as BookModel
+
+                //읽는중, 완독일 땐 라이브데이터에 등록된 데이터 저장하기
+                if (book.category!="BEFORE")
+                    _book.value = book
+
+                requestBookList(book.category)
             }
 
             code

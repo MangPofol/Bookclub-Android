@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.write
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,9 +10,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordBinding
-import com.mangpo.bookclub.model.PostModel
+import com.mangpo.bookclub.model.BookModel
+import com.mangpo.bookclub.model.PostDetailModel
+import com.mangpo.bookclub.util.BackStackManager
+import com.mangpo.bookclub.util.OnBackPressedListener
 import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
-import com.mangpo.bookclub.view.LoadingDialogFragment
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.view.main.MainActivity
@@ -23,7 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class RecordFragment(private var isUpdate: Boolean) : Fragment() {
+class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedListener {
     private lateinit var binding: FragmentRecordBinding
     private lateinit var cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment2
 
@@ -34,9 +35,6 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
     private val newImgList: ArrayList<String> = arrayListOf()  //새롭게 추가된 이미지 리스트(기록 수정하기에서 사용)
     private val delImgList: ArrayList<String> =
         arrayListOf()  //기존 imgList 에서 삭제된 이미지 리스트(기록 수정하기에서 사용)
-    private val loadingDialogFragment = LoadingDialogFragment()
-
-    private var post: PostModel = PostModel()   //기록되고 있는 post
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +45,8 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("RecordFragment", "onCreateView post -> ${postVm.getPost()}")
         binding = FragmentRecordBinding.inflate(inflater, container, false)
-        Log.d("RecordFragment", "onCreateView")
-
         observe()
 
         //선택한 이미지를 보여주는 recycler view 어댑터 설정
@@ -62,6 +59,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
                     val idx = imgList.indexOf(path)
                     delImgList.add(imgList.removeAt(idx))
                     recordImgRVAdapter.setData(imgList)
+                    binding.imgCntTv.text = imgList.size.toString()
                 } else if (isUpdate && newImgList.contains(path)) {   //기록 수정하기 화면에서 새로 추가된 이미지 삭제
                     val idx = newImgList.indexOf(path)
                     deleteImg(path, idx)
@@ -79,7 +77,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
             (requireActivity() as MainActivity).moveToSelect()
         }
 
-        //이미지 선택하기 클릭 리스너
+        //이미지 추가하기 클릭 리스너
         binding.addImgView.setOnClickListener {
             if (imgList.size == 4) {
                 Toast.makeText(requireContext(), R.string.max_image_desc, Toast.LENGTH_SHORT)
@@ -109,10 +107,13 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
                 setPost()   //다시 한 번 기록한 데이터 저장
 
                 //WritingSettingFragment 로 이동
-                if (delImgList.isNotEmpty())
+                if (isUpdate && delImgList.isNotEmpty())  //수정하기 화면에서 기존 이미지 중 삭제할 이미지가 있다면 해당 리스트도 같이 넘긴다.
                     (requireActivity() as MainActivity).moveToWritingSetting(isUpdate, delImgList)
                 else
                     (requireActivity() as MainActivity).moveToWritingSetting(isUpdate, null)
+
+                //이미지가 포함된 기록 추가하고 다시 RecordFragment 로 돌아왔을 때 이전에 추가했던 이미지가 adapter 에 setData 돼 있는 버그 해결하기 위해
+                imgList = arrayListOf()
             }
         }
 
@@ -154,6 +155,24 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
         Log.d("RecordFragment", "onDetach")
     }
 
+    //뒤로가기 인터페이스 -> 기록된 내용이 있다면 모두 지워버리고, 없으면 이전 화면으로 이동한다.
+    override fun onBackPressed() {
+        if (isInitUI()) {   //기록된 내용이 없을 때
+            val menuIdx = (requireActivity() as MainActivity).getMenuIdx()
+            BackStackManager.popFragment(menuIdx)
+            (requireActivity() as MainActivity).changeFragment(
+                BackStackManager.peekFragment(menuIdx)!!,
+                false
+            )
+        } else {    //기록된 내용이 있을 때
+            bookVm.setBook(BookModel())
+            postVm.setPost(PostDetailModel())
+            imgList.clear()
+            newImgList.clear()
+            delImgList.clear()
+        }
+    }
+
     //카메라 촬영 or 갤러리에서 사진 선택 후 콜백 함수
     private fun imgSelectCallback(paths: List<String>) {
         if (paths.size == 1)
@@ -162,13 +181,16 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
             uploadMultiImg(paths as ArrayList<String>)
     }
 
+    //지금까지 입력된 post 저장하기
     private fun setPost() {
-        post.bookId = bookVm.getBook()?.id
-        post.isIncomplete = false
+        var post = postVm.getPost()
+        if (post == null) {
+            post = PostDetailModel()
+        }
+
         post.postImgLocations = imgList
         post.title = binding.postTitleET.text.toString()
         post.content = binding.contentET.text.toString()
-
         postVm.setPost(post)
     }
 
@@ -194,23 +216,28 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
         }
     }
 
-    private fun setUpdateUI(post: PostModel) {
-        binding.selectBookBtn.isEnabled = !isUpdate
+    //지금까지 입력된 post 를 화면에 보여주기
+    private fun bind(post: PostDetailModel) {
+        binding.selectBookBtn.isEnabled = !isUpdate //수정하기 화면이면 책 선택 화면 비활성화, 기록하기 화면이면 활성화
 
-        binding.postTitleET.setText(post.title)
-        binding.contentET.setText(post.content)
+        //책 제목
+        if (post.book == null || post.book!!.name.isBlank())
+            binding.selectBookBtn.setText(R.string.book_select)
+        else
+            binding.selectBookBtn.text = post.book?.name
 
-        if (post.postImgLocations != null) {
+        binding.postTitleET.setText(post.title) //post 제목
+        binding.contentET.setText(post.content) //post 내용
+
+        //이미지
+        if (post.postImgLocations != null)
             recordImgRVAdapter.setData(post.postImgLocations)
-        }
     }
 
     //하나의 이미지를 업로드하는 함수
     private fun uploadImg(imgPath: String) {
         CoroutineScope(Dispatchers.Main).launch {
             val path = postVm.uploadImg(imgPath)
-
-            postVm.setImgLoading(0)
 
             when {
                 path == null -> Toast.makeText(
@@ -226,6 +253,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
             }
 
             recordImgRVAdapter.setData(imgList)
+            binding.imgCntTv.text = imgList.size.toString()
         }
     }
 
@@ -233,8 +261,6 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
     private fun uploadMultiImg(imgPaths: ArrayList<String>) {
         CoroutineScope(Dispatchers.Main).launch {
             val paths = postVm.uploadMultiImg(imgPaths)
-
-            postVm.setImgLoading(0)
 
             when {
                 paths == null -> Toast.makeText(
@@ -250,6 +276,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
             }
 
             recordImgRVAdapter.setData(imgList)
+            binding.imgCntTv.text = imgList.size.toString()
         }
     }
 
@@ -269,35 +296,35 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment() {
                 Toast.makeText(requireContext(), "이미지 삭제 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
                     .show()
             }
+
+            binding.imgCntTv.text = imgList.size.toString()
         }
     }
+
+    //입력된 내용이 있는지 확인하는 함수
+    private fun isInitUI(): Boolean =
+        binding.selectBookBtn.text == getString(R.string.book_select) &&
+                imgList.isEmpty() &&
+                binding.postTitleET.text.isBlank() &&
+                binding.contentET.text.isBlank()
+
 
     private fun observe() {
         //BookViewModel book observer
         bookVm.book.observe(viewLifecycleOwner, Observer {
-            if (it.name.isBlank())    //book.name 이 비어 있으면 selectedBtn.text = 기록할 책을 선택해주세요.
-                binding.selectBookBtn.text = getString(R.string.book_select)
-            else {  //book.id 가 null 이 아니면
-                post.bookId = it.id
-                binding.selectBookBtn.text = it.name
-            }
+            Log.d("RecordFragment", "book Observe!! -> $it")
+            val post = postVm.getPost()!!
+            post.book = it
+            post.bookId = it.id
+            postVm.setPost(post)
         })
 
         postVm.post.observe(viewLifecycleOwner, Observer {
-            post = it
-            setUpdateUI(it)
+            Log.d("RecordFragment", "post Observe!! -> $it")
+            bind(it)
 
             if (isUpdate)
-                imgList = post.postImgLocations as ArrayList<String>
-        })
-
-        postVm.imgLoading.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordFragment", "imgLoading Observe!! -> $it")
-            if (it == 1)
-                loadingDialogFragment.show((activity as MainActivity).supportFragmentManager, null)
-            else {
-                loadingDialogFragment.dismiss()
-            }
+                imgList = it.postImgLocations as ArrayList<String>
         })
     }
 }

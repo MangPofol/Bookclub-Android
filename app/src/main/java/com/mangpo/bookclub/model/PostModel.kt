@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.model
 
+/*
 data class PostModel(
     var bookId: Long? = null,
     var scope: String? = null,
@@ -12,4 +13,4 @@ data class PostModel(
     var content: String? = null,
     var postImgLocations: List<String> = ArrayList<String>(),
 //    var clubIdListForScope: List<Long> = ArrayList<Long>()
-)
+)*/

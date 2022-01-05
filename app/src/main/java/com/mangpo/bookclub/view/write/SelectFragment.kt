@@ -126,8 +126,8 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                 when (it) {
                     //읽는 중, 완독이면 -> 기록하기 화면으로 이동
                     "NOW", "AFTER" -> {
-                        bookVm.setBook(selectedBook)
-                        (requireActivity() as MainActivity).moveToRecord(false)
+                        bookVm.setBook(selectedBook)    //bookViewModel 의 book 변수에 선택된 책 저장
+                        (requireActivity() as MainActivity).onBackPressed() //이전 화면인 RecordFragment 로 이동
                     }
                     //읽고 싶은이면 -> 읽고 싶은 화면으로 이동.
                     "BEFORE" -> {
@@ -143,7 +143,6 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
                             else {
                                 Toast.makeText(requireContext(), "책이 등록됐습니다!", Toast.LENGTH_SHORT)
                                     .show()
-                                bookVm.setBook(BookModel())
 
                                 //책이 등록됐으면 내서재의 읽고싶은 탭 화면으로 이동.
                                 (requireActivity() as MainActivity).moveToMyLibrary()
@@ -157,12 +156,12 @@ class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
         } else {    //기존 책을 클릭한 상황이면
             //BookViewModel 의 book 변수에 선택한 책 데이터 저장
             selectedBook = when (binding.readTypeRG.checkedRadioButtonId) {
-                binding.readingRB.id -> bookVm.nowBooks.value!![position]
-                binding.readCompleteRB.id -> bookVm.afterBooks.value!![position]
-                else -> bookVm.beforeBooks.value!![position]
-            }
-            bookVm.setBook(selectedBook)
-            (requireActivity() as MainActivity).onBackPressed() //RecordFragment 로 이동
+                                binding.readingRB.id -> bookVm.nowBooks.value!![position]
+                                binding.readCompleteRB.id -> bookVm.afterBooks.value!![position]
+                                else -> bookVm.beforeBooks.value!![position]
+                            }
+            bookVm.setBook(selectedBook)    //bookViewModel 의 book 변수에 선택된 책 저장
+            (requireActivity() as MainActivity).onBackPressed() //이전 화면인 RecordFragment 로 이동
         }
     }
 
