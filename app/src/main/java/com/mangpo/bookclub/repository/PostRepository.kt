@@ -25,21 +25,6 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    /*suspend fun createPost(newPost: PostModel): PostDetailModel? {
-        val response = postService.createPost(newPost)
-
-        return if (!response.isSuccessful) {
-            Log.e(
-                "PostRepository",
-                "createPost 실패\ncode: ${response.code()}\nerror: ${response.message()}\npost: $newPost"
-            )
-
-            null
-        } else {
-            response.body()
-        }
-    }*/
-
     suspend fun createPost(newPost: PostDetailModel): PostDetailModel? {
         val response = postService.createPost(newPost)
 
@@ -55,8 +40,6 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    /*suspend fun updatePost(postId: Long, post: PostModel): Int =
-        postService.updatePost(postId, post).code()*/
     suspend fun updatePost(postId: Long, post: PostDetailModel): Int =
         postService.updatePost(postId, post).code()
 

@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.write
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.mangpo.bookclub.databinding.FragmentWritingSettingBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
@@ -26,11 +26,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     private val bookVm: BookViewModel by sharedViewModel()
     private val loadingDialogFragment = LoadingDialogFragment()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("WritingSettingFragment", "onAttach")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("WritingSettingFragment", "onCreate")
@@ -43,8 +38,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         Log.d("WritingSettingFragment", "onCreateView")
         binding = FragmentWritingSettingBinding.inflate(inflater, container, false)
         observe()
-
-        bind()
 
         //완료 버튼 클릭 리스너
         binding.completeBtn.setOnClickListener {
@@ -84,8 +77,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("WritingSettingFragment", "onResume")
-
-//        initUI(post)
     }
 
     override fun onPause() {
@@ -111,16 +102,10 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     override fun onDetach() {
         super.onDetach()
         Log.d("WritingSettingFragment", "onDetach")
-
-        //데이터 초기화
-//        bookVm.setBook(BookModel())
-//        postVm.setPost(PostModel())
-//        postVm.setPost(PostDetailModel())
     }
 
     //post 데이터를 화면에 보여주기
-    private fun bind() {
-        val post = postVm.getPost()!!
+    private fun bind(post: PostDetailModel) {
         Log.d("WritingSettingFragment", "bind $post")
 
         binding.readWhereEt.setText(post.location)
@@ -152,27 +137,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         }
     }
 
-    //기록 추가 함수
-    /*private fun createPost(post: PostModel) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val postDetail = postVm.createPost(post)
-
-            loadingDialogFragment.dismiss()
-
-            if (postDetail != null) {
-                if (book.category == "BEFORE") {  //책 카테고리가 "읽고 싶은" 이면 "읽는 중" 으로 변경하기
-                    bookVm.updateBook(book.id!!, "NOW")
-                    initBook()  //읽는중, 읽고싶은 책 목록 업데이트
-                }
-
-                postVm.setPostDetail(postDetail)
-                (requireActivity() as MainActivity).moveToPostDetail(book)
-            } else {
-                Toast.makeText(requireContext(), "게시글 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }*/
     private fun createPost(post: PostDetailModel) {
         CoroutineScope(Dispatchers.Main).launch {
             val resPost = postVm.createPost(post)   //응답 데이터
@@ -180,7 +144,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             loadingDialogFragment.dismiss()
 
             if (resPost != null) {
-//                val book = bookVm.getBook()!!
                 val book = post.book!!
                 if (book.category == "BEFORE") {  //책 카테고리가 "읽고 싶은" 이면 "읽는 중" 으로 업데이트
                     if (bookVm.updateBook(book.id!!, "NOW")) {
@@ -191,12 +154,10 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
                 resPost.book = book
 
-//                postVm.setPostDetail(postDetail)
                 //이동하면서 post, book 데이터 초기화
                 postVm.setPost(PostDetailModel())
                 bookVm.setBook(BookModel())
-                Log.d("WritingSettingFragment", "createPost post -> ${postVm.getPost()}")
-                Log.d("WritingSettingFragment", "createPost book -> ${bookVm.getBook()}")
+
                 //저장된 post 데이터와 함께 PostDetailFragment 로 이동하기
                 (requireActivity() as MainActivity).moveToPostDetail(post)
             } else {
@@ -206,40 +167,22 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         }
     }
 
-    //기록 수정하기
-    /*private fun updatePost(post: PostModel) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.postId, post)
-
-            if (isUpdate) {
-                setPostDetail()
-
-                val delImgList = arguments?.getStringArrayList("delImgList")
-                if (delImgList!=null)
-                    deleteMultiImg(delImgList)
-
-                loadingDialogFragment.dismiss()
-                (requireActivity() as MainActivity).moveToPostDetail(book)
-            } else {
-                loadingDialogFragment.dismiss()
-                Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }*/
     private fun updatePost(post: PostDetailModel) {
         CoroutineScope(Dispatchers.Main).launch {
-            val isUpdate = postVm.updatePost(postVm.getPostDetail()!!.postId!!, post)
+            val isUpdate = postVm.updatePost(post.postId!!, post)
 
             if (isUpdate) {
-//                setPostDetail()
-
                 val delImgList = arguments?.getStringArrayList("delImgList")
                 if (delImgList!=null)
                     deleteMultiImg(delImgList)
 
+                postVm.setPost(PostDetailModel())
+                bookVm.setBook(BookModel())
+
                 loadingDialogFragment.dismiss()
-//                (requireActivity() as MainActivity).moveToPostDetail(book)
+
+                //저장된 post 데이터와 함께 PostDetailFragment 로 이동하기
+                (requireActivity() as MainActivity).moveToPostDetail(post)
             } else {
                 loadingDialogFragment.dismiss()
                 Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
@@ -249,34 +192,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     }
 
     //기록 데이터 저장하는 함수
-    /*private fun addPostData() {
-        post.scope = "PRIVATE"
-
-        if (binding.readWhereEt.text.isNotBlank())
-            post.location = binding.readWhereEt.text.toString()
-        else
-//            post.location = null
-            post.location = ""
-
-        if (binding.readTimeEt.text.isNotBlank())
-            post.readTime = binding.readTimeEt.text.toString()
-        else
-//            post.readTime = null
-            post.readTime = ""
-
-        if (binding.linkTitleEt.text.isNotBlank())
-            post.hyperlinkTitle = binding.linkTitleEt.text.toString()
-        else
-//            post.hyperlinkTitle = null
-            post.hyperlinkTitle = ""
-
-        if (binding.linkEt.text.isNotBlank())
-            post.hyperlink = binding.linkEt.text.toString()
-        else
-//            post.hyperlink = null
-            post.hyperlink = ""
-        postVm.setPost(post)
-    }*/
     private fun addPostData(): PostDetailModel {
         val post = postVm.getPost()!!
 
@@ -307,21 +222,6 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         return post
     }
 
-    /*private fun setPostDetail() {
-        val postDetail: PostDetailModel = postVm.getPostDetail()!!
-        postDetail.scope = post.scope!!
-        postDetail.isIncomplete = post.isIncomplete
-        postDetail.title = post.title!!
-        postDetail.content = post.content!!
-        postDetail.location = post.location
-        postDetail.readTime = post.readTime
-        postDetail.hyperlinkTitle = post.hyperlinkTitle
-        postDetail.hyperlink = post.hyperlink
-        postDetail.postImgLocations = post.postImgLocations
-
-        postVm.setPostDetail(postDetail)
-    }*/
-
     private fun initBook() {
         CoroutineScope(Dispatchers.Main).launch {
             bookVm.requestBookList("BEFORE")
@@ -337,13 +237,8 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
     }
 
     private fun observe() {
-        /*bookVm.book.observe(viewLifecycleOwner, Observer {
-            book = it
-        })*/
-
-        /*postVm.post.observe(viewLifecycleOwner, Observer {
-            post = it
-        })*/
+        postVm.post.observe(viewLifecycleOwner, Observer {
+            bind(it)
+        })
     }
-
 }

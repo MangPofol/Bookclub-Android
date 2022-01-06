@@ -17,8 +17,6 @@ interface PostService {
     @GET("/posts/total-count")
     suspend fun getTotalPostCnt(): Response<JsonObject>
 
-    /*@POST("/posts")
-    suspend fun createPost(@Body newPost: PostModel): Response<PostDetailModel>*/
     @POST("/posts")
     suspend fun createPost(@Body newPost: PostDetailModel): Response<PostDetailModel>
 
@@ -29,8 +27,6 @@ interface PostService {
     @POST("/files/delete-multiple-files")
     suspend fun deleteMultiImgFile(@Body imageLocations: List<String>): Response<String>
 
-    /*@PUT("/posts/{postId}")
-    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostModel): Response<String>*/
     @PUT("/posts/{postId}")
     suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostDetailModel): Response<String>
 

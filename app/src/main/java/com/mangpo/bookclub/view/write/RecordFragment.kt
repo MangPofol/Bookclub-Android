@@ -45,7 +45,6 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("RecordFragment", "onCreateView post -> ${postVm.getPost()}")
         binding = FragmentRecordBinding.inflate(inflater, container, false)
         observe()
 
@@ -165,11 +164,19 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
                 false
             )
         } else {    //기록된 내용이 있을 때
-            bookVm.setBook(BookModel())
+            //PostDetail -> Record(수정하기) -> 뒤로가기 -> 뒤로가기(PostDetail) -> Record(수정하기)로 오면
+            //post 의 book 데이터가 null 로 바뀌는 버그를 막기 위한 코드
+            if (bookVm.getBook()==null) {
+                binding.selectBookBtn.text = getString(R.string.book_select)
+            } else {
+                bookVm.setBook(BookModel())
+            }
             postVm.setPost(PostDetailModel())
             imgList.clear()
             newImgList.clear()
             delImgList.clear()
+
+            binding.selectBookBtn.isEnabled = true  //수정하기 화면에서 비활성화 돼 있던 책 선택 버튼을 활성화시킨다.
         }
     }
 
@@ -312,7 +319,6 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
     private fun observe() {
         //BookViewModel book observer
         bookVm.book.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordFragment", "book Observe!! -> $it")
             val post = postVm.getPost()!!
             post.book = it
             post.bookId = it.id
@@ -320,10 +326,10 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
         })
 
         postVm.post.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordFragment", "post Observe!! -> $it")
             bind(it)
 
-            if (isUpdate)
+            //사진이 있는 기혹하기 화면(뒤로가기 버튼 누르기 전) 에서 imgList 에 데이터 저장하기
+            if (isUpdate && it.postImgLocations.isNotEmpty())
                 imgList = it.postImgLocations as ArrayList<String>
         })
     }

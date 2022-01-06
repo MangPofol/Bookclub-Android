@@ -148,6 +148,7 @@ class BookDescFragment : Fragment() {
             //기록데이터 클릭 리스너
             override fun goPostDetail(post: PostDetailModel) {
                 post.book = book    //선택된 기록 데이터에 현재 책 데이터를 저장한다.
+                post.bookId = book.id   //선택된 기록 데이터에 현재 책 데이터 Id 를 저장한다.
                 postVm.setPostDetail(post)  //현재 기록 데이터를 저장하고
                 (requireActivity() as MainActivity).moveToPostDetail(post)  //PostDetailFragment 로 이동한다.
             }
