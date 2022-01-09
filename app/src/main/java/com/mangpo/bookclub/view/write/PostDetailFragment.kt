@@ -43,11 +43,6 @@ class PostDetailFragment : Fragment() {
 
         setUI() //화면 디자인 함수 호출
 
-        //뒤로가기 클릭 리스너
-        binding.backIvView.setOnClickListener {
-            (requireActivity() as MainActivity).onBackPressed()
-        }
-
         //수정하기 클릭 리스너
         binding.updateTv.setOnClickListener {
             //PostDetail -> Record(수정하기) -> 뒤로가기 -> 뒤로가기(PostDetail) -> Record(수정하기)로 오면
