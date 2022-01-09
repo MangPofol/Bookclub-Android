@@ -22,7 +22,7 @@
         android:layout_marginTop="9.6dp"
         android:layout_marginBottom="60dp"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/main_blue"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

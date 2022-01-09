@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/select_book"
-                    android:textColor="@color/black"
+                    android:textColor="@color/main_blue"
                     android:textSize="21.6dp"
                     android:textStyle="bold" />
 
