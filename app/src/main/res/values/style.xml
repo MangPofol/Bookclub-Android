@@ -32,7 +32,7 @@
     </style>
 
     <style name="HyperlinkBlueAccent" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorAccent">#0000FF</item>
+        <item name="colorAccent">@color/grey12</item>
     </style>
 
     <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">

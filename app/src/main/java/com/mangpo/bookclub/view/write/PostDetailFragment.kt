@@ -104,6 +104,7 @@ class PostDetailFragment : Fragment() {
 
         binding.locationTv.text = post.location
         binding.clockTv.text = post.readTime
+        binding.linkTv.text = post.hyperlink
     }
 
     //이미지 개수에 따라 ImageView 구성을 바꾸는 함수

@@ -215,7 +215,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10.8dp"
-                android:text="우리집"
                 android:textColor="@color/grey12"
                 android:textSize="14.4dp"
                 app:layout_constraintBottom_toBottomOf="@+id/location_icon_iv"
@@ -236,12 +235,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10.8dp"
-                android:text="점심 먹을 때"
                 android:textColor="@color/grey12"
                 android:textSize="14.4dp"
                 app:layout_constraintBottom_toBottomOf="@+id/clock_icon_iv"
                 app:layout_constraintEnd_toStartOf="@+id/clock_icon_iv"
                 app:layout_constraintTop_toTopOf="@+id/clock_icon_iv" />
+
+            <ImageView
+                android:id="@+id/link_iv"
+                android:layout_width="13.2dp"
+                android:layout_height="16.8dp"
+                android:layout_marginTop="16.872dp"
+                android:src="@drawable/link_icon_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clock_icon_iv" />
+
+            <TextView
+                android:id="@+id/link_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:gravity="end|top"
+                android:paddingEnd="10.8dp"
+                android:textColor="@color/grey12"
+                android:textSize="14.4dp"
+                android:theme="@style/HyperlinkBlueAccent"
+                app:layout_constraintEnd_toStartOf="@+id/link_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/link_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
