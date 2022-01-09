@@ -85,11 +85,13 @@ class MyLibraryFragment : Fragment(), TextWatcher {
         //main 검색 버튼 클릭 리스너
         binding.searchButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                bookVm.setSearchFilterBtnClick(1)   //뷰모델에 검색 버튼이 클릭됐다는 것을 알려주기
                 binding.clubButton.isChecked = false
                 binding.sortButton.isChecked = false
                 binding.searchLayout.root.visibility = View.VISIBLE
                 binding.searchLayout.searchBookET.text.clear()
-            } else {
+            } else {    //뷰모델에 검색 버튼이 클릭이 취소됐다는 것을 알려주기
+                bookVm.setSearchFilterBtnClick(0)
                 binding.searchLayout.root.visibility = View.GONE
                 binding.searchLayout.searchBookET.text.clear()  //검색어 초기화
                 (activity as MainActivity).hideKeyBord(requireView())   //키보드 숨기기
@@ -118,15 +120,16 @@ class MyLibraryFragment : Fragment(), TextWatcher {
 
         //main 정렬 필터 버튼 클릭 리스너
         binding.sortButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            //scrollUp()
-            if (isChecked) {
+            if (isChecked) {    //뷰모델에 정렬 필터가 클릭됐다는 것을 알려주기
+                bookVm.setSortFilterBtnClick(1)
                 binding.searchButton.isChecked = false
                 binding.clubButton.isChecked = false
                 binding.sortFilterLayout.root.visibility = View.VISIBLE
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.oldOrder.isChecked = false
                 binding.sortFilterLayout.nameOrder.isChecked = false
-            } else {
+            } else {    //뷰모델에 정렬 필터 클릭이 취소됐다는 것을 알려주기
+                bookVm.setSortFilterBtnClick(0)
                 binding.sortFilterLayout.root.visibility = View.GONE
                 binding.sortFilterLayout.latestOrder.isChecked = false
                 binding.sortFilterLayout.oldOrder.isChecked = false
@@ -212,6 +215,24 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 "NOW" -> binding.viewPager.currentItem = 0
                 "AFTER" -> binding.viewPager.currentItem = 1
                 else -> binding.viewPager.currentItem = 2
+            }
+        })
+
+        //검색 필터 버튼 클릭 Observer -> 정렬 필터도 클릭이 안 돼 있는 상황이면 세부 필터 클릭 레이아웃의 View=Gone 으로 변경한다.
+        bookVm.searchFilterBtnClick.observe(viewLifecycleOwner, Observer {
+            if (it == 0 && bookVm.sortFilterBtnClick.value == 0) {
+                binding.filterContentsLayout.visibility = View.GONE
+            } else {
+                binding.filterContentsLayout.visibility = View.VISIBLE
+            }
+        })
+
+        //정렬 필터 버튼 클릭 Observer -> 검색 필터도 클릭이 안 돼 있는 상황이면 세부 필터 클릭 레이아웃의 View=Gone 으로 변경한다.
+        bookVm.sortFilterBtnClick.observe(viewLifecycleOwner, Observer {
+            if (it == 0 && bookVm.searchFilterBtnClick.value == 0) {
+                binding.filterContentsLayout.visibility = View.GONE
+            } else {
+                binding.filterContentsLayout.visibility = View.VISIBLE
             }
         })
     }

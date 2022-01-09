@@ -35,6 +35,8 @@ class BookViewModel(
     private val _myLibrarySearch: MutableLiveData<String> = MutableLiveData<String>()
     private val _myLibrarySort: MutableLiveData<String> = MutableLiveData<String>()
     private val _getBooksCode: MutableLiveData<Int> = MutableLiveData<Int>()    //getBooks req 응답코드
+    private val _searchFilterBtnClick: MutableLiveData<Int> = MutableLiveData<Int>()  //내서재에서 검색 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    private val _sortFilterBtnClick: MutableLiveData<Int> = MutableLiveData<Int>()  //내서재에서 정렬 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
 
     val book: LiveData<BookModel> get() = _book
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
@@ -45,6 +47,8 @@ class BookViewModel(
     val myLibrarySearch: LiveData<String> get() = _myLibrarySearch
     val myLibrarySort: LiveData<String> get() = _myLibrarySort
     val getBooksCode: LiveData<Int> get() = _getBooksCode   //getBooks req 응답코드
+    val searchFilterBtnClick: LiveData<Int> get() = _searchFilterBtnClick   //내서재에서 검색 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    val sortFilterBtnClick: LiveData<Int> get() = _sortFilterBtnClick   //내서재에서 정렬 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
 
     fun getBookList(category: String): MutableList<BookModel>? {
         return when (category) {
@@ -70,6 +74,14 @@ class BookViewModel(
 
     fun setMyLibrarySort(filter: String) {
         _myLibrarySort.value = filter
+    }
+
+    fun setSearchFilterBtnClick(searchFilterBtnClick: Int) {
+        _searchFilterBtnClick.value = searchFilterBtnClick
+    }
+
+    fun setSortFilterBtnClick(sortFilterBtnClick: Int) {
+        _sortFilterBtnClick.value = sortFilterBtnClick
     }
 
     suspend fun requestBookList(category: String) {

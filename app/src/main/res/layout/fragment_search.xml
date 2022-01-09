@@ -9,7 +9,7 @@
         android:id="@+id/searchBookET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19.2dp"
+        android:layout_marginTop="22dp"
         android:background="@drawable/search_book_et"
         android:hint="@string/book_search"
         android:paddingVertical="7.2dp"
