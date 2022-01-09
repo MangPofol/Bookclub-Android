@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.write.PostDetailFragment">
 
-    <View
+    <!--<View
         android:id="@+id/back_iv_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -24,9 +24,9 @@
         android:src="@drawable/back"
         app:layout_constraintBottom_toTopOf="@+id/book_name_tv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
+    <!--<TextView
         android:id="@+id/book_name_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,12 +35,30 @@
         android:layout_marginEnd="10dp"
         android:text="책 이름"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/line_view"
         app:layout_constraintEnd_toStartOf="@id/update_tv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_iv" />
+        app:layout_constraintTop_toBottomOf="@+id/back_iv" />-->
+
+    <TextView
+        android:id="@+id/book_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34.8dp"
+        android:layout_marginTop="40.8dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="책 이름"
+        android:textColor="@color/main_blue"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/line_view"
+        app:layout_constraintEnd_toStartOf="@id/update_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/update_tv"
