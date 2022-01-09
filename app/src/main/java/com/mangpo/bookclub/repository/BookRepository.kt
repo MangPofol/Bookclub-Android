@@ -114,18 +114,24 @@ class BookRepository(
 
             if (image == null) {
                 try {
-                    image = kakaoBookService.getKakaoBooks(book.isbn!!, "isbn", 1)
-                        .body()!!.documents[0].thumbnail!!
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                    //아이폰에서 넘어오는 책들 중 isbn 이 두 개인 경우 한번에 넘어오기 때문에 isbn 이 두개인지 확인할 필요가 있음.
+                    image = if (book.isbn.split(" ").size==2)
+                        kakaoBookService.getKakaoBooks(book.isbn.split(" ")[0], "isbn", 1)
+                            .body()!!.documents[0].thumbnail!!
+                    else
+                        kakaoBookService.getKakaoBooks(book.isbn!!, "isbn", 1)
+                            .body()!!.documents[0].thumbnail!!
 
-                bookImageDao.insertBook(
-                    BookImageModel(
-                        isbn = book.isbn,
-                        image = image
+                    bookImageDao.insertBook(
+                        BookImageModel(
+                            isbn = book.isbn,
+                            image = image
+                        )
                     )
-                )
+                } catch (e: Exception) {
+                    Log.e("BookRepository", "getBookImg ERROR! -> ${e.stackTraceToString()}")
+                    image = ""
+                }
             }
 
             book.imgPath = image
