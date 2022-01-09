@@ -6,13 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.mangpo.bookclub.databinding.BookItemBinding
+import com.mangpo.bookclub.databinding.ItemBookBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
 
 class BookAdapter() :
     RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
-    private lateinit var binding: BookItemBinding
+    private lateinit var binding: ItemBookBinding
     private lateinit var itemClick: OnItemClick
 
     private var books: MutableList<Any> = ArrayList<Any>()
@@ -23,7 +23,7 @@ class BookAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookAdapter.BookViewHolder {
-        binding = BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return BookViewHolder(binding)
     }
@@ -67,7 +67,7 @@ class BookAdapter() :
         return books.size
     }
 
-    inner class BookViewHolder(itemView: BookItemBinding) : RecyclerView.ViewHolder(itemView.root) {
+    inner class BookViewHolder(itemView: ItemBookBinding) : RecyclerView.ViewHolder(itemView.root) {
         val bookImg: ImageView = itemView.bookIV
         val bookTitle: TextView = itemView.bookTitle
 
