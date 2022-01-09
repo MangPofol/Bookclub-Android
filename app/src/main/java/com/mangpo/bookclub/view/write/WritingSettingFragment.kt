@@ -123,7 +123,8 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
             }
 
             if (code.await() == 201) {  //책이 등록됐으면
-                post.book!!.id = bookVm.getBook()!!.id    //post 의 bookId 저장
+                post.book!!.id = bookVm.getBook()!!.id    //post 의 book 데이터의 id 저장
+                post.bookId = bookVm.getBook()!!.id //post 의 bookId 데이터 저장
 
                 if (isUpdate)
                     updatePost(post)
