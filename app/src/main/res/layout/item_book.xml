@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/bookIV"
         android:layout_width="0dp"
-        android:layout_height="158.4dp"
+        android:layout_height="132dp"
         android:layout_marginHorizontal="12dp"
         android:background="@drawable/book_image_view_border_round"
         android:scaleType="fitXY"

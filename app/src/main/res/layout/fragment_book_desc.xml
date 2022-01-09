@@ -55,7 +55,7 @@
         android:id="@+id/book_iv"
         android:layout_width="148dp"
         android:layout_height="217dp"
-        android:layout_marginTop="52.8dp"
+        android:layout_marginTop="41dp"
         android:background="@drawable/book_desc_book_iv"
         android:scaleType="fitXY"
         android:src="@drawable/book_ex"
@@ -100,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="50.4dp"
+        android:layout_marginTop="45dp"
         android:layout_marginBottom="22.8dp"
         android:background="@drawable/book_desc_memo_list_view"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,6 +125,7 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="19.2dp"
         android:layout_marginTop="14.4dp"
+        android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="@+id/memo_list_view"
         app:layout_constraintEnd_toEndOf="@+id/memo_list_view"
@@ -135,6 +136,7 @@
             android:id="@+id/memo_list_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_post" />
     </ScrollView>

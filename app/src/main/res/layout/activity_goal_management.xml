@@ -73,7 +73,7 @@
         android:layout_marginTop="37dp"
         android:text="@string/update_reading_goal"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/layout_view"
         app:layout_constraintTop_toTopOf="@+id/layout_view" />
@@ -89,7 +89,7 @@
 
     <NumberPicker
         android:id="@+id/period_number_np"
-        android:layout_width="66dp"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:theme="@style/AppTheme.Picker"
@@ -108,7 +108,7 @@
 
     <NumberPicker
         android:id="@+id/period_unit_np"
-        android:layout_width="44.4dp"
+        android:layout_width="37dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:theme="@style/AppTheme.Picker"
@@ -123,7 +123,7 @@
         android:gravity="center"
         android:text="동안"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/period_unit_np"
         app:layout_constraintEnd_toStartOf="@+id/book_cnt_np"
@@ -141,7 +141,7 @@
 
     <NumberPicker
         android:id="@+id/book_cnt_np"
-        android:layout_width="66dp"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:theme="@style/AppTheme.Picker"
@@ -156,7 +156,7 @@
         android:gravity="center"
         android:text="권의 책을 기록하기"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/book_cnt_np"
         app:layout_constraintEnd_toEndOf="parent"

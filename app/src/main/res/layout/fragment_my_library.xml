@@ -69,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -80,7 +81,7 @@
                 android:id="@+id/readTypeTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/read_type_tab_layout_view"
                 app:layout_constraintTop_toTopOf="parent"

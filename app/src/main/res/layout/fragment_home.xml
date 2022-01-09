@@ -18,6 +18,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hamburger_ib">
@@ -40,15 +41,13 @@
                 android:id="@+id/write_init_title_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="165.6dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginHorizontal="21dp"
+                android:layout_marginTop="104dp"
                 android:text="닉네임님,\n오늘도 힘차게 기록해봅시다."
                 android:textColor="@color/main_blue"
                 android:textSize="24dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/go_my_info_iv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +64,7 @@
                 android:id="@+id/go_my_info_iv"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="21dp"
                 android:src="@drawable/next_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/write_init_title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +74,7 @@
                 android:id="@+id/total_pages_view"
                 android:layout_width="122.4dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="25.2dp"
+                android:layout_marginStart="21dp"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/write_init_fragment_blue_view"
                 app:layout_constraintEnd_toStartOf="@+id/date_view"
@@ -99,7 +98,7 @@
                 android:id="@+id/date_view"
                 android:layout_width="192dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="7.2dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/write_init_fragment_blue_view"
                 app:layout_constraintBottom_toBottomOf="@+id/total_pages_view"
                 app:layout_constraintStart_toEndOf="@+id/total_pages_view"
@@ -124,12 +123,12 @@
                 android:layout_height="42dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/grey13_round_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/background_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/total_pages_view" />
 
             <TextView
                 android:id="@+id/reading_goal_tv"

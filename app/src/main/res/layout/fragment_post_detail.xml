@@ -69,6 +69,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="26.4dp"
         android:background="@drawable/layout_gradation"
+        android:overScrollMode="never"
         android:paddingHorizontal="28.8dp"
         android:paddingVertical="21.6dp"
         android:scrollbars="none"
