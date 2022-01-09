@@ -66,7 +66,7 @@ class UserRepository(private val userService: UserService) {
         } else {
             Log.e(
                 "UserRepository",
-                "getUser is not Successful! -> message: ${result.message()}}"
+                "getUser is not Successful! -> code: ${result.code()}, result: ${result}}"
             )
 
             null
