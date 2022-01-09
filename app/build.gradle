@@ -15,8 +15,8 @@ android {
         applicationId "com.mangpo.bookclub"
         minSdk 26
         targetSdk 30
-        versionCode 5
-        versionName "0.2.0"
+        versionCode 6
+        versionName "0.2.1"
 
         buildConfigField("String", "KAKAOBOOK_KEY", properties.getProperty("kakaobook.key"))
         buildConfigField("String", "KAKAO_BOOK_API_BASE_URL", properties.getProperty("kakao.book.api.base.url"))
@@ -49,6 +49,9 @@ android {
             minifyEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            shrinkResources false
+            zipAlignEnabled false
         }
     }
 
