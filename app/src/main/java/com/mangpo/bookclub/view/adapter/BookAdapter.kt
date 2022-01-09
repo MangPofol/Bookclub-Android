@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ItemBookBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.KakaoBookModel
@@ -46,9 +47,15 @@ class BookAdapter() :
     private fun libraryViewBinding(position: Int, holder: BookViewHolder) {
         val book: BookModel = books[position] as BookModel
 
-        Glide.with(binding.root.context.applicationContext)
-            .load(book.imgPath)
-            .into(holder.bookImg)
+        if (book.imgPath=="") { //책 표지가 없을 때
+            Glide.with(binding.root.context.applicationContext)
+                .load(R.drawable.no_book_img)
+                .into(holder.bookImg)
+        } else {    //책 표지가 있을 때
+            Glide.with(binding.root.context.applicationContext)
+                .load(book.imgPath)
+                .into(holder.bookImg)
+        }
 
         holder.bookTitle.text = book.name
     }
