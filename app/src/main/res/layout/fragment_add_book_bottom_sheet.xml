@@ -77,7 +77,7 @@
         android:paddingTop="9.6dp"
         android:stateListAnimator="@null"
         android:text="@string/add_book"
-        android:textColor="@color/black"
+        android:textColor="@color/main_blue"
         android:textSize="16.8dp"
         android:textStyle="bold"
         app:backgroundTint="@color/grey4"
