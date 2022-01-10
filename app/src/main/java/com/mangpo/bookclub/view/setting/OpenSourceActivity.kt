@@ -67,10 +67,10 @@ class OpenSourceActivity : AppCompatActivity() {
                 "Copyright 2012 Jake Wharton\nCopyright 2011 The Android Open Source Project"
             ),
             OpenSourceModel(
-                "Dotsindicator",
-                "https://github.com/tommybuonomo/dotsindicator",
+                "CircleIndicator",
+                "https://github.com/ongakuer/CircleIndicator",
                 "Apache 2.0",
-                "Copyright 2016 Tommy Buonomo"
+                ""
             ),
             OpenSourceModel(
                 "TedImagePicker",
