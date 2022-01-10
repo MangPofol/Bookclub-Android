@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
 import com.mangpo.bookclub.model.PostDetailModel
+import com.mangpo.bookclub.view.adapter.PostDetailImgAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -24,6 +24,7 @@ class PostDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentPostDetailBinding
     private lateinit var post: PostDetailModel
+    private lateinit var postDetailImgAdapter: PostDetailImgAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class PostDetailFragment : Fragment() {
 
         binding = FragmentPostDetailBinding.inflate(inflater, container, false)
 
+        initAdapter()
         setUI() //화면 디자인 함수 호출
 
         //수정하기 클릭 리스너
@@ -86,6 +88,16 @@ class PostDetailFragment : Fragment() {
 
     //화면 디자인 함수
     private fun setUI() {
+        if (post.postImgLocations.isEmpty()) {
+            binding.contentImgVp.visibility = View.GONE
+        } else {
+            binding.contentImgVp.visibility = View.VISIBLE
+            //뷰페이저 어댑터에 데이터 바인딩
+            postDetailImgAdapter.setData(post.postImgLocations)
+            //인디케이터 등록
+            binding.contentImgIndicator.setViewPager(binding.contentImgVp)
+        }
+
         binding.bookNameTv.text = post.book!!.name
 
         if (post.scope == "PRIVATE")
@@ -95,129 +107,27 @@ class PostDetailFragment : Fragment() {
 
         binding.recordTitleTv.text = post.title
         binding.recordContentTv.text = post.content
-        setImg(post.postImgLocations)   //이미지 개수에 따라 ImageView 구성을 바꾸는 함수 호출
 
         binding.locationTv.text = post.location
         binding.clockTv.text = post.readTime
         binding.linkTv.text = post.hyperlink
     }
 
-    //이미지 개수에 따라 ImageView 구성을 바꾸는 함수
-    private fun setImg(imgList: List<String>) {
+    //뷰페이저 어댑터 초기화
+    private fun initAdapter() {
+        postDetailImgAdapter = PostDetailImgAdapter()
+        binding.contentImgVp.adapter = postDetailImgAdapter
 
-        when {
-            imgList.isEmpty() -> {
-                setVisibilityOneIV(View.GONE)
-                setVisibilityTwoIV(View.GONE)
-                setVisibilityThreeIV(View.GONE)
-                setVisibilityFourIV(View.GONE)
+        postDetailImgAdapter.setMyItemClickListener(object :
+            PostDetailImgAdapter.MyItemClickListener {
+            override fun goPhotoView(position: Int) {
+                goPhotoViewActivity(position)
             }
-            imgList.size == 1 -> {
-                setVisibilityOneIV(View.VISIBLE)
-                setVisibilityTwoIV(View.GONE)
-                setVisibilityThreeIV(View.GONE)
-                setVisibilityFourIV(View.GONE)
 
-                Glide.with(requireContext().applicationContext).load(imgList[0]).into(binding.oneIv)
-            }
-            imgList.size == 2 -> {
-                setVisibilityOneIV(View.GONE)
-                setVisibilityTwoIV(View.VISIBLE)
-                setVisibilityThreeIV(View.GONE)
-                setVisibilityFourIV(View.GONE)
-
-                Glide.with(requireContext().applicationContext).load(imgList[0])
-                    .into(binding.twoIv1)
-                Glide.with(requireContext().applicationContext).load(imgList[1])
-                    .into(binding.twoIv2)
-            }
-            imgList.size == 3 -> {
-                setVisibilityOneIV(View.GONE)
-                setVisibilityTwoIV(View.GONE)
-                setVisibilityThreeIV(View.VISIBLE)
-                setVisibilityFourIV(View.GONE)
-
-                Glide.with(requireContext().applicationContext).load(imgList[0])
-                    .into(binding.threeIv1)
-                Glide.with(requireContext().applicationContext).load(imgList[1])
-                    .into(binding.threeIv2)
-                Glide.with(requireContext().applicationContext).load(imgList[2])
-                    .into(binding.threeIv3)
-            }
-            else -> {
-                setVisibilityOneIV(View.GONE)
-                setVisibilityTwoIV(View.GONE)
-                setVisibilityThreeIV(View.GONE)
-                setVisibilityFourIV(View.VISIBLE)
-
-                Glide.with(requireContext().applicationContext).load(imgList[0])
-                    .into(binding.fourIv1)
-                Glide.with(requireContext().applicationContext).load(imgList[1])
-                    .into(binding.fourIv2)
-                Glide.with(requireContext().applicationContext).load(imgList[2])
-                    .into(binding.fourIv3)
-                Glide.with(requireContext().applicationContext).load(imgList[3])
-                    .into(binding.fourIv4)
-            }
-        }
-
+        })
     }
 
-    private fun setVisibilityOneIV(visibility: Int) {
-        binding.oneIv.visibility = visibility
-        binding.oneIv.setOnClickListener {
-            goPhotoViewActivity(0)
-        }
-    }
-
-    private fun setVisibilityTwoIV(visibility: Int) {
-        binding.twoIv1.visibility = visibility
-        binding.twoIv2.visibility = visibility
-
-        binding.twoIv1.setOnClickListener {
-            goPhotoViewActivity(0)
-        }
-        binding.twoIv2.setOnClickListener {
-            goPhotoViewActivity(1)
-        }
-    }
-
-    private fun setVisibilityThreeIV(visibility: Int) {
-        binding.threeIv1.visibility = visibility
-        binding.threeIv2.visibility = visibility
-        binding.threeIv3.visibility = visibility
-
-        binding.threeIv1.setOnClickListener {
-            goPhotoViewActivity(0)
-        }
-        binding.threeIv2.setOnClickListener {
-            goPhotoViewActivity(1)
-        }
-        binding.threeIv3.setOnClickListener {
-            goPhotoViewActivity(2)
-        }
-    }
-
-    private fun setVisibilityFourIV(visibility: Int) {
-        binding.fourIv1.visibility = visibility
-        binding.fourIv2.visibility = visibility
-        binding.fourIv3.visibility = visibility
-        binding.fourIv4.visibility = visibility
-
-        binding.fourIv1.setOnClickListener {
-            goPhotoViewActivity(0)
-        }
-        binding.fourIv2.setOnClickListener {
-            goPhotoViewActivity(1)
-        }
-        binding.fourIv3.setOnClickListener {
-            goPhotoViewActivity(2)
-        }
-        binding.fourIv4.setOnClickListener {
-            goPhotoViewActivity(3)
-        }
-    }
-
+    //이미지 상세 화면(PhotoViewActivity)으로 이동
     private fun goPhotoViewActivity(position: Int) {
         //수정 후 사진 하나일 때 형변환 에러 해결을 위해
         var postImgLocations =
