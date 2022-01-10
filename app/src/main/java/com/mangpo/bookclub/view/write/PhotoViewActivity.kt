@@ -20,7 +20,7 @@ class PhotoViewActivity : AppCompatActivity() {
 
         binding.photoViewVp.adapter = adaptor
         binding.photoViewVp.setCurrentItem(currentItem, true)
-        binding.photoViewIndicator.setViewPager2(binding.photoViewVp)
+        binding.photoViewIndicator.setViewPager(binding.photoViewVp)
 
         binding.exitIv.setOnClickListener {
             finish()

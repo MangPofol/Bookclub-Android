@@ -26,22 +26,17 @@
         app:layout_constraintBottom_toTopOf="@+id/photo_view_indicator"
         app:layout_constraintTop_toBottomOf="@+id/exit_iv" />
 
-    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+    <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/photo_view_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
-        app:dampingRatio="0.5"
-        app:dotsColor="@color/white"
-        app:dotsCornerRadius="10dp"
-        app:dotsSize="12dp"
-        app:dotsSpacing="6dp"
-        app:dotsStrokeColor="@color/white"
-        app:dotsStrokeWidth="2dp"
+        app:ci_drawable="@drawable/content_img_dot_indicator"
+        app:ci_height="10dp"
+        app:ci_margin="10dp"
+        app:ci_width="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:stiffness="300" />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
