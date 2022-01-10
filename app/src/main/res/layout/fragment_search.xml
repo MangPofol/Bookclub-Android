@@ -27,7 +27,7 @@
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginStart="12dp"
-        android:src="@drawable/search_filter_icon"
+        android:src="@drawable/search_main_blue_icon"
         app:layout_constraintBottom_toBottomOf="@+id/searchBookET"
         app:layout_constraintStart_toStartOf="@+id/searchBookET"
         app:layout_constraintTop_toTopOf="@+id/searchBookET" />

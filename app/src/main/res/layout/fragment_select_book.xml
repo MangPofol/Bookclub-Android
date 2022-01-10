@@ -66,7 +66,7 @@
         android:layout_width="10.8dp"
         android:layout_height="10.8dp"
         android:layout_marginEnd="12dp"
-        android:src="@drawable/search_filter_icon"
+        android:src="@drawable/search_main_blue_icon"
         app:layout_constraintBottom_toBottomOf="@+id/searchBookET"
         app:layout_constraintEnd_toEndOf="@+id/searchBookET"
         app:layout_constraintTop_toTopOf="@+id/searchBookET" />
