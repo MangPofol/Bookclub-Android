@@ -12,12 +12,18 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
+import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.util.BackStackManager
+import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
+import com.mangpo.bookclub.view.book_profile.EmailAuthenticationActivity
+import com.mangpo.bookclub.view.book_profile.SignInActivity
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.*
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -56,20 +62,34 @@ class LoginActivity : AppCompatActivity() {
                 checkNetwork() == null   //네트워크 연결 상태 확인
                 -> Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
                 validationLogin() -> {    //로그인 유효성 검사
-                    //로그인 입력값 JSON 객체로 저장
-                    loginEditJson.addProperty("email", binding.loginIdEt.text.toString())
-                    loginEditJson.addProperty(
-                        "password",
-                        binding.loginPasswordEt.text.toString()
+                    val user: UserModel = UserModel(
+                        email = binding.loginIdEt.text.toString(),
+                        password = binding.loginPasswordEt.text.toString()
                     )
 
                     //로그인 요청 api 전송
                     CoroutineScope(Dispatchers.Main).launch {
-                        val token = mainVm.login(loginEditJson)
+//                        val token = mainVm.login(loginEditJson)
+                        val token = mainVm.login(user)
 
                         if (token != null) {
                             AccountSharedPreference.setJWT(this@LoginActivity, token)
-                            mainVm.getUser()
+
+                            when (val role = checkRole(token)) {
+                                "ROLE_NEED_EMAIL" -> {
+                                    val intent = Intent(
+                                        this@LoginActivity,
+                                        EmailAuthenticationActivity::class.java
+                                    )
+                                    intent.putExtra("email", binding.loginIdEt.text.toString())
+                                    intent.putExtra("prevActivity", 0)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                "ROLE_USER" -> {
+                                    mainVm.getUser()
+                                }
+                            }
                         } else {
                             Toast.makeText(baseContext, "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT)
                                 .show()
@@ -101,17 +121,6 @@ class LoginActivity : AppCompatActivity() {
     private fun validationLogin(): Boolean =
         !(binding.loginIdEt.text.isBlank() || binding.loginPasswordEt.text.isBlank())
 
-    private fun observe() {
-        mainVm.user.observe(this, Observer {
-            BackStackManager.clear()
-
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            val userStr = Gson().toJson(it)
-            intent.putExtra("user", userStr)
-            startActivity(intent)
-        })
-    }
-
     private fun checkNetwork(): Network? {
         val connectivityManager = getSystemService(ConnectivityManager::class.java)
 
@@ -122,5 +131,33 @@ class LoginActivity : AppCompatActivity() {
         val imm: InputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.loginIdEt.windowToken, 0)
+    }
+
+    //JWT Token Decode -> Find User Role
+    private fun checkRole(token: String): String {
+        val splitToken = token.split(".")
+        val payloadByte = Base64.getUrlDecoder().decode(splitToken[1])
+        val payload = payloadByte.toString(Charsets.UTF_8)
+
+        return JSONObject(payload).getString("auth")
+    }
+
+    private fun validateUser(user: UserModel): Boolean =
+        !(user.nickname == null || user.sex == null || user.birthdate == null || user.profileImgLocation == "")
+
+    private fun observe() {
+        mainVm.user.observe(this, Observer {
+            BackStackManager.clear()
+
+            if (validateUser(it))   //정상 계정인 경우
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            else {   //role==ROLE_USER && user.nickname==null(인증은 됐는데 필수 데이터가 없음.)
+                val intent = Intent(this@LoginActivity, BookProfileInitActivity::class.java)
+                intent.putExtra("user", Gson().toJson(it))
+                startActivity(intent)
+            }
+
+            finish()
+        })
     }
 }

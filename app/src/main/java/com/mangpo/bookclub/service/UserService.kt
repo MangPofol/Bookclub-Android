@@ -12,7 +12,7 @@ interface UserService {
     suspend fun getUser(): Response<UserDataModel>
 
     @POST("/auth/login")
-    suspend fun login(@Body user: JsonObject): Response<JsonObject>
+    suspend fun login(@Body user: UserModel): Response<JsonObject>
 
     @POST("/users/validate-duplicate")
     suspend fun validateEmail(@Body email: JsonObject): Response<JsonObject>
@@ -28,6 +28,12 @@ interface UserService {
 
     @POST("/users/{userId}/change-dormant")
     suspend fun changeUserDormant(@Path("userId") userId: Long): Response<String>
+
+    @POST("/users/validate-email")
+    suspend fun sendEmail(): Response<String>
+
+    @POST("/users/validate-email-send-code")
+    suspend fun sendCode(@Query("emailCode") emailCode: Int): Response<JsonObject>
 
     @PUT("/users/{userId}")
     suspend fun updateUser(@Path("userId") userId: Long, @Body user: UserModel): Response<String>

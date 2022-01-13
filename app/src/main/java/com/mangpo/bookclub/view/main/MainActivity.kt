@@ -30,7 +30,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var user: UserModel
 
     private var beforeMenu: Int = R.id.main
 
@@ -43,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = Gson().fromJson(intent.getStringExtra("user"), UserModel::class.java)
         initBook()  //책 데이터 불러오기
 
         //bottom navigation 메뉴 선택 시 프래그먼트 전환
@@ -197,18 +195,6 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
-    /*fun moveToRecord(isUpdate: Boolean, post: PostDetailFragment?) {
-        if (post==null)
-            changeFragment(RecordFragment(isUpdate), true)
-        else {  //전달할 post 가 있으면 bundle 에 넣어서 post 를 전달한다.
-            val fragment = RecordFragment(isUpdate).apply {
-                arguments = Bundle().apply {
-                    putString("post", Gson().toJson(post))
-                }
-            }
-            changeFragment(fragment, true)
-        }
-    }*/
     fun moveToRecord(isUpdate: Boolean) {
         changeFragment(RecordFragment(isUpdate), true)
     }
@@ -239,15 +225,6 @@ class MainActivity : AppCompatActivity() {
         changeFragment(fragment, true)
     }
 
-    /*fun moveToPostDetail(book: BookModel) {
-        val fragment = PostDetailFragment().apply {
-            arguments = Bundle().apply {
-                putLong("bookId", book.id!!)
-                putString("bookName", book.name)
-            }
-        }
-        changeFragment(fragment, true)
-    }*/
     fun moveToPostDetail(post: PostDetailModel) {
         Log.d("MainActivity", "moveToPostDetail $post")
         val fragment = PostDetailFragment().apply {
@@ -279,7 +256,7 @@ class MainActivity : AppCompatActivity() {
 
     //현재 선택돼 있는 bottom menu 구하기
     fun getMenuIdx(): Int {
-        return when(binding.bottomNavigation.selectedItemId) {
+        return when (binding.bottomNavigation.selectedItemId) {
             R.id.main -> 0
             R.id.library -> 1
             else -> 2

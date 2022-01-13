@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivityResettingPasswordBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.viewmodel.MainViewModel
@@ -61,12 +60,11 @@ class ResettingPasswordActivity : AppCompatActivity() {
     //비밀번호 변경하기
     private fun updatePassword() {
         val password = binding.newPasswordEt.text.toString()
-        val loginJson = JsonObject()
-        loginJson.addProperty("email", user.email)
-        loginJson.addProperty("password", binding.oldPasswordEt.text.toString())
+        val user: UserModel =
+            UserModel(email = user.email, password = binding.oldPasswordEt.text.toString())
 
         CoroutineScope(Dispatchers.Main).launch {
-            val token = mainVm.login(loginJson) //기존 비밀번호가 일치하는지 확인
+            val token = mainVm.login(user)  //기존 비밀번호가 일치하는지 확인
 
             if (token == null) {
                 Toast.makeText(

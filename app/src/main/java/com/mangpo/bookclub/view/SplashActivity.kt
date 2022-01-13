@@ -9,19 +9,23 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
+import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private lateinit var role: String
 
     private val mainVm: MainViewModel by viewModel()
 
@@ -41,31 +45,42 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            mainVm.getUser()
+        val token = AccountSharedPreference.getJWT(this)
+
+        if (token == "") {  //로그인 안 됐을 때
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(2000L)
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                finish()
+            }
+        } else {    //로그인 돼 있을 때
+            role = checkRole(token)
+
+            when (role) {
+                "ROLE_NEED_EMAIL" -> {  //이메일 인증이 안된 유저
+                    //getUser 를 통해 이메일 정보를 받아와서 EmailAuthenticationActivity 화면으로 이동한다.
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(2000L)
+                        startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                    }
+                }
+                "ROLE_USER" -> {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(2000L)
+                        mainVm.getUser()
+                    }
+                }
+            }
         }
     }
 
-    private fun observe() {
-        mainVm.user.observe(this, Observer {
-            //로그인 기록이 있으면 MainActivity 로 이동하고, 없으면 2초 후 LoginActivity 화면으로 이동한다.
-            if (it.userId != null) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(2000L)
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    val userStr = Gson().toJson(it)
-                    intent.putExtra("user", userStr)
-                    startActivity(intent)
-                    finish()
-                }
-            } else {
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(2000L)
-                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                    finish()
-                }
-            }
-        })
+    //JWT Token Decode -> Find User Role
+    private fun checkRole(token: String): String {
+        val splitToken = token.split(".")
+        val payloadByte = Base64.getUrlDecoder().decode(splitToken[1])
+        val payload = payloadByte.toString(Charsets.UTF_8)
+
+        return JSONObject(payload).getString("auth")
     }
 
     private fun checkNetwork(): Network? {
@@ -74,4 +89,18 @@ class SplashActivity : AppCompatActivity() {
         return connectivityManager.activeNetwork
     }
 
+    private fun validateUser(user: UserModel): Boolean =
+        !(user.nickname == null || user.sex == null || user.birthdate == null || user.profileImgLocation == "")
+
+    private fun observe() {
+        mainVm.user.observe(this, Observer {
+            if (!validateUser(it)) {  //role==ROLE_USER && user.nickname==null(인증은 됐는데 필수 데이터가 없음.)
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            } else {    //정상적인 계정
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            }
+
+            finish()
+        })
+    }
 }

@@ -15,16 +15,16 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<UserModel>()
     private val _updateUserCode = MutableLiveData<Int>()
     private val _quitMembershipCode = MutableLiveData<Int>()
-
-    private var _newUser = UserModel()
+    private val _sendCodeResult = MutableLiveData<Int>()    //이메인 인증 코드 전송 결과 코드
 
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
     val logoutCode: LiveData<Int> get() = _logoutCode
     val user: LiveData<UserModel> get() = _user
     val updateUserCode: LiveData<Int> get() = _updateUserCode
     val quitMembershipCode: LiveData<Int> get() = _quitMembershipCode
+    val sendCodeResult: LiveData<Int> get() = _sendCodeResult   //이메인 인증 코드 전송 결과 코드
 
-    suspend fun login(user: JsonObject): String? {
+    suspend fun login(user: UserModel): String? {
         val token = viewModelScope.async {
             val loginResult = repository.login(user)
             val token = loginResult.get("token")
@@ -47,10 +47,15 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
             _emailAlertVisibility.value = View.VISIBLE
     }
 
-    suspend fun createUser() {
-        _newUser = withContext(viewModelScope.coroutineContext) {
-            repository.createUser(_newUser)
-        }!!
+    suspend fun createUser(user: UserModel) {
+        viewModelScope.launch {
+            val result = repository.createUser(user)
+
+            if (result == null)
+                _user.value = UserModel()
+            else
+                _user.value = result!!
+        }
     }
 
     suspend fun getUser() {
@@ -94,10 +99,15 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    fun updateNewUser(user: UserModel) {
-        _newUser = user
+    suspend fun sendEmail() {
+        viewModelScope.launch {
+            repository.sendEmail()
+        }
     }
 
-    fun getNewUser(): UserModel = _newUser
-
+    suspend fun sendCode(code: Int) {
+        viewModelScope.launch {
+            _sendCodeResult.value = repository.sendCode(code)
+        }
+    }
 }

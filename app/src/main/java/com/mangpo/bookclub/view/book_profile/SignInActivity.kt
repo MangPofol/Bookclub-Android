@@ -1,7 +1,6 @@
-package com.mangpo.bookclub.view
+package com.mangpo.bookclub.view.book_profile
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,10 +8,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivitySignInBinding
-import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
+import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.AccountSharedPreference
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInActivity : AppCompatActivity(), TextWatcher {
     private lateinit var binding: ActivitySignInBinding
+    private lateinit var user: UserModel
 
     private val mainVm: MainViewModel by viewModel()
 
@@ -44,20 +44,16 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
         }
 
         binding.signinCompleteTv.setOnClickListener {   //회원가입 완료 버튼 클릭 리스너
+            user = UserModel(
+                email = binding.signinIdEt.text.toString(),
+                password = binding.signinPasswordEt.text.toString()
+            )
+
             if (checkEdit()) {
-                val mPreferences = getSharedPreferences("signInPreferences", MODE_PRIVATE)
-                val preferencesEditor: SharedPreferences.Editor = mPreferences.edit()
-                val userJson: JsonObject = JsonObject()
-
-                userJson.addProperty("email", binding.signinIdEt.text.toString())
-                userJson.addProperty("password", binding.signinPasswordEt.text.toString())
-
-                preferencesEditor.putString("newUser", Gson().toJson(userJson))
-                preferencesEditor.apply()
-
-                val intent: Intent = Intent(this, BookProfileInitActivity::class.java)
-                startActivity(intent)
-                finish()
+                //createUser
+                CoroutineScope(Dispatchers.IO).launch {
+                    mainVm.createUser(user)
+                }
             } else {
                 Toast.makeText(this, "아이디와 비밀번호를 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -97,15 +93,51 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
         }
     }
 
-    private fun observe() {
-        mainVm.emailAlertVisibility.observe(this, Observer {
-            binding.signinIdAlertTv.visibility = it
-        })
-    }
-
     private fun checkEdit(): Boolean =
         !(binding.signinIdEt.text.isBlank() || binding.signinIdAlertTv.visibility == View.VISIBLE ||
                 binding.signinPasswordEt.text.isBlank() || binding.signinPasswordConfirmEt.text.isBlank() ||
                 binding.signinPasswordAlertTv.visibility == View.VISIBLE)
 
+    private fun login() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val token = mainVm.login(user)  //로그인을 통해 JWT 토큰을 알아냄.
+
+            if (token == null) {
+                Toast.makeText(
+                    this@SignInActivity,
+                    "오류가 발생했습니다. 입력한 아이디와 비밀번호로 로그인 해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                onBackPressed()
+            } else {    //로그인 성공 -> 이메일 인증 화면으로 이동
+                AccountSharedPreference.setJWT(this@SignInActivity, token)
+                val intent = Intent(
+                    this@SignInActivity,
+                    EmailAuthenticationActivity::class.java
+                )
+                intent.putExtra("email", user.email)
+                intent.putExtra("prevActivity", 1)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun observe() {
+        mainVm.emailAlertVisibility.observe(this, Observer {
+            binding.signinIdAlertTv.visibility = it
+        })
+
+        //createUser 확인용
+        mainVm.user.observe(this, Observer {
+            if (it.userId == null)    //createUser 실패
+                Toast.makeText(
+                    this@SignInActivity,
+                    "회원가입 중 오류가 발생했습니다.\n다시 시도해 주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            else {  //createUser 성공 -> 토큰을 얻기 위해 로그인
+                login()
+            }
+        })
+    }
 }

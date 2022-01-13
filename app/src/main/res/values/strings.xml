@@ -198,5 +198,13 @@
 
     <!-- SettingActivity, OpenSourceActivity -->
     <string name="open_source_license">오픈소스 라이선스</string>
-
+    
+    <!-- EmailAuthenticationActivity -->
+    <string name="email_authentication">이메일 인증</string>
+    <string name="send">전송</string>
+    <string name="resend">재전송</string>
+    <string name="msg_input_code">인증코드를 입력해주세요.</string>
+    <string name="msg_input_email">이메일 주소를 입력해주세요.</string>
+    <string name="err_not_sign_in_email">가입되지 않은 이메일입니다.</string>
+    <string name="err_wrong_code">인증코드가 틀렸습니다.</string>
 </resources>

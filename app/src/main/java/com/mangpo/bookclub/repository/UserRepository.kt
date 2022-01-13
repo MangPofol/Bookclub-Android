@@ -9,7 +9,7 @@ import java.net.UnknownHostException
 
 class UserRepository(private val userService: UserService) {
 
-    suspend fun login(user: JsonObject): JsonObject {
+    suspend fun login(user: UserModel): JsonObject {
         var jsonObject: JsonObject = JsonObject()
 
         try {
@@ -148,5 +148,29 @@ class UserRepository(private val userService: UserService) {
 
         return result.code()
 
+    }
+
+    suspend fun sendEmail() {
+        userService.sendEmail()
+    }
+
+    suspend fun sendCode(code: Int): Int {
+        val res = userService.sendCode(code)
+        var result: Int = 0
+
+        if (res.isSuccessful) {
+            Log.d("UserRepository", "sendCode is Successful!\ncode: ${res.code()}")
+            when (res.code()) {
+                204 -> result = 1
+                else -> Log.e(
+                    "UserRepository",
+                    "sendCode is not Successful!\ncode: ${res.code()}\nbody: ${res.body()}"
+                )
+            }
+        } else {
+            Log.e("UserRepository", "sendCode ERROR!\ncode: ${res.code()}\nerror: ${res.message()}")
+        }
+
+        return result
     }
 }
