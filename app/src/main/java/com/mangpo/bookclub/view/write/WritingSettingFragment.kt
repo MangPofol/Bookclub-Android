@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentWritingSettingBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
@@ -131,9 +132,14 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 else
                     createPost(post)  //기록 추가 함수 호출
             } else if (code.await() == 400) {
-                Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.err_select_book),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(requireContext(), "책 등록 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.err_post), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -162,9 +168,11 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 bookVm.setBook(BookModel())
 
                 //저장된 post 데이터와 함께 PostDetailFragment 로 이동하기
+                Toast.makeText(requireContext(), getString(R.string.msg_post), Toast.LENGTH_SHORT)
+                    .show()
                 (requireActivity() as MainActivity).moveToPostDetail(post)
             } else {
-                Toast.makeText(requireContext(), "게시글 업로드 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), getString(R.string.err_post), Toast.LENGTH_SHORT)
                     .show()
             }
         }
@@ -185,11 +193,13 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 loadingDialogFragment.dismiss()
 
                 //저장된 post 데이터와 함께 PostDetailFragment 로 이동하기
+                Toast.makeText(requireContext(), getString(R.string.msg_post), Toast.LENGTH_SHORT)
+                    .show()
                 (requireActivity() as MainActivity).moveToPostDetail(post)
             } else {
-                loadingDialogFragment.dismiss()
-                Toast.makeText(requireContext(), "게시글 수정 중 오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), getString(R.string.err_post), Toast.LENGTH_SHORT)
                     .show()
+                loadingDialogFragment.dismiss()
             }
         }
     }

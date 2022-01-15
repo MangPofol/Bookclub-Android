@@ -205,17 +205,20 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
     private fun validate(): Boolean {
         when {
             binding.selectBookBtn.text.toString() == getString(R.string.book_select) -> {
-                Toast.makeText(requireContext(), "책을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.err_select_book),
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 return false
             }
-            binding.postTitleET.text.isBlank() -> {
-                Toast.makeText(requireContext(), "메모 제목을 입력해주세요.", Toast.LENGTH_SHORT).show()
-
-                return false
-            }
-            binding.contentET.text.isBlank() -> {
-                Toast.makeText(requireContext(), "메모 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            binding.postTitleET.text.isBlank() || binding.contentET.text.isBlank() -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.err_input_title_content),
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 return false
             }

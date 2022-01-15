@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityResettingPasswordBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.viewmodel.MainViewModel
@@ -81,10 +82,12 @@ class ResettingPasswordActivity : AppCompatActivity() {
     private fun observe() {
         mainVm.updateUserCode.observe(this, Observer {
             if (it == 204) {
-                Toast.makeText(this, "비밀번호 변경 완료.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.msg_password_resetting), Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             } else {
-                Toast.makeText(this, "비밀번호 변경 중 오류 발생!\n다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.err_password_resetting), Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

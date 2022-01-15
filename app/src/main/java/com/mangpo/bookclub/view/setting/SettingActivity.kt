@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
@@ -150,6 +151,11 @@ class SettingActivity : AppCompatActivity() {
 
         mainVm.quitMembershipCode.observe(this, Observer {
             if (it == 204) {
+                Toast.makeText(
+                    this@SettingActivity,
+                    getString(R.string.msg_quit_membership),
+                    Toast.LENGTH_SHORT
+                ).show()
                 clearUser()
                 val intent = Intent(this@SettingActivity, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -157,7 +163,7 @@ class SettingActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this@SettingActivity,
-                    "계정탈퇴 중 오류 발생. 다시 시도해 주세요.",
+                    getString(R.string.err_quit_membership),
                     Toast.LENGTH_SHORT
                 ).show()
             }
