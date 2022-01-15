@@ -72,12 +72,11 @@ class BookDescFragment : Fragment() {
                         book.category = "NOW"
 
                         binding.categoryBtn.background =
-                            requireContext().getDrawable(R.drawable.bg_book_desc_category_not_after_btn)
-                        binding.categoryBtn.text = getString(R.string.reading)
+                            requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
                         binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
                             0,
                             0,
-                            R.drawable.ic_read_not_after,
+                            R.drawable.ic_read_after,
                             0
                         )
 
@@ -101,12 +100,11 @@ class BookDescFragment : Fragment() {
                         book.category = "AFTER"
 
                         binding.categoryBtn.background =
-                            requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
-                        binding.categoryBtn.text = getString(R.string.read_complete)
+                            requireContext().getDrawable(R.drawable.bg_book_desc_category_not_after_btn)
                         binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
                             0,
                             0,
-                            R.drawable.ic_read_after,
+                            R.drawable.ic_read_not_after,
                             0
                         )
 
@@ -161,27 +159,21 @@ class BookDescFragment : Fragment() {
         Glide.with(requireActivity().applicationContext).load(book.imgPath).into(binding.bookIv)
 
         if (book.category == "AFTER") {
-            binding.categoryBtn.text = getString(R.string.read_complete)
-            binding.categoryBtn.background =
-                requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
-            binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_read_after,
-                0
-            )
-            book
-        } else {
-            if (book.category == "NOW")
-                binding.categoryBtn.text = getString(R.string.reading)
-            else
-                binding.categoryBtn.text = getString(R.string.want_to_read)
             binding.categoryBtn.background =
                 requireContext().getDrawable(R.drawable.bg_book_desc_category_not_after_btn)
             binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 0,
                 R.drawable.ic_read_not_after,
+                0
+            )
+        } else {
+            binding.categoryBtn.background =
+                requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
+            binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.ic_read_after,
                 0
             )
         }
