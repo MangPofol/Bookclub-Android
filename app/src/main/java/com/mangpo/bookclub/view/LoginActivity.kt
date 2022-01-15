@@ -5,12 +5,13 @@ import android.content.Intent
 import android.net.*
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.google.gson.JsonObject
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.AccountSharedPreference
@@ -69,7 +70,6 @@ class LoginActivity : AppCompatActivity() {
 
                     //로그인 요청 api 전송
                     CoroutineScope(Dispatchers.Main).launch {
-//                        val token = mainVm.login(loginEditJson)
                         val token = mainVm.login(user)
 
                         if (token != null) {
@@ -91,13 +91,14 @@ class LoginActivity : AppCompatActivity() {
                                 }
                             }
                         } else {
-                            Toast.makeText(baseContext, "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_SHORT)
-                                .show()
+                            binding.loginMsgTv.visibility = View.VISIBLE
+                            binding.loginMsgTv.text = getString(R.string.err_wrong_user)
                         }
                     }
                 }
                 else -> {
-                    Toast.makeText(baseContext, "아이디와 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                    binding.loginMsgTv.visibility = View.VISIBLE
+                    binding.loginMsgTv.text = getString(R.string.err_input_id_pw)
                 }
             }
         }
