@@ -124,7 +124,11 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
 
     private fun observe() {
         mainVm.emailAlertVisibility.observe(this, Observer {
-            binding.signinIdAlertTv.visibility = it
+            if (it==204) {
+                binding.signinIdAlertTv.visibility = View.INVISIBLE
+            } else {
+                binding.signinIdAlertTv.visibility = View.VISIBLE
+            }
         })
 
         //createUser 확인용
