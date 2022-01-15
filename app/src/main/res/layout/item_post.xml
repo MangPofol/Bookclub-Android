@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="12dp">
-
-    <View
-        android:id="@+id/memo_view"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="@drawable/item_post_memo_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/memo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17.484dp"
-        android:src="@drawable/post_icon"
-        app:layout_constraintBottom_toBottomOf="@id/memo_view"
-        app:layout_constraintStart_toStartOf="@id/memo_view"
-        app:layout_constraintTop_toTopOf="@+id/memo_view" />
+    android:layout_marginTop="15dp"
+    android:background="@drawable/item_post_memo_view"
+    android:paddingVertical="12dp">
 
     <TextView
         android:id="@+id/post_title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15.096dp"
-        android:text="목차 읽기"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/memo_view"
-        app:layout_constraintEnd_toStartOf="@id/post_date_tv"
-        app:layout_constraintStart_toEndOf="@+id/memo_iv"
-        app:layout_constraintTop_toTopOf="@id/memo_view" />
+        android:layout_marginHorizontal="13dp"
+        android:text="메모의 제목"
+        android:textColor="@color/main_blue"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="11dp"
+        android:layout_marginTop="9dp"
+        android:background="@color/grey12"
+        app:layout_constraintTop_toBottomOf="@+id/post_title_tv" />
+
+    <TextView
+        android:id="@+id/post_content_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="2021년 111월 29일(월)진행되는 올해 KOSAC 전국어디서2021년 111월 29일(월)진행되는 올해 KOSAC 전국어디서..."
+        android:textColor="@color/light_blue"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/post_date_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_view" />
 
     <TextView
         android:id="@+id/post_date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15.096dp"
-        android:layout_marginEnd="20.4dp"
+        android:layout_marginHorizontal="13dp"
         android:text="2021.12.24"
         android:textColor="@color/grey12"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/memo_view"
-        app:layout_constraintEnd_toEndOf="@id/memo_view"
-        app:layout_constraintStart_toEndOf="@+id/post_title_tv"
-        app:layout_constraintTop_toTopOf="@id/memo_view" />
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/post_content_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/post_content_tv"
+        app:layout_constraintTop_toTopOf="@+id/post_content_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,6 +107,27 @@ class BookRepository(
         }
     }
 
+    suspend fun deleteBook(bookId: Long): Int {
+        val result = bookService.deleteBook(bookId)
+
+        if (result.isSuccessful) {
+            when (result.code()) {
+                204 -> Log.d("BookRepository", "deleteBook is Successful")
+                else -> Log.e(
+                    "BookRepository",
+                    "deleteBook is not Successful code: ${result.code()}"
+                )
+            }
+        } else {
+            Log.e(
+                "BookRepository",
+                "deleteBook error!\n code: ${result.code()}\nerror message: ${result.message()}"
+            )
+        }
+
+        return result.code()
+    }
+
     //응답받은 books 데이터를 통해 카카오 도서 API 를 통해서 이미지 path 가져오는 함수
     private suspend fun getBookImg(books: BooksModel): BooksModel {
         for (book in books.books) {
@@ -115,7 +136,7 @@ class BookRepository(
             if (image == null) {
                 try {
                     //아이폰에서 넘어오는 책들 중 isbn 이 두 개인 경우 한번에 넘어오기 때문에 isbn 이 두개인지 확인할 필요가 있음.
-                    image = if (book.isbn.split(" ").size==2)
+                    image = if (book.isbn.split(" ").size == 2)
                         kakaoBookService.getKakaoBooks(book.isbn.split(" ")[0], "isbn", 1)
                             .body()!!.documents[0].thumbnail!!
                     else

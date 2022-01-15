@@ -3,6 +3,7 @@ package com.mangpo.bookclub.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mangpo.bookclub.databinding.ItemPostBinding
 import com.mangpo.bookclub.model.PostDetailModel
@@ -26,9 +27,10 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun onBindViewHolder(holder: PostAdapter.PostViewHolder, position: Int) {
         holder.title.text = posts[position].title
+        holder.content.text = posts[position].content
         holder.date.text = posts[position].createdDate.substring(0, 10)
 
-        holder.title.setOnClickListener {
+        holder.layout.setOnClickListener {
             myItemClickListener.goPostDetail(posts[position])
         }
     }
@@ -48,7 +50,9 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     }
 
     inner class PostViewHolder(itemView: ItemPostBinding) : RecyclerView.ViewHolder(itemView.root) {
+        val layout: ConstraintLayout = itemView.layout
         val title: TextView = itemView.postTitleTv
         val date: TextView = itemView.postDateTv
+        val content: TextView = itemView.postContentTv
     }
 }

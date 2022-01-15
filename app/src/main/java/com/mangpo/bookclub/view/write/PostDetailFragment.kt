@@ -98,7 +98,7 @@ class PostDetailFragment : Fragment() {
             binding.contentImgIndicator.setViewPager(binding.contentImgVp)
         }
 
-        binding.bookNameTv.text = post.book!!.name
+        binding.bookTv.text = post.book!!.name
 
         if (post.scope == "PRIVATE")
             binding.updateTv.visibility = View.VISIBLE

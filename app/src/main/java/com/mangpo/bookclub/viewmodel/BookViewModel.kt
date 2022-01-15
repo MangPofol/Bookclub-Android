@@ -34,9 +34,13 @@ class BookViewModel(
     private val _readType: MutableLiveData<String> = MutableLiveData<String>()
     private val _myLibrarySearch: MutableLiveData<String> = MutableLiveData<String>()
     private val _myLibrarySort: MutableLiveData<String> = MutableLiveData<String>()
-    private val _getBooksCode: MutableLiveData<Int> = MutableLiveData<Int>()    //getBooks req 응답코드
-    private val _searchFilterBtnClick: MutableLiveData<Int> = MutableLiveData<Int>()  //내서재에서 검색 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
-    private val _sortFilterBtnClick: MutableLiveData<Int> = MutableLiveData<Int>()  //내서재에서 정렬 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    private val _getBooksCode: MutableLiveData<Int> = MutableLiveData<Int>()    //getBooks res 응답코드
+    private val _searchFilterBtnClick: MutableLiveData<Int> =
+        MutableLiveData<Int>()  //내서재에서 검색 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    private val _sortFilterBtnClick: MutableLiveData<Int> =
+        MutableLiveData<Int>()  //내서재에서 정렬 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    private val _deleteBookCode: MutableLiveData<Int> =
+        MutableLiveData<Int>()  //deleteBook res 응답코드
 
     val book: LiveData<BookModel> get() = _book
     val nowBooks: LiveData<MutableList<BookModel>> get() = _nowBooks
@@ -49,6 +53,7 @@ class BookViewModel(
     val getBooksCode: LiveData<Int> get() = _getBooksCode   //getBooks req 응답코드
     val searchFilterBtnClick: LiveData<Int> get() = _searchFilterBtnClick   //내서재에서 검색 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
     val sortFilterBtnClick: LiveData<Int> get() = _sortFilterBtnClick   //내서재에서 정렬 필터 버튼이 눌렸는지 안눌렸는지 확인용 변수
+    val deleteBookCode: LiveData<Int> get() = _deleteBookCode   //deleteBook res 응답코드
 
     fun getBookList(category: String): MutableList<BookModel>? {
         return when (category) {
@@ -82,6 +87,10 @@ class BookViewModel(
 
     fun setSortFilterBtnClick(sortFilterBtnClick: Int) {
         _sortFilterBtnClick.value = sortFilterBtnClick
+    }
+
+    fun setDeleteBookCode(deleteBookCode: Int) {
+        _deleteBookCode.value = deleteBookCode
     }
 
     suspend fun requestBookList(category: String) {
@@ -133,7 +142,7 @@ class BookViewModel(
                 val book = hashMap.await()!!["book"] as BookModel
 
                 //읽는중, 완독일 땐 라이브데이터에 등록된 데이터 저장하기
-                if (book.category!="BEFORE")
+                if (book.category != "BEFORE")
                     _book.value = book
 
                 requestBookList(book.category)
@@ -154,5 +163,11 @@ class BookViewModel(
         }
 
         return result.await()
+    }
+
+    suspend fun deleteBook(bookId: Long) {
+        viewModelScope.launch {
+            _deleteBookCode.value = bookRepository.deleteBook(bookId)
+        }
     }
 }

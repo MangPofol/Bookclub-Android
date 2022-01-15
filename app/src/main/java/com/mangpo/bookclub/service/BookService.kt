@@ -21,4 +21,7 @@ interface BookService {
         @Path("bookId") bookId: Long,
         @Body categoryJson: JsonObject
     ): Response<Int>
+
+    @DELETE("/books/{bookId}")
+    suspend fun deleteBook(@Path("bookId") bookId: Long): Response<Int>
 }

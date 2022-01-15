@@ -166,7 +166,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
         } else {    //기록된 내용이 있을 때
             //PostDetail -> Record(수정하기) -> 뒤로가기 -> 뒤로가기(PostDetail) -> Record(수정하기)로 오면
             //post 의 book 데이터가 null 로 바뀌는 버그를 막기 위한 코드
-            if (bookVm.getBook()==null) {
+            if (bookVm.getBook() == null) {
                 binding.selectBookBtn.text = getString(R.string.book_select)
             } else {
                 bookVm.setBook(BookModel())
@@ -319,7 +319,10 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
     private fun observe() {
         //BookViewModel book observer
         bookVm.book.observe(viewLifecycleOwner, Observer {
-            val post = postVm.getPost()!!
+            var post = postVm.getPost()
+            if (post == null)
+                post = PostDetailModel()
+
             post.book = it
             post.bookId = it.id
             postVm.setPost(post)
