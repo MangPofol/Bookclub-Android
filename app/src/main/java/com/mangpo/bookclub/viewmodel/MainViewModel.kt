@@ -41,10 +41,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         val statusCode = withContext(viewModelScope.coroutineContext) {
             repository.validateEmail(email)
         }
-        if (statusCode == 204)
-            _emailAlertVisibility.value = View.INVISIBLE
-        else
-            _emailAlertVisibility.value = View.VISIBLE
+        _emailAlertVisibility.value = statusCode
     }
 
     suspend fun createUser(user: UserModel) {
@@ -108,6 +105,12 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     suspend fun sendCode(code: Int) {
         viewModelScope.launch {
             _sendCodeResult.value = repository.sendCode(code)
+        }
+    }
+
+    suspend fun sendTempPWEmail(email: String) {
+        viewModelScope.launch {
+            repository.sendTempPWEmail(email)
         }
     }
 }

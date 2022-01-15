@@ -173,4 +173,8 @@ class UserRepository(private val userService: UserService) {
 
         return result
     }
+
+    suspend fun sendTempPWEmail(email: String) {
+        userService.sendTempPWEmail(email)
+    }
 }

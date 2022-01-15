@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Bookclub"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.my_info.PasswordReissueActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.book_profile.EmailAuthenticationActivity"
             android:exported="false" />
         <activity

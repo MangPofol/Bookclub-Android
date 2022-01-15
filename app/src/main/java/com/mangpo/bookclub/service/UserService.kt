@@ -35,6 +35,9 @@ interface UserService {
     @POST("/users/validate-email-send-code")
     suspend fun sendCode(@Query("emailCode") emailCode: Int): Response<JsonObject>
 
+    @POST("/users/lost-pw")
+    suspend fun sendTempPWEmail(@Query("userEmail") email: String): Response<String>
+
     @PUT("/users/{userId}")
     suspend fun updateUser(@Path("userId") userId: Long, @Body user: UserModel): Response<String>
 }

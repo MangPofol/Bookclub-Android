@@ -19,6 +19,7 @@ import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.view.book_profile.EmailAuthenticationActivity
 import com.mangpo.bookclub.view.book_profile.SignInActivity
 import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.my_info.PasswordReissueActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -29,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private val mainVm: MainViewModel by viewModel()
-    private val loginEditJson: JsonObject = JsonObject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +48,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        //비밀번호 찾기 클릭 리스너
+        //비밀번호 찾기 클릭 리스너 -> 비밀번호 재발급 화면 이동
         binding.loginFindPasswordClickView.setOnClickListener {
-            Toast.makeText(baseContext, "개발 중인 기능입니다.", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@LoginActivity, PasswordReissueActivity::class.java))
         }
 
         binding.loginBtn.outlineProvider = null //로그인 버튼 그림자 제거
