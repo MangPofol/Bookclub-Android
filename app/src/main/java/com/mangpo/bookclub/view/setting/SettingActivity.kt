@@ -138,7 +138,9 @@ class SettingActivity : AppCompatActivity() {
 
         mainVm.logoutCode.observe(this, Observer {
             clearUser()
-            startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+            val intent = Intent(this@SettingActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         })
 
         mainVm.updateUserCode.observe(this, Observer {
@@ -149,7 +151,9 @@ class SettingActivity : AppCompatActivity() {
         mainVm.quitMembershipCode.observe(this, Observer {
             if (it == 204) {
                 clearUser()
-                startActivity(Intent(this@SettingActivity, LoginActivity::class.java))
+                val intent = Intent(this@SettingActivity, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             } else {
                 Toast.makeText(
                     this@SettingActivity,
