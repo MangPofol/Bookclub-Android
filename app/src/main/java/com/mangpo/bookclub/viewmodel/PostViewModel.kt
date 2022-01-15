@@ -12,50 +12,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
-//    private val _post: MutableLiveData<PostModel> = MutableLiveData()
     private val _post: MutableLiveData<PostDetailModel> = MutableLiveData()
     private val _totalCnt: MutableLiveData<Int> = MutableLiveData()
-    private val _imgLoading: MutableLiveData<Int> = MutableLiveData()
+    private val _deletePostCode: MutableLiveData<Int> = MutableLiveData()   //deletePost 결과코드
 
     private var postDetail: PostDetailModel? = null
 
-//    val post: LiveData<PostModel> get() = _post
     val post: LiveData<PostDetailModel> get() = _post
     val totalCnt: LiveData<Int> get() = _totalCnt
-    val imgLoading: LiveData<Int> get() = _imgLoading
+    val deletePostCode: LiveData<Int> get() = _deletePostCode   //deletePost 결과코드
 
-    /*fun setPost(post: PostModel) {
-        _post.value = post
-    }*/
     fun setPost(post: PostDetailModel) {
         _post.value = post
     }
 
-//    fun getPost(): PostModel? = _post.value
     fun getPost(): PostDetailModel? = _post.value
 
     fun setPostDetail(postDetail: PostDetailModel?) {
         this.postDetail = postDetail
     }
 
-    fun getPostDetail(): PostDetailModel? = this.postDetail
-
-    fun setImgLoading(imgLoading: Int) {
-        _imgLoading.value = imgLoading
+    fun setDeletePostCode(deletePostCode: Int) {
+        _deletePostCode.value = deletePostCode
     }
 
     suspend fun getPosts(bookId: Long, clubId: Long?): List<PostDetailModel>? =
         repository.getPosts(bookId, clubId)
 
-    /*suspend fun createPost(post: PostModel): PostDetailModel? {
-        val job = viewModelScope.async(Dispatchers.Main) {
-            repository.createPost(post)
-        }
-
-        postDetail = job.await()
-
-        return postDetail
-    }*/
     suspend fun createPost(post: PostDetailModel): PostDetailModel? {
         val job = viewModelScope.async(Dispatchers.Main) {
             repository.createPost(post)
@@ -66,17 +49,6 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         return postDetail
     }
 
-    /*suspend fun updatePost(postId: Long, post: PostModel): Boolean {
-
-        val isUpdate = viewModelScope.async {
-            when (repository.updatePost(postId, post!!)) {
-                204 -> true
-                else -> false
-            }
-        }
-
-        return isUpdate.await()
-    }*/
     suspend fun updatePost(postId: Long, post: PostDetailModel): Boolean {
 
         val isUpdate = viewModelScope.async {
@@ -118,6 +90,12 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     suspend fun deleteMultiImg(imgList: List<String>) {
         viewModelScope.launch {
             repository.deleteMultiImg(imgList)
+        }
+    }
+
+    suspend fun deletePost(postId: Long) {
+        viewModelScope.launch {
+            _deletePostCode.value = repository.deletePost(postId)
         }
     }
 }

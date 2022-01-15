@@ -28,7 +28,10 @@ interface PostService {
     suspend fun deleteMultiImgFile(@Body imageLocations: List<String>): Response<String>
 
     @PUT("/posts/{postId}")
-    suspend fun updatePost(@Path("postId") postId: Long, @Body post: PostDetailModel): Response<String>
+    suspend fun updatePost(
+        @Path("postId") postId: Long,
+        @Body post: PostDetailModel
+    ): Response<String>
 
     @Multipart
     @PUT("/files/upload")
@@ -36,4 +39,7 @@ interface PostService {
 
     @DELETE("/files/delete")
     suspend fun deleteImgFile(@Query("imageLocation") imageLocation: String): Response<String>
+
+    @DELETE("/posts/{postId}")
+    suspend fun deletePost(@Path("postId") postId: Long): Response<Int>
 }

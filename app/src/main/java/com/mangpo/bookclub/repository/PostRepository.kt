@@ -95,4 +95,22 @@ class PostRepository(private val postService: PostService) {
         Log.d("PostRepository", "deleteMultiImg code -> ${result.code()}")
     }
 
+    suspend fun deletePost(postId: Long): Int {
+        val result = postService.deletePost(postId)
+
+        if (result.isSuccessful) {
+            when (val code = result.code()) {
+                204 -> Log.d("PostRepository", "deletePost is Successful!")
+                else -> Log.e("PostRepository", "deletePost is not Successful! code: $code")
+            }
+        } else {
+            Log.e(
+                "PostRepository",
+                "deletePost ERROR!\ncode: ${result.code()}\nmessage: ${result.message()}"
+            )
+        }
+
+        return result.code()
+    }
+
 }

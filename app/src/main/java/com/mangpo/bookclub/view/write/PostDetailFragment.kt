@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
 import com.mangpo.bookclub.model.PostDetailModel
@@ -14,7 +16,12 @@ import com.mangpo.bookclub.view.adapter.PostDetailImgAdapter
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 class PostDetailFragment : Fragment() {
@@ -41,6 +48,7 @@ class PostDetailFragment : Fragment() {
         Log.d("PostDetailFragment", "onCreateView")
 
         binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        observe()
 
         initAdapter()
         setUI() //화면 디자인 함수 호출
@@ -56,6 +64,17 @@ class PostDetailFragment : Fragment() {
                 "binding.updateTv.setOnClickListener post: ${postVm.getPost()}"
             )
             (requireActivity() as MainActivity).moveToRecord(true)
+        }
+
+        //삭제 텍스트뷰 클릭 리스너
+        binding.deleteTv.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                //이미지가 있으면 이미지도 함께 삭제한다.
+                if (post.postImgLocations.isNotEmpty())
+                    postVm.deleteMultiImg(post.postImgLocations)
+
+                postVm.deletePost(post.postId!!)
+            }
         }
 
         return binding.root
@@ -88,6 +107,7 @@ class PostDetailFragment : Fragment() {
 
     //화면 디자인 함수
     private fun setUI() {
+        Log.d("PostDetailFragment", "post: $post")
         if (post.postImgLocations.isEmpty()) {
             binding.contentImgVp.visibility = View.GONE
         } else {
@@ -104,6 +124,11 @@ class PostDetailFragment : Fragment() {
             binding.updateTv.visibility = View.VISIBLE
         else
             binding.updateTv.visibility = View.INVISIBLE
+
+        val formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+        val date: LocalDateTime = LocalDateTime.parse(post.modifiedDate, formatter1)
+        binding.dateTv.text = date.format(formatter2)
 
         binding.recordTitleTv.text = post.title
         binding.recordContentTv.text = post.content
@@ -145,4 +170,19 @@ class PostDetailFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun observe() {
+        postVm.deletePostCode.observe(viewLifecycleOwner, Observer {
+            if (it == 204) {
+                Toast.makeText(requireContext(), "메모가 삭제되었습니다!", Toast.LENGTH_SHORT).show()
+                (requireActivity() as MainActivity).onBackPressed()
+                postVm.setDeletePostCode(-1)    //deleteCode 를 초기 상태(-1)로 변경
+            } else if (it != -1) {
+                Toast.makeText(
+                    requireContext(),
+                    "메모가 삭제 중 오류가 발생했습니다.\n다시 시도해 주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
 }

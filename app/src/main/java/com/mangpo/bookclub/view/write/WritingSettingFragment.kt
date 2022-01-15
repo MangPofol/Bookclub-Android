@@ -154,6 +154,8 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
                 }
 
                 resPost.book = book
+                //PostDetailFragment 에서 날짜 데이터가 필요하게 되면서 작성한 코드
+                post.modifiedDate = resPost.modifiedDate.substring(0, 19)
 
                 //이동하면서 post, book 데이터 초기화
                 postVm.setPost(PostDetailModel())
@@ -174,7 +176,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
             if (isUpdate) {
                 val delImgList = arguments?.getStringArrayList("delImgList")
-                if (delImgList!=null)
+                if (delImgList != null)
                     deleteMultiImg(delImgList)
 
                 postVm.setPost(PostDetailModel())
