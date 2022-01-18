@@ -36,6 +36,9 @@
     <string name="err_input_id_pw">이메일과 비밀번호를 작성하세요.</string>
     <string name="err_wrong_user">이메일과 비밀번호를 확인해주세요.</string>
 
+    <!--SignIn Activity-->
+    <string name="input_email">이메일 주소를 입력해 주세요.</string>
+
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
     <string name="password_confirm">비밀번호 확인</string>
