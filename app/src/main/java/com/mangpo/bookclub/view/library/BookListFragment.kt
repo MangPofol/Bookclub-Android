@@ -70,13 +70,8 @@ class BookListFragment(private val category: String) : Fragment(), OnItemClick {
 
         bookVm.myLibrarySearch.observe(viewLifecycleOwner, Observer {
             val search = it
-            val defaultBooks = when (category) {
-                "NOW" -> bookVm.nowBooks.value
-                "AFTER" -> bookVm.afterBooks.value
-                else -> bookVm.beforeBooks.value
-            }
 
-            books = defaultBooks?.filter { it ->
+            books = books?.filter { it ->
                 it.name!!.contains(search)
             } as MutableList<BookModel>
 
@@ -85,17 +80,11 @@ class BookListFragment(private val category: String) : Fragment(), OnItemClick {
 
         bookVm.myLibrarySort.observe(viewLifecycleOwner, Observer { it ->
             if (books?.isNotEmpty() == true) {
-                val defaultBooks = when (category) {
-                    "NOW" -> bookVm.nowBooks.value
-                    "AFTER" -> bookVm.afterBooks.value
-                    else -> bookVm.beforeBooks.value
-                }
-
                 books = when (it) {
-                    "Latest" -> defaultBooks?.sortedWith(compareBy { it.modifiedDate })?.reversed() as MutableList<BookModel>
-                    "Old" -> defaultBooks?.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>
-                    "Name" -> defaultBooks?.sortedWith(compareBy { it.name }) as MutableList<BookModel>
-                    else -> defaultBooks
+                    "Latest" -> books?.sortedWith(compareBy { it.modifiedDate })?.reversed() as MutableList<BookModel>
+                    "Old" -> books?.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>
+                    "Name" -> books?.sortedWith(compareBy { it.name }) as MutableList<BookModel>
+                    else -> books
                 }
 
                 bookAdapter.setBooks(books)
