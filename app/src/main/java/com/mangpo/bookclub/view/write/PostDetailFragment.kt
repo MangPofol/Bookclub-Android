@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.view.adapter.PostDetailImgAdapter
+import com.mangpo.bookclub.view.dialog.RemoveDialogFragment
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -32,6 +34,7 @@ class PostDetailFragment : Fragment() {
     private lateinit var binding: FragmentPostDetailBinding
     private lateinit var post: PostDetailModel
     private lateinit var postDetailImgAdapter: PostDetailImgAdapter
+    private lateinit var removeDialogFragment: RemoveDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,10 @@ class PostDetailFragment : Fragment() {
 
         //현재 post 를 BookDescFragment 또는 WritingSettingFragment 로부터 전달받는다.
         post = Gson().fromJson(arguments?.getString("post"), PostDetailModel::class.java)
+
+        removeDialogFragment = RemoveDialogFragment(getString(R.string.title_delete_memo)) {
+            deleteCallback(it)
+        }
     }
 
     override fun onCreateView(
@@ -68,41 +75,10 @@ class PostDetailFragment : Fragment() {
 
         //삭제 텍스트뷰 클릭 리스너
         binding.deleteTv.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                //이미지가 있으면 이미지도 함께 삭제한다.
-                if (post.postImgLocations.isNotEmpty())
-                    postVm.deleteMultiImg(post.postImgLocations)
-
-                postVm.deletePost(post.postId!!)
-            }
+            removeDialogFragment.show(requireActivity().supportFragmentManager, null)
         }
 
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("PostDetailFragment", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("PostDetailFragment", "onStop")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("PostDetailFragment", "onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("PostDetailFragment", "onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("PostDetailFragment", "onDetach")
     }
 
     //화면 디자인 함수
@@ -173,6 +149,18 @@ class PostDetailFragment : Fragment() {
         )
         intent.putExtra("currentItem", position)
         startActivity(intent)
+    }
+
+    private fun deleteCallback(isDelete: Boolean) {
+        if (isDelete) {
+            CoroutineScope(Dispatchers.IO).launch {
+                //이미지가 있으면 이미지도 함께 삭제한다.
+                if (post.postImgLocations.isNotEmpty())
+                    postVm.deleteMultiImg(post.postImgLocations)
+
+                postVm.deletePost(post.postId!!)
+            }
+        }
     }
 
     private fun observe() {

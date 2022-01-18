@@ -15,7 +15,7 @@ import com.mangpo.bookclub.databinding.FragmentBookDescBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.view.adapter.PostAdapter
-import com.mangpo.bookclub.view.dialog.RemoveBookDialogFragment
+import com.mangpo.bookclub.view.dialog.RemoveDialogFragment
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -29,12 +29,10 @@ class BookDescFragment : Fragment() {
 
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
-    private val removeBookDialogFragment: RemoveBookDialogFragment = RemoveBookDialogFragment {
-        deleteCallback(it)
-    }
 
     private lateinit var binding: FragmentBookDescBinding
     private lateinit var book: BookModel
+    private lateinit var removeDialogFragment: RemoveDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +40,9 @@ class BookDescFragment : Fragment() {
 
         book = Gson().fromJson<BookModel>(arguments?.getString("book"), BookModel::class.java)
 
+        removeDialogFragment = RemoveDialogFragment(getString(R.string.title_delete_book)) {
+            deleteCallback(it)
+        }
     }
 
     override fun onCreateView(
@@ -132,7 +133,7 @@ class BookDescFragment : Fragment() {
 
         //삭제 텍스트뷰 클릭 리스너
         binding.deleteBtn.setOnClickListener {
-            removeBookDialogFragment.show(requireActivity().supportFragmentManager, null)
+            removeDialogFragment.show(requireActivity().supportFragmentManager, null)
         }
 
         return binding.root

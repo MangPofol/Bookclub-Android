@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRemoveBookDialogBinding
 import com.mangpo.bookclub.util.DialogFragmentUtils
 
-class RemoveBookDialogFragment(val callback: (Boolean) -> Unit) : DialogFragment() {
+class RemoveDialogFragment(private val msg: String, val callback: (Boolean) -> Unit) :
+    DialogFragment() {
     private lateinit var binding: FragmentRemoveBookDialogBinding
 
     override fun onCreateView(
@@ -20,9 +22,7 @@ class RemoveBookDialogFragment(val callback: (Boolean) -> Unit) : DialogFragment
     ): View? {
         binding = FragmentRemoveBookDialogBinding.inflate(inflater, container, false)
 
-        //다이얼로그 프래그먼트 모서리 둥글게
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        setUI()
 
         //취소 텍스트뷰 클릭 리스너 -> 프래그먼트 닫기, 콜백 함수에 삭제 안한다는(false) 데이터 전달
         binding.cancelTv.setOnClickListener {
@@ -45,9 +45,23 @@ class RemoveBookDialogFragment(val callback: (Boolean) -> Unit) : DialogFragment
         //전체 프래그먼트 크기 설정
         DialogFragmentUtils.dialogFragmentResize(
             requireContext(),
-            this@RemoveBookDialogFragment,
+            this@RemoveDialogFragment,
             0.74f,
             0.18f
         )
+    }
+
+    private fun setUI() {
+        //다이얼로그 프래그먼트 모서리 둥글게
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+
+        binding.titleTv.text = msg
+
+        if (msg == getString(R.string.title_delete_book)) {
+            binding.msgTv.text = getString(R.string.msg_memo_list_all_delete)
+        } else {
+            binding.msgTv.text = getString(R.string.msg_delete_memo)
+        }
     }
 }

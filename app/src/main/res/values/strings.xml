@@ -29,6 +29,8 @@
     <string name="msg_send_temp_password">임시 비밀번호로 로그인 후 설정 - 비밀번호 재설정에\n들어가서 비밀번호 재설정 후 사용하시길 바랍니다.</string>
     <string name="title_delete_book">책을 삭제하시겠습니까?</string>
     <string name="msg_memo_list_all_delete">전체 메모 리스트도 함께 삭제됩니다.</string>
+    <string name="title_delete_memo">메모를 삭제하시겠습니까?</string>
+    <string name="msg_delete_memo">메모는 추후 복구가 불가능합니다.</string>
 
     <!--Login Activity-->
     <string name="err_input_id_pw">이메일과 비밀번호를 작성하세요.</string>
