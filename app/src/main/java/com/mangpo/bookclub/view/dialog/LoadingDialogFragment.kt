@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view
+package com.mangpo.bookclub.view.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

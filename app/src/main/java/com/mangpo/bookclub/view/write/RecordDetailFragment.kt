@@ -11,11 +11,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.mangpo.bookclub.R
-import com.mangpo.bookclub.databinding.FragmentPostDetailBinding
+import com.mangpo.bookclub.databinding.FragmentRecordDetailBinding
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.view.adapter.PostDetailImgAdapter
 import com.mangpo.bookclub.view.dialog.RemoveDialogFragment
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +26,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class PostDetailFragment : Fragment() {
+class RecordDetailFragment : Fragment() {
 
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
 
-    private lateinit var binding: FragmentPostDetailBinding
+    private lateinit var binding: FragmentRecordDetailBinding
     private lateinit var post: PostDetailModel
     private lateinit var postDetailImgAdapter: PostDetailImgAdapter
     private lateinit var removeDialogFragment: RemoveDialogFragment
@@ -54,7 +54,7 @@ class PostDetailFragment : Fragment() {
     ): View? {
         Log.d("PostDetailFragment", "onCreateView")
 
-        binding = FragmentPostDetailBinding.inflate(inflater, container, false)
+        binding = FragmentRecordDetailBinding.inflate(inflater, container, false)
         observe()
 
         initAdapter()

@@ -1,6 +1,6 @@
 package com.mangpo.bookclub.service
 
-import com.mangpo.bookclub.util.AuthInterceptor
+import com.mangpo.bookclub.interceptor.AuthInterceptor
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

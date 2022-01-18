@@ -13,12 +13,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookClubBinding
 import com.mangpo.bookclub.model.ClubModel
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.HotMemoTopicViewpagerAdapter
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.ClubViewModel
 import kotlinx.coroutines.*
 

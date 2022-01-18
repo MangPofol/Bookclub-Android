@@ -13,7 +13,7 @@ import com.mangpo.bookclub.databinding.FragmentBookListBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

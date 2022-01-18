@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/navigation_view_fragment"
-    tools:context=".view.main.MyBookClubFragment">
+    tools:context=".view.bookclub.MyBookClubFragment">
 
     <FrameLayout
         android:id="@+id/my_book_club_frame_layout"

@@ -17,7 +17,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentMyLibraryBinding
 import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.view.adapter.MyLibraryPagerAdapter
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

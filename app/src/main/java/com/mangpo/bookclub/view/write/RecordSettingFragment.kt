@@ -9,19 +9,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
-import com.mangpo.bookclub.databinding.FragmentWritingSettingBinding
+import com.mangpo.bookclub.databinding.FragmentRecordSettingBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
-import com.mangpo.bookclub.view.LoadingDialogFragment
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.dialog.LoadingDialogFragment
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
+class RecordSettingFragment(private val isUpdate: Boolean) : Fragment() {
 
-    private lateinit var binding: FragmentWritingSettingBinding
+    private lateinit var binding: FragmentRecordSettingBinding
 
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
@@ -37,7 +37,7 @@ class WritingSettingFragment(private val isUpdate: Boolean) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("WritingSettingFragment", "onCreateView")
-        binding = FragmentWritingSettingBinding.inflate(inflater, container, false)
+        binding = FragmentRecordSettingBinding.inflate(inflater, container, false)
         observe()
 
         //완료 버튼 클릭 리스너

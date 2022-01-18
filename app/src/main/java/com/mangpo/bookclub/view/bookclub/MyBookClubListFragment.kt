@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view.main
+package com.mangpo.bookclub.view.bookclub
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mangpo.bookclub.databinding.FragmentMyBookClubListBinding
-import com.mangpo.bookclub.view.bookclub.CreateClubActivity
 
 //베타 버전 출시 후 사용
 class MyBookClubListFragment : Fragment() {

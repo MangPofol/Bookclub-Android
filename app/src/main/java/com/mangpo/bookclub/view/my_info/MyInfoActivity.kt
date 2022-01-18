@@ -12,7 +12,7 @@ import com.google.android.material.chip.Chip
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMyInfoBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
+import com.mangpo.bookclub.view.write.CameraGalleryBottomSheetFragment
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -24,8 +24,8 @@ class MyInfoActivity : AppCompatActivity() {
 
     private val mainVm: MainViewModel by viewModel()
     private val postVm: PostViewModel by viewModel()
-    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment2 =
-        CameraGalleryBottomSheetFragment2.newInstance(1) {
+    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment =
+        CameraGalleryBottomSheetFragment.newInstance(1) {
             profileImgCallback(it[0])
         }
 

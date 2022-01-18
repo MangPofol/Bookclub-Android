@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentSetNicknameAndProfileImgBinding
-import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
+import com.mangpo.bookclub.view.write.CameraGalleryBottomSheetFragment
 
 class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
 
@@ -19,7 +19,7 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentSetNicknameAndProfileImgBinding
 
-    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment2 = CameraGalleryBottomSheetFragment2.newInstance(1) {
+    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment.newInstance(1) {
         profileImgUrl = it[0]
 
         updateProfileImg()

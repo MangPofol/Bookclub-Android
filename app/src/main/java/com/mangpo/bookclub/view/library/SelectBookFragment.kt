@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view.write
+package com.mangpo.bookclub.view.library
 
 import android.content.Context
 import android.os.Bundle
@@ -16,12 +16,12 @@ import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class SelectFragment : Fragment(), android.text.TextWatcher, OnItemClick {
+class SelectBookFragment : Fragment(), android.text.TextWatcher, OnItemClick {
     private lateinit var binding: FragmentSelectBookBinding
     private lateinit var bookAdapter: BookAdapter
 

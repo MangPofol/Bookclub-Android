@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view
+package com.mangpo.bookclub.view.write
 
 import android.app.Activity
 import android.content.Intent
@@ -18,14 +18,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentCameraGalleryBottomSheetBinding
-import com.mangpo.bookclub.view.write.CameraActivity
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.MediaType
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
-class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<String>) -> Unit) :
+class CameraGalleryBottomSheetFragment(val imgCnt: Int, val callback: (List<String>) -> Unit) :
     BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCameraGalleryBottomSheetBinding
@@ -37,8 +36,8 @@ class CameraGalleryBottomSheetFragment2(val imgCnt: Int, val callback: (List<Str
     companion object {
         fun newInstance(
             imgCnt: Int, callback: (List<String>) -> Unit
-        ): CameraGalleryBottomSheetFragment2 {
-            return CameraGalleryBottomSheetFragment2(imgCnt, callback)
+        ): CameraGalleryBottomSheetFragment {
+            return CameraGalleryBottomSheetFragment(imgCnt, callback)
         }
     }
 

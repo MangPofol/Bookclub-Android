@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view.write
+package com.mangpo.bookclub.view.library
 
 import android.os.Bundle
 import android.view.LayoutInflater

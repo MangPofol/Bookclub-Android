@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view.main
+package com.mangpo.bookclub.view.bookclub
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

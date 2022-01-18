@@ -12,7 +12,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.view.LoadingDialogFragment
+import com.mangpo.bookclub.view.dialog.LoadingDialogFragment
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel

@@ -14,10 +14,9 @@ import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.util.OnBackPressedListener
-import com.mangpo.bookclub.view.CameraGalleryBottomSheetFragment2
 import com.mangpo.bookclub.view.adapter.RecordImgRVAdapter
 import com.mangpo.bookclub.viewmodel.BookViewModel
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedListener {
     private lateinit var binding: FragmentRecordBinding
-    private lateinit var cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment2
+    private lateinit var cameraGalleryBottomSheet: CameraGalleryBottomSheetFragment
 
     private val recordImgRVAdapter: RecordImgRVAdapter = RecordImgRVAdapter()
     private val bookVm: BookViewModel by sharedViewModel()
@@ -87,7 +86,7 @@ class RecordFragment(private var isUpdate: Boolean) : Fragment(), OnBackPressedL
                 //카메라를 실행할지 갤러리를 실행할지 선택하는 bottom sheet dialog 객체 가져오기
                 //선택할 수 있는 이미지는 최대 선택 가능한 이미지 수(4) - 지금까지 선택한 이미지 수(imgList.size)로 한다.
                 cameraGalleryBottomSheet =
-                    CameraGalleryBottomSheetFragment2.newInstance(4 - imgList.size) {
+                    CameraGalleryBottomSheetFragment.newInstance(4 - imgList.size) {
                         imgSelectCallback(it)
                     }
                 //카메라 촬영인지 갤러리 선택인지 bottom dialog 띄우기

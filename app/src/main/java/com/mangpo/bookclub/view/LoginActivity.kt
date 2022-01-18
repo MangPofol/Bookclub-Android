@@ -19,7 +19,6 @@ import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.view.book_profile.EmailAuthenticationActivity
 import com.mangpo.bookclub.view.book_profile.SignInActivity
-import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.view.my_info.PasswordReissueActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.*

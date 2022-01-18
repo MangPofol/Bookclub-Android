@@ -1,4 +1,4 @@
-package com.mangpo.bookclub.view.main
+package com.mangpo.bookclub.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,11 +14,12 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMainBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
-import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.util.OnBackPressedListener
-import com.mangpo.bookclub.view.library.BookDescFragment
+import com.mangpo.bookclub.view.library.BookDetailFragment
 import com.mangpo.bookclub.view.library.MyLibraryFragment
+import com.mangpo.bookclub.view.library.SelectBookFragment
+import com.mangpo.bookclub.view.write.RecordDetailFragment
 import com.mangpo.bookclub.view.my_info.ChecklistManagementActivity
 import com.mangpo.bookclub.view.my_info.GoalManagementActivity
 import com.mangpo.bookclub.view.my_info.MyInfoActivity
@@ -200,14 +201,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun moveToSelect() {
-        changeFragment(SelectFragment(), true)
+        changeFragment(SelectBookFragment(), true)
     }
 
     fun moveToWritingSetting(isUpdate: Boolean, delImgList: ArrayList<String>?) {
         if (delImgList == null)
-            changeFragment(WritingSettingFragment(isUpdate), true)
+            changeFragment(RecordSettingFragment(isUpdate), true)
         else {
-            val fragment = WritingSettingFragment(isUpdate).apply {
+            val fragment = RecordSettingFragment(isUpdate).apply {
                 arguments = Bundle().apply {
                     putStringArrayList("delImgList", delImgList)
                 }
@@ -217,7 +218,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun moveToBookDesc(book: BookModel) {
-        val fragment = BookDescFragment().apply {
+        val fragment = BookDetailFragment().apply {
             arguments = Bundle().apply {
                 putString("book", Gson().toJson(book))
             }
@@ -227,7 +228,7 @@ class MainActivity : AppCompatActivity() {
 
     fun moveToPostDetail(post: PostDetailModel) {
         Log.d("MainActivity", "moveToPostDetail $post")
-        val fragment = PostDetailFragment().apply {
+        val fragment = RecordDetailFragment().apply {
             arguments = Bundle().apply {
                 putString("post", Gson().toJson(post))
             }

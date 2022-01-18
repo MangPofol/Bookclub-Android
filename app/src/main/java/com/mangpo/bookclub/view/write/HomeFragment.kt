@@ -17,7 +17,7 @@ import java.util.*
 import com.mangpo.bookclub.model.CheckListModel
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.view.adapter.ChecklistContentRVAdapter
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.ChecklistViewModel
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope

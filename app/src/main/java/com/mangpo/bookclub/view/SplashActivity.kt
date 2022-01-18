@@ -13,7 +13,6 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.JWTUtils
-import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

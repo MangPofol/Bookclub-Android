@@ -9,18 +9,18 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.mangpo.bookclub.R
-import com.mangpo.bookclub.databinding.FragmentRemoveBookDialogBinding
+import com.mangpo.bookclub.databinding.FragmentRemoveDialogBinding
 import com.mangpo.bookclub.util.DialogFragmentUtils
 
 class RemoveDialogFragment(private val msg: String, val callback: (Boolean) -> Unit) :
     DialogFragment() {
-    private lateinit var binding: FragmentRemoveBookDialogBinding
+    private lateinit var binding: FragmentRemoveDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRemoveBookDialogBinding.inflate(inflater, container, false)
+        binding = FragmentRemoveDialogBinding.inflate(inflater, container, false)
 
         setUI()
 

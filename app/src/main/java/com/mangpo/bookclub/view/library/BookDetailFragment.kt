@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mangpo.bookclub.R
-import com.mangpo.bookclub.databinding.FragmentBookDescBinding
+import com.mangpo.bookclub.databinding.FragmentBookDetailBinding
 import com.mangpo.bookclub.model.BookModel
 import com.mangpo.bookclub.model.PostDetailModel
 import com.mangpo.bookclub.view.adapter.PostAdapter
 import com.mangpo.bookclub.view.dialog.RemoveDialogFragment
-import com.mangpo.bookclub.view.main.MainActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -25,12 +25,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class BookDescFragment : Fragment() {
+class BookDetailFragment : Fragment() {
 
     private val postVm: PostViewModel by sharedViewModel()
     private val bookVm: BookViewModel by sharedViewModel()
 
-    private lateinit var binding: FragmentBookDescBinding
+    private lateinit var binding: FragmentBookDetailBinding
     private lateinit var book: BookModel
     private lateinit var removeDialogFragment: RemoveDialogFragment
 
@@ -50,7 +50,7 @@ class BookDescFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("BookDescFragment", "onCreateView")
-        binding = FragmentBookDescBinding.inflate(inflater, container, false)
+        binding = FragmentBookDetailBinding.inflate(inflater, container, false)
         observe()
 
         initUI(book)    //book 데이터를 가지고 바인딩 할 수 있는 UI 업데이트 함수 호출
@@ -82,7 +82,7 @@ class BookDescFragment : Fragment() {
                         )
 
                         Toast.makeText(
-                            this@BookDescFragment.context,
+                            this@BookDetailFragment.context,
                             "책 완독을 취소했습니다!",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -110,7 +110,7 @@ class BookDescFragment : Fragment() {
                         )
 
                         Toast.makeText(
-                            this@BookDescFragment.context,
+                            this@BookDetailFragment.context,
                             "첵을 완독하셧습니다.",
                             Toast.LENGTH_SHORT
                         ).show()
