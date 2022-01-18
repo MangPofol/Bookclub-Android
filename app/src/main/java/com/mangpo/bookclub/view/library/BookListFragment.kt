@@ -15,6 +15,9 @@ import com.mangpo.bookclub.view.adapter.BookAdapter
 import com.mangpo.bookclub.view.adapter.OnItemClick
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.BookViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class BookListFragment(private val category: String) : Fragment(), OnItemClick {
@@ -29,7 +32,10 @@ class BookListFragment(private val category: String) : Fragment(), OnItemClick {
         super.onCreate(savedInstanceState)
         Log.d("BookListFragment", "onCreate")
 
-        bookAdapter.setBooks(bookVm.getBookList(category))
+        CoroutineScope(Dispatchers.Main).launch {
+            books = bookVm.getBookList(category)
+            bookAdapter.setBooks(books)
+        }
     }
 
     override fun onCreateView(
@@ -70,18 +76,18 @@ class BookListFragment(private val category: String) : Fragment(), OnItemClick {
 
         bookVm.myLibrarySearch.observe(viewLifecycleOwner, Observer {
             val search = it
-
-            books = books?.filter { it ->
+            val searchedBooks = books?.filter { it ->
                 it.name!!.contains(search)
             } as MutableList<BookModel>
 
-            bookAdapter.setBooks(books)
+            bookAdapter.setBooks(searchedBooks)
         })
 
         bookVm.myLibrarySort.observe(viewLifecycleOwner, Observer { it ->
             if (books?.isNotEmpty() == true) {
                 books = when (it) {
-                    "Latest" -> books?.sortedWith(compareBy { it.modifiedDate })?.reversed() as MutableList<BookModel>
+                    "Latest" -> books?.sortedWith(compareBy { it.modifiedDate })
+                        ?.reversed() as MutableList<BookModel>
                     "Old" -> books?.sortedWith(compareBy { it.modifiedDate }) as MutableList<BookModel>
                     "Name" -> books?.sortedWith(compareBy { it.name }) as MutableList<BookModel>
                     else -> books
