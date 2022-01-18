@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="32dp"
+    android:paddingHorizontal="20dp"
     tools:context=".view.book_profile.ExpressMeFragment">
 
     <TextView
@@ -12,20 +14,20 @@
         android:layout_height="wrap_content"
         android:text="@string/express_me_title"
         android:textColor="@color/main_blue"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/express_me_et"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16.8dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
         android:background="@drawable/login_book_profile_et"
         android:hint="@string/express_me_hint"
         android:maxLength="20"
-        android:paddingHorizontal="12dp"
+        android:paddingHorizontal="10dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey12"
-        android:textSize="16.8dp" />
+        android:textSize="14dp" />
 
 </LinearLayout>
