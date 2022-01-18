@@ -145,11 +145,12 @@
     <!-- WritingSettingFragment -->
     <string name="writing_setting">글 설정</string>
     <string name="read_where">어디서 책을 읽었나요?</string>
+    <string name="read_where_hint">ex. 집 앞 카페에서</string>
     <string name="read_time">책 읽은 시간대는?</string>
-    <string name="read_time_hint">점심시간 / 13:34</string>
+    <string name="read_time_hint">ex. 점심시간에 30분</string>
     <string name="link">함께 첨부하고 싶은 링크가 있다면?</string>
     <string name="link_title_hint">링크 제목</string>
-    <string name="link_hint">https://drive.google.com/drive/u/0/starred</string>
+    <string name="link_hint">메모와 관련된 노래/영상/뉴스의 링크를 입력해보세요.</string>
     <string name="public_setting">공개 설정</string>
 
     <!-- PostDetailFragment -->
