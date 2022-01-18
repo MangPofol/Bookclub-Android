@@ -154,6 +154,9 @@
 
     <!-- PostDetailFragment -->
     <string name="update">수정하기</string>
+    <string name="msg_input_location">책과 함께한 장소를 입력해보세요.</string>
+    <string name="msg_input_time">책을 읽은 시간대를 입력해보세요.</string>
+    <string name="msg_input_link">함께 기억하고 싶은 링크를 입력해보세요.</string>
 
     <!-- BookDescFragment -->
     <string name="end">END</string>

@@ -133,9 +133,14 @@ class PostDetailFragment : Fragment() {
         binding.recordTitleTv.text = post.title
         binding.recordContentTv.text = post.content
 
-        binding.locationTv.text = post.location
-        binding.clockTv.text = post.readTime
-        binding.linkTv.text = post.hyperlink
+        if (post.location.isNotBlank())
+            binding.locationTv.text = post.location
+
+        if (post.readTime.isNotBlank())
+            binding.clockTv.text = post.readTime
+
+        if (post.hyperlink.isNotBlank())
+            binding.linkTv.text = post.hyperlink
     }
 
     //뷰페이저 어댑터 초기화
