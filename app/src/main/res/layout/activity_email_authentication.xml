@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/back">
+            app:navigationIcon="@drawable/ic_back">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
                 android:layout_gravity="center"
                 android:text="@string/email_authentication"
                 android:textColor="@color/main_blue"
-                android:textSize="21.6dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -33,10 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginEnd="25.2dp"
+                android:layout_marginEnd="21dp"
                 android:text="@string/complete"
                 android:textColor="@color/main_blue"
-                android:textSize="16.8dp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -52,22 +52,21 @@
         <EditText
             android:id="@+id/email_et"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="25.2dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="51dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/signin_et"
             android:enabled="false"
             android:hint="@string/msg_input_email"
             android:maxLines="1"
-            android:paddingHorizontal="10.8dp"
+            android:paddingHorizontal="14dp"
             android:textColorHint="@color/grey12"
             android:textSize="16dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/send_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.widget.Button
             android:id="@+id/send_btn"
@@ -107,14 +106,15 @@
         <EditText
             android:id="@+id/code_et"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="25.2dp"
-            android:layout_marginTop="21dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
             android:background="@drawable/signin_et"
             android:hint="@string/msg_input_code"
             android:inputType="number"
             android:maxLines="1"
-            android:paddingHorizontal="10.8dp"
+            android:paddingHorizontal="14dp"
             android:textColorHint="@color/grey12"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -126,15 +126,14 @@
             android:id="@+id/code_alert_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="4.8dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="6dp"
             android:text="@string/err_wrong_code"
             android:textColor="@color/light_red"
-            android:textSize="12dp"
+            android:textSize="10dp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/code_et"
-            app:layout_constraintVertical_bias="0.41" />
+            app:layout_constraintTop_toBottomOf="@+id/code_et" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
