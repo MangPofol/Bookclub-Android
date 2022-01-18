@@ -14,7 +14,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.view.book_profile.EmailAuthenticationActivity
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                         val token = mainVm.login(user)
 
                         if (token != null) {
-                            AccountSharedPreference.setJWT(this@LoginActivity, token)
+                            JWTUtils.setJWT(this@LoginActivity, token)
 
                             when (val role = checkRole(token)) {
                                 "ROLE_NEED_EMAIL" -> {

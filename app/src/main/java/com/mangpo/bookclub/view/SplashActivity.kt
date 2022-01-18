@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.view.main.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }
 
-        val token = AccountSharedPreference.getJWT(this)
+        val token = JWTUtils.getJWT(this)
 
         if (token == "") {  //로그인 안 됐을 때
             CoroutineScope(Dispatchers.Main).launch {

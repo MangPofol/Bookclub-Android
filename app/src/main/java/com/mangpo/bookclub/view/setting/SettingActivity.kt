@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.view.my_info.ResettingPasswordActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
@@ -129,7 +129,7 @@ class SettingActivity : AppCompatActivity() {
 
     //로그아웃 or 계정 탈퇴 시 사용하는 함수 -> 사용자 관련 sharedPreferences clear, JWT 빈값으로
     private fun clearUser() {
-        AccountSharedPreference.clearJWT(this)
+        JWTUtils.clearJWT(this)
     }
 
     private fun observe() {

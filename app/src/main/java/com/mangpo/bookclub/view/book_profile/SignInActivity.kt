@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivitySignInBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -110,7 +110,7 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 ).show()
                 onBackPressed()
             } else {    //로그인 성공 -> 이메일 인증 화면으로 이동
-                AccountSharedPreference.setJWT(this@SignInActivity, token)
+                JWTUtils.setJWT(this@SignInActivity, token)
                 val intent = Intent(
                     this@SignInActivity,
                     EmailAuthenticationActivity::class.java

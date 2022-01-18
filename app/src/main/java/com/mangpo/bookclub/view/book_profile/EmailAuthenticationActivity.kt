@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.ActivityEmailAuthenticationBinding
-import com.mangpo.bookclub.util.AccountSharedPreference
+import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -71,7 +71,7 @@ class EmailAuthenticationActivity : AppCompatActivity() {
 
     //뒤로가기 버튼을 누르면 LoginActivity 로 이동한다.
     override fun onBackPressed() {
-        AccountSharedPreference.clearJWT(this@EmailAuthenticationActivity)
+        JWTUtils.clearJWT(this@EmailAuthenticationActivity)
 
         //이전 액티비티가 SplashActivity 또는 LoginActivity 이면 LoginActivity 로 이동하고,
         //SignInActivity 이면 SignInActivity 로 이동한다.
