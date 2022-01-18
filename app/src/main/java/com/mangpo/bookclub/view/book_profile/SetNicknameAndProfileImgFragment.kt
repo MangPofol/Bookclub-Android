@@ -19,11 +19,12 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
 
     private lateinit var binding: FragmentSetNicknameAndProfileImgBinding
 
-    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment = CameraGalleryBottomSheetFragment.newInstance(1) {
-        profileImgUrl = it[0]
+    private val cameraGalleryBottomSheetFragment: CameraGalleryBottomSheetFragment =
+        CameraGalleryBottomSheetFragment.newInstance(1) {
+            profileImgUrl = it[0]
 
-        updateProfileImg()
-    }
+            updateProfileImg()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +37,7 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
 
         binding.nicknameEt.addTextChangedListener(this) //텍스트 입력 시 이벤트 처리
 
-        binding.addProfileIvView.setOnClickListener {
+        binding.plusIv.setOnClickListener {
             cameraGalleryBottomSheetFragment.show(requireActivity().supportFragmentManager, null)
         }
 
@@ -63,8 +64,9 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
     }
 
     private fun updateProfileImg() {
-        Glide.with(requireActivity().applicationContext).load(profileImgUrl).circleCrop().into(binding.profileIv)
-        binding.plusIv.setImageResource(R.drawable.setting_icon_white)
+        Glide.with(requireActivity().applicationContext).load(profileImgUrl).circleCrop()
+            .into(binding.profileIv)
+        binding.plusIv.setImageResource(R.drawable.ic_setting)
         isProfileImgSetting = true
 
         if (binding.nicknameEt.text.isBlank())   //닉네임 입력창이 비어있으면 다음 버튼 비활성화
@@ -73,7 +75,7 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
             (activity as BookProfileInitActivity).enableNextBtn()
     }
 
-    fun getNickname():String = binding.nicknameEt.text.toString()
+    fun getNickname(): String = binding.nicknameEt.text.toString()
 
     fun getProfileImg(): String = profileImgUrl
 }
