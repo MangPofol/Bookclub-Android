@@ -3,35 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="13.2dp">
+    android:paddingBottom="11dp">
 
     <View
         android:id="@+id/checklist_view"
         android:layout_width="0dp"
-        android:layout_height="28.8dp"
-        android:layout_marginHorizontal="18dp"
+        android:layout_height="24dp"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/checklist_item_background_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/checklist_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:textColor="@color/light_blue"
-        android:textSize="14.4dp"
+    <ImageView
+        android:id="@+id/checked_iv"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="11dp"
+        android:src="@drawable/ic_checked"
         app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
         app:layout_constraintStart_toStartOf="@+id/checklist_view"
+        app:layout_constraintTop_toTopOf="@+id/checklist_view" />
+
+    <TextView
+        android:id="@+id/checklist_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:textColor="@color/light_blue"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
+        app:layout_constraintEnd_toStartOf="@+id/remove_iv"
+        app:layout_constraintStart_toEndOf="@+id/checked_iv"
         app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
     <ImageView
         android:id="@+id/remove_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8.4dp"
-        android:src="@drawable/close_icon_light_red"
+        android:layout_marginEnd="17dp"
+        android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
         app:layout_constraintEnd_toEndOf="@id/checklist_view"
         app:layout_constraintTop_toTopOf="@+id/checklist_view" />
