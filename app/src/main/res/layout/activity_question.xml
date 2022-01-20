@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="@string/question"
         android:textColor="@color/main_blue"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
@@ -38,8 +38,8 @@
         android:id="@+id/back_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26.4dp"
-        android:src="@drawable/back"
+        android:layout_marginStart="22dp"
+        android:src="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
@@ -58,32 +58,32 @@
         android:layout_height="wrap_content"
         android:text="@string/contact_us"
         android:textColor="@color/main_blue"
-        android:textSize="19.2dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/layout_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout_view"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.33" />
 
     <TextView
         android:id="@+id/contact_desc_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/contact_desc"
         android:textColor="@color/light_blue"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_tv" />
 
     <View
         android:id="@+id/send_email_view"
-        android:layout_width="151.2dp"
-        android:layout_height="38.4dp"
-        android:layout_marginTop="18dp"
+        android:layout_width="126dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/light_red_round_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:text="@string/send_email"
         android:textColor="@color/white"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/send_email_view"
         app:layout_constraintEnd_toEndOf="@+id/send_email_view"
         app:layout_constraintStart_toStartOf="@+id/send_email_view"
@@ -103,13 +103,13 @@
 
     <ImageView
         android:id="@+id/send_email_arrow_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="7.2dp"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
         android:layout_marginStart="2dp"
-        android:src="@drawable/diagonal_arrow"
+        android:src="@drawable/ic_diagonal"
         app:layout_constraintBottom_toBottomOf="@+id/send_email_tv"
         app:layout_constraintStart_toEndOf="@+id/send_email_tv"
         app:layout_constraintTop_toTopOf="@+id/send_email_tv"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.31" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
