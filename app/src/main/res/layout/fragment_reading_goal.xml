@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="32dp"
     tools:context=".view.book_profile.ReadingGoalFragment">
 
     <TextView
@@ -12,14 +14,14 @@
         android:layout_height="wrap_content"
         android:text="@string/reading_goal_title"
         android:textColor="@color/main_blue"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:layout_width="66dp"
-        android:layout_height="48dp"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
         android:background="@drawable/login_book_profile_et"
         app:layout_constraintBottom_toBottomOf="@+id/period_number_np"
         app:layout_constraintEnd_toEndOf="@+id/period_number_np"
@@ -28,17 +30,17 @@
 
     <NumberPicker
         android:id="@+id/period_number_np"
-        android:layout_width="66dp"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toStartOf="@+id/period_unit_np"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reading_goal_tv" />
 
     <View
-        android:layout_width="44.4dp"
-        android:layout_height="48dp"
+        android:layout_width="37dp"
+        android:layout_height="40dp"
         android:background="@drawable/login_book_profile_et"
         app:layout_constraintBottom_toBottomOf="@+id/period_unit_np"
         app:layout_constraintEnd_toEndOf="@+id/period_unit_np"
@@ -47,9 +49,9 @@
 
     <NumberPicker
         android:id="@+id/period_unit_np"
-        android:layout_width="44.4dp"
+        android:layout_width="37dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toStartOf="@+id/period_tv"
         app:layout_constraintStart_toEndOf="@+id/period_number_np"
@@ -62,7 +64,7 @@
         android:gravity="center"
         android:text="동안"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="13dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/period_unit_np"
         app:layout_constraintEnd_toStartOf="@+id/book_cnt_np"
@@ -70,8 +72,8 @@
         app:layout_constraintTop_toTopOf="@+id/period_unit_np" />
 
     <View
-        android:layout_width="66dp"
-        android:layout_height="48dp"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
         android:background="@drawable/login_book_profile_et"
         app:layout_constraintBottom_toBottomOf="@+id/book_cnt_np"
         app:layout_constraintEnd_toEndOf="@+id/book_cnt_np"
@@ -80,9 +82,9 @@
 
     <NumberPicker
         android:id="@+id/book_cnt_np"
-        android:layout_width="66dp"
+        android:layout_width="55dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toStartOf="@+id/book_cnt_tv"
         app:layout_constraintStart_toEndOf="@+id/period_tv"
@@ -95,7 +97,7 @@
         android:gravity="center"
         android:text="권의 책을 기록하기"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/book_cnt_np"
         app:layout_constraintEnd_toEndOf="parent"
