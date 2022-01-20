@@ -36,7 +36,7 @@
     </style>
 
     <style name="chipText" parent="TextAppearance.MaterialComponents.Chip">
-        <item name="android:textSize">16.8dp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@font/custom_font_family</item>
     </style>
 

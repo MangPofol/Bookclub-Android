@@ -7,12 +7,12 @@
     android:textAppearance="@style/chipText"
     android:textColor="@drawable/genre_text_selector"
     app:chipBackgroundColor="@color/white"
-    app:chipCornerRadius="12dp"
-    app:chipEndPadding="19.2dp"
-    app:chipMinHeight="37.2dp"
-    app:chipStartPadding="19.2dp"
+    app:chipCornerRadius="10dp"
+    app:chipEndPadding="16dp"
+    app:chipMinHeight="31dp"
+    app:chipStartPadding="16dp"
     app:chipStrokeColor="@color/grey12"
-    app:chipStrokeWidth="1.2dp"
+    app:chipStrokeWidth="1dp"
     app:rippleColor="@android:color/transparent">
 
 </com.google.android.material.chip.Chip>
