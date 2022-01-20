@@ -194,7 +194,7 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginEnd="18dp"
-                android:src="@drawable/ic_write"
+                android:src="@drawable/ic_write_white"
                 app:layout_constraintBottom_toBottomOf="@+id/go_post_tv"
                 app:layout_constraintEnd_toEndOf="@+id/go_post_view"
                 app:layout_constraintTop_toTopOf="@+id/go_post_tv" />

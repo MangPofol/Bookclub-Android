@@ -180,6 +180,8 @@
     <string name="favorite_genre">좋아하는 장르</string>
     <string name="reading_style">책 읽는 스타일</string>
     <string name="reading_routine">책 루틴</string>
+    <string name="total_record">총 기록</string>
+    <string name="total_reading_book">읽은 책</string>
 
     <!-- YourTasteActivity -->
     <string name="update_genre_title">좋아하는 장르를 수정해주세요.</string>

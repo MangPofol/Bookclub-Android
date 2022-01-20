@@ -119,7 +119,7 @@
                 android:layout_width="122dp"
                 android:layout_height="26dp"
                 android:background="@drawable/bg_book_desc_go_record_btn"
-                android:drawableRight="@drawable/ic_write"
+                android:drawableRight="@drawable/ic_write_white"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:paddingHorizontal="14dp"

@@ -44,7 +44,7 @@ class MyInfoActivity : AppCompatActivity() {
         getUser()
 
         //프로필 이미지 설정 클릭 리스너
-        binding.profileImageSettingView.setOnClickListener {
+        binding.profileImageSettingIv.setOnClickListener {
             //카메라 or 갤러리 선택하는 bottom dialog 실행
             cameraGalleryBottomSheetFragment.show(supportFragmentManager, null)
         }
@@ -85,7 +85,7 @@ class MyInfoActivity : AppCompatActivity() {
 
     private fun setUI(user: UserModel) {
         binding.nicknameTv.text = user.nickname
-        binding.idTv.text = user.email
+        binding.emailTv.text = user.email
 
         if (user.introduce == "")
             binding.introduceTv.text = "나를 한 줄로 표현해보세요."
@@ -103,7 +103,7 @@ class MyInfoActivity : AppCompatActivity() {
         }
 
         if (user.profileImgLocation == "")
-            Glide.with(applicationContext).load(R.drawable.no_profile_img).into(binding.profileIv)
+            Glide.with(applicationContext).load(R.drawable.default_profile).into(binding.profileIv)
         else
             Glide.with(applicationContext).load(user.profileImgLocation).circleCrop().into(binding.profileIv)
     }
