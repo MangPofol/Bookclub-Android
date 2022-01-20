@@ -3,16 +3,16 @@
     <item
         android:id="@+id/main"
         android:enabled="true"
-        android:icon="@drawable/record_navi_icon"
+        android:icon="@drawable/ic_menu_user"
         android:title="@string/main" />
     <item
         android:id="@+id/library"
         android:enabled="true"
-        android:icon="@drawable/library_navi_icon"
+        android:icon="@drawable/ic_menu_book"
         android:title="@string/library" />
     <item
         android:id="@+id/bookclub"
         android:enabled="false"
-        android:icon="@drawable/bookclub_navi_icon"
+        android:icon="@drawable/ic_menu_library"
         android:title="@string/bookclub" />
 </menu>
