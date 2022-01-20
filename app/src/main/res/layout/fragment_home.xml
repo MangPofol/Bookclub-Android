@@ -7,11 +7,11 @@
 
     <ImageView
         android:id="@+id/hamburger_ib"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="25.2dp"
-        android:layout_marginTop="21.6dp"
-        android:src="@drawable/hamburger_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,9 +30,10 @@
             <ImageView
                 android:id="@+id/background_iv"
                 android:layout_width="0dp"
-                android:layout_height="206.4dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/write_init_background_img"
+                android:layout_height="172dp"
+                android:layout_marginTop="84dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_bg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="21dp"
-                android:layout_marginTop="104dp"
+                android:layout_marginTop="138dp"
                 android:text="닉네임님,\n오늘도 힘차게 기록해봅시다."
                 android:textColor="@color/main_blue"
                 android:textSize="24dp"
@@ -62,18 +63,18 @@
 
             <ImageView
                 android:id="@+id/go_my_info_iv"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="21dp"
-                android:src="@drawable/next_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
+                android:src="@drawable/ic_next"
                 app:layout_constraintBottom_toBottomOf="@+id/write_init_title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/write_init_title_tv" />
 
             <View
                 android:id="@+id/total_pages_view"
-                android:layout_width="122.4dp"
-                android:layout_height="24dp"
+                android:layout_width="103dp"
+                android:layout_height="21dp"
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="17dp"
                 android:background="@drawable/write_init_fragment_blue_view"
@@ -88,7 +89,7 @@
                 android:layout_marginTop="2dp"
                 android:text="total 396 pages"
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/total_pages_view"
                 app:layout_constraintEnd_toEndOf="@+id/total_pages_view"
                 app:layout_constraintStart_toStartOf="@+id/total_pages_view"
@@ -96,9 +97,9 @@
 
             <View
                 android:id="@+id/date_view"
-                android:layout_width="192dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="5dp"
+                android:layout_width="161dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/write_init_fragment_blue_view"
                 app:layout_constraintBottom_toBottomOf="@+id/total_pages_view"
                 app:layout_constraintStart_toEndOf="@+id/total_pages_view"
@@ -111,7 +112,7 @@
                 android:layout_marginTop="2dp"
                 android:text="The record for October 20."
                 android:textColor="@color/white"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/date_view"
                 app:layout_constraintEnd_toEndOf="@+id/date_view"
                 app:layout_constraintStart_toStartOf="@+id/date_view"
@@ -120,11 +121,9 @@
             <View
                 android:id="@+id/reading_goal_view"
                 android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="24dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/grey13_round_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,11 +133,10 @@
                 android:id="@+id/reading_goal_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20.4dp"
-                android:layout_marginEnd="10.2dp"
+                android:layout_marginStart="18dp"
                 android:text="1년에 10권 읽고 기록하기"
                 android:textColor="@color/main_blue"
-                android:textSize="14.4dp"
+                android:textSize="12dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/reading_goal_view"
                 app:layout_constraintEnd_toStartOf="@+id/reading_goal_next_iv"
@@ -156,164 +154,35 @@
 
             <ImageView
                 android:id="@+id/reading_goal_next_iv"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="20.4dp"
-                android:src="@drawable/next_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_next"
                 app:layout_constraintBottom_toBottomOf="@+id/reading_goal_tv"
                 app:layout_constraintEnd_toEndOf="@+id/reading_goal_view"
                 app:layout_constraintTop_toTopOf="@+id/reading_goal_tv" />
 
-            <!--Base CardView-->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/base_card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.4dp"
-                app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/reading_goal_view">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/base_card_view"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.511"
-                    tools:layout_editor_absoluteX="-55dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/fixed_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="42dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0">
-
-                        <View
-                            android:id="@+id/checklist_view"
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginEnd="24dp"
-                            android:background="@drawable/grey13_round_view"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/checklist_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20.4dp"
-                            android:layout_marginEnd="10.2dp"
-                            android:text="@string/checklist"
-                            android:textColor="@color/main_blue"
-                            android:textSize="14.4dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
-                            app:layout_constraintStart_toStartOf="@+id/checklist_view"
-                            app:layout_constraintTop_toTopOf="@+id/checklist_view" />
-
-                        <View
-                            android:id="@+id/checklist_setting_click_view"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/checklist_setting_iv"
-                            app:layout_constraintEnd_toEndOf="@id/checklist_setting_iv"
-                            app:layout_constraintStart_toStartOf="@+id/checklist_setting_iv"
-                            app:layout_constraintTop_toTopOf="@+id/checklist_setting_iv" />
-
-                        <ImageView
-                            android:id="@+id/checklist_setting_iv"
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:layout_marginEnd="57dp"
-                            android:src="@drawable/checklist_setting_icon"
-                            app:layout_constraintBottom_toBottomOf="@+id/checklist_tv"
-                            app:layout_constraintEnd_toEndOf="@+id/checklist_view"
-                            app:layout_constraintTop_toTopOf="@+id/checklist_tv" />
-
-                        <View
-                            android:id="@+id/checklist_line_view"
-                            android:layout_width="1.56dp"
-                            android:layout_height="0dp"
-                            android:layout_marginVertical="14.4dp"
-                            android:layout_marginStart="14.4dp"
-                            android:background="@color/main_blue"
-                            app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
-                            app:layout_constraintEnd_toStartOf="@+id/arrow_down_iv"
-                            app:layout_constraintStart_toEndOf="@+id/checklist_setting_iv"
-                            app:layout_constraintTop_toTopOf="@+id/checklist_view" />
-
-                        <View
-                            android:id="@+id/arrow_down_click_view"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/arrow_down_iv"
-                            app:layout_constraintEnd_toEndOf="@id/arrow_down_iv"
-                            app:layout_constraintStart_toStartOf="@+id/arrow_down_iv"
-                            app:layout_constraintTop_toTopOf="@+id/arrow_down_iv" />
-
-                        <ImageView
-                            android:id="@+id/arrow_down_iv"
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:layout_marginStart="14.4dp"
-                            android:src="@drawable/arrow_down_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/checklist_line_view"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/checklist_hidden_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:background="@drawable/write_init_fragment_grey13_bottom_round_view"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="22.8dp"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fixed_layout"
-                        tools:itemCount="5"
-                        tools:listitem="@layout/item_checklist_content" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
             <View
                 android:id="@+id/go_post_view"
                 android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="14.4dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="48dp"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="58dp"
                 android:background="@drawable/write_init_fragment_light_red_view"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/base_card_view" />
+                app:layout_constraintTop_toBottomOf="@+id/reading_goal_view" />
 
             <TextView
                 android:id="@+id/go_post_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20.4dp"
-                android:layout_marginEnd="10.2dp"
+                android:layout_marginStart="18dp"
                 android:text="@string/go_post"
                 android:textColor="@color/white"
-                android:textSize="14.4dp"
+                android:textSize="12dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/go_post_view"
                 app:layout_constraintEnd_toStartOf="@+id/go_post_iv"
@@ -322,10 +191,10 @@
 
             <ImageView
                 android:id="@+id/go_post_iv"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="20.4dp"
-                android:src="@drawable/write_icon"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_write"
                 app:layout_constraintBottom_toBottomOf="@+id/go_post_tv"
                 app:layout_constraintEnd_toEndOf="@+id/go_post_view"
                 app:layout_constraintTop_toTopOf="@+id/go_post_tv" />

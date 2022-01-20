@@ -66,7 +66,7 @@ class SetNicknameAndProfileImgFragment : Fragment(), TextWatcher {
     private fun updateProfileImg() {
         Glide.with(requireActivity().applicationContext).load(profileImgUrl).circleCrop()
             .into(binding.profileIv)
-        binding.plusIv.setImageResource(R.drawable.ic_setting)
+        binding.plusIv.setImageResource(R.drawable.ic_profile_img_setting)
         isProfileImgSetting = true
 
         if (binding.nicknameEt.text.isBlank())   //닉네임 입력창이 비어있으면 다음 버튼 비활성화

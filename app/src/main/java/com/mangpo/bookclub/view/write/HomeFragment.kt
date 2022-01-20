@@ -66,36 +66,6 @@ class HomeFragment : Fragment() {
             (requireActivity() as MainActivity).moveToRecord(false)
         }
 
-        //체크리스트의 arrow_down 이미지뷰 클릭 리스너
-        binding.arrowDownClickView.setOnClickListener {
-            Toast.makeText(requireContext(), "개발 중인 기능입니다.", Toast.LENGTH_SHORT).show()
-            /*//체크리스트 목록 뷰가 열려 있으면 -> 닫기
-            if (binding.checklistHiddenRv.visibility == View.VISIBLE) {
-                //체크리스트 고정뷰의 모든 코너를 둥글게
-                binding.checklistView.setBackgroundResource(R.drawable.grey13_round_view)
-                //애니메이션
-                TransitionManager.beginDelayedTransition(
-                    binding.baseCardView,
-                    AutoTransition()
-                )
-                binding.checklistHiddenRv.visibility = View.GONE
-            } else {    //체크리스트 목록 뷰가 닫혀 있으면 -> 열기
-                //체크리스트 고정뷰의 위 모서리 코너를 둥글게
-                binding.checklistView.setBackgroundResource(R.drawable.write_init_fragment_grey13_top_round_view)
-                //애니메이션
-                TransitionManager.beginDelayedTransition(
-                    binding.baseCardView,
-                    AutoTransition()
-                )
-                binding.checklistHiddenRv.visibility = View.VISIBLE
-            }*/
-        }
-
-        //체크리스트 설정 이미지 클릭 리스너 -> ChecklistManagementActivity 화면으로 이동
-        binding.checklistSettingClickView.setOnClickListener {
-            (requireActivity() as MainActivity).goChecklistManagement()
-        }
-
         //프로필 관리 화면으로 이동하는 이미지 클릭 리스너 -> MyInfoActivity 화면으로 이동
         binding.goMyInfoClickView.setOnClickListener {
             (requireActivity() as MainActivity).goMyInfo()
@@ -147,10 +117,6 @@ class HomeFragment : Fragment() {
             }
 
         })
-
-        //체크리스트 리사이클러뷰 어댑터 설정
-        binding.checklistHiddenRv.setHasFixedSize(true)
-        binding.checklistHiddenRv.adapter = checklistContentAdapter
     }
 
     private fun createChecklist(position: Int, content: String) {
