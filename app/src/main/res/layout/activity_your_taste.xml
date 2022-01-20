@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="@string/your_taste"
         android:textColor="@color/main_blue"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
