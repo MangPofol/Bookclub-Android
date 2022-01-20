@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="26dp"
     tools:context=".view.setting.TermsBottomSheetFragment">
 
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="31.2dp"
         android:textColor="@color/main_blue"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,11 +21,10 @@
     <TextView
         android:id="@+id/content_tv"
         android:layout_width="0dp"
-        android:layout_height="288dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/light_blue"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_tv" />
@@ -33,10 +32,9 @@
     <View
         android:id="@+id/confirm_btn"
         android:layout_width="0dp"
-        android:layout_height="62.4dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="34.8dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="29dp"
         android:background="@drawable/main_blue_round_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="@string/confirm"
         android:textColor="@color/white"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/confirm_btn"
         app:layout_constraintEnd_toEndOf="@+id/confirm_btn"
