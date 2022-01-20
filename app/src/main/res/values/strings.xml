@@ -200,7 +200,7 @@
     <string name="checklist_management">체크리스트 관리</string>
 
     <!-- SettingActivity, ResettingPasswordActivity -->
-    <string name="resetting_password">비밀번호 재설정</string>
+    <string name="resetting_password">비밀번호 변경</string>
 
     <!-- ResettingPasswordActivity -->
     <string name="old_password">기존 비밀번호</string>

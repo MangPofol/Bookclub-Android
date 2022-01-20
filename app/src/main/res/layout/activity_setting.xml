@@ -19,9 +19,9 @@
         android:id="@+id/back_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28.8dp"
-        android:layout_marginTop="21.6dp"
-        android:src="@drawable/back"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,10 +29,10 @@
         android:id="@+id/setting_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13.2dp"
+        android:layout_marginTop="11dp"
         android:text="@string/setting"
         android:textColor="@color/main_blue"
-        android:textSize="21.6dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:id="@+id/background_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="13.2dp"
+        android:layout_marginTop="11dp"
         android:background="@drawable/layout_gradation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_title_tv" />
@@ -51,11 +51,11 @@
         android:id="@+id/resetting_password_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="27.6dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginStart="30dp"
         android:text="@string/resetting_password"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="@+id/background_view"
         app:layout_constraintTop_toTopOf="@+id/background_view" />
 
@@ -70,10 +70,10 @@
 
     <ImageView
         android:id="@+id/resetting_password_next_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="36dp"
-        android:src="@drawable/next_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/resetting_password_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/resetting_password_tv" />
@@ -81,9 +81,9 @@
     <View
         android:id="@+id/resetting_password_line_view"
         android:layout_width="match_parent"
-        android:layout_height="2.4dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="19.2dp"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
         android:background="@color/grey13"
         app:layout_constraintTop_toBottomOf="@+id/resetting_password_tv" />
 
@@ -91,11 +91,11 @@
         android:id="@+id/notice_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="17dp"
         android:text="@string/notice"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resetting_password_line_view" />
 
@@ -110,10 +110,10 @@
 
     <ImageView
         android:id="@+id/notice_next_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="36dp"
-        android:src="@drawable/next_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/notice_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/notice_tv" />
@@ -122,11 +122,11 @@
         android:id="@+id/question_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="26.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="22dp"
         android:text="@string/question"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notice_tv" />
 
@@ -141,10 +141,10 @@
 
     <ImageView
         android:id="@+id/question_next_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="36dp"
-        android:src="@drawable/next_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/question_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/question_tv" />
@@ -153,11 +153,11 @@
         android:id="@+id/terms_conditions_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="26.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="22dp"
         android:text="@string/terms_conditions"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/question_tv" />
 
@@ -172,10 +172,10 @@
 
     <ImageView
         android:id="@+id/terms_conditions_next_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="36dp"
-        android:src="@drawable/next_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/terms_conditions_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/terms_conditions_tv" />
@@ -184,11 +184,11 @@
         android:id="@+id/open_source_license_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="26.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="22dp"
         android:text="@string/open_source_license"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_conditions_tv" />
 
@@ -203,10 +203,10 @@
 
     <ImageView
         android:id="@+id/open_source_license_next_iv"
-        android:layout_width="7.2dp"
-        android:layout_height="12dp"
-        android:layout_marginEnd="36dp"
-        android:src="@drawable/next_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="@+id/open_source_license_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/open_source_license_tv" />
@@ -215,20 +215,20 @@
         android:id="@+id/version_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="26.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="22dp"
         android:text="@string/version"
         android:textColor="@color/main_blue"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/open_source_license_tv" />
 
     <View
         android:id="@+id/version_line_view"
         android:layout_width="match_parent"
-        android:layout_height="2.4dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="19.2dp"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
         android:background="@color/grey13"
         app:layout_constraintTop_toBottomOf="@+id/version_tv" />
 
@@ -236,11 +236,11 @@
         android:id="@+id/logout_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="18dp"
         android:text="@string/logout"
         android:textColor="@color/light_red"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/version_line_view" />
 
@@ -248,11 +248,11 @@
         android:id="@+id/quit_membership_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="26.4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="22dp"
         android:text="@string/quit_membership"
         android:textColor="@color/light_red"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logout_tv" />
 
