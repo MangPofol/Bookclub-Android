@@ -19,26 +19,11 @@
         android:id="@+id/back_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28.8dp"
+        android:layout_marginStart="20dp"
         android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/delete_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/delete_btn" />
-
-    <TextView
-        android:id="@+id/delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14.4dp"
-        android:layout_marginTop="21.6dp"
-        android:layout_marginEnd="28.8dp"
-        android:gravity="center"
-        android:text="@string/delete"
-        android:textColor="@color/light_red"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -49,7 +34,7 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete_btn">
+        app:layout_constraintTop_toBottomOf="@+id/back_iv">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -59,7 +44,7 @@
                 android:id="@+id/book_iv"
                 android:layout_width="93dp"
                 android:layout_height="132dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginTop="43dp"
                 android:background="@drawable/book_desc_book_iv"
                 android:scaleType="fitXY"
                 android:src="@drawable/book_ex"
@@ -71,7 +56,7 @@
                 android:id="@+id/book_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="공간의 미래 (유현준)"
                 android:textColor="@color/main_blue"
@@ -81,57 +66,115 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/book_iv" />
 
+            <View
+                android:id="@+id/line_view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grey13"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/book_tv" />
+
+            <ImageView
+                android:id="@+id/category_iv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_eye_active"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@+id/write_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/read_check_iv"/>
+
             <TextView
                 android:id="@+id/category_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reading"
+                android:text="읽는중"
                 android:textColor="@color/grey12"
                 android:textSize="12dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/category_btn"
-                app:layout_constraintStart_toStartOf="@+id/category_btn"
-                app:layout_constraintTop_toTopOf="@+id/category_btn" />
+                app:layout_constraintTop_toTopOf="@+id/write_tv"
+                app:layout_constraintStart_toStartOf="@+id/category_iv"
+                app:layout_constraintEnd_toEndOf="@+id/category_iv" />
 
-            <android.widget.Button
-                android:id="@+id/category_btn"
-                android:layout_width="89dp"
-                android:layout_height="26dp"
-                android:layout_marginTop="11dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_book_desc_category_after_btn"
-                android:drawableRight="@drawable/ic_read_after"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="4dp"
+            <ImageView
+                android:id="@+id/read_check_iv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_circle_bg"
+                app:layout_constraintTop_toTopOf="@+id/write_iv"
+                app:layout_constraintStart_toEndOf="@+id/category_iv"
+                app:layout_constraintEnd_toStartOf="@id/delete_book_iv"/>
+
+            <TextView
+                android:id="@+id/read_check_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/read_complete"
-                android:textColor="@color/white"
+                android:textColor="@color/main_blue"
                 android:textSize="12dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/go_record_btn"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_tv" />
+                app:layout_constraintTop_toTopOf="@+id/write_tv"
+                app:layout_constraintStart_toStartOf="@+id/read_check_iv"
+                app:layout_constraintEnd_toEndOf="@+id/read_check_iv" />
 
-            <android.widget.Button
-                android:id="@+id/go_record_btn"
-                android:layout_width="122dp"
-                android:layout_height="26dp"
-                android:background="@drawable/bg_book_desc_go_record_btn"
-                android:drawableRight="@drawable/ic_write_white"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="4dp"
+            <ImageView
+                android:id="@+id/delete_book_iv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_trash"
+                app:layout_constraintTop_toTopOf="@+id/write_iv"
+                app:layout_constraintStart_toEndOf="@+id/read_check_iv"
+                app:layout_constraintEnd_toStartOf="@+id/go_record_view"/>
+
+            <TextView
+                android:id="@+id/delete_book_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_book"
+                android:textColor="@color/light_red"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/write_tv"
+                app:layout_constraintStart_toStartOf="@+id/delete_book_iv"
+                app:layout_constraintEnd_toEndOf="@+id/delete_book_iv" />
+
+            <View
+                android:id="@+id/go_record_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="12dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/light_red_round_view"
+                app:layout_constraintTop_toBottomOf="@+id/line_view"
+                app:layout_constraintBottom_toTopOf="@+id/memo_list_view"
+                app:layout_constraintStart_toEndOf="@+id/delete_book_iv"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/write_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_write_white"
+                app:layout_constraintTop_toTopOf="@+id/go_record_view"
+                app:layout_constraintBottom_toTopOf="@+id/write_tv"
+                app:layout_constraintStart_toStartOf="@+id/go_record_view"
+                app:layout_constraintEnd_toEndOf="@+id/go_record_view"/>
+
+            <TextView
+                android:id="@+id/write_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/go_post"
                 android:textColor="@color/white"
                 android:textSize="12dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/category_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/category_btn"
-                app:layout_constraintTop_toTopOf="@+id/category_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/write_iv"
+                app:layout_constraintStart_toStartOf="@+id/write_iv"
+                app:layout_constraintEnd_toEndOf="@+id/write_iv"
+                app:layout_constraintBottom_toBottomOf="@+id/go_record_view"/>
 
             <View
                 android:id="@+id/memo_list_view"
@@ -140,7 +183,7 @@
                 android:layout_marginTop="48dp"
                 android:background="@color/grey15"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/category_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/category_iv" />
 
             <TextView
                 android:id="@+id/memo_list_tv"

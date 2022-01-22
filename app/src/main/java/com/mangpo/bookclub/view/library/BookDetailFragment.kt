@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -61,78 +62,27 @@ class BookDetailFragment : Fragment() {
             (requireActivity() as MainActivity).onBackPressed()
         }
 
-        //읽는중, 읽고 싶은 -> 완독 OR 완독 -> 읽는중 으로 변경
-        binding.categoryBtn.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                if (book.category == "AFTER") { //완독 -> 읽는중으로 변경
-                    val result = CoroutineScope(Dispatchers.IO).async {
-                        bookVm.updateBook(book.id!!, "NOW")
-                    }
-
-                    if (result.await()) {
-                        book.category = "NOW"
-
-                        binding.categoryBtn.background =
-                            requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
-                        binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            0,
-                            0,
-                            R.drawable.ic_read_after,
-                            0
-                        )
-
-                        Toast.makeText(
-                            this@BookDetailFragment.context,
-                            "책 완독을 취소했습니다!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        initBookList()
-                    } else {
-                        Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                } else {    //읽는중 -> 완독으로 변경
-                    val result = CoroutineScope(Dispatchers.IO).async {
-                        bookVm.updateBook(book.id!!, "AFTER")
-                    }
-
-                    if (result.await()) {
-                        book.category = "AFTER"
-
-                        binding.categoryBtn.background =
-                            requireContext().getDrawable(R.drawable.bg_book_desc_category_not_after_btn)
-                        binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
-                            0,
-                            0,
-                            R.drawable.ic_read_not_after,
-                            0
-                        )
-
-                        Toast.makeText(
-                            this@BookDetailFragment.context,
-                            "첵을 완독하셧습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        initBookList()
-                    } else {
-                        Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-
-            }
+        //완독 클릭 리스너
+        binding.readCheckIv.setOnClickListener {
+            changeCategory()
+        }
+        binding.readCheckTv.setOnClickListener {
+            changeCategory()
         }
 
         //기록 쓰러가기 버튼 클릭 리스너
-        binding.goRecordBtn.setOnClickListener {
+        binding.goRecordView.setOnClickListener {
             bookVm.setBook(book)
             (requireActivity() as MainActivity).moveToRecord(false)
         }
 
+        //삭제 이미지뷰 클릭 리스너
+        binding.deleteBookIv.setOnClickListener {
+            removeDialogFragment.show(requireActivity().supportFragmentManager, null)
+        }
+
         //삭제 텍스트뷰 클릭 리스너
-        binding.deleteBtn.setOnClickListener {
+        binding.deleteBookTv.setOnClickListener {
             removeDialogFragment.show(requireActivity().supportFragmentManager, null)
         }
 
@@ -159,24 +109,58 @@ class BookDetailFragment : Fragment() {
         binding.bookIv.clipToOutline = true
         Glide.with(requireActivity().applicationContext).load(book.imgPath).into(binding.bookIv)
 
-        if (book.category == "AFTER") {
-            binding.categoryBtn.background =
-                requireContext().getDrawable(R.drawable.bg_book_desc_category_not_after_btn)
-            binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_read_not_after,
-                0
-            )
-        } else {
-            binding.categoryBtn.background =
-                requireContext().getDrawable(R.drawable.bg_book_desc_category_after_btn)
-            binding.categoryBtn.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.ic_read_after,
-                0
-            )
+        when (book.category) {
+            "AFTER" -> {
+                binding.categoryTv.text = "완독"
+                binding.categoryIv.setImageResource(R.drawable.ic_eye_active)
+                binding.categoryTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_blue
+                    )
+                )
+                binding.readCheckIv.setImageResource(R.drawable.ic_check_circle_bg)
+                binding.readCheckTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_blue
+                    )
+                )
+            }
+            "NOW" -> {
+                binding.categoryTv.text = "읽는 중"
+                binding.categoryIv.setImageResource(R.drawable.ic_eye_active)
+                binding.categoryTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_blue
+                    )
+                )
+                binding.readCheckIv.setImageResource(R.drawable.ic_uncheck_circle_bg)
+                binding.readCheckTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey12
+                    )
+                )
+            }
+            else -> {
+                binding.categoryTv.text = "읽고 싶은"
+                binding.categoryIv.setImageResource(R.drawable.ic_eye_inactive)
+                binding.categoryTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey12
+                    )
+                )
+                binding.readCheckIv.setImageResource(R.drawable.ic_uncheck_circle_bg)
+                binding.readCheckTv.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey12
+                    )
+                )
+            }
         }
     }
 
@@ -213,6 +197,67 @@ class BookDetailFragment : Fragment() {
     private fun deleteBook() {
         CoroutineScope(Dispatchers.IO).launch {
             bookVm.deleteBook(book.id!!)
+        }
+    }
+
+    private fun changeCategory() {
+        CoroutineScope(Dispatchers.Main).launch {
+            if (book.category == "AFTER") { //완독 -> 읽는중으로 변경
+                val result = CoroutineScope(Dispatchers.IO).async {
+                    bookVm.updateBook(book.id!!, "NOW")
+                }
+
+                if (result.await()) {
+                    book.category = "NOW"
+
+                    binding.readCheckIv.setImageResource(R.drawable.ic_uncheck_circle_bg)
+                    binding.readCheckTv.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.grey12
+                        )
+                    )
+
+                    Toast.makeText(
+                        this@BookDetailFragment.context,
+                        "책 완독을 취소했습니다!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    initBookList()
+                } else {
+                    Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {    //읽는중 -> 완독으로 변경
+                val result = CoroutineScope(Dispatchers.IO).async {
+                    bookVm.updateBook(book.id!!, "AFTER")
+                }
+
+                if (result.await()) {
+                    book.category = "AFTER"
+
+                    binding.readCheckIv.setImageResource(R.drawable.ic_check_circle_bg)
+                    binding.readCheckTv.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.main_blue
+                        )
+                    )
+
+                    Toast.makeText(
+                        this@BookDetailFragment.context,
+                        "첵을 완독하셧습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    initBookList()
+                } else {
+                    Toast.makeText(requireContext(), "오류 발생. 다시 시도해 주세요.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
         }
     }
 

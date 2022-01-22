@@ -167,6 +167,7 @@
     <!-- BookDescFragment -->
     <string name="end">END</string>
     <string name="memo_list">MEMO LIST</string>
+    <string name="delete_book">책 삭제</string>
     <string name="title_activity_photo_view">PhotoViewActivity</string>
 
     <!-- SettingActivity -->
