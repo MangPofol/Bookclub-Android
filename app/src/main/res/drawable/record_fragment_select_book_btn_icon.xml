@@ -3,5 +3,5 @@
     <item
         android:width="8dp"
         android:height="16dp"
-        android:drawable="@drawable/next_icon_white" />
+        android:drawable="@drawable/ic_next_white" />
 </layer-list>

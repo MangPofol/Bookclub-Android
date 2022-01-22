@@ -93,7 +93,7 @@ class MyLibraryFragment : Fragment(), TextWatcher {
                 binding.searchLayout.searchBookET.text.clear()
             } else {    //뷰모델에 검색 버튼이 클릭이 취소됐다는 것을 알려주기
                 bookVm.setSearchFilterBtnClick(0)
-                binding.searchIconIv.setImageResource(R.drawable.search_main_blue_icon) //검색 아이콘 변경(남색)
+                binding.searchIconIv.setImageResource(R.drawable.ic_search) //검색 아이콘 변경(남색)
                 binding.searchLayout.root.visibility = View.GONE
                 binding.searchLayout.searchBookET.text.clear()  //검색어 초기화
                 (activity as MainActivity).hideKeyBord(requireView())   //키보드 숨기기

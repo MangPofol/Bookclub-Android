@@ -19,7 +19,6 @@
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginStart="13.2dp"
-        android:src="@drawable/checklist_unenabled_icon"
         app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
         app:layout_constraintStart_toStartOf="@+id/checklist_view"
         app:layout_constraintTop_toTopOf="@+id/checklist_view" />

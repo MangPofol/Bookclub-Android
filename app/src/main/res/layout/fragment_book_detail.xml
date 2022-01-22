@@ -47,7 +47,6 @@
                 android:layout_marginTop="43dp"
                 android:background="@drawable/book_desc_book_iv"
                 android:scaleType="fitXY"
-                android:src="@drawable/book_ex"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

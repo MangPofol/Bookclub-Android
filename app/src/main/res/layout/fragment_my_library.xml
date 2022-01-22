@@ -40,7 +40,6 @@
                     android:layout_width="19.2dp"
                     android:layout_height="19.2dp"
                     android:layout_marginEnd="21.6dp"
-                    android:src="@drawable/alarm_main_blue_icon"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/search_iv"
                     app:layout_constraintEnd_toStartOf="@+id/search_iv"
@@ -51,7 +50,7 @@
                     android:layout_width="19.2dp"
                     android:layout_height="19.2dp"
                     android:layout_marginEnd="26.4dp"
-                    android:src="@drawable/search_main_blue_icon"
+                    android:src="@drawable/ic_search"
                     android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
