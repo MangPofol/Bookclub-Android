@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+club_filter_item.xml
+fragment_book_club.xml
+fragment_my_library.xml
+fragment_sort_filter.xml-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/white" android:state_checked="true"></item>
     <item android:color="@color/main_blue" android:state_checked="false"></item>

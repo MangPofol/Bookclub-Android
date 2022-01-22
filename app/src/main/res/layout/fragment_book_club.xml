@@ -250,7 +250,6 @@
                     android:layout_marginTop="14dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:drawableEnd="@drawable/filter_checkbox_drawable_end"
                     android:drawablePadding="0dp"
                     android:gravity="center"
                     android:paddingHorizontal="12dp"

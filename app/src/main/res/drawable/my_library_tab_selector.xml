@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--fragment_my_library.xml readTypeTabLayout-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/my_library_tab_selected" android:state_selected="true"/>
     <item android:drawable="@drawable/my_library_tab_not_selected" android:state_selected="false"/>

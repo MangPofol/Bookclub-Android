@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--activity_email_authentication.xml, activity_sign_in.xml-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 

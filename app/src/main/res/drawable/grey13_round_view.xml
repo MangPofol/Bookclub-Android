@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+activity_password_reissue.xml email_et
+activity_resetting_password.xml old_password_et, new_password_et, reenter_new_password_et
+fragment_home.xml reading_goal_view
+item_checklist_header.xml checklist_header_view-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
