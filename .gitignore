@@ -21,3 +21,4 @@ local.properties
 /app/src/main/res/drawable/close_icon_light_red.xml
 /app/src/main/res/drawable/setting_icon_white.xml
 /app/release
+/app/src/main/res/drawable/ic_*.xml
