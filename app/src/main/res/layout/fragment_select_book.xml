@@ -27,7 +27,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:elevation="0dp"
-                app:navigationIcon="@drawable/back">
+                app:navigationIcon="@drawable/ic_back">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                     android:layout_gravity="center"
                     android:text="@string/select_book"
                     android:textColor="@color/main_blue"
-                    android:textSize="21.6dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -47,26 +47,25 @@
     <EditText
         android:id="@+id/searchBookET"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="33.6dp"
-        android:layout_marginBottom="32.4dp"
+        android:layout_height="25dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="28dp"
         android:background="@drawable/border_round_blue"
         android:hint="@string/enroll_new_book"
-        android:paddingHorizontal="14.4dp"
-        android:paddingTop="4.8dp"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="4dp"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey1"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bookListLayout"
         app:layout_constraintTop_toBottomOf="@id/coordinateLayout" />
 
     <ImageView
-        android:layout_width="10.8dp"
-        android:layout_height="10.8dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/search_main_blue_icon"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_marginEnd="9dp"
+        android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@+id/searchBookET"
         app:layout_constraintEnd_toEndOf="@+id/searchBookET"
         app:layout_constraintTop_toTopOf="@+id/searchBookET" />
@@ -84,29 +83,29 @@
             android:id="@+id/search_result_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="19.2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
             android:text="@string/search_result"
             android:textColor="@color/light_blue"
-            android:textSize="15.6dp"
+            android:textSize="12dp"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/selectBookTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="19.2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
             android:text="@string/select_in_library"
             android:textColor="@color/grey8"
-            android:textSize="15.6dp" />
+            android:textSize="12dp" />
 
         <View
             android:id="@+id/search_result_line"
             android:layout_width="match_parent"
-            android:layout_height="1.2dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="15.6dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="14dp"
             android:background="@color/grey12"
             android:visibility="gone" />
 
@@ -114,47 +113,47 @@
             android:id="@+id/readTypeRG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="11.856dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="9dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/readingRB"
-                android:layout_width="58.416dp"
-                android:layout_height="24.66dp"
+                android:layout_width="45dp"
+                android:layout_height="19dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center_horizontal"
-                android:paddingTop="3.792dp"
+                android:paddingTop="2dp"
                 android:text="@string/reading"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12dp" />
+                android:textSize="10dp" />
 
             <RadioButton
                 android:id="@+id/readCompleteRB"
-                android:layout_width="44.136dp"
-                android:layout_height="24.66dp"
-                android:layout_marginHorizontal="6.492dp"
+                android:layout_width="34dp"
+                android:layout_height="19dp"
+                android:layout_marginHorizontal="5dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:gravity="center_horizontal"
-                android:paddingTop="3.792dp"
+                android:paddingTop="2dp"
                 android:text="@string/read_complete"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12dp" />
+                android:textSize="10dp" />
 
             <RadioButton
                 android:id="@+id/wantToReadRB"
-                android:layout_width="64.908dp"
-                android:layout_height="24.66dp"
+                android:layout_width="50dp"
+                android:layout_height="19dp"
                 android:background="@drawable/state_check_border_round_grey_white"
                 android:button="@null"
                 android:gravity="center_horizontal"
-                android:paddingTop="3.792dp"
+                android:paddingTop="2dp"
                 android:text="@string/want_to_read"
                 android:textColor="@drawable/state_checked_text_white_grey9"
-                android:textSize="12dp" />
+                android:textSize="10dp" />
 
         </RadioGroup>
 
@@ -162,8 +161,8 @@
             android:id="@+id/bookListRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="19.884dp" />
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="20dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
