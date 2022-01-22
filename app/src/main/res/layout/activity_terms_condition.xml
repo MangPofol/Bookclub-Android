@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="29dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/terms_of_service_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/terms_of_service_tv" />
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="29dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/privacy_policy_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/privacy_policy_tv" />
@@ -144,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="29dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/receive_marketing_information_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/receive_marketing_information_tv" />

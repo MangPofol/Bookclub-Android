@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/resetting_password_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/resetting_password_tv" />
@@ -113,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/notice_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/notice_tv" />
@@ -144,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/question_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/question_tv" />
@@ -175,7 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/terms_conditions_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/terms_conditions_tv" />
@@ -206,7 +206,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/ic_next"
+        android:src="@drawable/ic_next_blue"
         app:layout_constraintBottom_toBottomOf="@+id/open_source_license_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/open_source_license_tv" />
