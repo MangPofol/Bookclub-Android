@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/record_iv"
-        android:layout_width="44.4dp"
-        android:layout_height="44.4dp"
-        android:layout_marginTop="2.4dp"
-        android:layout_marginStart="15.6dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="13dp"
         android:scaleType="fitXY"
         android:background="@drawable/record_img_view"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,8 +17,8 @@
 
     <View
         android:id="@+id/remove_img_view"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:background="@drawable/record_remove_img_view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/remove_img_icon"
@@ -26,10 +26,10 @@
 
     <View
         android:id="@+id/remove_img_icon"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="36dp"
-        android:background="@drawable/close_icon"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="33dp"
+        android:background="@drawable/ic_close_white"
         app:layout_constraintStart_toStartOf="@+id/record_iv"
         app:layout_constraintTop_toTopOf="parent"/>
 

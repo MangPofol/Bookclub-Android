@@ -35,7 +35,7 @@
                     android:layout_gravity="center"
                     android:text="@string/record_en"
                     android:textColor="@color/main_blue"
-                    android:textSize="21.6dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -43,10 +43,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginEnd="22.8dp"
+                    android:layout_marginEnd="19dp"
                     android:text="@string/next"
                     android:textColor="@color/main_blue"
-                    android:textSize="16.8dp"
+                    android:textSize="14dp"
                     android:textStyle="bold" />
             </com.google.android.material.appbar.MaterialToolbar>
 
@@ -59,18 +59,18 @@
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="26.4dp"
-        android:drawableRight="@drawable/record_fragment_select_book_btn_icon"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="22dp"
+        android:drawableRight="@drawable/ic_next_white"
         android:gravity="left|center"
-        android:paddingLeft="18dp"
-        android:paddingTop="7.2dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="6dp"
         android:text="@string/book_select"
         android:textColor="@color/white"
-        android:textSize="14.4dp"
+        android:textSize="12dp"
         android:textStyle="bold"
-        app:cornerRadius="12dp"
+        app:cornerRadius="10dp"
         app:iconGravity="end"
         app:layout_constraintBottom_toTopOf="@+id/record_view"
         app:layout_constraintTop_toBottomOf="@+id/coordinateLayout" />
@@ -86,20 +86,20 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
-        android:layout_width="20.4dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="6dp"
-        android:src="@drawable/photo_icon"
+        android:layout_width="18dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_camera"
         app:layout_constraintEnd_toEndOf="@+id/add_img_view"
         app:layout_constraintStart_toStartOf="@+id/add_img_view"
         app:layout_constraintTop_toTopOf="@+id/add_img_view" />
 
     <View
         android:id="@+id/add_img_view"
-        android:layout_width="44.4dp"
-        android:layout_height="44.4dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/add_img_view"
         app:layout_constraintEnd_toStartOf="@+id/record_img_rv"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,10 +109,10 @@
         android:id="@+id/img_cnt_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10.8dp"
+        android:layout_marginStart="9dp"
         android:text="0"
         android:textColor="@color/light_red"
-        android:textSize="12dp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintEnd_toStartOf="@+id/img_line_tv"
         app:layout_constraintStart_toStartOf="@+id/add_img_view" />
@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:text="/"
         android:textColor="@color/light_red"
-        android:textSize="12dp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintEnd_toStartOf="@+id/img_total_cnt_tv"
         app:layout_constraintStart_toEndOf="@+id/img_cnt_tv" />
@@ -132,10 +132,10 @@
         android:id="@+id/img_total_cnt_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10.8dp"
+        android:layout_marginEnd="9dp"
         android:text="4"
         android:textColor="@color/light_red"
-        android:textSize="12dp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/add_img_view"
         app:layout_constraintEnd_toEndOf="@+id/add_img_view"
         app:layout_constraintStart_toEndOf="@+id/img_line_tv" />
@@ -154,9 +154,9 @@
     <View
         android:id="@+id/record_line_view"
         android:layout_width="match_parent"
-        android:layout_height="1.2dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/grey12"
         app:layout_constraintTop_toBottomOf="@+id/add_img_view" />
 
@@ -164,14 +164,14 @@
         android:id="@+id/postTitleET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="28.8dp"
-        android:layout_marginTop="27.6dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="23dp"
         android:background="@android:color/transparent"
         android:hint="@string/title_hint"
         android:maxLength="20"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey12"
-        android:textSize="19.2dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/record_line_view" />
 
@@ -179,8 +179,8 @@
         android:id="@+id/contentET"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="28.8dp"
-        android:layout_marginVertical="27.6dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="23dp"
         android:background="@android:color/transparent"
         android:gravity="start"
         android:hint="@string/content_hint"
@@ -188,7 +188,7 @@
         android:scrollbars="vertical"
         android:textColor="@color/main_blue"
         android:textColorHint="@color/grey12"
-        android:textSize="16.8dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/postTitleET" />
 
