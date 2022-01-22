@@ -25,15 +25,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/hamburger_ib"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="9dp"
-                    android:src="@drawable/hamburger_icon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_setting"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,9 +78,9 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/readTypeTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="35dp"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/read_type_tab_layout_view"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@drawable/my_library_tab_selector"
@@ -101,15 +99,15 @@
 
                 <CheckBox
                     android:id="@+id/searchButton"
-                    android:layout_width="72dp"
-                    android:layout_height="28.8dp"
+                    android:layout_width="60dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="3dp"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="4dp"
                     android:text="@string/search"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/clubButton"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,10 +115,11 @@
 
                 <ImageView
                     android:id="@+id/search_icon_iv"
-                    android:layout_width="9.6dp"
-                    android:layout_height="9.6dp"
-                    android:layout_marginEnd="18dp"
-                    android:src="@drawable/search_main_blue_icon"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="13dp"
+                    android:src="@drawable/ic_search"
                     app:layout_constraintBottom_toBottomOf="@+id/searchButton"
                     app:layout_constraintEnd_toEndOf="@+id/searchButton"
                     app:layout_constraintTop_toTopOf="@+id/searchButton" />
@@ -145,16 +144,16 @@
 
                 <CheckBox
                     android:id="@+id/sortButton"
-                    android:layout_width="72dp"
-                    android:layout_height="28.8dp"
-                    android:layout_marginLeft="6dp"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/state_check_border_round_blue_white"
                     android:button="@null"
                     android:gravity="center_horizontal"
-                    android:paddingTop="6dp"
+                    android:paddingTop="5dp"
                     android:text="@string/sort"
                     android:textColor="@drawable/state_checked_text_white_black"
-                    android:textSize="12dp"
+                    android:textSize="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/clubButton"
                     app:layout_constraintStart_toEndOf="@+id/clubButton"
                     app:layout_constraintTop_toTopOf="@+id/clubButton" />

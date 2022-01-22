@@ -9,41 +9,38 @@
 
     <CheckBox
         android:id="@+id/latestOrder"
-        android:layout_width="58.8dp"
-        android:layout_height="25.2dp"
+        android:layout_width="45dp"
+        android:layout_height="19dp"
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:paddingTop="2.4dp"
         android:text="@string/latest_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4dp" />
+        android:textSize="10dp" />
 
     <CheckBox
         android:id="@+id/oldOrder"
-        android:layout_width="72dp"
-        android:layout_height="25.2dp"
-        android:layout_marginLeft="6dp"
+        android:layout_width="55dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="5dp"
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:paddingTop="2.4dp"
         android:text="@string/old_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4dp" />
+        android:textSize="10dp" />
 
     <CheckBox
         android:id="@+id/nameOrder"
-        android:layout_width="58.8dp"
-        android:layout_height="25.2dp"
-        android:layout_marginLeft="6dp"
+        android:layout_width="45dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="5dp"
         android:background="@drawable/selector_filter2"
         android:button="@null"
         android:gravity="center"
-        android:paddingTop="2.4dp"
         android:text="@string/name_order"
         android:textColor="@drawable/state_checked_text_white_black"
-        android:textSize="14.4dp" />
+        android:textSize="10dp" />
 
     <CheckBox
         android:id="@+id/like_order"
