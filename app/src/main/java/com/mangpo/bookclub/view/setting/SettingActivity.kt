@@ -4,10 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
-import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.util.JWTUtils
@@ -74,38 +72,10 @@ class SettingActivity : AppCompatActivity() {
 
         //계정 탈퇴하기 클릭 리스너
         binding.quitMembershipTv.setOnClickListener {
-            quitMembership()
+            val intent = Intent(this@SettingActivity, WithdrawalActivity::class.java)
+            intent.putExtra("userId", user.userId)
+            startActivity(intent)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("SettingActivity", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("SettingActivity", "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("SettingActivity", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("SettingActivity", "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("SettingActivity", "onDestroy")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("SettingActivity", "onRestart")
     }
 
     private fun getUser() {
@@ -117,13 +87,6 @@ class SettingActivity : AppCompatActivity() {
     private fun logout() {
         CoroutineScope(Dispatchers.IO).launch {
             mainVm.logout()
-        }
-    }
-
-    //계정 탈퇴 함수
-    private fun quitMembership() {
-        CoroutineScope(Dispatchers.IO).launch {
-            mainVm.quitMembership(user.userId!!)
         }
     }
 
@@ -147,26 +110,6 @@ class SettingActivity : AppCompatActivity() {
         mainVm.updateUserCode.observe(this, Observer {
             if (it == 204)
                 logout()
-        })
-
-        mainVm.quitMembershipCode.observe(this, Observer {
-            if (it == 204) {
-                Toast.makeText(
-                    this@SettingActivity,
-                    getString(R.string.msg_quit_membership),
-                    Toast.LENGTH_SHORT
-                ).show()
-                clearUser()
-                val intent = Intent(this@SettingActivity, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else {
-                Toast.makeText(
-                    this@SettingActivity,
-                    getString(R.string.err_quit_membership),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
         })
     }
 }
