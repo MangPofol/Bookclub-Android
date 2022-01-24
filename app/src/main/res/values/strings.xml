@@ -18,9 +18,11 @@
     <string name="msg_post">작성이 완료되었습니다.</string>
     <string name="msg_password_resetting">비밀번호가 변경되었습니다.</string>
     <string name="msg_quit_membership">회원 탈퇴가 완료되었습니다. 그동안 Our page를 이용해주셔서 감사합니다.</string>
+    <string name="msg_read_complete">책 완독을 취소했습니다.</string>
+    <string name="msg_cancel_read_complete">첵을 완독하셨습니다!</string>
     <string name="err_select_book">책을 선택해주세요.</string>
     <string name="err_input_title_content">제목과 내용을 입력해주세요.</string>
-    <string name="err_password_resetting">변경 중 오류가 발생했습니다. 다시 시도해주세요.</string>
+    <string name="err_change">변경 중 오류가 발생했습니다. 다시 시도해주세요.</string>
     <string name="err_post">작성 중 오류가 발생했습니다. 다시 시도해주세요.</string>
     <string name="err_quit_membership">회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.</string>
 
