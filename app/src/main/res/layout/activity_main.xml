@@ -40,4 +40,31 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/navigation_first_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/bottomNavigationLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationLayout"
+        app:layout_constraintStart_toStartOf="@+id/bottomNavigationLayout"
+        app:layout_constraintEnd_toStartOf="@+id/navigation_second_view"/>
+
+    <View
+        android:id="@+id/navigation_second_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/navigation_first_view"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_first_view"
+        app:layout_constraintStart_toEndOf="@+id/navigation_first_view"
+        app:layout_constraintEnd_toStartOf="@+id/navigation_third_view"/>
+
+    <View
+        android:id="@+id/navigation_third_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/navigation_second_view"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_second_view"
+        app:layout_constraintStart_toEndOf="@+id/navigation_second_view"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

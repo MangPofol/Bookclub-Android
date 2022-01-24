@@ -71,6 +71,7 @@
     <!-- main activity -->
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="msg_ready_book_club">COMING SOON!\n다함께 책에 대한 이야기를 나눌 수 있는\n아워페이지 북클럽 서비스를 준비 중입니다.</string>
 
     <!-- navigation view -->
     <string name="add_book_club">북클럽 추가하기</string>

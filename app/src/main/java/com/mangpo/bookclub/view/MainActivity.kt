@@ -101,7 +101,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.bookclub -> {
-                    Toast.makeText(this@MainActivity, "개발 중인 기능입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -112,6 +111,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNavigation.selectedItemId = beforeMenu
+
+        binding.navigationThirdView.setOnClickListener {
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.msg_ready_book_club),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onResume() {
