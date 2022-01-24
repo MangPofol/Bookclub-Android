@@ -97,7 +97,7 @@
                             android:layout_marginStart="30dp"
                             android:background="@drawable/bookclub_member_add_iv"
                             android:scaleType="center"
-                            android:src="@drawable/ic_plus"
+                            android:src="@drawable/ic_plus_circle_bg"
                             android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/club_member_profile_iv6"
@@ -298,9 +298,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="15dp"
-                    android:paddingHorizontal="20dp"
                     android:background="@color/grey5"
                     android:orientation="vertical"
+                    android:paddingHorizontal="20dp"
                     app:layout_constraintBottom_toTopOf="@+id/book_club_book_rv"
                     app:layout_constraintTop_toBottomOf="@+id/searchButton">
 

@@ -39,7 +39,7 @@
             android:id="@+id/plus_iv"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_plus"
+            android:src="@drawable/ic_plus_circle_bg"
             app:layout_constraintBottom_toBottomOf="@+id/profile_iv"
             app:layout_constraintEnd_toEndOf="@+id/profile_iv" />
 
