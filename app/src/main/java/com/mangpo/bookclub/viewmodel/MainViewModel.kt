@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.view.View
 import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
@@ -75,9 +74,6 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     suspend fun updateUser(user: UserModel) {
         viewModelScope.launch {
             _updateUserCode.value = repository.updateUser(user)
-
-            if (_updateUserCode.value == 204)
-                _user.value = user
         }
     }
 
@@ -112,5 +108,13 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             repository.sendTempPWEmail(email)
         }
+    }
+
+    fun setUpdateUserCode(updateUserCode: Int) {
+        _updateUserCode.value = updateUserCode
+    }
+
+    fun setUser(user: UserModel) {
+        _user.value = user
     }
 }

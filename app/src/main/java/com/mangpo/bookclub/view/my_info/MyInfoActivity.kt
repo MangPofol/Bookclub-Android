@@ -12,6 +12,7 @@ import com.google.android.material.chip.Chip
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityMyInfoBinding
 import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.view.dialog.AboutMeDialogFragment
 import com.mangpo.bookclub.view.write.CameraGalleryBottomSheetFragment
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -32,6 +33,7 @@ class MyInfoActivity : AppCompatActivity() {
     private var beforeProfileImg: String? = null
 
     private lateinit var binding: ActivityMyInfoBinding
+    private lateinit var user: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +70,12 @@ class MyInfoActivity : AppCompatActivity() {
         binding.backIvView.setOnClickListener {
             finish()
         }
+
+        //자기소개 텍스트뷰 클릭 리스너 -> 자기 소개 입력 다이얼로그 화면 띄우기, 다이얼로그 화면에 자기소개 글 전달하기
+        binding.introduceTv.setOnClickListener {
+            val aboutMeDialogFragment = AboutMeDialogFragment()
+            aboutMeDialogFragment.show(supportFragmentManager, null)
+        }
     }
 
     override fun onResume() {
@@ -83,7 +91,7 @@ class MyInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUI(user: UserModel) {
+    private fun setUI() {
         binding.nicknameTv.text = user.nickname
         binding.emailTv.text = user.email
 
@@ -105,7 +113,8 @@ class MyInfoActivity : AppCompatActivity() {
         if (user.profileImgLocation == "")
             Glide.with(applicationContext).load(R.drawable.default_profile).into(binding.profileIv)
         else
-            Glide.with(applicationContext).load(user.profileImgLocation).circleCrop().into(binding.profileIv)
+            Glide.with(applicationContext).load(user.profileImgLocation).circleCrop()
+                .into(binding.profileIv)
     }
 
     private fun addGenreChip(genres: List<String>) {
@@ -146,7 +155,8 @@ class MyInfoActivity : AppCompatActivity() {
 
             if (url != null) {
                 val user = mainVm.user.value
-                beforeProfileImg = user!!.profileImgLocation //업데이트 된 프로필 이미지로 변경하기 전에 이전 프로필 이미지 저장.
+                beforeProfileImg =
+                    user!!.profileImgLocation //업데이트 된 프로필 이미지로 변경하기 전에 이전 프로필 이미지 저장.
                 user!!.profileImgLocation = url
                 mainVm.updateUser(user)
             } else {
@@ -170,11 +180,28 @@ class MyInfoActivity : AppCompatActivity() {
 
     private fun observe() {
         mainVm.user.observe(this, Observer {
-            setUI(it)
+            Log.d("MyInfoActivity", "user Observe!! -> $it")
 
-            //프로필 이미지가 업데이트 됐으면 이전의 프로필 이미지 삭제
-            if (beforeProfileImg!=null)
-                deleteProfileImg()
+            user = it
+            setUI()
+        })
+
+        mainVm.updateUserCode.observe(this, Observer {
+            Log.d("MyInfoActivity", "updateUserCode Observe!! -> $it")
+
+            if (it == 204) {
+                mainVm.setUser(user)
+
+                //프로필 이미지가 업데이트 됐으면 이전의 프로필 이미지 삭제
+                if (beforeProfileImg != null)
+                    deleteProfileImg()
+            } else if (it != -1) {
+                Toast.makeText(
+                    this@MyInfoActivity,
+                    getString(R.string.err_change),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         })
     }
 
