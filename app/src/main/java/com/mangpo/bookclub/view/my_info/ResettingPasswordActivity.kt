@@ -86,7 +86,7 @@ class ResettingPasswordActivity : AppCompatActivity() {
                     .show()
                 finish()
             } else {
-                Toast.makeText(this, getString(R.string.err_password_resetting), Toast.LENGTH_SHORT)
+                Toast.makeText(this, getString(R.string.err_change), Toast.LENGTH_SHORT)
                     .show()
             }
         })
