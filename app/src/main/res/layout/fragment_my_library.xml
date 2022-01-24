@@ -21,7 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            android:elevation="0dp">
+            android:elevation="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -29,8 +32,10 @@
 
                 <ImageView
                     android:id="@+id/hamburger_ib"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="11dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_setting"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -7,10 +7,11 @@
 
     <ImageView
         android:id="@+id/hamburger_ib"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="18dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
         android:src="@drawable/ic_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -190,11 +191,11 @@
                 android:id="@+id/checklist_open_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_down"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintTop_toTopOf="@+id/checklist_view"
+                android:src="@drawable/ic_down"
+                app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
                 app:layout_constraintEnd_toEndOf="@+id/checklist_view"
-                app:layout_constraintBottom_toBottomOf="@+id/checklist_view" />
+                app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
             <View
                 android:id="@+id/checklist_line_view"
@@ -202,19 +203,19 @@
                 android:layout_height="0dp"
                 android:layout_margin="11dp"
                 android:background="@color/main_blue"
-                app:layout_constraintTop_toTopOf="@+id/checklist_view"
                 app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
-                app:layout_constraintEnd_toStartOf="@+id/checklist_open_iv" />
+                app:layout_constraintEnd_toStartOf="@+id/checklist_open_iv"
+                app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
             <ImageView
                 android:id="@+id/checklist_setting_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_gear"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintTop_toTopOf="@+id/checklist_view"
+                android:src="@drawable/ic_gear"
+                app:layout_constraintBottom_toBottomOf="@+id/checklist_view"
                 app:layout_constraintEnd_toStartOf="@+id/checklist_line_view"
-                app:layout_constraintBottom_toBottomOf="@+id/checklist_view" />
+                app:layout_constraintTop_toTopOf="@+id/checklist_view" />
 
             <View
                 android:id="@+id/go_post_view"
