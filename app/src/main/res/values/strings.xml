@@ -111,6 +111,7 @@
     <!-- write init fragment -->
     <string name="checklist">CHECK LIST</string>
     <string name="write_checklist">눌러서 작성하세요.</string>
+    <string name="msg_checklist_not_develop">아직 개발 중인 기능입니다.\n조금만 기다려주세요!</string>
 
     <!-- record fragment -->
     <string name="record_en">Record</string>

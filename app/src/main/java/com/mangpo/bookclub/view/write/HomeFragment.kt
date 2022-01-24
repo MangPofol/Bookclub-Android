@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentHomeBinding
 import com.mangpo.bookclub.view.setting.SettingActivity
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -74,6 +75,15 @@ class HomeFragment : Fragment() {
         //독서 목표 관리 화면으로 이동하는 이미지 클릭 리스너 -> GoalManagementActivity 화면으로 이동
         binding.readingGoalNextClickView.setOnClickListener {
             (requireActivity() as MainActivity).goGoalManagement()
+        }
+
+        //체크리스트뷰 클릭 리스너 -> 아직 개발중임을 보여주는 토스트 메세지 띄우기
+        binding.checklistView.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.msg_checklist_not_develop),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         return binding.root
