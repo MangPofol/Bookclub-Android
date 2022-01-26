@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityWithdrawalBinding
-import com.mangpo.bookclub.util.JWTUtils
+import com.mangpo.bookclub.util.AuthUtils
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
@@ -62,7 +62,7 @@ class WithdrawalActivity : AppCompatActivity() {
 
     //로그아웃 or 계정 탈퇴 시 사용하는 함수 -> 사용자 관련 sharedPreferences clear, JWT 빈값으로
     private fun clearUser() {
-        JWTUtils.clearJWT(this)
+        AuthUtils.clear(this)
     }
 
     private fun observe() {

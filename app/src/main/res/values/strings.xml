@@ -26,6 +26,8 @@
     <string name="err_change">변경 중 오류가 발생했습니다. 다시 시도해주세요.</string>
     <string name="err_post">작성 중 오류가 발생했습니다. 다시 시도해주세요.</string>
     <string name="err_quit_membership">회원 탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.</string>
+    <string name="err_login_fail_go_login">로그인 중 오류가 발생했습니다.\n로그인 화면으로 이동합니다.</string>
+    <string name="err_login_fail">로그인 중 오류가 발생했습니다.\n다시 시도해 주세요.</string>
 
     <!--Dialog Fragment-->
     <string name="title_send_temp_password">임시 비밀번호가 발급되었습니다.</string>

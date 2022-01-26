@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.book_profile
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,7 +10,6 @@ import androidx.lifecycle.Observer
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.databinding.ActivitySignInBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.JWTUtils
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -100,7 +98,8 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
 
     private fun login() {
         CoroutineScope(Dispatchers.Main).launch {
-            val token = mainVm.login(user)  //로그인을 통해 JWT 토큰을 알아냄.
+            mainVm.login(user)
+            /*val token = mainVm.login(user)  //로그인을 통해 JWT 토큰을 알아냄.
 
             if (token == null) {
                 Toast.makeText(
@@ -110,7 +109,7 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 ).show()
                 onBackPressed()
             } else {    //로그인 성공 -> 이메일 인증 화면으로 이동
-                JWTUtils.setJWT(this@SignInActivity, token)
+                AuthUtils.setJWT(this@SignInActivity, token)
                 val intent = Intent(
                     this@SignInActivity,
                     EmailAuthenticationActivity::class.java
@@ -118,13 +117,13 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 intent.putExtra("email", user.email)
                 intent.putExtra("prevActivity", 1)
                 startActivity(intent)
-            }
+            }*/
         }
     }
 
     private fun observe() {
         mainVm.emailAlertVisibility.observe(this, Observer {
-            if (it==204) {
+            if (it == 204) {
                 binding.signinIdAlertTv.visibility = View.INVISIBLE
             } else {
                 binding.signinIdAlertTv.visibility = View.VISIBLE
@@ -143,5 +142,30 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 login()
             }
         })
+
+        /*mainVm.jwtToken.observe(this, Observer {
+            if (it.isBlank()) {
+                Toast.makeText(
+                    this@SignInActivity,
+                    "오류가 발생했습니다. 입력한 아이디와 비밀번호로 로그인 해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                onBackPressed()
+            } else {
+                AuthUtils.setJWT(this@SignInActivity, it)
+                AuthUtils.setEmail(this@SignInActivity, user.email!!)
+                AuthUtils.setPassword(this@SignInActivity, user.password!!)
+
+                val intent = Intent(
+                    this@SignInActivity,
+                    EmailAuthenticationActivity::class.java
+                )
+
+                intent.putExtra("email", user.email)
+                intent.putExtra("prevActivity", 1)
+                startActivity(intent)
+            }
+        })*/
     }
 }

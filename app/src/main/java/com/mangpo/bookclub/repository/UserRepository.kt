@@ -2,28 +2,30 @@ package com.mangpo.bookclub.repository
 
 import android.util.Log
 import com.google.gson.JsonObject
+import com.mangpo.bookclub.model.LoginResModel
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.service.UserService
 import java.lang.Exception
-import java.net.UnknownHostException
 
 class UserRepository(private val userService: UserService) {
+    suspend fun login(user: UserModel): LoginResModel {
+        val result = userService.login(user)
 
-    suspend fun login(user: UserModel): JsonObject {
-        var jsonObject: JsonObject = JsonObject()
-
-        try {
-            val result = userService.login(user)
-            jsonObject = result.body()!!
-            jsonObject.addProperty("code", result.code())
-        } catch (e: UnknownHostException) {
-            jsonObject.addProperty("code", -1)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            jsonObject.addProperty("code", 500)
+        if (result.isSuccessful) {
+            return LoginResModel(
+                code = result.code(),
+                token = result.body()!!.token
+            )
+        } else {
+            return when (val code = result.code()) {
+                401 -> LoginResModel(
+                    code = code
+                )
+                else -> LoginResModel(
+                    code = code
+                )
+            }
         }
-
-        return jsonObject
     }
 
     suspend fun validateEmail(email: JsonObject): Int = userService.validateEmail(email).code()

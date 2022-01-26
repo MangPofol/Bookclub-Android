@@ -2,14 +2,12 @@ package com.mangpo.bookclub.view.my_info
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityResettingPasswordBinding
-import com.mangpo.bookclub.model.UserModel
+import com.mangpo.bookclub.util.AuthUtils
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,19 +16,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResettingPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResettingPasswordBinding
-    private lateinit var user: UserModel
 
     private val mainVm: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("ResettingPasswordActivity", "onCreate")
 
         binding = ActivityResettingPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
         observe()
-
-        user = Gson().fromJson(intent.getStringExtra("user"), UserModel::class.java)
 
         //뒤로가기 버튼 클릭 리스너
         binding.backIvView.setOnClickListener {
@@ -61,22 +55,18 @@ class ResettingPasswordActivity : AppCompatActivity() {
     //비밀번호 변경하기
     private fun updatePassword() {
         val password = binding.newPasswordEt.text.toString()
-        val user: UserModel =
-            UserModel(email = user.email, password = binding.oldPasswordEt.text.toString())
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val token = mainVm.login(user)  //기존 비밀번호가 일치하는지 확인
-
-            if (token == null) {
-                Toast.makeText(
-                    this@ResettingPasswordActivity,
-                    "기존 비밀번호가 일치하지 않습니다.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
+        val oldPassword = AuthUtils.getPassword(this@ResettingPasswordActivity)
+        if (oldPassword == binding.oldPasswordEt.text.toString()) {
+            CoroutineScope(Dispatchers.Main).launch {
                 mainVm.changePW(password)
             }
-        }
+        } else
+            Toast.makeText(
+                this@ResettingPasswordActivity,
+                "기존 비밀번호가 일치하지 않습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
     }
 
     private fun observe() {
@@ -84,11 +74,16 @@ class ResettingPasswordActivity : AppCompatActivity() {
             if (it == 204) {
                 Toast.makeText(this, getString(R.string.msg_password_resetting), Toast.LENGTH_SHORT)
                     .show()
+
+                AuthUtils.setPassword(
+                    this@ResettingPasswordActivity,
+                    binding.newPasswordEt.text.toString()
+                )
+
                 finish()
-            } else {
+            } else
                 Toast.makeText(this, getString(R.string.err_change), Toast.LENGTH_SHORT)
                     .show()
-            }
         })
     }
 }

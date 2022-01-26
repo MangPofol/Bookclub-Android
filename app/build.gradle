@@ -115,6 +115,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0"
     //TedImagePicker
     implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.4'
+    //SecurityCrypto
+    implementation("androidx.security:security-crypto:1.0.0")
     testImplementation 'junit:junit:4.+'
     //robolectric
     testImplementation 'org.robolectric:robolectric:4.6'

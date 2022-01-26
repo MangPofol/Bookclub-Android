@@ -3,12 +3,10 @@ package com.mangpo.bookclub.view.setting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.JWTUtils
+import com.mangpo.bookclub.util.AuthUtils
 import com.mangpo.bookclub.view.LoginActivity
 import com.mangpo.bookclub.view.my_info.ResettingPasswordActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
@@ -26,7 +24,6 @@ class SettingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("SettingActivity", "onCreate")
 
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,10 +33,7 @@ class SettingActivity : AppCompatActivity() {
 
         //ResettingPasswordActivity 화면으로 이동
         binding.resettingPasswordNextView.setOnClickListener {
-            val userJson = Gson().toJson(user)
-            val intent = Intent(this, ResettingPasswordActivity::class.java)
-            intent.putExtra("user", userJson)
-            startActivity(intent)
+            startActivity(Intent(this, ResettingPasswordActivity::class.java))
         }
 
         //NoticeActivity 화면으로 이동
@@ -92,7 +86,7 @@ class SettingActivity : AppCompatActivity() {
 
     //로그아웃 or 계정 탈퇴 시 사용하는 함수 -> 사용자 관련 sharedPreferences clear, JWT 빈값으로
     private fun clearUser() {
-        JWTUtils.clearJWT(this)
+        AuthUtils.clear(this)
     }
 
     private fun observe() {

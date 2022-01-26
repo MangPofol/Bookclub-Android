@@ -37,7 +37,7 @@ val ViewModelModule = module {
         ChecklistRepository(get())
     }
     viewModel<MainViewModel> {
-        MainViewModel(get())
+        MainViewModel(get(), get())
     }
     viewModel<BookViewModel> {
         BookViewModel(get(), get(), get())

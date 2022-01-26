@@ -1,20 +1,23 @@
 package com.mangpo.bookclub.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.repository.UserRepository
-import kotlinx.coroutines.async
+import com.mangpo.bookclub.util.AuthUtils
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(private val repository: UserRepository) : ViewModel() {
+class MainViewModel(private val repository: UserRepository, private val context: Context) :
+    ViewModel() {
     private val _emailAlertVisibility = MutableLiveData<Int>()
     private val _logoutCode = MutableLiveData<Int>()
     private val _user = MutableLiveData<UserModel>()
     private val _updateUserCode = MutableLiveData<Int>()
     private val _quitMembershipCode = MutableLiveData<Int>()
     private val _sendCodeResult = MutableLiveData<Int>()    //이메인 인증 코드 전송 결과 코드
+    private val _loginCode = MutableLiveData<Int>() //로그인 결과 코드
 
     val emailAlertVisibility: LiveData<Int> get() = _emailAlertVisibility
     val logoutCode: LiveData<Int> get() = _logoutCode
@@ -22,18 +25,20 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     val updateUserCode: LiveData<Int> get() = _updateUserCode
     val quitMembershipCode: LiveData<Int> get() = _quitMembershipCode
     val sendCodeResult: LiveData<Int> get() = _sendCodeResult   //이메인 인증 코드 전송 결과 코드
+    val loginCode: LiveData<Int> get() = _loginCode //로그인 결과 코드
 
-    suspend fun login(user: UserModel): String? {
-        val token = viewModelScope.async {
-            val loginResult = repository.login(user)
-            val token = loginResult.get("token")
+    suspend fun login(user: UserModel) {
+        viewModelScope.launch {
+            val loginResModel = repository.login(user)
 
-            if (token != null)
-                loginResult.get("token").asString
-            else null
+            if (loginResModel.code == 200) {
+                AuthUtils.setJWT(context, loginResModel.token!!)
+                AuthUtils.setEmail(context, user.email!!)
+                AuthUtils.setPassword(context, user.password!!)
+            }
+
+            _loginCode.value = loginResModel.code
         }
-
-        return token.await()
     }
 
     suspend fun validateEmail(email: JsonObject) {

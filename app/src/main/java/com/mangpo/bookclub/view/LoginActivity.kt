@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.*
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -14,7 +13,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityLoginBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.JWTUtils
+import com.mangpo.bookclub.util.AuthUtils
 import com.mangpo.bookclub.util.BackStackManager
 import com.mangpo.bookclub.view.book_profile.BookProfileInitActivity
 import com.mangpo.bookclub.view.book_profile.EmailAuthenticationActivity
@@ -33,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("LoginActivity", "onCreate")
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -69,30 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
                     //로그인 요청 api 전송
                     CoroutineScope(Dispatchers.Main).launch {
-                        val token = mainVm.login(user)
-
-                        if (token != null) {
-                            JWTUtils.setJWT(this@LoginActivity, token)
-
-                            when (val role = checkRole(token)) {
-                                "ROLE_NEED_EMAIL" -> {
-                                    val intent = Intent(
-                                        this@LoginActivity,
-                                        EmailAuthenticationActivity::class.java
-                                    )
-                                    intent.putExtra("email", binding.loginIdEt.text.toString())
-                                    intent.putExtra("prevActivity", 0)
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                "ROLE_USER" -> {
-                                    mainVm.getUser()
-                                }
-                            }
-                        } else {
-                            binding.loginMsgTv.visibility = View.VISIBLE
-                            binding.loginMsgTv.text = getString(R.string.err_wrong_user)
-                        }
+                        mainVm.login(user)
                     }
                 }
                 else -> {
@@ -101,16 +76,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("LoginActivity", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("LoginActivity", "onStop")
     }
 
     override fun onBackPressed() {
@@ -146,6 +111,37 @@ class LoginActivity : AppCompatActivity() {
         !(user.nickname == null || user.sex == null || user.birthdate == null || user.profileImgLocation == "")
 
     private fun observe() {
+        mainVm.loginCode.observe(this, Observer {
+            if (it == 200) {
+                when (checkRole(AuthUtils.getJWT(this@LoginActivity))) {
+                    "ROLE_NEED_EMAIL" -> {
+                        val intent = Intent(
+                            this@LoginActivity,
+                            EmailAuthenticationActivity::class.java
+                        )
+                        intent.putExtra("email", binding.loginIdEt.text.toString())
+                        intent.putExtra("prevActivity", 0)
+                        startActivity(intent)
+                        finish()
+                    }
+                    "ROLE_USER" -> {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            mainVm.getUser()
+                        }
+                    }
+                }
+            } else if (it == 401) {
+                binding.loginMsgTv.visibility = View.VISIBLE
+                binding.loginMsgTv.text = getString(R.string.err_wrong_user)
+            } else {
+                Toast.makeText(
+                    this@LoginActivity,
+                    getString(R.string.err_login_fail),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
         mainVm.user.observe(this, Observer {
             BackStackManager.clear()
 

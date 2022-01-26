@@ -5,14 +5,13 @@ import android.net.ConnectivityManager
 import android.net.Network
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySplashBinding
 import com.mangpo.bookclub.model.UserModel
-import com.mangpo.bookclub.util.JWTUtils
+import com.mangpo.bookclub.util.AuthUtils
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,46 +29,43 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("SplashActivity", "onCreate")
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         observe()
 
-        Glide.with(applicationContext).load(R.drawable.loading)
-            .into(binding.logoIv)   //이미지뷰에 gif 파일 넣기
+        //이미지뷰에 gif 파일 넣기
+        Glide.with(applicationContext).load(R.drawable.loading).into(binding.logoIv)
 
         if (checkNetwork() == null) { //네트워크 연결 상태 확인
             Toast.makeText(baseContext, "와이파이나 데이터 접속이 필요합니다.", Toast.LENGTH_SHORT).show()
             finish()
+        } else
+            autoLogin()
+    }
+
+    private fun autoLogin() {
+        val email = AuthUtils.getEmail(this@SplashActivity)
+        val password = AuthUtils.getPassword(this@SplashActivity)
+
+        if (email.isBlank() || password.isBlank())
+            goLoginActivity()
+        else
+            login(UserModel(email = email, password = password))
+
+    }
+
+    private fun goLoginActivity() {
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(2000L)
+            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            finish()
         }
+    }
 
-        val token = JWTUtils.getJWT(this)
-
-        if (token == "") {  //로그인 안 됐을 때
-            CoroutineScope(Dispatchers.Main).launch {
-                delay(2000L)
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                finish()
-            }
-        } else {    //로그인 돼 있을 때
-            role = checkRole(token)
-
-            when (role) {
-                "ROLE_NEED_EMAIL" -> {  //이메일 인증이 안된 유저
-                    //getUser 를 통해 이메일 정보를 받아와서 EmailAuthenticationActivity 화면으로 이동한다.
-                    CoroutineScope(Dispatchers.Main).launch {
-                        delay(2000L)
-                        startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                    }
-                }
-                "ROLE_USER" -> {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        delay(2000L)
-                        mainVm.getUser()
-                    }
-                }
-            }
+    private fun login(user: UserModel) {
+        CoroutineScope(Dispatchers.IO).launch {
+            mainVm.login(user)
         }
     }
 
@@ -92,12 +88,40 @@ class SplashActivity : AppCompatActivity() {
         !(user.nickname == null || user.sex == null || user.birthdate == null || user.profileImgLocation == "")
 
     private fun observe() {
-        mainVm.user.observe(this, Observer {
-            if (!validateUser(it)) {  //role==ROLE_USER && user.nickname==null(인증은 됐는데 필수 데이터가 없음.)
+        mainVm.loginCode.observe(this, Observer {
+            if (it == 200) {
+                role = checkRole(AuthUtils.getJWT(this@SplashActivity))
+
+                when (role) {
+                    "ROLE_NEED_EMAIL" -> {  //이메일 인증이 안된 유저
+                        //getUser 를 통해 이메일 정보를 받아와서 EmailAuthenticationActivity 화면으로 이동한다.
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(2000L)
+                            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                        }
+                    }
+                    "ROLE_USER" -> {    //이메일 인증이 된 유저
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(2000L)
+                            mainVm.getUser()
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this@SplashActivity,
+                    getString(R.string.err_login_fail_go_login),
+                    Toast.LENGTH_SHORT
+                ).show()
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            } else {    //정상적인 계정
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             }
+        })
+
+        mainVm.user.observe(this, Observer {
+            if (!validateUser(it)) //role==ROLE_USER && user.nickname==null(인증은 됐는데 필수 데이터가 없음.)
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            else    //정상적인 계정
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
 
             finish()
         })

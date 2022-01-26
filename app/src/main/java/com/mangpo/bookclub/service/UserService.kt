@@ -1,6 +1,7 @@
 package com.mangpo.bookclub.service
 
 import com.google.gson.JsonObject
+import com.mangpo.bookclub.model.LoginResModel
 import com.mangpo.bookclub.model.UserDataModel
 import com.mangpo.bookclub.model.UserModel
 import retrofit2.Response
@@ -12,7 +13,7 @@ interface UserService {
     suspend fun getUser(): Response<UserDataModel>
 
     @POST("/auth/login")
-    suspend fun login(@Body user: UserModel): Response<JsonObject>
+    suspend fun login(@Body user: UserModel): Response<LoginResModel>
 
     @POST("/users/validate-duplicate")
     suspend fun validateEmail(@Body email: JsonObject): Response<JsonObject>
