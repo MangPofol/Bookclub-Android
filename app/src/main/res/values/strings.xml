@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Our page</string>
+    <string name="app_name">Ourpage</string>
     <string name="email">ourpageapp@gmail.com</string>
 
     <!--공통-->
@@ -181,7 +181,7 @@
 
     <!-- SettingActivity -->
     <string name="setting">설정</string>
-    <string name="version">버전 0.3.0</string>
+    <string name="version">버전 0.4.0</string>
     <string name="logout">로그아웃</string>
     <string name="quit_membership">계정 탈퇴하기</string>
 
