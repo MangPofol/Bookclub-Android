@@ -13,7 +13,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityBookProfileInitBinding
 import com.mangpo.bookclub.model.UserModel
 import com.mangpo.bookclub.view.dialog.LoadingDialogFragment
-import com.mangpo.bookclub.view.LoginActivity
+import com.mangpo.bookclub.view.MainActivity
 import com.mangpo.bookclub.viewmodel.MainViewModel
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import gun0912.tedimagepicker.util.ToastUtil.context
@@ -59,10 +59,6 @@ class BookProfileInitActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     private fun goToNextStep(isSkip: Boolean) {
         when (supportFragmentManager.fragments[0].javaClass) {
             BookProfileDescFragment::class.java -> {
@@ -87,19 +83,23 @@ class BookProfileInitActivity : AppCompatActivity() {
                 user.birthdate =
                     (supportFragmentManager.fragments[0] as SetGenderAndBirthFragment).getBirth()
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, ExpressMeFragment()).addToBackStack(null).commitAllowingStateLoss()
+                    .replace(binding.frameLayout.id, ExpressMeFragment()).addToBackStack(null)
+                    .commitAllowingStateLoss()
             }
             ExpressMeFragment::class.java -> {
                 if (!isSkip)
                     user.introduce =
                         (supportFragmentManager.fragments[0] as ExpressMeFragment).getExpressText()
+
                 supportFragmentManager.beginTransaction()
-                    .replace(binding.frameLayout.id, SetGenreFragment()).addToBackStack(null).commitAllowingStateLoss()
+                    .replace(binding.frameLayout.id, SetGenreFragment()).addToBackStack(null)
+                    .commitAllowingStateLoss()
             }
             SetGenreFragment::class.java -> {
                 if (!isSkip)
                     user.genres =
                         (supportFragmentManager.fragments[0] as SetGenreFragment).getGenres()
+
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameLayout.id, ReadingStyleFragment()).addToBackStack(null)
                     .commitAllowingStateLoss()
@@ -108,6 +108,7 @@ class BookProfileInitActivity : AppCompatActivity() {
                 if (!isSkip)
                     user.style =
                         (supportFragmentManager.fragments[0] as ReadingStyleFragment).getReadingStyle()
+
                 supportFragmentManager.beginTransaction()
                     .replace(binding.frameLayout.id, ReadingGoalFragment()).addToBackStack(null)
                     .commitAllowingStateLoss()
@@ -116,6 +117,7 @@ class BookProfileInitActivity : AppCompatActivity() {
                 if (!isSkip)
                     user.goal =
                         (supportFragmentManager.fragments[0] as ReadingGoalFragment).getGoal()
+
                 signIn()
             }
         }
@@ -133,25 +135,11 @@ class BookProfileInitActivity : AppCompatActivity() {
                     "이미지 업로드 중 오류 발생. 다시 시도해 주세요.",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 return@launch
-            } else {
-                    mainVm.updateUser(user)
-            }
+            } else
+                mainVm.updateUser(user)
         }
-    }
-
-    private fun observe() {
-        mainVm.updateUserCode.observe(this, Observer {
-            loadingDialogFragment.dismiss() //로딩 프래그먼트 종료
-
-            if (it==204) {
-                Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
-                finish()
-                startActivity(Intent(this@BookProfileInitActivity, LoginActivity::class.java))
-            } else {
-                Toast.makeText(context, "회원가입 실패. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     fun unEnableNextBtn() {
@@ -178,4 +166,16 @@ class BookProfileInitActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
+    private fun observe() {
+        mainVm.updateUserCode.observe(this, Observer {
+            loadingDialogFragment.dismiss() //로딩 프래그먼트 종료
+
+            if (it == 204) {
+                Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show()
+                finish()
+                startActivity(Intent(this@BookProfileInitActivity, MainActivity::class.java))
+            } else
+                Toast.makeText(context, "회원가입 실패. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show()
+        })
+    }
 }

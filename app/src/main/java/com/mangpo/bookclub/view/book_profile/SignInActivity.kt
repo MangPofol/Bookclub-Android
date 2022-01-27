@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.book_profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -47,14 +48,13 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 password = binding.signinPasswordEt.text.toString()
             )
 
-            if (checkEdit()) {
-                //createUser
+            if (checkEdit())
+            //createUser
                 CoroutineScope(Dispatchers.IO).launch {
                     mainVm.createUser(user)
                 }
-            } else {
+            else
                 Toast.makeText(this, "아이디와 비밀번호를 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
@@ -73,11 +73,10 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
             else
                 binding.signinPasswordAlertTv.visibility = View.VISIBLE
         } else {    //비밀번호 6~12자 & 비밀번호, 비밀번호 확인 일치 여부
-            if (binding.signinPasswordEt.text.toString() == s.toString() && s?.length in 6..12) {
+            if (binding.signinPasswordEt.text.toString() == s.toString() && s?.length in 6..12)
                 binding.signinPasswordAlertTv.visibility = View.INVISIBLE
-            } else {
+            else
                 binding.signinPasswordAlertTv.visibility = View.VISIBLE
-            }
         }
     }
 
@@ -99,35 +98,15 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
     private fun login() {
         CoroutineScope(Dispatchers.Main).launch {
             mainVm.login(user)
-            /*val token = mainVm.login(user)  //로그인을 통해 JWT 토큰을 알아냄.
-
-            if (token == null) {
-                Toast.makeText(
-                    this@SignInActivity,
-                    "오류가 발생했습니다. 입력한 아이디와 비밀번호로 로그인 해주세요.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                onBackPressed()
-            } else {    //로그인 성공 -> 이메일 인증 화면으로 이동
-                AuthUtils.setJWT(this@SignInActivity, token)
-                val intent = Intent(
-                    this@SignInActivity,
-                    EmailAuthenticationActivity::class.java
-                )
-                intent.putExtra("email", user.email)
-                intent.putExtra("prevActivity", 1)
-                startActivity(intent)
-            }*/
         }
     }
 
     private fun observe() {
         mainVm.emailAlertVisibility.observe(this, Observer {
-            if (it == 204) {
+            if (it == 204)
                 binding.signinIdAlertTv.visibility = View.INVISIBLE
-            } else {
+            else
                 binding.signinIdAlertTv.visibility = View.VISIBLE
-            }
         })
 
         //createUser 확인용
@@ -138,25 +117,12 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                     "회원가입 중 오류가 발생했습니다.\n다시 시도해 주세요.",
                     Toast.LENGTH_SHORT
                 ).show()
-            else {  //createUser 성공 -> 토큰을 얻기 위해 로그인
+            else  //createUser 성공 -> 토큰을 얻기 위해 로그인
                 login()
-            }
         })
 
-        /*mainVm.jwtToken.observe(this, Observer {
-            if (it.isBlank()) {
-                Toast.makeText(
-                    this@SignInActivity,
-                    "오류가 발생했습니다. 입력한 아이디와 비밀번호로 로그인 해주세요.",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                onBackPressed()
-            } else {
-                AuthUtils.setJWT(this@SignInActivity, it)
-                AuthUtils.setEmail(this@SignInActivity, user.email!!)
-                AuthUtils.setPassword(this@SignInActivity, user.password!!)
-
+        mainVm.loginCode.observe(this, Observer {
+            if (it == 200) {
                 val intent = Intent(
                     this@SignInActivity,
                     EmailAuthenticationActivity::class.java
@@ -165,7 +131,15 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 intent.putExtra("email", user.email)
                 intent.putExtra("prevActivity", 1)
                 startActivity(intent)
+            } else {
+                Toast.makeText(
+                    this@SignInActivity,
+                    "오류가 발생했습니다. 입력한 아이디와 비밀번호로 로그인 해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                onBackPressed()
             }
-        })*/
+        })
     }
 }
