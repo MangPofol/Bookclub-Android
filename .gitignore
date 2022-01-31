@@ -22,3 +22,7 @@ local.properties
 /app/src/main/res/drawable/setting_icon_white.xml
 /app/release
 /app/src/main/res/drawable/ic_*.xml
+/app/src/main/*-playstore.png
+/app/src/main/res/values/ic_launcher_background.xml
+/app/src/main/res/*/ic_launcher_ourpage.*
+/app/src/main/res/*/ic_launcher_ourpage_*.*
