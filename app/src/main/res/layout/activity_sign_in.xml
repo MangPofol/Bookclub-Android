@@ -129,6 +129,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signin_password_confirm_et" />
 
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/agree_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:background="@null"
+            android:button="@drawable/selector_sign_in_cb"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:stateListAnimator="@null"
+            android:text="@string/msg_sign_in_agree"
+            android:textColor="@color/grey12"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signin_password_alert_tv" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

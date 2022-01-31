@@ -48,13 +48,14 @@ class SignInActivity : AppCompatActivity(), TextWatcher {
                 password = binding.signinPasswordEt.text.toString()
             )
 
-            if (checkEdit())
-            //createUser
-                CoroutineScope(Dispatchers.IO).launch {
+            if (!checkEdit())
+                Toast.makeText(this, "아이디와 비밀번호를 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            else if (!binding.agreeCb.isChecked)
+                Toast.makeText(this, "개인정보 이용약관에 동의해 주세요.", Toast.LENGTH_SHORT).show()
+            else
+                CoroutineScope(Dispatchers.IO).launch { //createUser
                     mainVm.createUser(user)
                 }
-            else
-                Toast.makeText(this, "아이디와 비밀번호를 모두 입력해 주세요.", Toast.LENGTH_SHORT).show()
         }
     }
 
