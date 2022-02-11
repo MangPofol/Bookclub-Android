@@ -182,7 +182,7 @@
 
     <!-- SettingActivity -->
     <string name="setting">설정</string>
-    <string name="version">버전 0.4.0</string>
+    <string name="version">버전 0.4.1</string>
     <string name="logout">로그아웃</string>
     <string name="quit_membership">계정 탈퇴하기</string>
 
@@ -237,10 +237,6 @@
     <string name="terms_of_service">서비스 이용약관</string>
     <string name="privacy_policy">개인정보 처리 방침</string>
     <string name="receive_marketing_information">마케팅 정보 수신</string>
-
-    <!-- TermsBottomSheetFragment -->
-    <string name="terms_of_service_content">다른 어플보니 법적으로 공부를 하고 써야하는 부분인 거 같아 우선 노션에 가장 참고할만한 레퍼런스 찾아서 넣어뒀음\n\n주중으로 내용 초안 잡아서 공유할 예정\n나중에 자문받을 수 있으면 자문받는 게 좋을듯함 ,,</string>
-    <string name="receive_marketing_information_content">개인정보보호법 제22조 제4항에 의해 선택정보 사항에 대해서는 기재하지 않으셔도 서비스를 이용할 수 있습니다.\n\n\t1. 마케팅 및 광고에의 활용\n\t\t▪신규 기능 개발 및 맞춤 서비스 제공\n\t\t▪뉴스레터 발송, 새로운 기능(제품)의 안내\n\t\t▪할인 및 쿠폰 등 이벤트 등 광고성 정보 제공\n\t\t▪이용자 맞춤형 상품 추천\n\n\t2. Our page 서비스를 운용함에 있어 각종 정보를 서비스 화면, SMS, 이메일 등의 방법으로 회원에게 제공할 수 있으며, 결제안내 등 의무적으로 안내되어야 하는 정보성 내용 및 일부 혜택성 정보는 수신동의 여부와 무관하게 제공합니다.</string>
 
     <!-- SettingActivity, OpenSourceActivity -->
     <string name="open_source_license">오픈소스 라이선스</string>
