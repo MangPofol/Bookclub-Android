@@ -15,8 +15,8 @@ android {
         applicationId "com.mangpo.bookclub"
         minSdk 26
         targetSdk 30
-        versionCode 9
-        versionName "0.4.0"
+        versionCode 10
+        versionName "0.4.1"
 
         buildConfigField("String", "KAKAOBOOK_KEY", properties.getProperty("kakaobook.key"))
         buildConfigField("String", "KAKAO_BOOK_API_BASE_URL", properties.getProperty("kakao.book.api.base.url"))
