@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recordFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordFragment"
         android:label="fragment_record"
         tools:layout="@layout/fragment_record">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/recordSettingFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordSettingFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordSettingFragment"
         android:label="fragment_record_setting"
         tools:layout="@layout/fragment_record_setting">
         <argument
@@ -54,7 +54,7 @@
     </fragment>
     <activity
         android:id="@+id/photoViewActivity"
-        android:name="com.mangpo.ourpage.view.main.record.PhotoViewActivity"
+        android:name="com.mangpo.bookclub.view.main.record.PhotoViewActivity"
         android:label="activity_photo_view"
         tools:layout="@layout/activity_photo_view">
         <argument
@@ -66,7 +66,7 @@
     </activity>
     <fragment
         android:id="@+id/selectBookFragment"
-        android:name="com.mangpo.ourpage.view.main.record.SelectBookFragment"
+        android:name="com.mangpo.bookclub.view.main.record.SelectBookFragment"
         android:label="fragment_select_book"
         tools:layout="@layout/fragment_select_book">
         <action
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/recordDetailFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordDetailFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordDetailFragment"
         android:label="fragment_record_detail"
         tools:layout="@layout/fragment_record_detail">
         <argument
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mangpo.ourpage.view.main.home.HomeFragment"
+        android:name="com.mangpo.bookclub.view.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -125,17 +125,17 @@
 
     <activity
         android:id="@+id/settingActivity"
-        android:name="com.mangpo.ourpage.view.setting.SettingActivity"
+        android:name="com.mangpo.bookclub.view.setting.SettingActivity"
         android:label="activity_setting"
         tools:layout="@layout/activity_setting" />
     <activity
         android:id="@+id/infoActivity"
-        android:name="com.mangpo.ourpage.view.info.InfoActivity"
+        android:name="com.mangpo.bookclub.view.info.InfoActivity"
         android:label="activity_info"
         tools:layout="@layout/activity_info" />
     <activity
         android:id="@+id/goalManagementActivity"
-        android:name="com.mangpo.ourpage.view.main.home.GoalManagementActivity"
+        android:name="com.mangpo.bookclub.view.main.home.GoalManagementActivity"
         android:label="activity_goal_management"
         tools:layout="@layout/activity_goal_management" >
         <argument
@@ -144,7 +144,7 @@
     </activity>
     <dialog
         android:id="@+id/checklistDialogFragment"
-        android:name="com.mangpo.ourpage.view.dialog.ChecklistDialogFragment"
+        android:name="com.mangpo.bookclub.view.dialog.ChecklistDialogFragment"
         android:label="fragment_checklist_dialog"
         tools:layout="@layout/fragment_checklist_dialog" >
         <argument
@@ -154,12 +154,12 @@
     </dialog>
     <activity
         android:id="@+id/checklistManagementActivity"
-        android:name="com.mangpo.ourpage.view.main.home.ChecklistManagementActivity"
+        android:name="com.mangpo.bookclub.view.main.home.ChecklistManagementActivity"
         android:label="activity_checklist_management"
         tools:layout="@layout/activity_checklist_management" />
     <fragment
         android:id="@+id/bookDetailFragment"
-        android:name="com.mangpo.ourpage.view.main.library.BookDetailFragment"
+        android:name="com.mangpo.bookclub.view.main.library.BookDetailFragment"
         android:label="fragment_book_detail"
         tools:layout="@layout/fragment_book_detail">
         <argument
