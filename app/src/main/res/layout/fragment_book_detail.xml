@@ -4,240 +4,219 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.library.BookDetailFragment">
-
-    <View
-        android:id="@+id/back_iv_view"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
-        app:layout_constraintEnd_toEndOf="@id/back_iv"
-        app:layout_constraintStart_toStartOf="@+id/back_iv"
-        app:layout_constraintTop_toTopOf="@+id/back_iv" />
+    tools:context=".view.main.library.BookDetailFragment">
 
     <ImageView
-        android:id="@+id/back_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:id="@+id/book_detail_back_iv"
+        android:layout_width="27dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:padding="10dp"
         android:src="@drawable/ic_back"
-        android:layout_marginTop="22dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:clipToPadding="true"
         android:fillViewport="true"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_iv">
+        app:layout_constraintTop_toBottomOf="@+id/book_detail_back_iv">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/book_iv"
+                android:id="@+id/book_detail_book_iv"
                 android:layout_width="93dp"
                 android:layout_height="132dp"
-                android:layout_marginTop="43dp"
-                android:background="@drawable/book_desc_book_iv"
-                android:scaleType="fitXY"
+                android:layout_marginTop="33dp"
+                android:background="@drawable/bg_null_10_null_null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/book_tv"
-                android:layout_width="0dp"
+                android:id="@+id/book_detail_book_name_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="공간의 미래 (유현준)"
-                android:textColor="@color/main_blue"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:textAppearance="@style/ta_eb_18_kr"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_book_iv" />
 
             <View
-                android:id="@+id/line_view"
-                android:layout_width="0dp"
+                android:id="@+id/book_detail_line_view"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey13"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="25dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_tv" />
+                android:background="@color/grey"
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_book_name_tv" />
 
             <ImageView
-                android:id="@+id/category_iv"
+                android:id="@+id/book_detail_reading_iv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_eye_blue"
                 android:layout_marginStart="20dp"
-                app:layout_constraintTop_toTopOf="@+id/write_iv"
+                android:src="@drawable/ic_eye_blue"
+                app:layout_constraintEnd_toStartOf="@+id/book_detail_read_after_iv"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/read_check_iv"/>
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_iv" />
 
             <TextView
-                android:id="@+id/category_tv"
+                android:id="@+id/book_detail_reading_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reading"
-                android:textColor="@drawable/selector_book_detail_text_color"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@+id/write_tv"
-                app:layout_constraintStart_toStartOf="@+id/category_iv"
-                app:layout_constraintEnd_toEndOf="@+id/category_iv" />
+                android:text="@string/title_reading"
+                android:textAppearance="@style/ta_b_12_kr"
+                android:textColor="@color/primary"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_reading_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_reading_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_tv" />
 
             <View
-                android:id="@+id/reading_view"
+                android:id="@+id/book_detail_reading_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="@+id/category_iv"
-                app:layout_constraintBottom_toBottomOf="@+id/category_tv"
-                app:layout_constraintStart_toStartOf="@+id/category_iv"
-                app:layout_constraintEnd_toEndOf="@+id/category_iv" />
+                app:layout_constraintBottom_toBottomOf="@+id/book_detail_reading_tv"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_reading_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_reading_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_reading_iv" />
 
             <ImageView
-                android:id="@+id/read_check_iv"
+                android:id="@+id/book_detail_read_after_iv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_check_circle_bg_blue"
-                app:layout_constraintTop_toTopOf="@+id/write_iv"
-                app:layout_constraintStart_toEndOf="@+id/category_iv"
-                app:layout_constraintEnd_toStartOf="@id/delete_book_iv"/>
+                android:src="@drawable/ic_check_circle_bg_primary"
+                app:layout_constraintEnd_toStartOf="@id/book_detail_delete_iv"
+                app:layout_constraintStart_toEndOf="@+id/book_detail_reading_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_iv" />
 
             <TextView
-                android:id="@+id/read_check_tv"
+                android:id="@+id/book_detail_read_after_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/read_complete"
-                android:textColor="@drawable/selector_book_detail_text_color"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@+id/write_tv"
-                app:layout_constraintStart_toStartOf="@+id/read_check_iv"
-                app:layout_constraintEnd_toEndOf="@+id/read_check_iv" />
+                android:text="@string/title_reading_complete"
+                android:textAppearance="@style/ta_b_12_kr"
+                android:textColor="@color/primary"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_read_after_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_read_after_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_tv" />
 
             <View
-                android:id="@+id/after_view"
+                android:id="@+id/book_detail_read_after_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="@+id/read_check_iv"
-                app:layout_constraintBottom_toBottomOf="@+id/read_check_tv"
-                app:layout_constraintStart_toStartOf="@+id/read_check_iv"
-                app:layout_constraintEnd_toEndOf="@+id/read_check_iv" />
+                app:layout_constraintBottom_toBottomOf="@+id/book_detail_read_after_tv"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_read_after_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_read_after_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_read_after_iv" />
 
             <ImageView
-                android:id="@+id/delete_book_iv"
+                android:id="@+id/book_detail_delete_iv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_trash"
-                app:layout_constraintTop_toTopOf="@+id/write_iv"
-                app:layout_constraintStart_toEndOf="@+id/read_check_iv"
-                app:layout_constraintEnd_toStartOf="@+id/go_record_view"/>
+                app:layout_constraintEnd_toStartOf="@+id/book_detail_record_view"
+                app:layout_constraintStart_toEndOf="@+id/book_detail_read_after_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_iv" />
 
             <TextView
-                android:id="@+id/delete_book_tv"
+                android:id="@+id/book_detail_delete_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/delete_book"
-                android:textColor="@color/light_red"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@+id/write_tv"
-                app:layout_constraintStart_toStartOf="@+id/delete_book_iv"
-                app:layout_constraintEnd_toEndOf="@+id/delete_book_iv" />
+                android:text="@string/action_delete_book"
+                android:textAppearance="@style/ta_b_12_kr"
+                android:textColor="@color/secondary"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_delete_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_delete_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_tv" />
 
             <View
-                android:id="@+id/delete_book_view"
+                android:id="@+id/book_detail_delete_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="@+id/delete_book_iv"
-                app:layout_constraintBottom_toBottomOf="@+id/delete_book_tv"
-                app:layout_constraintStart_toStartOf="@+id/delete_book_iv"
-                app:layout_constraintEnd_toEndOf="@+id/delete_book_iv" />
+                app:layout_constraintBottom_toBottomOf="@+id/book_detail_delete_tv"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_delete_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_delete_iv"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_delete_iv" />
 
             <View
-                android:id="@+id/go_record_view"
+                android:id="@+id/book_detail_record_view"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="45dp"
                 android:layout_marginVertical="12dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/light_red_round_view"
-                app:layout_constraintTop_toBottomOf="@+id/line_view"
-                app:layout_constraintBottom_toTopOf="@+id/memo_list_view"
-                app:layout_constraintStart_toEndOf="@+id/delete_book_iv"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:background="@drawable/bg_secondary_8_null_null"
+                app:layout_constraintBottom_toTopOf="@+id/book_detail_memo_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/book_detail_delete_iv"
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_line_view" />
 
             <ImageView
-                android:id="@+id/write_iv"
+                android:id="@+id/book_detail_record_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_write_white"
-                app:layout_constraintTop_toTopOf="@+id/go_record_view"
-                app:layout_constraintBottom_toTopOf="@+id/write_tv"
-                app:layout_constraintStart_toStartOf="@+id/go_record_view"
-                app:layout_constraintEnd_toEndOf="@+id/go_record_view"/>
+                app:layout_constraintBottom_toTopOf="@+id/book_detail_record_tv"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_record_view"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_record_view"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_record_view" />
 
             <TextView
-                android:id="@+id/write_tv"
+                android:id="@+id/book_detail_record_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/go_post"
+                android:text="@string/action_go_post"
+                android:textAppearance="@style/ta_b_12_kr"
                 android:textColor="@color/white"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/write_iv"
-                app:layout_constraintStart_toStartOf="@+id/write_iv"
-                app:layout_constraintEnd_toEndOf="@+id/write_iv"
-                app:layout_constraintBottom_toBottomOf="@+id/go_record_view"/>
+                app:layout_constraintBottom_toBottomOf="@+id/book_detail_record_view"
+                app:layout_constraintEnd_toEndOf="@+id/book_detail_record_iv"
+                app:layout_constraintStart_toStartOf="@+id/book_detail_record_iv"
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_record_iv" />
 
             <View
-                android:id="@+id/memo_list_view"
+                android:id="@+id/book_detail_memo_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="48dp"
-                android:background="@color/grey15"
+                android:background="@color/white_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/category_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_reading_iv" />
 
             <TextView
-                android:id="@+id/memo_list_tv"
+                android:id="@+id/book_detail_memo_list_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="15dp"
-                android:text="@string/memo_list"
-                android:textColor="@color/main_blue"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/memo_list_view"
-                app:layout_constraintTop_toTopOf="@+id/memo_list_view" />
+                android:text="@string/title_memo_list"
+                android:textAppearance="@style/ta_b_16_en"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/book_detail_memo_view" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/memo_list_rv"
+                android:id="@+id/book_detail_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="14dp"
+                android:clipToPadding="true"
                 android:overScrollMode="never"
-                android:paddingBottom="15dp"
+                android:paddingBottom="14dp"
                 android:scrollbars="none"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/memo_list_tv"
-                tools:listitem="@layout/item_post" />
+                app:layout_constraintTop_toBottomOf="@+id/book_detail_memo_list_tv"
+                tools:listitem="@layout/item_memo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

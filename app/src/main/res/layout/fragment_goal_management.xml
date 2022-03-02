@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_layout_gradation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.info.GoalManagementFragment">
+
+    <TextView
+        android:id="@+id/goal_management_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="37dp"
+        android:text="@string/msg_update_reading_goal"
+        android:textAppearance="@style/ta_b_16_kr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/goal_mangement_period_number_np"
+        app:layout_constraintEnd_toEndOf="@+id/goal_mangement_period_number_np"
+        app:layout_constraintStart_toStartOf="@+id/goal_mangement_period_number_np"
+        app:layout_constraintTop_toTopOf="@+id/goal_mangement_period_number_np" />
+
+    <NumberPicker
+        android:id="@+id/goal_mangement_period_number_np"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goal_management_title_tv" />
+
+    <View
+        android:layout_width="47dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintEnd_toEndOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintStart_toStartOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintTop_toTopOf="@+id/goal_management_period_unit_np" />
+
+    <NumberPicker
+        android:id="@+id/goal_management_period_unit_np"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/goal_management_period_tv"
+        app:layout_constraintStart_toEndOf="@+id/goal_mangement_period_number_np"
+        app:layout_constraintTop_toBottomOf="@+id/goal_management_title_tv" />
+
+    <TextView
+        android:id="@+id/goal_management_period_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_during"
+        android:textAppearance="@style/ta_b_14_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintEnd_toStartOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintStart_toEndOf="@+id/goal_management_period_unit_np"
+        app:layout_constraintTop_toTopOf="@+id/goal_management_period_unit_np" />
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintEnd_toEndOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintStart_toStartOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintTop_toTopOf="@+id/goal_management_book_cnt_np" />
+
+    <NumberPicker
+        android:id="@+id/goal_management_book_cnt_np"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/goal_management_book_cnt_tv"
+        app:layout_constraintStart_toEndOf="@+id/goal_management_period_tv"
+        app:layout_constraintTop_toBottomOf="@+id/goal_management_title_tv" />
+
+    <TextView
+        android:id="@+id/goal_management_book_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_record_book"
+        android:textAppearance="@style/ta_b_14_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goal_management_book_cnt_np"
+        app:layout_constraintTop_toTopOf="@+id/goal_management_book_cnt_np" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

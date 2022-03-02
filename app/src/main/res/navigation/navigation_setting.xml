@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_setting"
+    app:startDestination="@id/settingFragment">
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.mangpo.ourpage.view.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_changePwFragment"
+            app:destination="@id/changePwFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_openSourceFragment"
+            app:destination="@id/openSourceFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_withdrawalActivity"
+            app:destination="@id/withdrawalActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePwFragment"
+        android:name="com.mangpo.ourpage.view.setting.ChangePwFragment"
+        android:label="fragment_change_pw"
+        tools:layout="@layout/fragment_change_pw" />
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.mangpo.ourpage.view.setting.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice" />
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.mangpo.ourpage.view.setting.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.mangpo.ourpage.view.setting.TermsFragment"
+        android:label="fragment_terms"
+        tools:layout="@layout/fragment_terms" />
+    <fragment
+        android:id="@+id/openSourceFragment"
+        android:name="com.mangpo.ourpage.view.setting.OpenSourceFragment"
+        android:label="fragment_open_source"
+        tools:layout="@layout/fragment_open_source" />
+    <activity
+        android:id="@+id/withdrawalActivity"
+        android:name="com.mangpo.ourpage.view.setting.WithdrawalActivity"
+        android:label="activity_withdrawal"
+        tools:layout="@layout/activity_withdrawal" />
+</navigation>

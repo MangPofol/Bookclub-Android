@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-activity_photo_view.xml photo_view_indicator,
-frgment_record_detail.xml content_img_indicator-->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/content_img_indicator_selected_dot" android:state_selected="true" />
-    <item android:drawable="@drawable/content_img_indicator_default_dot" />
-</selector>

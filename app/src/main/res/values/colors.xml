@@ -6,28 +6,20 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_light">#7B8099</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey1">#C4C4C4</color>
-    <color name="grey2">#C6C6C6</color>
-    <color name="grey3">#D5D5D5</color>
-    <color name="grey4">#E3E3E3</color>
-    <color name="grey5">#F7F5F5</color>
-    <color name="grey6">#A5A5A5</color>
-    <color name="grey7">#B0B0B0</color>
-    <color name="grey8">#7A7A7A</color>
-    <color name="grey9">#D1D1D1</color>
-    <color name="grey10">#E7E7E7</color>
-    <color name="grey11">#E4E4E4</color>
-    <color name="grey12">#C3C5D1</color>
-    <color name="grey13">#EFF0F3</color>
-    <color name="grey14">#CACBD6</color>
-    <color name="grey15">#E5E5E5</color>
-    <color name="grey16">#7B8099</color>
-    <color name="main_blue">#303860</color>
-    <color name="main_blue_light">#1940CD</color>
-    <color name="light_blue">#646A88</color>
-    <color name="red1">#FF3838</color>
-    <color name="light_red">#E5949D</color>
-    <color name="ted_image_picker_primary">#E5949D</color>
+    <color name="white50">#80FFFFFF</color>
+    <color name="white_dark">#EAEBEE</color>
+
+    <color name="primary">#303860</color>
+    <color name="primary_light">#646A88</color>
+
+    <color name="grey">#EFF0F3</color>
+    <color name="grey80">#CCEFF0F3</color>
+    <color name="grey_dark">#C3C5D1</color>
+
+    <color name="secondary">#E5949D</color>
+
     <color name="transparent">#00000000</color>
+    <color name="ted_image_picker_primary">#E5949D</color>
 </resources>

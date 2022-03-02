@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--fragment_set_gender_and_birth.xml-->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/white" android:state_checked="true"></item>
-    <item android:color="@color/main_blue" android:state_checked="false"></item>
-</selector>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    tools:context=".view.auth.signin.GenderBirthFragment">
+
+    <TextView
+        android:id="@+id/gender_birth_gender_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_select_gender"
+        android:textAppearance="@style/ta_b_18_kr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <RadioGroup
+        android:id="@+id/gender_birth_gender_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/gender_birth_gender_tv">
+
+        <RadioButton
+            android:id="@+id/gender_birth_man_rb"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/selector_gender_birth_rb"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/title_man"
+            android:textAppearance="@style/ta_r_14_kr"
+            android:textColor="@drawable/selector_gender_birth_rb_text"
+            android:textSize="14dp" />
+
+        <RadioButton
+            android:id="@+id/gender_birth_woman_rb"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_gender_birth_rb"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/title_woman"
+            android:textAppearance="@style/ta_r_14_kr"
+            android:textColor="@drawable/selector_gender_birth_rb_text"
+            android:textSize="14dp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/gender_birth_birth_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/msg_input_birth"
+        android:textAppearance="@style/ta_b_18_kr"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_year_np"
+        app:layout_constraintEnd_toEndOf="@+id/gender_birth_year_np"
+        app:layout_constraintStart_toStartOf="@+id/gender_birth_year_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_year_np" />
+
+    <NumberPicker
+        android:id="@+id/gender_birth_year_np"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/gender_birth_year_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender_birth_birth_tv" />
+
+    <TextView
+        android:id="@+id/gender_birth_year_tv"
+        android:layout_width="41dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_year"
+        android:textAppearance="@style/ta_b_14_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_year_np"
+        app:layout_constraintEnd_toStartOf="@+id/gender_birth_month_np"
+        app:layout_constraintStart_toEndOf="@+id/gender_birth_year_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_year_np" />
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_month_np"
+        app:layout_constraintEnd_toEndOf="@+id/gender_birth_month_np"
+        app:layout_constraintStart_toStartOf="@+id/gender_birth_month_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_month_np" />
+
+    <NumberPicker
+        android:id="@+id/gender_birth_month_np"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/gender_birth_month_tv"
+        app:layout_constraintStart_toEndOf="@+id/gender_birth_year_tv"
+        app:layout_constraintTop_toBottomOf="@+id/gender_birth_birth_tv" />
+
+    <TextView
+        android:id="@+id/gender_birth_month_tv"
+        android:layout_width="41dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_month"
+        android:textAppearance="@style/ta_b_14_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_month_np"
+        app:layout_constraintEnd_toStartOf="@+id/gender_birth_day_np"
+        app:layout_constraintStart_toEndOf="@+id/gender_birth_month_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_month_np" />
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_day_np"
+        app:layout_constraintEnd_toEndOf="@+id/gender_birth_day_np"
+        app:layout_constraintStart_toStartOf="@+id/gender_birth_day_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_day_np" />
+
+    <NumberPicker
+        android:id="@+id/gender_birth_day_np"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:theme="@style/AppTheme.Picker"
+        app:layout_constraintEnd_toStartOf="@+id/gender_birth_day_tv"
+        app:layout_constraintStart_toEndOf="@+id/gender_birth_month_tv"
+        app:layout_constraintTop_toBottomOf="@+id/gender_birth_birth_tv" />
+
+    <TextView
+        android:id="@+id/gender_birth_day_tv"
+        android:layout_width="41dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_day"
+        android:textAppearance="@style/ta_b_14_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/gender_birth_day_np"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gender_birth_day_np"
+        app:layout_constraintTop_toTopOf="@+id/gender_birth_day_np" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

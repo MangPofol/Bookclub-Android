@@ -11,8 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="16dp"
-        android:textStyle="bold"
+        android:textAppearance="@style/ta_b_16_en"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:autoLink="web"
         android:linksClickable="true"
-        android:textSize="14dp"
+        android:textAppearance="@style/ta_r_14_en"
         android:theme="@style/HyperlinkBlueAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +32,8 @@
         android:id="@+id/license_desc_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey8"
-        android:textSize="14dp"
+        android:textColor="@color/grey"
+        android:textAppearance="@style/ta_r_14_en"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/url_tv" />
@@ -51,12 +50,12 @@
             android:id="@+id/license_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/black_border_view"
+            android:background="@drawable/bg_null_null_black_08"
             android:maxLines="8"
             android:padding="8dp"
             android:scrollbars="vertical"
-            android:textColor="@color/grey8"
-            android:textSize="14dp" />
+            android:textColor="@color/black"
+            android:textAppearance="@style/ta_r_14_en" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

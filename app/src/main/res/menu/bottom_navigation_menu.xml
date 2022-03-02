@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/main"
-        android:enabled="true"
-        android:icon="@drawable/ic_menu_user"
-        android:title="@string/main" />
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_user_off"
+        android:contentDescription="@string/title_user"
+        android:title="@string/title_user" />
     <item
-        android:id="@+id/library"
-        android:enabled="true"
-        android:icon="@drawable/ic_menu_book"
-        android:title="@string/library" />
-    <item
-        android:id="@+id/bookclub"
-        android:enabled="false"
-        android:icon="@drawable/ic_menu_library"
-        android:title="@string/bookclub" />
+        android:id="@+id/navigation_library"
+        android:icon="@drawable/ic_books_off"
+        android:contentDescription="@string/title_library"
+        android:title="@string/title_library" />
 </menu>

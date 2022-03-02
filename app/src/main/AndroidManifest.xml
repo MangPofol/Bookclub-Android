@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mangpo.bookclub">
+    package="com.mangpo.ourpage">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -9,114 +9,65 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".view.MyApplication"
+        android:name=".ApplicationClass"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_ourpage"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_ourpage"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bookclub"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/Theme.Ourpage"
+        android:networkSecurityConfig="@xml/network_security_config">
+        <activity
+            android:name=".view.main.record.PhotoViewActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.home.ChecklistManagementActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.home.GoalManagementActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".view.info.InfoActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
         <activity
             android:name=".view.setting.WithdrawalActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".view.my_info.PasswordReissueActivity"
+            android:name=".view.auth.PasswordReissueActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".view.book_profile.EmailAuthenticationActivity"
+            android:name=".view.setting.SettingActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".view.setting.OpenSourceActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:name=".view.auth.signin.SignInActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
         <activity
-            android:name=".view.setting.TermsConditionActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:name=".view.auth.LoginActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
         <activity
-            android:name=".view.setting.QuestionActivity"
+            android:name=".view.main.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.my_info.ResettingPasswordActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.my_info.ChecklistManagementActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.my_info.GoalManagementActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.my_info.YourTasteActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.my_info.MyInfoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.setting.SettingActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.write.CameraActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.write.PhotoViewActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
-
-        <activity
-            android:name=".view.book_profile.BookProfileInitActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".view.book_profile.SignInActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.LoginActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.bookclub.CreateClubActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".view.setting.NoticeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

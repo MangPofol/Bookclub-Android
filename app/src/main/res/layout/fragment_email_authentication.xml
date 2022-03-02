@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_layout_gradation"
+    tools:context=".view.auth.signin.EmailAuthenticationFragment">
+
+    <EditText
+        android:id="@+id/email_authentication_email_et"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        android:hint="@string/msg_input_email"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingHorizontal="14dp"
+        android:textAppearance="@style/ta_b_16_kr"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/grey_dark"
+        app:layout_constraintEnd_toStartOf="@+id/email_authentication_send_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/email_authentication_send_btn"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_secondary_10_null_null"
+        android:text="@string/action_send"
+        android:textAppearance="@style/ta_b_16_kr"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/email_authentication_email_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/email_authentication_email_et"
+        app:layout_constraintTop_toTopOf="@+id/email_authentication_email_et" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/email_authentication_resend_btn"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_white_10_secondary_2"
+        android:text="@string/action_resend"
+        android:textAppearance="@style/ta_b_16_kr"
+        android:textColor="@color/secondary"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/email_authentication_email_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/email_authentication_email_et"
+        app:layout_constraintTop_toTopOf="@+id/email_authentication_email_et" />
+
+    <EditText
+        android:id="@+id/email_authentication_code_et"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        android:hint="@string/msg_input_code"
+        android:inputType="number"
+        android:maxLines="1"
+        android:paddingHorizontal="14dp"
+        android:textAppearance="@style/ta_b_16_kr"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/grey_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_authentication_email_et" />
+
+    <TextView
+        android:id="@+id/email_authentication_code_error_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="6dp"
+        android:text="@string/error_wrong_code"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@color/secondary"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_authentication_code_et" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_library"
+    app:startDestination="@id/libraryFragment">
+
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.mangpo.ourpage.view.main.record.RecordFragment"
+        android:label="fragment_record"
+        tools:layout="@layout/fragment_record">
+        <action
+            android:id="@+id/action_recordFragment_to_selectBookFragment"
+            app:destination="@id/selectBookFragment" />
+        <action
+            android:id="@+id/action_recordFragment_to_recordSettingFragment"
+            app:destination="@id/recordSettingFragment" />
+        <argument
+            android:name="mode"
+            app:argType="string" />
+        <argument
+            android:name="record"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="book"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <activity
+        android:id="@+id/photoViewActivity"
+        android:name="com.mangpo.ourpage.view.main.record.PhotoViewActivity"
+        android:label="activity_photo_view"
+        tools:layout="@layout/activity_photo_view">
+        <argument
+            android:name="photos"
+            app:argType="string[]" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </activity>
+    <fragment
+        android:id="@+id/selectBookFragment"
+        android:name="com.mangpo.ourpage.view.main.record.SelectBookFragment"
+        android:label="fragment_select_book"
+        tools:layout="@layout/fragment_select_book">
+        <action
+            android:id="@+id/action_selectBookFragment_to_recordFragment"
+            app:destination="@id/recordFragment" />
+        <argument
+            android:name="category"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_selectBookFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordDetailFragment"
+        android:name="com.mangpo.ourpage.view.main.record.RecordDetailFragment"
+        android:label="fragment_record_detail"
+        tools:layout="@layout/fragment_record_detail">
+        <argument
+            android:name="record"
+            app:argType="string" />
+        <argument
+            android:name="book"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recordDetailFragment_to_photoViewActivity"
+            app:destination="@id/photoViewActivity" />
+        <action
+            android:id="@+id/action_recordDetailFragment_to_recordFragment"
+            app:destination="@id/recordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordSettingFragment"
+        android:name="com.mangpo.ourpage.view.main.record.RecordSettingFragment"
+        android:label="fragment_record_setting"
+        tools:layout="@layout/fragment_record_setting">
+        <argument
+            android:name="mode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recordSettingFragment_to_recordDetailFragment"
+            app:destination="@id/recordDetailFragment"
+            app:popUpTo="@id/bookDetailFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="record"
+            app:argType="string" />
+        <argument
+            android:name="book"
+            app:argType="string" />
+        <argument
+            android:name="prevPhotos"
+            app:argType="string[]"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.mangpo.ourpage.view.main.library.LibraryFragment"
+        android:label="fragment_library"
+        tools:layout="@layout/fragment_library" >
+        <action
+            android:id="@+id/action_libraryFragment_to_settingActivity"
+            app:destination="@id/settingActivity" />
+        <action
+            android:id="@+id/action_libraryFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/settingActivity"
+        android:name="com.mangpo.ourpage.view.setting.SettingActivity"
+        android:label="activity_setting"
+        tools:layout="@layout/activity_setting" />
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.mangpo.ourpage.view.main.library.BookDetailFragment"
+        android:label="fragment_book_detail"
+        tools:layout="@layout/fragment_book_detail" >
+        <argument android:name="book"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_recordFragment"
+            app:destination="@id/recordFragment" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_recordDetailFragment"
+            app:destination="@id/recordDetailFragment" />
+    </fragment>
+</navigation>

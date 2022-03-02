@@ -20,5 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.mangpo.bookclub.model.** { *; }
--keepclassmembers class com.mangpo.bookclub.model.** { *; }
+-keep class com.mangpo.ourpage.model.** { *; }
+-keepclassmembers class com.mangpo.ourpage.model.** { *; }
