@@ -58,8 +58,11 @@ class ChecklistContentRVAdapter() :
             myChecklistContentRVAdapterListener.updateChecklist(position, todos[position])
         }
 
-        holder.checkIv.setOnClickListener { //체크리스트 완료
-            myChecklistContentRVAdapterListener.completeChecklist(position, todos[position])
+        holder.checkIv.setOnClickListener {
+            if (holder.checklistTv.visibility==View.VISIBLE)    //체크리스트 완료
+                myChecklistContentRVAdapterListener.completeChecklist(position, todos[position])
+            else    //체크리스트 추가
+                myChecklistContentRVAdapterListener.addChecklist()
         }
 
         holder.deleteIv.setOnClickListener {    //삭제 이미지뷰 클릭 리스너 -> 체크리스트 삭제
