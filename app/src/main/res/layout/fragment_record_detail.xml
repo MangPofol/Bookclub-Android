@@ -4,204 +4,190 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.write.RecordDetailFragment">
+    tools:context=".view.main.record.RecordDetailFragment">
 
     <TextView
-        android:id="@+id/book_tv"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:id="@+id/record_detail_book_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="29dp"
-        android:background="@drawable/bg_post_detail_book_tv"
+        android:background="@drawable/bg_primary_10_null_null"
         android:ellipsize="end"
+        android:gravity="center_vertical"
         android:maxLines="1"
-        android:paddingHorizontal="15dp"
-        android:paddingTop="6dp"
-        android:text="책 이름"
+        android:paddingHorizontal="14dp"
+        android:textAppearance="@style/ta_b_14_kr"
         android:textColor="@color/white"
-        android:textSize="12dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/date_tv"
-        android:layout_width="0dp"
+        android:id="@+id/record_detail_record_date_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="18dp"
-        android:text="2021/01/12 12:34"
-        android:textColor="@color/main_blue"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/update_tv"
+        android:layout_marginStart="24dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/record_detail_delete_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_tv" />
+        app:layout_constraintTop_toTopOf="@+id/record_detail_delete_btn" />
 
-    <TextView
-        android:id="@+id/update_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/record_detail_update_btn"
+        android:layout_width="55dp"
+        android:layout_height="21dp"
         android:layout_marginEnd="6dp"
-        android:background="@drawable/bg_post_detail_update_tv"
-        android:gravity="center"
-        android:paddingHorizontal="9dp"
-        android:paddingTop="3dp"
-        android:text="@string/update"
-        android:textColor="@color/main_blue"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/date_tv"
-        app:layout_constraintEnd_toStartOf="@+id/delete_tv"
-        app:layout_constraintStart_toEndOf="@+id/date_tv"
-        app:layout_constraintTop_toTopOf="@+id/date_tv" />
+        android:background="@drawable/bg_null_105_primary_1"
+        android:text="@string/action_update"
+        android:textAppearance="@style/ta_r_10_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/record_detail_delete_btn"
+        app:layout_constraintEnd_toStartOf="@+id/record_detail_delete_btn"
+        app:layout_constraintTop_toTopOf="@+id/record_detail_delete_btn" />
 
-    <TextView
-        android:id="@+id/delete_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/record_detail_delete_btn"
+        android:layout_width="37dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="11dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/bg_post_detail_delete_tv"
-        android:paddingHorizontal="9dp"
-        android:paddingTop="3dp"
-        android:text="@string/delete"
-        android:textColor="@color/light_red"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/update_tv"
+        android:background="@drawable/bg_null_105_secondary_1"
+        android:text="@string/action_delete"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@color/secondary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/update_tv"
-        app:layout_constraintTop_toTopOf="@+id/update_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/record_detail_book_name_tv" />
 
-    <ScrollView
-        android:id="@+id/scroll_view"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/record_detail_nsv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/layout_gradation"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_layout_gradation"
+        android:fillViewport="true"
         android:overScrollMode="never"
-        android:paddingHorizontal="24dp"
         android:paddingVertical="18dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_tv">
+        app:layout_constraintTop_toBottomOf="@+id/record_detail_delete_btn">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/record_title_tv"
+                android:id="@+id/record_detail_record_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="인생의 다음 단계로 넘어가 보자."
-                android:textColor="@color/main_blue"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/record_content_tv"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="18dp"
+                android:textAppearance="@style/ta_b_16_kr"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/record_content_tv"
-                android:layout_width="wrap_content"
+                android:id="@+id/record_detail_record_content_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="23dp"
-                android:lineSpacingExtra="15dp"
-                android:text="이 소설은 한남자의 불행을 중심으로 사실과 진실사이의 미묘한 차이를 보여주고 있다.\n\n전직 프로야구선수 최현수는 어릴적 아버지의 폭력과 불행한 가정환경속에서도 자신의 삶에 최선을 다하며 바르게 살고자하는 착한 남자이다. 그러나 어린시절의 불행은 늘 그에게 보이지 않는 그늘처럼 남아서 야구선수로 제대로 실력을 발휘하기 힘든 스트레스 주고 있었다. 그는 억척스런 아내를 맞아 씩씩하고 착한 아들 서원을 키우면서 스트레스로 한쪽 팔이 마비되는 증세도 사라졌다고 생각했다."
-                android:textColor="@color/light_blue"
-                android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/record_title_tv" />
+                android:lineSpacingExtra="4dp"
+                android:textAppearance="@style/ta_r_14_kr"
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_record_title_tv" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/content_img_vp"
-                android:layout_width="match_parent"
+                android:id="@+id/record_detail_photo_vp"
+                android:layout_width="0dp"
                 android:layout_height="320dp"
-                android:layout_marginTop="18dp"
-                android:overScrollMode="never"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/record_content_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_record_content_tv" />
 
-            <me.relex.circleindicator.CircleIndicator3
-                android:id="@+id/content_img_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+            <com.rd.PageIndicatorView
+                android:id="@+id/record_detail_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="15dp"
-                app:ci_drawable="@drawable/content_img_dot_indicator"
-                app:ci_height="7dp"
-                app:ci_margin="10dp"
-                app:ci_width="7dp"
-                app:layout_constraintBottom_toBottomOf="@+id/content_img_vp"
-                app:layout_constraintEnd_toEndOf="@+id/content_img_vp"
-                app:layout_constraintStart_toStartOf="@+id/content_img_vp" />
+                app:layout_constraintBottom_toBottomOf="@+id/record_detail_photo_vp"
+                app:layout_constraintEnd_toEndOf="@+id/record_detail_photo_vp"
+                app:layout_constraintStart_toStartOf="@+id/record_detail_photo_vp"
+                app:piv_animationType="slide"
+                app:piv_dynamicCount="true"
+                app:piv_interactiveAnimation="true"
+                app:piv_padding="10dp"
+                app:piv_radius="7dp"
+                app:piv_selectedColor="@color/white"
+                app:piv_unselectedColor="@color/white50"
+                app:piv_viewPager="@id/record_detail_photo_vp" />
+
+            <TextView
+                android:id="@+id/record_detail_location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/msg_input_location"
+                android:textAppearance="@style/ta_r_12_kr"
+                android:textColor="@color/grey_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/record_detail_location_iv"
+                app:layout_constraintEnd_toStartOf="@+id/record_detail_location_iv"
+                app:layout_constraintTop_toTopOf="@+id/record_detail_location_iv" />
 
             <ImageView
-                android:id="@+id/location_icon_iv"
+                android:id="@+id/record_detail_location_iv"
                 android:layout_width="11dp"
                 android:layout_height="14dp"
                 android:layout_marginTop="13dp"
+                android:layout_marginEnd="22dp"
                 android:src="@drawable/ic_location"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/content_img_vp" />
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_photo_vp" />
 
             <TextView
-                android:id="@+id/location_tv"
+                android:id="@+id/record_detail_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="9dp"
-                android:text="@string/msg_input_location"
-                android:textColor="@color/grey12"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@+id/location_icon_iv"
-                app:layout_constraintEnd_toStartOf="@+id/location_icon_iv"
-                app:layout_constraintTop_toTopOf="@+id/location_icon_iv" />
+                android:layout_marginEnd="10dp"
+                android:text="@string/msg_input_time"
+                android:textAppearance="@style/ta_r_12_kr"
+                android:textColor="@color/grey_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/record_detail_time_iv"
+                app:layout_constraintEnd_toStartOf="@+id/record_detail_time_iv"
+                app:layout_constraintTop_toTopOf="@+id/record_detail_time_iv" />
 
             <ImageView
-                android:id="@+id/clock_icon_iv"
+                android:id="@+id/record_detail_time_iv"
                 android:layout_width="11dp"
                 android:layout_height="11dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="22dp"
                 android:src="@drawable/ic_clock"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_icon_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_location_iv" />
 
             <TextView
-                android:id="@+id/clock_tv"
+                android:id="@+id/record_detail_link_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="9dp"
-                android:text="@string/msg_input_time"
-                android:textColor="@color/grey12"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@+id/clock_icon_iv"
-                app:layout_constraintEnd_toStartOf="@+id/clock_icon_iv"
-                app:layout_constraintTop_toTopOf="@+id/clock_icon_iv" />
+                android:layout_marginEnd="10dp"
+                android:text="@string/msg_input_link"
+                android:textAppearance="@style/ta_r_12_kr"
+                android:textColor="@color/grey_dark"
+                android:textColorLink="@color/primary"
+                app:layout_constraintBottom_toBottomOf="@+id/record_detail_link_iv"
+                app:layout_constraintEnd_toStartOf="@+id/record_detail_link_iv"
+                app:layout_constraintTop_toTopOf="@+id/record_detail_link_iv" />
 
             <ImageView
-                android:id="@+id/link_iv"
+                android:id="@+id/record_detail_link_iv"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="22dp"
                 android:src="@drawable/ic_link"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clock_icon_iv" />
-
-            <TextView
-                android:id="@+id/link_tv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="9dp"
-                android:autoLink="web"
-                android:gravity="end"
-                android:text="@string/msg_input_link"
-                android:textColor="@color/grey12"
-                android:textSize="12dp"
-                android:theme="@style/HyperlinkBlueAccent"
-                app:layout_constraintEnd_toStartOf="@+id/link_iv"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/link_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_time_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

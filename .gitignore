@@ -26,3 +26,6 @@ local.properties
 /app/src/main/res/values/ic_launcher_background.xml
 /app/src/main/res/*/ic_launcher_ourpage.*
 /app/src/main/res/*/ic_launcher_ourpage_*.*
+/app/src/main/res/xml/network_security_config.xml
+/app/src/main/res/font/*
+/app/src/main/res/raw/*

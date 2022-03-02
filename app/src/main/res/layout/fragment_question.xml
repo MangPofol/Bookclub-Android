@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.setting.QuestionFragment">
+
+    <TextView
+        android:id="@+id/question_contact_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_contact_us"
+        android:textAppearance="@style/ta_b_16_en"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33" />
+
+    <TextView
+        android:id="@+id/question_contact_desc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/msg_contact_desc"
+        android:textColor="@color/primary_light"
+        android:lineSpacingExtra="4dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_contact_tv" />
+
+    <View
+        android:id="@+id/send_email_view"
+        android:layout_width="126dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_secondary_20_secondary_null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question_contact_desc_tv" />
+
+    <TextView
+        android:id="@+id/send_email_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_send_email"
+        android:textColor="@color/white"
+        android:textAppearance="@style/ta_r_12_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/send_email_view"
+        app:layout_constraintEnd_toEndOf="@+id/send_email_view"
+        app:layout_constraintStart_toStartOf="@+id/send_email_view"
+        app:layout_constraintTop_toTopOf="@+id/send_email_view" />
+
+    <ImageView
+        android:id="@+id/send_email_arrow_iv"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="2dp"
+        android:src="@drawable/ic_diagonal"
+        app:layout_constraintBottom_toBottomOf="@+id/send_email_tv"
+        app:layout_constraintStart_toEndOf="@+id/send_email_tv"
+        app:layout_constraintTop_toTopOf="@+id/send_email_tv"
+        app:layout_constraintVertical_bias="0.31" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

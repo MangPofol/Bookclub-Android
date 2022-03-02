@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--activity_my_info.xml genre_view, style_view, goal_management_view, checklist_management_view-->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <solid android:color="@color/white" />
-
-    <corners android:radius="10dp" />
-</shape>

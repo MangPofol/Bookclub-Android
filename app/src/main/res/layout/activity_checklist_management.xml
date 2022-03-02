@@ -4,73 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.my_info.ChecklistManagementActivity">
+    android:background="@drawable/bg_layout_gradation"
+    tools:context=".view.main.home.ChecklistManagementActivity">
 
-    <Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/checklist_management_tb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/toolbar_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/checklist_management"
-        android:textColor="@color/main_blue"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
-
-    <View
-        android:id="@+id/back_iv_view"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/back_iv"
-        app:layout_constraintEnd_toEndOf="@id/back_iv"
-        app:layout_constraintStart_toStartOf="@+id/back_iv"
-        app:layout_constraintTop_toTopOf="@+id/back_iv" />
-
-    <ImageView
-        android:id="@+id/back_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:src="@drawable/ic_back"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/no_checklist_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="완료된 체크리스트가 없습니다."
-        android:textColor="@color/main_blue"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.35" />
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/title_checklist_setting"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/ta_b_18_en"
+        app:titleTextColor="@color/primary" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/checklist_rv"
+        android:id="@+id/checklist_management__rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/layout_gradation"
+        android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingTop="31dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/checklist_management_tb"
         tools:listitem="@layout/item_checklist_header" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

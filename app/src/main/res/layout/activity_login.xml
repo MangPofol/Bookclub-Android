@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.LoginActivity">
+    tools:context=".view.auth.LoginActivity">
 
     <TextView
         android:id="@+id/login_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textColor="@color/main_blue"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textAppearance="@style/ta_b_20_en"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,12 +35,13 @@
         android:layout_width="0dp"
         android:layout_height="26dp"
         android:layout_marginHorizontal="74dp"
-        android:background="@drawable/login_book_profile_et"
-        android:hint="@string/id"
+        android:background="@drawable/bg_grey_10_null_null"
+        android:hint="@string/title_email"
+        android:maxLines="1"
+        android:inputType="text"
         android:paddingHorizontal="13dp"
-        android:paddingTop="5dp"
-        android:textColorHint="@color/grey12"
-        android:textSize="12dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColorHint="@color/grey_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,68 +53,57 @@
         android:layout_width="0dp"
         android:layout_height="26dp"
         android:layout_marginHorizontal="74dp"
-        android:background="@drawable/login_book_profile_et"
-        android:hint="@string/password"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_grey_10_null_null"
+        android:hint="@string/title_password"
         android:inputType="textPassword"
         android:maxLength="12"
+        android:maxLines="1"
         android:paddingHorizontal="13dp"
-        android:paddingTop="5dp"
-        android:textColorHint="@color/grey12"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColorHint="@color/grey_dark"
         android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintTop_toBottomOf="@+id/login_id_et" />
 
     <TextView
         android:id="@+id/login_msg_tv"
         android:layout_width="0dp"
         android:layout_height="15dp"
-        android:layout_marginStart="80dp"
-        android:textColor="@color/light_red"
-        android:textSize="10dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.49" />
 
-    <android.widget.Button
+        android:layout_marginStart="80dp"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@color/secondary"
+        android:layout_marginTop="7dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_et"/>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_btn"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginHorizontal="77dp"
-        android:background="@drawable/bg_login_btn"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/login"
+        android:layout_marginTop="41dp"
+        android:background="@drawable/bg_secondary_20_null_null"
+        android:text="@string/action_login_en"
+        android:textAppearance="@style/ta_b_14_en"
         android:textColor="@color/white"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
-
-    <View
-        android:id="@+id/login_signin_click_view"
-        android:layout_width="65dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/login_signin_tv"
-        app:layout_constraintEnd_toEndOf="@+id/login_signin_tv"
-        app:layout_constraintStart_toStartOf="@+id/login_signin_tv"
-        app:layout_constraintTop_toTopOf="@+id/login_signin_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/login_password_et" />
 
     <TextView
         android:id="@+id/login_signin_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
-        android:text="@string/sign_in"
-        android:textColor="@color/grey12"
-        android:textSize="10dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="20dp"
+        android:text="@string/action_signin"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@color/grey_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/login_signin_find_password_line"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,33 +115,24 @@
         android:layout_width="1dp"
         android:layout_height="11dp"
         android:layout_marginHorizontal="6dp"
-        android:background="@color/grey12"
+        android:background="@color/grey_dark"
         app:layout_constraintBottom_toBottomOf="@+id/login_signin_tv"
         app:layout_constraintEnd_toStartOf="@+id/login_find_password_tv"
         app:layout_constraintStart_toEndOf="@+id/login_signin_tv"
         app:layout_constraintTop_toTopOf="@+id/login_signin_tv" />
-
-    <View
-        android:id="@+id/login_find_password_click_view"
-        android:layout_width="90dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/login_find_password_tv"
-        app:layout_constraintEnd_toEndOf="@+id/login_find_password_tv"
-        app:layout_constraintStart_toStartOf="@+id/login_find_password_tv"
-        app:layout_constraintTop_toTopOf="@+id/login_find_password_tv" />
 
     <TextView
         android:id="@+id/login_find_password_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="121dp"
-        android:text="@string/find_password"
-        android:textColor="@color/grey12"
-        android:textSize="10dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="20dp"
+        android:text="@string/action_find_password"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@color/grey_dark"
         app:layout_constraintBottom_toBottomOf="@+id/login_signin_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/login_signin_find_password_line"
         app:layout_constraintTop_toTopOf="@+id/login_signin_tv" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
