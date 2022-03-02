@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/myInfoFragment"
-        android:name="com.mangpo.ourpage.view.info.MyInfoFragment"
+        android:name="com.mangpo.bookclub.view.info.MyInfoFragment"
         android:label="fragment_my_info"
         tools:layout="@layout/fragment_my_info" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/yourTasteFragment"
-        android:name="com.mangpo.ourpage.view.info.YourTasteFragment"
+        android:name="com.mangpo.bookclub.view.info.YourTasteFragment"
         android:label="fragment_your_taste"
         tools:layout="@layout/fragment_your_taste" >
         <argument
@@ -31,14 +31,14 @@
     </fragment>
     <fragment
         android:id="@+id/goalManagementFragment"
-        android:name="com.mangpo.ourpage.view.info.GoalManagementFragment"
+        android:name="com.mangpo.bookclub.view.info.GoalManagementFragment"
         android:label="fragment_goal_management"
         tools:layout="@layout/fragment_goal_management" >
         <argument android:name="user" />
     </fragment>
     <activity
         android:id="@+id/checklistManagementActivity2"
-        android:name="com.mangpo.ourpage.view.main.home.ChecklistManagementActivity"
+        android:name="com.mangpo.bookclub.view.main.home.ChecklistManagementActivity"
         android:label="activity_checklist_management"
         tools:layout="@layout/activity_checklist_management" />
 </navigation>
