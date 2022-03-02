@@ -27,21 +27,11 @@ class OpenSourceFragment : BaseFragment<FragmentOpenSourceBinding>(FragmentOpenS
                 ""
             ),
             OpenSourceModel(
-                "Koin",
-                "https://github.com/InsertKoinIO/koin",
-                "Apache 2.0",
-                ""),
-            OpenSourceModel(
                 "Retrofit",
                 "https://github.com/square/retrofit",
                 "Apache 2.0",
                 "Copyright 2013 Square, Inc."
             ),
-            OpenSourceModel(
-                "OkHttp",
-                "",
-                "Apache 2.0",
-                "Copyright 2019 Square, Inc."),
             OpenSourceModel(
                 "Coroutines",
                 "https://github.com/Kotlin/kotlinx.coroutines",
@@ -55,28 +45,52 @@ class OpenSourceFragment : BaseFragment<FragmentOpenSourceBinding>(FragmentOpenS
                 "Copyright 2012 Jake Wharton\nCopyright 2011 The Android Open Source Project"
             ),
             OpenSourceModel(
-                "CircleIndicator",
-                "https://github.com/ongakuer/CircleIndicator",
-                "Apache 2.0",
-                ""
-            ),
-            OpenSourceModel(
                 "TedImagePicker",
                 "https://github.com/ParkSangGwon/TedImagePicker",
                 "Apache 2.0",
                 "Copyright 2019 Ted Park"
             ),
             OpenSourceModel(
-                "Robolectric",
-                "https://github.com/robolectric/robolectric",
-                "Apache 2.0",
-                ""
-            ),
-            OpenSourceModel(
                 "Gson",
                 "https://github.com/google/gson",
                 "Apache 2.0",
                 "Copyright 2008 Google Inc."
+            ),
+            OpenSourceModel(
+                "Security-crypto",
+                "https://github.com/android/security-samples",
+                "Apache 2.0",
+                ""
+            ),
+            OpenSourceModel(
+                "AndroidX-Navigation",
+                "https://github.com/android/architecture-components-samples",
+                "Apache 2.0",
+                "Copyright 2018 The Android Open Source Project, Inc."
+            ),
+            OpenSourceModel(
+                "TedPermission",
+                "https://github.com/ParkSangGwon/TedPermission",
+                "Apache 2.0",
+                "Copyright 2021 Ted Park"
+            ),
+            OpenSourceModel(
+                "AndroidX-Room",
+                "https://github.com/android/architecture-components-samples/tree/main/BasicRxJavaSampleKotlin",
+                "Apache 2.0",
+                "Copyright (C) 2017 The Android Open Source Project"
+            ),
+            OpenSourceModel(
+                "PageIndicatorView",
+                "https://github.com/romandanylyk/PageIndicatorView",
+                "Apache 2.0",
+                "Copyright 2017 Roman Danylyk"
+            ),
+            OpenSourceModel(
+                "PhotoView",
+                "https://github.com/Baseflow/PhotoView",
+                "Apache 2.0",
+                "Copyright 2018 Chris Banes"
             )
         )
 
