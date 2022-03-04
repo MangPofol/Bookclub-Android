@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.mangpo.ourpage.view.setting.SettingFragment"
+        android:name="com.mangpo.bookclub.view.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
         <action
@@ -31,32 +31,32 @@
     </fragment>
     <fragment
         android:id="@+id/changePwFragment"
-        android:name="com.mangpo.ourpage.view.setting.ChangePwFragment"
+        android:name="com.mangpo.bookclub.view.setting.ChangePwFragment"
         android:label="fragment_change_pw"
         tools:layout="@layout/fragment_change_pw" />
     <fragment
         android:id="@+id/noticeFragment"
-        android:name="com.mangpo.ourpage.view.setting.NoticeFragment"
+        android:name="com.mangpo.bookclub.view.setting.NoticeFragment"
         android:label="fragment_notice"
         tools:layout="@layout/fragment_notice" />
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.mangpo.ourpage.view.setting.QuestionFragment"
+        android:name="com.mangpo.bookclub.view.setting.QuestionFragment"
         android:label="fragment_question"
         tools:layout="@layout/fragment_question" />
     <fragment
         android:id="@+id/termsFragment"
-        android:name="com.mangpo.ourpage.view.setting.TermsFragment"
+        android:name="com.mangpo.bookclub.view.setting.TermsFragment"
         android:label="fragment_terms"
         tools:layout="@layout/fragment_terms" />
     <fragment
         android:id="@+id/openSourceFragment"
-        android:name="com.mangpo.ourpage.view.setting.OpenSourceFragment"
+        android:name="com.mangpo.bookclub.view.setting.OpenSourceFragment"
         android:label="fragment_open_source"
         tools:layout="@layout/fragment_open_source" />
     <activity
         android:id="@+id/withdrawalActivity"
-        android:name="com.mangpo.ourpage.view.setting.WithdrawalActivity"
+        android:name="com.mangpo.bookclub.view.setting.WithdrawalActivity"
         android:label="activity_withdrawal"
         tools:layout="@layout/activity_withdrawal" />
 </navigation>

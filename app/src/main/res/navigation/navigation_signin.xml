@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/emailPasswordFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.EmailPasswordFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.EmailPasswordFragment"
         android:label="fragment_email_password"
         tools:layout="@layout/fragment_email_password" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/emailAuthenticationFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.EmailAuthenticationFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.EmailAuthenticationFragment"
         android:label="fragment_email_authentication"
         tools:layout="@layout/fragment_email_authentication" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.WelcomeFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/photoNicknameFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.PhotoNicknameFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.PhotoNicknameFragment"
         android:label="fragment_photo_nickname"
         tools:layout="@layout/fragment_photo_nickname" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/genderBirthFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.GenderBirthFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.GenderBirthFragment"
         android:label="fragment_gender_birth"
         tools:layout="@layout/fragment_gender_birth" >
         <action
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/expressMeFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.ExpressMeFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ExpressMeFragment"
         android:label="fragment_express_me"
         tools:layout="@layout/fragment_express_me" >
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/genreFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.GenreFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.GenreFragment"
         android:label="fragment_genre"
         tools:layout="@layout/fragment_genre" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/readingStyleFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.ReadingStyleFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ReadingStyleFragment"
         android:label="fragment_reading_style"
         tools:layout="@layout/fragment_reading_style" >
         <action
@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/readingGoalFragment"
-        android:name="com.mangpo.ourpage.view.auth.signin.ReadingGoalFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ReadingGoalFragment"
         android:label="fragment_reading_goal"
         tools:layout="@layout/fragment_reading_goal" />
 </navigation>
