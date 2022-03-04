@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recordFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordFragment"
         android:label="fragment_record"
         tools:layout="@layout/fragment_record">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <activity
         android:id="@+id/photoViewActivity"
-        android:name="com.mangpo.ourpage.view.main.record.PhotoViewActivity"
+        android:name="com.mangpo.bookclub.view.main.record.PhotoViewActivity"
         android:label="activity_photo_view"
         tools:layout="@layout/activity_photo_view">
         <argument
@@ -42,7 +42,7 @@
     </activity>
     <fragment
         android:id="@+id/selectBookFragment"
-        android:name="com.mangpo.ourpage.view.main.record.SelectBookFragment"
+        android:name="com.mangpo.bookclub.view.main.record.SelectBookFragment"
         android:label="fragment_select_book"
         tools:layout="@layout/fragment_select_book">
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/recordDetailFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordDetailFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordDetailFragment"
         android:label="fragment_record_detail"
         tools:layout="@layout/fragment_record_detail">
         <argument
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/recordSettingFragment"
-        android:name="com.mangpo.ourpage.view.main.record.RecordSettingFragment"
+        android:name="com.mangpo.bookclub.view.main.record.RecordSettingFragment"
         android:label="fragment_record_setting"
         tools:layout="@layout/fragment_record_setting">
         <argument
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.mangpo.ourpage.view.main.library.LibraryFragment"
+        android:name="com.mangpo.bookclub.view.main.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
@@ -112,12 +112,12 @@
     </fragment>
     <activity
         android:id="@+id/settingActivity"
-        android:name="com.mangpo.ourpage.view.setting.SettingActivity"
+        android:name="com.mangpo.bookclub.view.setting.SettingActivity"
         android:label="activity_setting"
         tools:layout="@layout/activity_setting" />
     <fragment
         android:id="@+id/bookDetailFragment"
-        android:name="com.mangpo.ourpage.view.main.library.BookDetailFragment"
+        android:name="com.mangpo.bookclub.view.main.library.BookDetailFragment"
         android:label="fragment_book_detail"
         tools:layout="@layout/fragment_book_detail" >
         <argument android:name="book"
