@@ -1,10 +1,10 @@
-package com.mangpo.ourpage.view.setting
+package com.mangpo.bookclub.view.setting
 
-import com.mangpo.ourpage.R
-import com.mangpo.ourpage.databinding.FragmentOpenSourceBinding
-import com.mangpo.ourpage.model.entities.OpenSourceModel
-import com.mangpo.ourpage.view.BaseFragment
-import com.mangpo.ourpage.view.adpater.OpenSourceRVAdapter
+import com.mangpo.bookclub.R
+import com.mangpo.bookclub.databinding.FragmentOpenSourceBinding
+import com.mangpo.bookclub.model.entities.OpenSourceModel
+import com.mangpo.bookclub.view.BaseFragment
+import com.mangpo.bookclub.view.adpater.OpenSourceRVAdapter
 
 class OpenSourceFragment : BaseFragment<FragmentOpenSourceBinding>(FragmentOpenSourceBinding::inflate) {
     override fun initAfterBinding() {
