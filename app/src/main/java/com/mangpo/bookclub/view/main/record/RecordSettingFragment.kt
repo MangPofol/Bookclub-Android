@@ -108,9 +108,10 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
             hideKeyboard()
             showLoadingDialog()
 
-            if (!validateLink())    //1. 링크 유효성 검사
+            if (!validateLink()) {    //1. 링크 유효성 검사
+                dismissLoadingDialog()
                 showToast(getString(R.string.msg_null_link))
-            else if (!isNetworkAvailable(requireContext())) {  //2. 네트워크 상태 확인
+            } else if (!isNetworkAvailable(requireContext())) {  //2. 네트워크 상태 확인
                 showNetworkSnackBar()
                 dismissLoadingDialog()
             } else if (args.mode=="CREATE") {   //3. 기록 추가일 때
