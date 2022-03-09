@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.library.BookListFragment">
+
+    <CheckBox
+        android:id="@+id/book_list_search_cb"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_library_filter_cb"
+        android:button="@null"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:text="@string/title_search"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@drawable/selector_library_cb_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/book_list_search_iv"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/ic_reading_glasses_primary"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_search_cb"
+        app:layout_constraintEnd_toEndOf="@+id/book_list_search_cb"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="@+id/book_list_search_cb"
+        app:layout_constraintTop_toTopOf="@+id/book_list_search_cb" />
+
+    <CheckBox
+        android:id="@+id/book_list_sort_cb"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/selector_library_filter_cb"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/title_sort"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@drawable/selector_library_cb_text"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_search_cb"
+        app:layout_constraintStart_toEndOf="@+id/book_list_search_cb"
+        app:layout_constraintTop_toTopOf="@+id/book_list_search_cb" />
+
+    <ImageView
+        android:id="@+id/book_list_book_iv"
+        android:layout_width="21dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="29dp"
+        android:src="@drawable/ic_book"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_search_cb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/book_list_search_cb" />
+
+    <TextView
+        android:id="@+id/book_list_book_cnt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/ta_r_8_kr"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_book_iv"
+        app:layout_constraintEnd_toEndOf="@+id/book_list_book_iv"
+        app:layout_constraintStart_toStartOf="@+id/book_list_book_iv"
+        app:layout_constraintTop_toTopOf="@+id/book_list_book_iv" />
+
+    <View
+        android:id="@+id/book_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/bg_layout_gradation"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@+id/book_list_search_cb" />
+
+    <EditText
+        android:id="@+id/book_list_search_et"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/bg_null_8_grey_dark_1"
+        android:drawableLeft="@drawable/ic_reading_glasses_primary"
+        android:drawablePadding="10dp"
+        android:hint="@string/msg_input_book_name"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingHorizontal="10dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/primary"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/book_list_view" />
+
+    <CheckBox
+        android:id="@+id/book_list_newest_cb"
+        android:layout_width="45dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/selector_library_sort_cb"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/title_newest"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@drawable/selector_library_cb_text"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/book_list_view" />
+
+    <CheckBox
+        android:id="@+id/book_list_oldest_cb"
+        android:layout_width="55dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/selector_library_sort_cb"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/title_oldest"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@drawable/selector_library_cb_text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_newest_cb"
+        app:layout_constraintStart_toEndOf="@+id/book_list_newest_cb"
+        app:layout_constraintTop_toTopOf="@+id/book_list_newest_cb" />
+
+    <CheckBox
+        android:id="@+id/book_list_by_name_cb"
+        android:layout_width="55dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/selector_library_sort_cb"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/title_by_name"
+        android:textAppearance="@style/ta_r_10_kr"
+        android:textColor="@drawable/selector_library_cb_text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/book_list_oldest_cb"
+        app:layout_constraintStart_toEndOf="@+id/book_list_oldest_cb"
+        app:layout_constraintTop_toTopOf="@+id/book_list_oldest_cb" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/book_list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="41dp"
+        android:clipToPadding="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/book_list_view"
+        app:spanCount="3"
+        tools:listitem="@layout/item_book" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

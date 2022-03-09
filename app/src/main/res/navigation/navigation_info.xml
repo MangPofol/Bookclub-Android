@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_info"
+    app:startDestination="@id/myInfoFragment">
+
+    <fragment
+        android:id="@+id/myInfoFragment"
+        android:name="com.mangpo.bookclub.view.info.MyInfoFragment"
+        android:label="fragment_my_info"
+        tools:layout="@layout/fragment_my_info" >
+        <action
+            android:id="@+id/action_myInfoFragment_to_yourTasteFragment"
+            app:destination="@id/yourTasteFragment" />
+        <action
+            android:id="@+id/action_myInfoFragment_to_goalManagementFragment"
+            app:destination="@id/goalManagementFragment" />
+        <action
+            android:id="@+id/action_myInfoFragment_to_checklistManagementActivity2"
+            app:destination="@id/checklistManagementActivity2" />
+    </fragment>
+    <fragment
+        android:id="@+id/yourTasteFragment"
+        android:name="com.mangpo.bookclub.view.info.YourTasteFragment"
+        android:label="fragment_your_taste"
+        tools:layout="@layout/fragment_your_taste" >
+        <argument
+            android:name="user"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalManagementFragment"
+        android:name="com.mangpo.bookclub.view.info.GoalManagementFragment"
+        android:label="fragment_goal_management"
+        tools:layout="@layout/fragment_goal_management" >
+        <argument android:name="user" />
+    </fragment>
+    <activity
+        android:id="@+id/checklistManagementActivity2"
+        android:name="com.mangpo.bookclub.view.main.home.ChecklistManagementActivity"
+        android:label="activity_checklist_management"
+        tools:layout="@layout/activity_checklist_management" />
+</navigation>

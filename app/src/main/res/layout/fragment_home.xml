@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.main.home.HomeFragment">
+
+    <ImageView
+        android:id="@+id/home_setting_iv"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_setting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_setting_iv">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="84dp">
+
+            <ImageView
+                android:id="@+id/home_bg_iv"
+                android:layout_width="0dp"
+                android:layout_height="172dp"
+                android:layout_marginTop="84dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/home_welcome_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="21dp"
+                android:layout_marginTop="54dp"
+                android:textAppearance="@style/ta_b_24_kr"
+                app:layout_constraintEnd_toStartOf="@+id/home_my_info_arrow_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/home_bg_iv" />
+
+            <ImageView
+                android:id="@+id/home_my_info_arrow_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_next_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/home_welcome_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/home_welcome_tv" />
+
+            <TextView
+                android:id="@+id/home_total_pages_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/bg_primary_10_null_null"
+                android:paddingHorizontal="13dp"
+                android:paddingVertical="4dp"
+                android:text="total     pages"
+                android:textAppearance="@style/ta_m_10_en"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/home_welcome_tv"
+                app:layout_constraintStart_toStartOf="@+id/home_bg_iv" />
+
+            <TextView
+                android:id="@+id/home_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_primary_10_null_null"
+                android:paddingHorizontal="13dp"
+                android:paddingVertical="4dp"
+                android:text="The record for October 20."
+                android:textAppearance="@style/ta_m_10_en"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/home_total_pages_tv"
+                app:layout_constraintStart_toEndOf="@+id/home_total_pages_tv"
+                app:layout_constraintTop_toTopOf="@+id/home_total_pages_tv" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/home_goal_btn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/bg_grey_8_null_null"
+                android:drawableRight="@drawable/ic_next_blue"
+                android:gravity="start|center"
+                android:paddingHorizontal="17dp"
+                android:text="@string/msg_set_goal"
+                android:textAppearance="@style/ta_b_14_kr"
+                app:layout_constraintTop_toBottomOf="@+id/home_bg_iv" />
+
+            <TextView
+                android:id="@+id/home_checklist_tv"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_grey_8_null_null"
+                android:gravity="start|center"
+                android:paddingHorizontal="17dp"
+                android:text="@string/title_checklist_en"
+                android:textAppearance="@style/ta_sb_14_en"
+                app:backgroundTint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@+id/home_goal_btn" />
+
+            <ImageView
+                android:id="@+id/home_checklist_open_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_down"
+                app:layout_constraintBottom_toBottomOf="@+id/home_checklist_tv"
+                app:layout_constraintEnd_toEndOf="@+id/home_checklist_tv"
+                app:layout_constraintTop_toTopOf="@+id/home_checklist_tv" />
+
+            <View
+                android:id="@+id/home_checklist_line_view"
+                android:layout_width="1.3dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="12dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/primary"
+                app:layout_constraintBottom_toBottomOf="@+id/home_checklist_tv"
+                app:layout_constraintEnd_toStartOf="@+id/home_checklist_open_iv"
+                app:layout_constraintTop_toTopOf="@+id/home_checklist_tv" />
+
+            <ImageView
+                android:id="@+id/home_checklist_setting_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_gear"
+                app:layout_constraintBottom_toBottomOf="@+id/home_checklist_tv"
+                app:layout_constraintEnd_toStartOf="@+id/home_checklist_line_view"
+                app:layout_constraintTop_toTopOf="@+id/home_checklist_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_checklist_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/bg_grey_bottom_8_null_null"
+                android:overScrollMode="never"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="11dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/home_checklist_tv"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_checklist_content" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/home_memo_btn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_secondary_8_null_null"
+                android:drawableRight="@drawable/ic_write_white"
+                android:gravity="start|center"
+                android:paddingHorizontal="17dp"
+                android:text="@string/action_go_post"
+                android:textAppearance="@style/ta_b_14_kr"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/home_checklist_rv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

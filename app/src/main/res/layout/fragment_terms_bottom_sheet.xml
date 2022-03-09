@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="26dp"
+    tools:context=".view.bottomsheet.TermsBottomSheetFragment">
+
+    <TextView
+        android:id="@+id/terms_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/ta_b_12_kr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/terms_content_sv"
+        android:layout_width="match_parent"
+        android:layout_height="285dp"
+        android:layout_marginTop="20dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/terms_title_tv">
+
+        <TextView
+            android:id="@+id/terms_content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="285dp"
+            android:lineSpacingExtra="4dp"
+            android:textAppearance="@style/ta_r_12_kr"
+            android:textColor="@color/primary_light" />
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/terms_confirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="29dp"
+        android:background="@drawable/bg_primary_8_null_null"
+        android:text="@string/action_confirm"
+        android:textAppearance="@style/ta_b_18_kr"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_content_sv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

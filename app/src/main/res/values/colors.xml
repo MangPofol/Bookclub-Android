@@ -6,5 +6,20 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_light">#7B8099</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white50">#80FFFFFF</color>
+    <color name="white_dark">#EAEBEE</color>
+
+    <color name="primary">#303860</color>
+    <color name="primary_light">#646A88</color>
+
+    <color name="grey">#EFF0F3</color>
+    <color name="grey80">#CCEFF0F3</color>
+    <color name="grey_dark">#C3C5D1</color>
+
+    <color name="secondary">#E5949D</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="ted_image_picker_primary">#E5949D</color>
 </resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_signin">
+
+    <fragment
+        android:id="@+id/emailPasswordFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.EmailPasswordFragment"
+        android:label="fragment_email_password"
+        tools:layout="@layout/fragment_email_password" >
+        <action
+            android:id="@+id/action_emailPasswordFragment_to_emailAuthenticationFragment"
+            app:destination="@id/emailAuthenticationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailAuthenticationFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.EmailAuthenticationFragment"
+        android:label="fragment_email_authentication"
+        tools:layout="@layout/fragment_email_authentication" >
+        <action
+            android:id="@+id/action_emailAuthenticationFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_photoNicknameFragment"
+            app:destination="@id/photoNicknameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoNicknameFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.PhotoNicknameFragment"
+        android:label="fragment_photo_nickname"
+        tools:layout="@layout/fragment_photo_nickname" >
+        <action
+            android:id="@+id/action_photoNicknameFragment_to_genderBirthFragment"
+            app:destination="@id/genderBirthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/genderBirthFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.GenderBirthFragment"
+        android:label="fragment_gender_birth"
+        tools:layout="@layout/fragment_gender_birth" >
+        <action
+            android:id="@+id/action_genderBirthFragment_to_expressMeFragment"
+            app:destination="@id/expressMeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expressMeFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ExpressMeFragment"
+        android:label="fragment_express_me"
+        tools:layout="@layout/fragment_express_me" >
+        <action
+            android:id="@+id/action_expressMeFragment_to_genreFragment"
+            app:destination="@id/genreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.GenreFragment"
+        android:label="fragment_genre"
+        tools:layout="@layout/fragment_genre" >
+        <action
+            android:id="@+id/action_genreFragment_to_readingStyleFragment"
+            app:destination="@id/readingStyleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readingStyleFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ReadingStyleFragment"
+        android:label="fragment_reading_style"
+        tools:layout="@layout/fragment_reading_style" >
+        <action
+            android:id="@+id/action_readingStyleFragment_to_readingGoalFragment"
+            app:destination="@id/readingGoalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readingGoalFragment"
+        android:name="com.mangpo.bookclub.view.auth.signin.ReadingGoalFragment"
+        android:label="fragment_reading_goal"
+        tools:layout="@layout/fragment_reading_goal" />
+</navigation>

@@ -2,11 +2,20 @@
 buildscript {
     repositories {
         google()
+        jcenter()
         mavenCentral()
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+    ext {
+        nav_version = "2.3.5"
+        roomVersion = "2.4.1"
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+        classpath "com.android.tools.build:gradle:7.0.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

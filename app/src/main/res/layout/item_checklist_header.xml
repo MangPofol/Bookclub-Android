@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/checklist_header_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/checklist_header_tv"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_grey_8_null_null"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="17dp"
+            android:text="2021.09"
+            android:textAppearance="@style/ta_b_14_kr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/checklist_header_cnt_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:text="3"
+            android:textAppearance="@style/ta_r_10_kr"
+            app:layout_constraintBottom_toBottomOf="@+id/checklist_header_down_iv"
+            app:layout_constraintEnd_toStartOf="@+id/checklist_header_down_iv"
+            app:layout_constraintTop_toTopOf="@+id/checklist_header_down_iv" />
+
+        <ImageView
+            android:id="@+id/checklist_header_down_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/ic_down"
+            app:layout_constraintBottom_toBottomOf="@+id/checklist_header_tv"
+            app:layout_constraintEnd_toEndOf="@id/checklist_header_tv"
+            app:layout_constraintTop_toTopOf="@+id/checklist_header_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/checklist_body_layout"
+        android:layout_width="0dp"
+        android:layout_height="223dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checklist_header_layout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/checklist_body_rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_grey_bottom_8_null_null"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingVertical="11dp"
+            android:scrollbars="none"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_checklist_body" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

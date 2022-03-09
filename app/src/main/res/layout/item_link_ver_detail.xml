@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/link_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_underline_primary"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColor="@color/grey_dark"
+        android:textColorLink="@color/primary"
+        app:layout_constraintBottom_toBottomOf="@+id/link_iv"
+        app:layout_constraintEnd_toStartOf="@+id/link_iv"
+        app:layout_constraintTop_toTopOf="@+id/link_iv" />
+
+    <ImageView
+        android:id="@+id/link_iv"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:src="@drawable/ic_link"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
