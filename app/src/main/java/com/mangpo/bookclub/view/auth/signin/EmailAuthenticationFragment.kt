@@ -3,7 +3,6 @@ package com.mangpo.bookclub.view.auth.signin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentEmailAuthenticationBinding
 import com.mangpo.bookclub.utils.AuthUtils
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.viewmodel.AuthViewModel
@@ -91,7 +91,7 @@ class EmailAuthenticationFragment : BaseFragment<FragmentEmailAuthenticationBind
 
     private fun observe() {
         authVm.validateEmailCode.observe(viewLifecycleOwner, Observer {
-            Log.d("EmailAuthenticationFragment", "validateEmailCode Observe! -> $it")
+            LogUtil.d("EmailAuthenticationFragment", "validateEmailCode Observe! -> $it")
 
             if (it!=204)
                 showSnackBar(getString(R.string.error_api))
@@ -99,7 +99,7 @@ class EmailAuthenticationFragment : BaseFragment<FragmentEmailAuthenticationBind
 
         authVm.validateEmailSendCode.observe(viewLifecycleOwner, Observer {
             val code: Int? = it.getContentIfNotHandled()
-            Log.d("EmailAuthenticationFragment", "validateEmailSendCode Observe! -> $code")
+            LogUtil.d("EmailAuthenticationFragment", "validateEmailSendCode Observe! -> $code")
 
             binding.emailAuthenticationCodeErrorTv.visibility = View.INVISIBLE
             if (code!=null) {

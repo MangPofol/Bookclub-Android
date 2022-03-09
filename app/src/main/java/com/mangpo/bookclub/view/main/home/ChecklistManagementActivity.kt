@@ -1,11 +1,11 @@
 package com.mangpo.bookclub.view.main.home
 
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityChecklistManagementBinding
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.view.adpater.ChecklistHeaderRVAdapter
@@ -29,7 +29,7 @@ class ChecklistManagementActivity : BaseActivity<ActivityChecklistManagementBind
 
     private fun observe() {
         todoVm.completeTodos.observe(this, Observer {
-            Log.d("ChecklistManagementActivity", "completeTodos Observe! completeTodos -> $it")
+            LogUtil.d("ChecklistManagementActivity", "completeTodos Observe! completeTodos -> $it")
 
             if (it.isEmpty())
                 binding.checklistManagementRv.visibility = View.GONE
@@ -41,7 +41,7 @@ class ChecklistManagementActivity : BaseActivity<ActivityChecklistManagementBind
 
         todoVm.deleteTodoCode.observe(this, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("ChecklistManagementActivity", "deleteTodoCode Observe! deleteTodoCode -> $code")
+            LogUtil.d("ChecklistManagementActivity", "deleteTodoCode Observe! deleteTodoCode -> $code")
 
             if (code!=null) {
                 when (code) {

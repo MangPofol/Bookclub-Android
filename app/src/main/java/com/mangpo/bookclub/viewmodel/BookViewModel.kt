@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,6 +12,7 @@ import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.KakaoBook
 import com.mangpo.bookclub.model.remote.RecordResponse
 import com.mangpo.bookclub.repository.BookRepositoryImpl
+import com.mangpo.bookclub.utils.LogUtil
 import kotlinx.coroutines.*
 
 class BookViewModel: BaseViewModel() {
@@ -76,7 +76,7 @@ class BookViewModel: BaseViewModel() {
                     size = 1,
                     onResponse = {
                         viewModelScope.launch {
-                            Log.d("BookViewModel", "searchBookThumbnail Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                            LogUtil.d("BookViewModel", "searchBookThumbnail Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                             books[position].image = it.body()!!.documents[0].thumbnail
                             val job = launch(Dispatchers.IO) {
                                 bookDao.insert(BookEntity(isbn = books[position].isbn, image = it.body()!!.documents[0].thumbnail))
@@ -86,7 +86,7 @@ class BookViewModel: BaseViewModel() {
                         }
                     },
                     onFailure = {
-                        Log.e("BookViewModel", "searchBookThumbnail Fail!\nmessage: ${it.message}")
+                        LogUtil.e("BookViewModel", "searchBookThumbnail Fail!\nmessage: ${it.message}")
                     }
                 )
             } else {
@@ -102,7 +102,7 @@ class BookViewModel: BaseViewModel() {
             target = target,
             size = size,
             onResponse = {
-                Log.d("BookViewModel", "searchBooks Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "searchBooks Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200) {
                     val kakaoBooks = it.body()!!.documents
@@ -116,7 +116,7 @@ class BookViewModel: BaseViewModel() {
                 }
             },
             onFailure = {
-                Log.e("BookViewModel", "searchBooks Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "searchBooks Fail!\nmessage: ${it.message}")
             }
         )
     }
@@ -125,13 +125,13 @@ class BookViewModel: BaseViewModel() {
         bookRepository.getBooksByCategory(
             category = category,
             onResponse = {
-                Log.d("BookViewModel", "getBooksByCategory Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "getBooksByCategory Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200)
                     setBookImg(0, it.body()!!.data, category)
             },
             onFailure = {
-                Log.e("BookViewModel", "getBooksByCategory Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "getBooksByCategory Fail!\nmessage: ${it.message}")
             }
         )
     }
@@ -143,7 +143,7 @@ class BookViewModel: BaseViewModel() {
         bookRepository.createBook(
             book = bookReq,
             onResponse = {
-                Log.d("BookViewModel", "createBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "createBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==201) {
                     newBook = it.body()!!
@@ -161,7 +161,7 @@ class BookViewModel: BaseViewModel() {
                 _createBookCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("BookViewModel", "createBook Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "createBook Fail!\nmessage: ${it.message}")
                 _createBookCode.value = Event(600)
             }
         )
@@ -172,7 +172,7 @@ class BookViewModel: BaseViewModel() {
             bookId = bookId,
             categoryReq = BookCategoryRequest(category),
             onResponse = {
-                Log.d("BookViewModel", "updateBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "updateBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 if (it.code()==204) {
                     when (category) {
                         "NOW" -> _updateBookCode.value = Event(2040)
@@ -184,7 +184,7 @@ class BookViewModel: BaseViewModel() {
 
             },
             onFailure = {
-                Log.e("BookViewModel", "updateBook Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "updateBook Fail!\nmessage: ${it.message}")
                 _updateBookCode.value = Event(600)
             }
         )
@@ -194,11 +194,11 @@ class BookViewModel: BaseViewModel() {
         bookRepository.deleteBook(
             bookId = bookId,
             onResponse = {
-                Log.d("BookViewModel", "deleteBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "deleteBook Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _deleteBookCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("BookViewModel", "updateBook Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "updateBook Fail!\nmessage: ${it.message}")
                 _deleteBookCode.value = Event(600)
             }
         )
@@ -208,11 +208,11 @@ class BookViewModel: BaseViewModel() {
         bookRepository.getPostsByBookId(
             bookId = bookId,
             onResponse = {
-                Log.d("BookViewModel", "getPostsByBookId Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("BookViewModel", "getPostsByBookId Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _records.value = it.body()?.data
             },
             onFailure = {
-                Log.e("BookViewModel", "getPostsByBookId Fail!\nmessage: ${it.message}")
+                LogUtil.e("BookViewModel", "getPostsByBookId Fail!\nmessage: ${it.message}")
                 _records.value = null
             }
         )

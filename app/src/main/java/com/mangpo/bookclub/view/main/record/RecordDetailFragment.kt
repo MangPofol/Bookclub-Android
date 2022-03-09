@@ -1,8 +1,6 @@
 package com.mangpo.bookclub.view.main.record
 
 import android.os.Bundle
-import android.text.util.Linkify
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -15,10 +13,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordDetailBinding
 import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.RecordResponse
-import com.mangpo.bookclub.utils.PrefsUtils
-import com.mangpo.bookclub.utils.convertDpToPx
-import com.mangpo.bookclub.utils.getDeviceWidth
-import com.mangpo.bookclub.utils.isNetworkAvailable
+import com.mangpo.bookclub.utils.*
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.LinkVerDetailRVAdapter
 import com.mangpo.bookclub.view.adpater.RecordPhotoVPAdapter
@@ -165,7 +160,7 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
 
     private fun observe() {
         postVm.deletePostCode.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordDetailFragment", "deletePostCode Observe! deletePostCode -> $it")
+            LogUtil.d("RecordDetailFragment", "deletePostCode Observe! deletePostCode -> $it")
 
             if (it==204) {
                 if (record.postImgLocations.isEmpty()) {
@@ -180,7 +175,7 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
         })
 
         postVm.deletePhotosCode.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordDetailFragment", "deletePhotosCode Observe! deletePhotosCode -> $it")
+            LogUtil.d("RecordDetailFragment", "deletePhotosCode Observe! deletePhotosCode -> $it")
             showToast(getString(R.string.msg_delete_record))
 
             if (record.postImgLocations.isNotEmpty())

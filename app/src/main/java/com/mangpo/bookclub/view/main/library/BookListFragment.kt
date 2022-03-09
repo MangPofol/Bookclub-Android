@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.main.library
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
@@ -13,6 +12,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookListBinding
 import com.mangpo.bookclub.model.remote.Book
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.convertDpToPx
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.BookRVAdapter
@@ -153,7 +153,7 @@ class BookListFragment(private val category: String) : BaseFragment<FragmentBook
 
     private fun observe() {
         bookVm.nowBooks.observe(viewLifecycleOwner, Observer {
-            Log.d("BookListFragment", "nowBooks Observe! nowBooks -> $it")
+            LogUtil.d("BookListFragment", "nowBooks Observe! nowBooks -> $it")
 
             if (category=="NOW") {
                 binding.bookListBookCntTv.text = it.size.toString()
@@ -162,7 +162,7 @@ class BookListFragment(private val category: String) : BaseFragment<FragmentBook
         })
 
         bookVm.afterBooks.observe(viewLifecycleOwner, Observer {
-            Log.d("BookListFragment", "afterBooks Observe! afterBooks -> $it")
+            LogUtil.d("BookListFragment", "afterBooks Observe! afterBooks -> $it")
 
             if (category=="AFTER") {
                 binding.bookListBookCntTv.text = it.size.toString()
@@ -171,7 +171,7 @@ class BookListFragment(private val category: String) : BaseFragment<FragmentBook
         })
 
         bookVm.beforeBooks.observe(viewLifecycleOwner, Observer {
-            Log.d("BookListFragment", "beforeBooks Observe! beforeBooks -> $it")
+            LogUtil.d("BookListFragment", "beforeBooks Observe! beforeBooks -> $it")
 
             if (category=="BEFORE") {
                 binding.bookListBookCntTv.text = it.size.toString()

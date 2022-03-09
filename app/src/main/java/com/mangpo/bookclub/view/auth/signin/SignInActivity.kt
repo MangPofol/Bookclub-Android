@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.auth.signin
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -17,6 +16,7 @@ import com.mangpo.bookclub.model.remote.UserResponse
 import com.mangpo.bookclub.utils.AuthUtils
 import com.mangpo.bookclub.utils.ImgUtils.getAbsolutePathByBitmap
 import com.mangpo.bookclub.utils.ImgUtils.uriToBitmap
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.view.main.MainActivity
@@ -171,7 +171,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
                         (supportFragmentManager.findFragmentById(binding.signInNavHostFragment.id)?.childFragmentManager?.fragments?.get(
                             0
                         ) as ReadingStyleFragment).getData()
-                    Log.d("SignInActivity", "nextStep readingStyleFragment user -> $user")
+                    LogUtil.d("SignInActivity", "nextStep readingStyleFragment user -> $user")
                     findNavController(binding.signInNavHostFragment.id).navigate(R.id.action_readingStyleFragment_to_readingGoalFragment)
                 }
 
@@ -209,7 +209,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
 
     private fun observe() {
         authVm.signUpCode.observe(this, Observer {
-            Log.d("SignInActivity", "signUpCode Observe! signUpCode: $it")
+            LogUtil.d("SignInActivity", "signUpCode Observe! signUpCode: $it")
             if (it == 201) {
                 authVm.login(LoginUser(user.email!!, user.password!!))
             } else
@@ -226,7 +226,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>(ActivitySignInBinding
 
         userVm.updateUserCode.observe(this, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("SignInActivity", "updateUserCode Observe! updateUserCode: $code")
+            LogUtil.d("SignInActivity", "updateUserCode Observe! updateUserCode: $code")
 
             if (code!=null) {
                 when (code) {

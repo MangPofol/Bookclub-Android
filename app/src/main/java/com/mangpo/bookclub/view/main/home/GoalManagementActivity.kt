@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.main.home
 
-import android.util.Log
 import android.widget.NumberPicker
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -10,6 +9,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityGoalManagementBinding
 import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.remote.UserResponse
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.viewmodel.UserViewModel
 
@@ -112,7 +112,7 @@ class GoalManagementActivity : BaseActivity<ActivityGoalManagementBinding>(Activ
                 it.peekContent()
             else
                 it.getContentIfNotHandled()
-            Log.d("GoalManagementActivity", "updateUserCode observe! updateUserCode -> $code")
+            LogUtil.d("GoalManagementActivity", "updateUserCode observe! updateUserCode -> $code")
 
             when (code) {
                 204 -> finish()

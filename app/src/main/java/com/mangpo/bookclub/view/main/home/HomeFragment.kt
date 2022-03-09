@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.view.main.home
 
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -13,10 +12,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentHomeBinding
 import com.mangpo.bookclub.model.remote.Todo
 import com.mangpo.bookclub.model.remote.UserResponse
-import com.mangpo.bookclub.utils.PrefsUtils
-import com.mangpo.bookclub.utils.fadeIn
-import com.mangpo.bookclub.utils.fadeOut
-import com.mangpo.bookclub.utils.isNetworkAvailable
+import com.mangpo.bookclub.utils.*
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.ChecklistContentRVAdapter
 import com.mangpo.bookclub.viewmodel.TodoViewModel
@@ -138,7 +134,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun observe() {
         userVm.getUserCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("HomeFragment", "getUserCode Observe! getUserCode -> $code")
+            LogUtil.d("HomeFragment", "getUserCode Observe! getUserCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -151,7 +147,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
 
         userVm.totalMemoCnt.observe(viewLifecycleOwner, Observer {
-            Log.d("HomeFragment", "totalMemoCnt Observe! totalMemoCnt -> $it")
+            LogUtil.d("HomeFragment", "totalMemoCnt Observe! totalMemoCnt -> $it")
 
             if (it==-1)
                 binding.homeTotalPagesTv.text = "total     pages"
@@ -160,14 +156,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         })
 
         todoVm.unCompleteTodos.observe(viewLifecycleOwner, Observer {
-            Log.d("HomeFragment", "todos Observe! todos -> $it")
+            LogUtil.d("HomeFragment", "todos Observe! todos -> $it")
 
             checklistContentRVAdapter.setTodos(it as ArrayList<Todo>)
         })
 
         todoVm.completeTodoCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("ChecklistDialogFragment", "completeTodoCode Observe! completeTodoCode -> $code")
+            LogUtil.d("ChecklistDialogFragment", "completeTodoCode Observe! completeTodoCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -182,7 +178,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         todoVm.deleteTodoCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("ChecklistDialogFragment", "deleteTodoCode Observe! deleteTodoCode -> $code")
+            LogUtil.d("ChecklistDialogFragment", "deleteTodoCode Observe! deleteTodoCode -> $code")
 
             if (code!=null) {
                 when (code) {

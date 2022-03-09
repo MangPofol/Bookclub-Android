@@ -2,13 +2,13 @@ package com.mangpo.bookclub.view.auth
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityPasswordReissueBinding
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.view.dialog.TempPwDialogFragment
@@ -55,7 +55,7 @@ class PasswordReissueActivity : BaseActivity<ActivityPasswordReissueBinding>(Act
 
     private fun observe() {
         authVm.validateCode.observe(this, Observer {
-            Log.d("PasswordReissueActivity", "validateCode Observe! -> validateCode: $it")
+            LogUtil.d("PasswordReissueActivity", "validateCode Observe! -> validateCode: $it")
 
             if (it == 204) {
                 binding.passwordReissueEmailErrorTv.apply {
@@ -73,7 +73,7 @@ class PasswordReissueActivity : BaseActivity<ActivityPasswordReissueBinding>(Act
             dismissLoadingDialog()
 
             val code = it.getContentIfNotHandled()
-            Log.d("PasswordReissueActivity", "lostPasswordCode Observe! -> lostPasswordCode: $code")
+            LogUtil.d("PasswordReissueActivity", "lostPasswordCode Observe! -> lostPasswordCode: $code")
 
             if (code !=null && code==204)
                 TempPwDialogFragment().show(supportFragmentManager, null)

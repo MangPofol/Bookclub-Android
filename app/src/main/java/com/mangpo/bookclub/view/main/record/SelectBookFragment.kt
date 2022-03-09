@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.main.record
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -11,6 +10,7 @@ import com.google.gson.Gson
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentSelectBookBinding
 import com.mangpo.bookclub.model.remote.Book
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.PrefsUtils
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
@@ -131,12 +131,12 @@ class SelectBookFragment : BaseFragment<FragmentSelectBookBinding>(FragmentSelec
 
     private fun observe() {
         bookVm.kakaoBooks.observe(viewLifecycleOwner, Observer {
-            Log.d("SelectBookFragment", "kakaoBooks Observe! kakaoBooks -> $it")
+            LogUtil.d("SelectBookFragment", "kakaoBooks Observe! kakaoBooks -> $it")
             bookRVAdapter.setData(it)
         })
 
         bookVm.books.observe(viewLifecycleOwner, Observer {
-            Log.d("SelectBookFragment", "books Observe! books -> $it")
+            LogUtil.d("SelectBookFragment", "books Observe! books -> $it")
 
             if (binding.selectBookRg.visibility==View.VISIBLE)
                 bookRVAdapter.setData(it)
@@ -144,7 +144,7 @@ class SelectBookFragment : BaseFragment<FragmentSelectBookBinding>(FragmentSelec
 
         bookVm.createBookCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("SelectBookFragment", "createBookCode Observe! createBookCode -> $code")
+            LogUtil.d("SelectBookFragment", "createBookCode Observe! createBookCode -> $code")
 
             if (code!=null) {
                 when (code) {

@@ -3,7 +3,6 @@ package com.mangpo.bookclub.view.info
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentYourTasteBinding
 import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.remote.UserResponse
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.viewmodel.UserViewModel
 
@@ -165,7 +165,7 @@ class YourTasteFragment : BaseFragment<FragmentYourTasteBinding>(FragmentYourTas
                 it.peekContent()
             else
                 it.getContentIfNotHandled()
-            Log.d("YourTasteFragment", "updateUserCode observe! updateUserCode -> $code")
+            LogUtil.d("YourTasteFragment", "updateUserCode observe! updateUserCode -> $code")
 
             when (code) {
                 204 -> findNavController().popBackStack()

@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.main.record
 
 import android.Manifest
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
@@ -15,6 +14,7 @@ import com.mangpo.bookclub.databinding.FragmentRecordBinding
 import com.mangpo.bookclub.model.entities.RecordRequest
 import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.RecordResponse
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.PrefsUtils
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.RecordPhotoRVAdapter
@@ -52,15 +52,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(FragmentRecordBinding
         initAdapter()
 
         if (args.mode=="CREATE" && PrefsUtils.getTempRecord().isNotBlank()) {
-            Log.d("RecordFragment", "args.mode==\"CREATE\" && PrefsUtils.getTempRecord().isNotBlank()")
+            LogUtil.d("RecordFragment", "args.mode==\"CREATE\" && PrefsUtils.getTempRecord().isNotBlank()")
             recordVerCreate = Gson().fromJson(PrefsUtils.getTempRecord(), RecordRequest::class.java)
             bindRecordVerCreate(recordVerCreate)
         } else if (args.mode=="UPDATE" && PrefsUtils.getTempRecord().isBlank()) {
-            Log.d("RecordFragment", "args.mode==\"UPDATE\"")
+            LogUtil.d("RecordFragment", "args.mode==\"UPDATE\"")
             recordVerUpdate = Gson().fromJson(args.record, RecordResponse::class.java)
             bindRecordVerUpdate(recordVerUpdate)
         } else if (args.mode=="UPDATE" && PrefsUtils.getTempRecord().isNotBlank()) {
-            Log.d("RecordFragment", "args.mode==\"UPDATE\" && PrefsUtils.getTempRecord().isNotBlank()")
+            LogUtil.d("RecordFragment", "args.mode==\"UPDATE\" && PrefsUtils.getTempRecord().isNotBlank()")
             recordVerUpdate = Gson().fromJson(PrefsUtils.getTempRecord(), RecordResponse::class.java)
             bindRecordVerUpdate(recordVerUpdate)
         }
@@ -73,7 +73,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(FragmentRecordBinding
 
     override fun onStop() {
         super.onStop()
-        Log.d("RecordFragment", "onStop")
+        LogUtil.d("RecordFragment", "onStop")
 
         if (!backPressedFlag && args.mode=="CREATE")
             PrefsUtils.setTempRecord(Gson().toJson(setRecordVerCreate()))

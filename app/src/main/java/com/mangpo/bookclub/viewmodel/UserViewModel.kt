@@ -1,11 +1,11 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.remote.UserResponse
 import com.mangpo.bookclub.repository.UserRepositoryImpl
+import com.mangpo.bookclub.utils.LogUtil
 
 class UserViewModel: BaseViewModel() {
     private val userRepositoryImpl: UserRepositoryImpl = UserRepositoryImpl()
@@ -30,7 +30,7 @@ class UserViewModel: BaseViewModel() {
     fun getUserInfo() {
         userRepositoryImpl.getCurrentUserInfo(
             onResponse = {
-                Log.d("UserViewModel", "getUser Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("UserViewModel", "getUser Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 user = if (it.code()==200)
                     it.body()!!.data
@@ -40,7 +40,7 @@ class UserViewModel: BaseViewModel() {
                 _getUserCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("UserViewModel", "getUser Fail!\nmessage: ${it.message}")
+                LogUtil.e("UserViewModel", "getUser Fail!\nmessage: ${it.message}")
                 user = null
             }
         )
@@ -53,11 +53,11 @@ class UserViewModel: BaseViewModel() {
             user = user,
             userId = userId,
             onResponse = {
-                Log.d("UserViewModel", "updateUser Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("UserViewModel", "updateUser Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _updateUserCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("UserViewModel", "updateUser Fail!\nmessage: ${it.message}")
+                LogUtil.e("UserViewModel", "updateUser Fail!\nmessage: ${it.message}")
                 _updateUserCode.value = Event(600)
             }
         )
@@ -67,7 +67,7 @@ class UserViewModel: BaseViewModel() {
         userRepositoryImpl.uploadMultiImgFile(
             imgPaths = listOf(imgPath),
             onResponse = {
-                Log.d("UserViewModel", "uploadImgFile Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("UserViewModel", "uploadImgFile Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200)
                     this.imgPath = it.body()!![0]
@@ -75,7 +75,7 @@ class UserViewModel: BaseViewModel() {
                 _uploadImgFileCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("UserViewModel", "uploadImgFile Fail!\nmessage: ${it.message}")
+                LogUtil.e("UserViewModel", "uploadImgFile Fail!\nmessage: ${it.message}")
                 _uploadImgFileCode.value = Event(600)
             }
         )
@@ -86,7 +86,7 @@ class UserViewModel: BaseViewModel() {
     fun getTotalMemoCnt() {
         userRepositoryImpl.getTotalMemoCnt(
             onResponse = {
-                Log.d("UserViewModel", "getTotalCnt Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("UserViewModel", "getTotalCnt Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200)
                     _totalMemoCnt.value = it.body()!!.data
@@ -94,7 +94,7 @@ class UserViewModel: BaseViewModel() {
                     _totalMemoCnt.value = -1
             },
             onFailure = {
-                Log.e("UserViewModel", "getTotalCnt Fail!\nmessage: ${it.message}")
+                LogUtil.e("UserViewModel", "getTotalCnt Fail!\nmessage: ${it.message}")
                 _totalMemoCnt.value = -1
             }
         )
@@ -103,7 +103,7 @@ class UserViewModel: BaseViewModel() {
     fun getTotalBookCnt() {
         userRepositoryImpl.getTotalBookCnt(
             onResponse = {
-                Log.d("UserViewModel", "getTotalBookCnt Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("UserViewModel", "getTotalBookCnt Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200)
                     _totalBookCnt.value = it.body()!!.data
@@ -111,7 +111,7 @@ class UserViewModel: BaseViewModel() {
                     _totalBookCnt.value = -1
             },
             onFailure = {
-                Log.e("UserViewModel", "getTotalBookCnt Fail!\nmessage: ${it.message}")
+                LogUtil.e("UserViewModel", "getTotalBookCnt Fail!\nmessage: ${it.message}")
                 _totalBookCnt.value = -1
             }
         )

@@ -1,12 +1,12 @@
 package com.mangpo.bookclub.view.setting
 
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivityWithdrawalBinding
 import com.mangpo.bookclub.utils.AuthUtils
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.view.auth.LoginActivity
@@ -39,13 +39,13 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>(ActivityWithd
 
     private fun observe() {
         userVm.totalMemoCnt.observe(this, Observer {
-            Log.d("WithdrawalActivity", "totalMemoCnt Observe! totalMemoCnt -> $it")
+            LogUtil.d("WithdrawalActivity", "totalMemoCnt Observe! totalMemoCnt -> $it")
             binding.withdrawalTv.text = "Our Page를 떠나면\n${it}개 기록들이 사라져요."
         })
 
         userVm.getUserCode.observe(this, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("WithdrawalActivity", "getUserCode Observe! getUserCode -> $code")
+            LogUtil.d("WithdrawalActivity", "getUserCode Observe! getUserCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -58,7 +58,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>(ActivityWithd
         })
 
         authVm.changeDormantCode.observe(this, Observer {
-            Log.d("WithdrawalActivity", "changeDormantCode Observe! changeDormantCode -> $it")
+            LogUtil.d("WithdrawalActivity", "changeDormantCode Observe! changeDormantCode -> $it")
 
             if (it==204) {
                 showToast(getString(R.string.msg_success_quit_membership))

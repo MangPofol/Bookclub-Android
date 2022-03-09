@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mangpo.bookclub.model.entities.TodoRequest
@@ -8,6 +7,7 @@ import com.mangpo.bookclub.model.entities.UpdateTodoRequest
 import com.mangpo.bookclub.model.remote.Todo
 import com.mangpo.bookclub.model.remote.TodoGroupByMonth
 import com.mangpo.bookclub.repository.TodoRepositoryImpl
+import com.mangpo.bookclub.utils.LogUtil
 import java.text.SimpleDateFormat
 
 class TodoViewModel: BaseViewModel() {
@@ -55,7 +55,7 @@ class TodoViewModel: BaseViewModel() {
     fun getTodos() {
         todoRepositoryImpl.getTodos(
             onResponse = {
-                Log.d("TodoViewModel", "getTodos Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("TodoViewModel", "getTodos Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200) {
                     _completeTodos.value = groupByDate(it.body()!!.data.filter { it.isComplete })
@@ -63,7 +63,7 @@ class TodoViewModel: BaseViewModel() {
                 }
             },
             onFailure = {
-                Log.e("TodoViewModel", "getTodos Fail!\nmessage: ${it.message}")
+                LogUtil.e("TodoViewModel", "getTodos Fail!\nmessage: ${it.message}")
             }
         )
     }
@@ -74,11 +74,11 @@ class TodoViewModel: BaseViewModel() {
         todoRepositoryImpl.createTodo(
             newTodo = req,
             onResponse = {
-                Log.d("TodoViewModel", "createTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("TodoViewModel", "createTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _createTodoCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("TodoViewModel", "createTodo Fail!\nmessage: ${it.message}")
+                LogUtil.e("TodoViewModel", "createTodo Fail!\nmessage: ${it.message}")
                 _createTodoCode.value = Event(600)
             }
         )
@@ -91,14 +91,14 @@ class TodoViewModel: BaseViewModel() {
             toDoId = toDoId,
             updateTodo = updateTodo,
             onResponse = {
-                Log.d("TodoViewModel", "updateTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("TodoViewModel", "updateTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 if (isComplete)
                     _completeTodoCode.value = Event(it.code())
                 else
                 _updateTodoCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("TodoViewModel", "updateTodo Fail!\nmessage: ${it.message}")
+                LogUtil.e("TodoViewModel", "updateTodo Fail!\nmessage: ${it.message}")
                 if (isComplete)
                     _completeTodoCode.value = Event(600)
                 else
@@ -111,7 +111,7 @@ class TodoViewModel: BaseViewModel() {
         todoRepositoryImpl.deleteTodo(
             toDoId = toDoId,
             onResponse = {
-                Log.d("TodoViewModel", "deleteTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("TodoViewModel", "deleteTodo Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _deleteTodoCode.value = Event(it.code())
             },
             onFailure = {

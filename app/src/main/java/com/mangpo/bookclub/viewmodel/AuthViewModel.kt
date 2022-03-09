@@ -1,6 +1,5 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.entities.ValidateUser
 import com.mangpo.bookclub.repository.UserRepositoryImpl
 import com.mangpo.bookclub.utils.AuthUtils
+import com.mangpo.bookclub.utils.LogUtil
 
 class AuthViewModel : ViewModel() {
     private val userRepositoryImpl: UserRepositoryImpl = UserRepositoryImpl()
@@ -42,7 +42,7 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.login(
             user = user,
             onResponse = {
-                Log.d("AuthViewModel", "login Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "login Success!\ncode: ${it.code()}\nbody: ${it.body()}")
 
                 if (it.code()==200) {
                     AuthUtils.setJWT(it.body()!!.token)
@@ -54,7 +54,7 @@ class AuthViewModel : ViewModel() {
 
             },
             onFailure = {
-                Log.e("AuthViewModel", "login Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "login Fail!\nmessage: ${it.message}")
                 _loginSuccess.value = false
             })
     }
@@ -65,11 +65,11 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.validateDuplicate(
             email = validateUser,
             onResponse = {
-                Log.d("AuthViewModel", "validateDuplicate Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "validateDuplicate Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _validateCode.value = it.code()
             },
             onFailure = {
-                Log.e("AuthViewModel", "validateDuplicate Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "validateDuplicate Fail!\nmessage: ${it.message}")
                 _validateCode.value = 600
             })
     }
@@ -78,11 +78,11 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.signUp(
             user = user,
             onResponse = {
-                Log.d("AuthViewModel", "signUp Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "signUp Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _signUpCode.value = it.code()
             },
             onFailure = {
-                Log.e("AuthViewModel", "signUp Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "signUp Fail!\nmessage: ${it.message}")
                 _signUpCode.value = 600
             }
         )
@@ -91,11 +91,11 @@ class AuthViewModel : ViewModel() {
     fun validateEmail() {
         userRepositoryImpl.validateEmail(
             onResponse = {
-                Log.d("AuthViewModel", "validateEmail Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "validateEmail Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _validateEmailCode.value = it.code()
             },
             onFailure = {
-                Log.e("AuthViewModel", "validateEmail Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "validateEmail Fail!\nmessage: ${it.message}")
                 _validateEmailCode.value = 600
             }
         )
@@ -105,11 +105,11 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.validateEmailSendCode(
             emailCode = emailCode,
             onResponse = {
-                Log.d("AuthViewModel", "validateEmailSendCode Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "validateEmailSendCode Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _validateEmailSendCode.value = Event(it.code())
             },
             onFailure = {
-                Log.e("AuthViewModel", "validateEmailSendCode Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "validateEmailSendCode Fail!\nmessage: ${it.message}")
                 _validateEmailSendCode.value = Event(600)
             }
         )
@@ -119,11 +119,11 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.lostPassword(
             email = email,
             onResponse = {
-                Log.d("AuthViewModel", "lostPassword Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "lostPassword Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _lostPasswordCode.value= Event(it.code())
             },
             onFailure = {
-                Log.e("AuthViewModel", "lostPassword Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "lostPassword Fail!\nmessage: ${it.message}")
                 _lostPasswordCode.value = Event(600)
             }
         )
@@ -133,14 +133,14 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.changePassword(
             password = password,
             onResponse = {
-                Log.d("AuthViewModel", "changePassword Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "changePassword Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _changePasswordCode.value = it.code()
 
                 if (it.code()==204)
                     AuthUtils.setPassword(password.password)
             },
             onFailure = {
-                Log.e("AuthViewModel", "changePassword Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "changePassword Fail!\nmessage: ${it.message}")
                 _changePasswordCode.value = 600
             }
         )
@@ -150,11 +150,11 @@ class AuthViewModel : ViewModel() {
         userRepositoryImpl.changeDormant(
             userId = userId,
             onResponse = {
-                Log.d("AuthViewModel", "changeDormant Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("AuthViewModel", "changeDormant Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _changeDormantCode.value = it.code()
             },
             onFailure = {
-                Log.e("AuthViewModel", "changeDormant Fail!\nmessage: ${it.message}")
+                LogUtil.e("AuthViewModel", "changeDormant Fail!\nmessage: ${it.message}")
                 _changeDormantCode.value = 600
             }
         )

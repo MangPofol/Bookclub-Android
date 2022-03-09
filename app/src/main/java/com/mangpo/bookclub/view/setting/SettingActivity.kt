@@ -1,12 +1,12 @@
 package com.mangpo.bookclub.view.setting
 
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.ActivitySettingBinding
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseActivity
 import com.mangpo.bookclub.viewmodel.AuthViewModel
@@ -43,7 +43,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>(ActivitySettingBind
 
     private fun observe() {
         authVm.changePasswordCode.observe(this, Observer {
-            Log.d("SettingActivity", "changePasswordCode Observe! changePasswordCode -> $it")
+            LogUtil.d("SettingActivity", "changePasswordCode Observe! changePasswordCode -> $it")
 
             if (it==204) {
                 showToast(getString(R.string.msg_success_change_pw))

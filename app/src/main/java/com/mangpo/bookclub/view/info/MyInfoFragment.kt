@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.info
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -19,6 +18,7 @@ import com.mangpo.bookclub.databinding.FragmentMyInfoBinding
 import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.remote.UserResponse
 import com.mangpo.bookclub.utils.ImgUtils
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.dialog.IntroduceDialogFragment
@@ -203,7 +203,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentMyInfoBinding
                 it.peekContent()
             else
                 it.getContentIfNotHandled()
-            Log.d("MyInfoFragment", "getUserCode observe! getUserCode -> $code")
+            LogUtil.d("MyInfoFragment", "getUserCode observe! getUserCode -> $code")
 
             when (code) {
                 200 -> bindUser(userVm.getUser()!!)
@@ -212,18 +212,18 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentMyInfoBinding
         })
 
         userVm.totalMemoCnt.observe(viewLifecycleOwner, Observer {
-            Log.d("MyInfoFragment", "totalMemoCnt observe! totalMemoCnt -> $it")
+            LogUtil.d("MyInfoFragment", "totalMemoCnt observe! totalMemoCnt -> $it")
             binding.myInfoTotalRecordCntTv.text = "\t$it pages"
         })
 
         userVm.totalBookCnt.observe(viewLifecycleOwner, Observer {
-            Log.d("MyInfoFragment", "totalBookCnt observe! totalBookCnt -> $it")
+            LogUtil.d("MyInfoFragment", "totalBookCnt observe! totalBookCnt -> $it")
             binding.myInfoTotalReadingBooksCntTv.text = "\t$it books"
         })
 
         userVm.uploadImgFileCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("MyInfoFragment", "uploadImgFileCode observe! uploadImgFileCode -> $code")
+            LogUtil.d("MyInfoFragment", "uploadImgFileCode observe! uploadImgFileCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -241,7 +241,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentMyInfoBinding
                 it.peekContent()
             else
                 it.getContentIfNotHandled()
-            Log.d("MyInfoFragment", "updateUserCode observe! updateUserCode -> $code")
+            LogUtil.d("MyInfoFragment", "updateUserCode observe! updateUserCode -> $code")
 
             when (code) {
                 204 -> {

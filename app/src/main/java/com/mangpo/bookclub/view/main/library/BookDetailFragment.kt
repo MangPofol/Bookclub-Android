@@ -1,7 +1,6 @@
 package com.mangpo.bookclub.view.main.library
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -13,6 +12,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentBookDetailBinding
 import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.RecordResponse
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.PrefsUtils
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
@@ -144,7 +144,7 @@ class BookDetailFragment : BaseFragment<FragmentBookDetailBinding>(FragmentBookD
     private fun observe() {
         bookVm.updateBookCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("BookDetailFragment", "updateBookCode Observe! updateBookCode -> $code")
+            LogUtil.d("BookDetailFragment", "updateBookCode Observe! updateBookCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -170,7 +170,7 @@ class BookDetailFragment : BaseFragment<FragmentBookDetailBinding>(FragmentBookD
 
         bookVm.deleteBookCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("BookDetailFragment", "deleteBookCode Observe! deleteBookCode -> $code")
+            LogUtil.d("BookDetailFragment", "deleteBookCode Observe! deleteBookCode -> $code")
 
             if (code!=null) {
                 dismissLoadingDialog()
@@ -187,7 +187,7 @@ class BookDetailFragment : BaseFragment<FragmentBookDetailBinding>(FragmentBookD
         })
 
         bookVm.records.observe(viewLifecycleOwner, Observer {
-            Log.d("BookDetailFragment", "records Observe! records -> $it")
+            LogUtil.d("BookDetailFragment", "records Observe! records -> $it")
 
             if (it==null)
                 showSnackBar(getString(R.string.error_api))

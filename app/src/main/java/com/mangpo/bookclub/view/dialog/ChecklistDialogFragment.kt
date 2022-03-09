@@ -3,7 +3,6 @@ package com.mangpo.bookclub.view.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentChecklistDialogBinding
 import com.mangpo.bookclub.model.remote.Todo
 import com.mangpo.bookclub.utils.DialogFragmentUtils
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.viewmodel.TodoViewModel
 
@@ -83,7 +83,7 @@ class ChecklistDialogFragment : DialogFragment() {
     private fun observe() {
         todoVm.createTodoCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("ChecklistDialogFragment", "createTodoCode Observe! createTodoCode -> $code")
+            LogUtil.d("ChecklistDialogFragment", "createTodoCode Observe! createTodoCode -> $code")
 
             if (code!=null) {
                 when (code) {
@@ -98,7 +98,7 @@ class ChecklistDialogFragment : DialogFragment() {
 
         todoVm.updateTodoCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("ChecklistDialogFragment", "updateTodoCode Observe! updateTodoCode -> $code")
+            LogUtil.d("ChecklistDialogFragment", "updateTodoCode Observe! updateTodoCode -> $code")
 
             if (code!=null) {
                 when (code) {

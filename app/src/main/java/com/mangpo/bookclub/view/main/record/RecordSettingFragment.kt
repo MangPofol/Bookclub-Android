@@ -2,7 +2,6 @@ package com.mangpo.bookclub.view.main.record
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,6 +17,7 @@ import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.RecordResponse
 import com.mangpo.bookclub.utils.ImgUtils.getAbsolutePathByBitmap
 import com.mangpo.bookclub.utils.ImgUtils.uriToBitmap
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.LinkRVAdapter
@@ -50,7 +50,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
             bindRecordVerUpdate()
         else {
             recordVerUpdate = Gson().fromJson(args.record, RecordResponse::class.java)
-            Log.d("RecordSettingFragment", "recordVerUpdate: $recordVerUpdate")
+            LogUtil.d("RecordSettingFragment", "recordVerUpdate: $recordVerUpdate")
             bindRecordVerUpdate()
         }
         book = Gson().fromJson(args.book, Book::class.java)
@@ -114,14 +114,14 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
                 showNetworkSnackBar()
                 dismissLoadingDialog()
             } else if (args.mode=="CREATE") {   //3. 기록 추가일 때
-                Log.d("RecordSettingFragment", "record: $recordVerCreate")
+                LogUtil.d("RecordSettingFragment", "record: $recordVerCreate")
                 when {
                     book.id==null -> bookVm.createBook(book) //3-1. book.id 가 null -> 책 등록
                     recordVerCreate.postImgLocations.isEmpty() -> postVm.createRecord(setRecordVerCreate()) //3-2. 이미지 없는 기록 -> createRecord
                     else -> uploadPhotos()    //3-3. 이미지 있는 기록 -> uploadPost
                 }
             } else {    //4. 기록 수정일 때
-                Log.d("RecordSettingFragment", "record: $recordVerUpdate")
+                LogUtil.d("RecordSettingFragment", "record: $recordVerUpdate")
                 if (recordVerUpdate.postImgLocations.isEmpty()) //4-1. 이미지가 없을 때
                     postVm.updatePost(recordVerUpdate.postId, setRecordUpdateRequest())
                 else    //4-2. 이미지가 있을 때
@@ -131,7 +131,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
 
         binding.recordSettingLinkPlusView.setOnClickListener {
             hideKeyboard()
-            Log.d("RecordSettingFragment", "recordSettingLinkPlusView onClick itemCount: ${linkRVAdapter.itemCount}")
+            LogUtil.d("RecordSettingFragment", "recordSettingLinkPlusView onClick itemCount: ${linkRVAdapter.itemCount}")
 
             if (linkRVAdapter.itemCount==2) {
                 it.visibility = View.GONE
@@ -258,7 +258,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
     private fun observe() {
         bookVm.createBookCode.observe(viewLifecycleOwner, Observer {
             val code = it.getContentIfNotHandled()
-            Log.d("RecordSettingFragment", "createBookCode Observe! createBookCode -> $code")
+            LogUtil.d("RecordSettingFragment", "createBookCode Observe! createBookCode -> $code")
 
             if (code!=null) {
                 dismissLoadingDialog()
@@ -278,7 +278,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
         })
 
         postVm.newRecord.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordSettingFragment", "newRecord Observe! newRecord -> $it")
+            LogUtil.d("RecordSettingFragment", "newRecord Observe! newRecord -> $it")
             dismissLoadingDialog()
 
             if (it==null)
@@ -291,7 +291,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
         })
 
         postVm.updateRecord.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordSettingFragment", "updateRecord Observe! updateRecord -> $it")
+            LogUtil.d("RecordSettingFragment", "updateRecord Observe! updateRecord -> $it")
             dismissLoadingDialog()
 
             if (it==null)
@@ -318,7 +318,7 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
         })
 
         postVm.uploadImgPaths.observe(viewLifecycleOwner, Observer {
-            Log.d("RecordSettingFragment", "uploadImgPaths Observe! uploadImgPaths -> $it")
+            LogUtil.d("RecordSettingFragment", "uploadImgPaths Observe! uploadImgPaths -> $it")
 
             if (it==null || it.isEmpty()) {
                 dismissLoadingDialog()

@@ -1,12 +1,12 @@
 package com.mangpo.bookclub.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mangpo.bookclub.model.entities.RecordRequest
 import com.mangpo.bookclub.model.entities.RecordUpdateRequest
 import com.mangpo.bookclub.model.remote.RecordResponse
 import com.mangpo.bookclub.repository.PostRepositoryImpl
+import com.mangpo.bookclub.utils.LogUtil
 
 class PostViewModel: BaseViewModel() {
     private val postRepository: PostRepositoryImpl = PostRepositoryImpl()
@@ -27,15 +27,15 @@ class PostViewModel: BaseViewModel() {
     val updateRecord: LiveData<RecordResponse> get() = _updateRecord
 
     fun createRecord(record: RecordRequest) {
-        Log.d("PostViewModel", "createRecord record: $record")
+        LogUtil.d("PostViewModel", "createRecord record: $record")
         postRepository.createPost(
             record = record,
             onResponse = {
-                Log.d("PostViewModel", "createRecord Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("PostViewModel", "createRecord Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _newRecord.value = it.body()
             },
             onFailure = {
-                Log.e("PostViewModel", "createRecord Fail!\nmessage: ${it.message}")
+                LogUtil.e("PostViewModel", "createRecord Fail!\nmessage: ${it.message}")
                 _newRecord.value = null
             }
         )
@@ -45,11 +45,11 @@ class PostViewModel: BaseViewModel() {
         postRepository.uploadImgFile(
             imgPaths = imgPaths,
             onResponse = {
-                Log.d("PostViewModel", "uploadImgPaths Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("PostViewModel", "uploadImgPaths Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _uploadImgPaths.value = it.body()
             },
             onFailure = {
-                Log.e("PostViewModel", "uploadImgPaths Fail!\nmessage: ${it.message}")
+                LogUtil.e("PostViewModel", "uploadImgPaths Fail!\nmessage: ${it.message}")
                 _uploadImgPaths.value = null
             }
         )
@@ -59,11 +59,11 @@ class PostViewModel: BaseViewModel() {
         postRepository.deletePost(
             postId = recordId,
             onResponse = {
-                Log.d("PostViewModel", "deletePost Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("PostViewModel", "deletePost Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _deletePostCode.value = it.code()
             },
             onFailure = {
-                Log.e("PostViewModel", "deletePost Fail!\nmessage: ${it.message}")
+                LogUtil.e("PostViewModel", "deletePost Fail!\nmessage: ${it.message}")
                 _deletePostCode.value = 600
             }
         )
@@ -73,11 +73,11 @@ class PostViewModel: BaseViewModel() {
         postRepository.deletePhotos(
             deletePhotos = deletePhotos,
             onResponse = {
-                Log.d("PostViewModel", "deleteMultiplePhotos Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("PostViewModel", "deleteMultiplePhotos Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _deletePhotosCode.value = it.code()
             },
             onFailure = {
-                Log.e("PostViewModel", "deleteMultiplePhotos Fail!\nmessage: ${it.message}")
+                LogUtil.e("PostViewModel", "deleteMultiplePhotos Fail!\nmessage: ${it.message}")
                 _deletePhotosCode.value = 600
             }
         )
@@ -88,11 +88,11 @@ class PostViewModel: BaseViewModel() {
             postId = recordId,
             updateRecord = updateRecord,
             onResponse = {
-                Log.d("PostViewModel", "updatePost Success!\ncode: ${it.code()}\nbody: ${it.body()}")
+                LogUtil.d("PostViewModel", "updatePost Success!\ncode: ${it.code()}\nbody: ${it.body()}")
                 _updateRecord.value = it.body()
             },
             onFailure = {
-                Log.e("PostViewModel", "updatePost Fail!\nmessage: ${it.message}")
+                LogUtil.e("PostViewModel", "updatePost Fail!\nmessage: ${it.message}")
                 _updateRecord.value = null
             }
         )

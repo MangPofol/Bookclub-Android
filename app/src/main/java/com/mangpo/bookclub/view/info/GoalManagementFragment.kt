@@ -1,7 +1,6 @@
 package com.mangpo.bookclub.view.info
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.NumberPicker
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +11,7 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentGoalManagementBinding
 import com.mangpo.bookclub.model.entities.User
 import com.mangpo.bookclub.model.remote.UserResponse
+import com.mangpo.bookclub.utils.LogUtil
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.viewmodel.UserViewModel
 
@@ -108,7 +108,7 @@ class GoalManagementFragment : BaseFragment<FragmentGoalManagementBinding>(Fragm
                 it.peekContent()
             else
                 it.getContentIfNotHandled()
-            Log.d("GoalManagementFragment", "updateUserCode observe! updateUserCode -> $code")
+            LogUtil.d("GoalManagementFragment", "updateUserCode observe! updateUserCode -> $code")
 
             when (code) {
                 204 -> findNavController().popBackStack()

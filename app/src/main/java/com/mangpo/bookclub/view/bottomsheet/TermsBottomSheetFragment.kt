@@ -1,13 +1,13 @@
 package com.mangpo.bookclub.view.bottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentTermsBottomSheetBinding
+import com.mangpo.bookclub.utils.LogUtil
 
 class TermsBottomSheetFragment(private val type: String) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentTermsBottomSheetBinding
@@ -16,16 +16,11 @@ class TermsBottomSheetFragment(private val type: String) : BottomSheetDialogFrag
         fun newInstance(type: String): TermsBottomSheetFragment = TermsBottomSheetFragment(type)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("TermsBottomSheetFragment", "onCreate")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("TermsBottomSheetFragment", "onCreateView")
+        LogUtil.d("TermsBottomSheetFragment", "onCreateView")
         binding = FragmentTermsBottomSheetBinding.inflate(inflater, container, false)
 
         //type 에 따라 제목과 본문을 다르게 바꾼다.
