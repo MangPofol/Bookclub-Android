@@ -15,16 +15,17 @@ import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentRecordDetailBinding
 import com.mangpo.bookclub.model.remote.Book
 import com.mangpo.bookclub.model.remote.RecordResponse
+import com.mangpo.bookclub.utils.PrefsUtils
 import com.mangpo.bookclub.utils.convertDpToPx
 import com.mangpo.bookclub.utils.getDeviceWidth
 import com.mangpo.bookclub.utils.isNetworkAvailable
 import com.mangpo.bookclub.view.BaseFragment
+import com.mangpo.bookclub.view.adpater.LinkVerDetailRVAdapter
 import com.mangpo.bookclub.view.adpater.RecordPhotoVPAdapter
 import com.mangpo.bookclub.view.dialog.ActionDialogFragment
 import com.mangpo.bookclub.viewmodel.PostViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.regex.Pattern
 
 class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentRecordDetailBinding::inflate) {
     private val postVm: PostViewModel by viewModels<PostViewModel>()
@@ -90,6 +91,7 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
         })
 
         binding.recordDetailUpdateBtn.setOnClickListener {
+            PrefsUtils.setTempRecord("")
             val action = RecordDetailFragmentDirections.actionRecordDetailFragmentToRecordFragment("UPDATE", Gson().toJson(record), Gson().toJson(book))
             findNavController().navigate(action)
         }
@@ -143,16 +145,21 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
             binding.recordDetailTimeTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.primary))
         }
 
-        if (record.hyperlink.isBlank()) {
-            binding.recordDetailLinkTv.text = getString(R.string.msg_input_link)
-            binding.recordDetailLinkTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey_dark))
-        } else {
-            binding.recordDetailLinkTv.text = record.hyperlinkTitle
-            binding.recordDetailLinkTv.setBackgroundResource(R.drawable.bg_underline_primary)
+        if (record.linkResponseDtos.isEmpty()) {
+            binding.recordDetailLinkHintTv.text = getString(R.string.msg_input_link)
+            binding.recordDetailLinkHintTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey_dark))
 
-            val mTransform: Linkify.TransformFilter = Linkify.TransformFilter { p0, p1 -> "" }
-            val pattern: Pattern = Pattern.compile(record.hyperlinkTitle)
-            Linkify.addLinks(binding.recordDetailLinkTv, pattern, record.hyperlink, null, mTransform)
+            binding.recordDetailLinkHintTv.visibility = View.VISIBLE
+            binding.recordDetailLinkHintIv.visibility = View.VISIBLE
+            binding.recordDetailLinkRv.visibility = View.GONE
+        } else {
+            val linkVerDetailRVAdapter: LinkVerDetailRVAdapter = LinkVerDetailRVAdapter()
+            linkVerDetailRVAdapter.setData(record.linkResponseDtos)
+            binding.recordDetailLinkRv.adapter = linkVerDetailRVAdapter
+
+            binding.recordDetailLinkHintTv.visibility = View.GONE
+            binding.recordDetailLinkHintIv.visibility = View.GONE
+            binding.recordDetailLinkRv.visibility = View.VISIBLE
         }
     }
 

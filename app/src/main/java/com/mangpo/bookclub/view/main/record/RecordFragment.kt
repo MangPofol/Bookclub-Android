@@ -55,13 +55,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(FragmentRecordBinding
             Log.d("RecordFragment", "args.mode==\"CREATE\" && PrefsUtils.getTempRecord().isNotBlank()")
             recordVerCreate = Gson().fromJson(PrefsUtils.getTempRecord(), RecordRequest::class.java)
             bindRecordVerCreate(recordVerCreate)
-        } else if (args.mode=="CREATE" && args.record!=null) {
-            Log.d("RecordFragment", "${args.record}")
-            recordVerCreate = Gson().fromJson(args.record, RecordRequest::class.java)
-            bindRecordVerCreate(recordVerCreate)
-        } else if (args.mode=="UPDATE") {
+        } else if (args.mode=="UPDATE" && PrefsUtils.getTempRecord().isBlank()) {
             Log.d("RecordFragment", "args.mode==\"UPDATE\"")
             recordVerUpdate = Gson().fromJson(args.record, RecordResponse::class.java)
+            bindRecordVerUpdate(recordVerUpdate)
+        } else if (args.mode=="UPDATE" && PrefsUtils.getTempRecord().isNotBlank()) {
+            Log.d("RecordFragment", "args.mode==\"UPDATE\" && PrefsUtils.getTempRecord().isNotBlank()")
+            recordVerUpdate = Gson().fromJson(PrefsUtils.getTempRecord(), RecordResponse::class.java)
             bindRecordVerUpdate(recordVerUpdate)
         }
 

@@ -17,7 +17,7 @@ interface PostService {
     fun deleteMultipleFiles(@Body deletePhotos: List<String>): Call<Void>
 
     @PUT("/posts/{postId}")
-    fun updatePost(@Path("postId") postId: Int, @Body updateRecord: RecordUpdateRequest): Call<Void>
+    fun updatePost(@Path("postId") postId: Int, @Body updateRecord: RecordUpdateRequest): Call<RecordResponse>
 
     @DELETE("/posts/{postId}")
     fun deletePost(@Path("postId") postId: Int): Call<Void>

@@ -54,6 +54,10 @@
         <item name="android:textSize">24dp</item>
     </style>
 
+    <style name="ta_eb_12_kr" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/nanum_gothic_extra_bold</item>
+        <item name="android:textSize">12dp</item>
+    </style>
     <style name="ta_eb_18_kr" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/nanum_gothic_extra_bold</item>
         <item name="android:textSize">18dp</item>

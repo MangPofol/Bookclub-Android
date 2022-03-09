@@ -1,5 +1,7 @@
 package com.mangpo.bookclub.model.remote
 
+import com.mangpo.bookclub.model.entities.Link
+
 data class RecordsResponse (
     val data: List<RecordResponse>
 )
@@ -14,8 +16,7 @@ data class RecordResponse (
     val modifiedDate: String,
     var location: String,
     var readTime: String,
-    var hyperlinkTitle: String,
-    var hyperlink: String,
+    var linkResponseDtos: List<Link> = listOf(),
     var postImgLocations: List<String> = listOf(),
     val clubIdListForScope: List<Int> = listOf(),
     val likedList: List<Int> = listOf(),

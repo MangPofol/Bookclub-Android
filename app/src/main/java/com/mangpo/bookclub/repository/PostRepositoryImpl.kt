@@ -89,15 +89,15 @@ class PostRepositoryImpl: PostRepository {
     override fun updatePost(
         postId: Int,
         updateRecord: RecordUpdateRequest,
-        onResponse: (Response<Void>) -> Unit,
+        onResponse: (Response<RecordResponse>) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        postService.updatePost(postId, updateRecord).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        postService.updatePost(postId, updateRecord).enqueue(object : Callback<RecordResponse> {
+            override fun onResponse(call: Call<RecordResponse>, response: Response<RecordResponse>) {
                 onResponse(response)
             }
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<RecordResponse>, t: Throwable) {
                 onFailure(t)
             }
         })

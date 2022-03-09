@@ -151,8 +151,8 @@
     <string name="msg_what_time_read">책 읽은 시간대는?</string>
     <string name="msg_what_time_read_hint">점심시간 / 13:34</string>
     <string name="msg_add_link">함께 첨부하고 싶은 링크가 있다면?</string>
-    <string name="msg_add_link_hint">나른한 점심시간에 어울리는 노래</string>
-    <string name="msg_input_link">책과 함께한 링크를 입력해보세요</string>
+    <string name="msg_add_link_hint">링크 제목</string>
+    <string name="msg_input_link">링크를 입력해 주세요.</string>
     <string name="msg_create_record_success">작성이 완료되었습니다.</string>
     <string name="msg_input_location">책과 함께한 장소를 입력해보세요</string>
     <string name="msg_input_time">책과 함께한 시간를 입력해보세요</string>
@@ -163,4 +163,7 @@
     <string name="msg_delete_book">책을 삭제하시겠습니까?</string>
     <string name="msg_delete_book_desc">전체 메모 리스트도 함께 삭제됩니다.</string>
     <string name="msg_delete_record">기록이 삭제되었습니다.</string>
+    <string name="msg_delete_link">링크를 삭제하시겠습니까?</string>
+    <string name="msg_delete_link_desc">삭제 후 복구할 수 없습니다.</string>
+    <string name="msg_null_link">링크 제목과 링크를 모두 입력해 주세요.</string>
 </resources>
