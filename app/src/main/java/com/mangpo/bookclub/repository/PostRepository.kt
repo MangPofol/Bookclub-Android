@@ -10,5 +10,5 @@ interface PostRepository {
     fun uploadImgFile(imgPaths: List<String>, onResponse: (Response<List<String>>) -> Unit, onFailure: (Throwable) -> Unit)
     fun deletePost(postId: Int, onResponse: (Response<Void>) -> Unit, onFailure: (Throwable) -> Unit)
     fun deletePhotos(deletePhotos: List<String>, onResponse: (Response<Void>) -> Unit, onFailure: (Throwable) -> Unit)
-    fun updatePost(postId: Int, updateRecord: RecordUpdateRequest, onResponse: (Response<Void>) -> Unit, onFailure: (Throwable) -> Unit)
+    fun updatePost(postId: Int, updateRecord: RecordUpdateRequest, onResponse: (Response<RecordResponse>) -> Unit, onFailure: (Throwable) -> Unit)
 }

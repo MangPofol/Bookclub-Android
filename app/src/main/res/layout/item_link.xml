@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/link_et_view"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_white_15_null_null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/link_iv"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="6dp"
+        android:src="@drawable/ic_link"
+        app:layout_constraintBottom_toBottomOf="@+id/link_title_et"
+        app:layout_constraintEnd_toStartOf="@+id/link_title_et"
+        app:layout_constraintStart_toStartOf="@+id/link_et_view"
+        app:layout_constraintTop_toTopOf="@+id/link_title_et" />
+
+    <EditText
+        android:id="@+id/link_title_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/transparent"
+        android:hint="@string/msg_add_link_hint"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingVertical="1dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/grey_dark"
+        app:layout_constraintBottom_toTopOf="@+id/link_line_view"
+        app:layout_constraintEnd_toEndOf="@+id/link_et_view"
+        app:layout_constraintStart_toEndOf="@+id/link_iv"
+        app:layout_constraintTop_toTopOf="@+id/link_et_view" />
+
+    <ImageView
+        android:id="@+id/link_remove_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_close_secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/link_title_et"
+        app:layout_constraintEnd_toEndOf="@+id/link_title_et"
+        app:layout_constraintTop_toTopOf="@+id/link_title_et" />
+
+    <View
+        android:id="@+id/link_line_view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@+id/link_et"
+        app:layout_constraintEnd_toEndOf="@+id/link_title_et"
+        app:layout_constraintStart_toStartOf="@+id/link_title_et"
+        app:layout_constraintTop_toBottomOf="@+id/link_title_et" />
+
+    <EditText
+        android:id="@+id/link_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="start"
+        android:hint="@string/msg_input_link"
+        android:inputType="text"
+        android:lineSpacingExtra="4dp"
+        android:maxLines="1"
+        android:paddingVertical="1dp"
+        android:textAppearance="@style/ta_r_12_kr"
+        android:textColor="@color/primary"
+        android:textColorHint="@color/grey_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/link_et_view"
+        app:layout_constraintEnd_toEndOf="@+id/link_title_et"
+        app:layout_constraintStart_toStartOf="@+id/link_title_et"
+        app:layout_constraintTop_toBottomOf="@+id/link_title_et" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

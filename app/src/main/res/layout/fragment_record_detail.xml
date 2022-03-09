@@ -166,7 +166,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/record_detail_location_iv" />
 
             <TextView
-                android:id="@+id/record_detail_link_tv"
+                android:id="@+id/record_detail_link_hint_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -174,12 +174,12 @@
                 android:textAppearance="@style/ta_r_12_kr"
                 android:textColor="@color/grey_dark"
                 android:textColorLink="@color/primary"
-                app:layout_constraintBottom_toBottomOf="@+id/record_detail_link_iv"
-                app:layout_constraintEnd_toStartOf="@+id/record_detail_link_iv"
-                app:layout_constraintTop_toTopOf="@+id/record_detail_link_iv" />
+                app:layout_constraintBottom_toBottomOf="@+id/record_detail_link_hint_iv"
+                app:layout_constraintEnd_toStartOf="@+id/record_detail_link_hint_iv"
+                app:layout_constraintTop_toTopOf="@+id/record_detail_link_hint_iv" />
 
             <ImageView
-                android:id="@+id/record_detail_link_iv"
+                android:id="@+id/record_detail_link_hint_iv"
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginTop="16dp"
@@ -188,6 +188,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/record_detail_time_iv" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/record_detail_link_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="22dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/record_detail_link_hint_iv"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_link_ver_detail" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

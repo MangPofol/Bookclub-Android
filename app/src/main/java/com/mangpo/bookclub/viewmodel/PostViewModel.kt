@@ -23,8 +23,8 @@ class PostViewModel: BaseViewModel() {
     private val _deletePhotosCode: MutableLiveData<Int> = MutableLiveData()
     val deletePhotosCode: LiveData<Int> get() = _deletePhotosCode
 
-    private val _updatePostCode: MutableLiveData<Int> = MutableLiveData()
-    val updatePostCode: LiveData<Int> get() = _updatePostCode
+    private val _updateRecord: MutableLiveData<RecordResponse> = MutableLiveData()
+    val updateRecord: LiveData<RecordResponse> get() = _updateRecord
 
     fun createRecord(record: RecordRequest) {
         Log.d("PostViewModel", "createRecord record: $record")
@@ -89,11 +89,11 @@ class PostViewModel: BaseViewModel() {
             updateRecord = updateRecord,
             onResponse = {
                 Log.d("PostViewModel", "updatePost Success!\ncode: ${it.code()}\nbody: ${it.body()}")
-                _updatePostCode.value = it.code()
+                _updateRecord.value = it.body()
             },
             onFailure = {
                 Log.e("PostViewModel", "updatePost Fail!\nmessage: ${it.message}")
-                _updatePostCode.value = 600
+                _updateRecord.value = null
             }
         )
     }
