@@ -71,13 +71,16 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
     private fun initActionDialog() {
         actionDialog = ActionDialogFragment()
         actionDialog.setMyDialogCallback(object : ActionDialogFragment.MyDialogCallback {
-            override fun delete() {
+            override fun action1() {
                 linkRVAdapter.removeLink(clickedLinkPosition!!)
 
                 if (binding.recordSettingLinkPlusView.visibility==View.GONE) {
                     binding.recordSettingLinkPlusView.visibility = View.VISIBLE
                     binding.recordSettingLinkPlusIv.visibility = View.VISIBLE
                 }
+            }
+
+            override fun action2() {
             }
         })
     }
@@ -108,9 +111,10 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
             hideKeyboard()
             showLoadingDialog()
 
-            if (!validateLink())    //1. 링크 유효성 검사
+            if (!validateLink()) {    //1. 링크 유효성 검사
+                dismissLoadingDialog()
                 showToast(getString(R.string.msg_null_link))
-            else if (!isNetworkAvailable(requireContext())) {  //2. 네트워크 상태 확인
+            } else if (!isNetworkAvailable(requireContext())) {  //2. 네트워크 상태 확인
                 showNetworkSnackBar()
                 dismissLoadingDialog()
             } else if (args.mode=="CREATE") {   //3. 기록 추가일 때

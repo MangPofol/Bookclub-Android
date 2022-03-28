@@ -128,9 +128,12 @@ class BookDetailFragment : BaseFragment<FragmentBookDetailBinding>(FragmentBookD
         actionDialogFragment.arguments = bundle
 
         actionDialogFragment.setMyDialogCallback(object : ActionDialogFragment.MyDialogCallback {
-            override fun delete() {
+            override fun action1() {
                 showLoadingDialog()
                 bookVm.deleteBook(book.id!!)
+            }
+
+            override fun action2() {
             }
         })
     }
