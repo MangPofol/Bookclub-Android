@@ -51,12 +51,12 @@
         android:textAppearance="@style/ta_r_14_kr"
         android:textColor="@color/grey_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/action_dialog_delete_tv"
+        app:layout_constraintEnd_toStartOf="@+id/action_dialog_action_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/action_dialog_line_view" />
 
     <TextView
-        android:id="@+id/action_dialog_delete_tv"
+        android:id="@+id/action_dialog_action_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"

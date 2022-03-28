@@ -1,5 +1,6 @@
 package com.mangpo.bookclub.view.main.home
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import com.mangpo.bookclub.model.remote.UserResponse
 import com.mangpo.bookclub.utils.*
 import com.mangpo.bookclub.view.BaseFragment
 import com.mangpo.bookclub.view.adpater.ChecklistContentRVAdapter
+import com.mangpo.bookclub.view.dialog.ActionDialogFragment
 import com.mangpo.bookclub.viewmodel.TodoViewModel
 import com.mangpo.bookclub.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
@@ -26,6 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val todoVm: TodoViewModel by activityViewModels<TodoViewModel>()
 
     private lateinit var checklistContentRVAdapter: ChecklistContentRVAdapter
+    private lateinit var checklist: Todo
 
     override fun initAfterBinding() {
         initChecklistAdapter()
@@ -107,8 +110,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             override fun completeChecklist(position: Int, checklist: Todo) {
                 if (!isNetworkAvailable(requireContext()))
                     showNetworkSnackBar()
-                else
+                else {
+                    this@HomeFragment.checklist = checklist
                     todoVm.updateTodo(checklist.toDoId, checklist.content, true)
+                }
             }
 
             override fun deleteChecklist(position: Int, checklistId: Int) {
@@ -168,8 +173,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             if (code!=null) {
                 when (code) {
                     204 -> {
-                        showToast(getString(R.string.msg_complete_checklist))
-                        todoVm.getTodos()
+                        val bundle: Bundle = Bundle()
+                        bundle.putString("title", getString(R.string.msg_complete_checklist))
+                        bundle.putString("desc", getString(R.string.msg_checklist_move_store))
+
+                        val actionDialog: ActionDialogFragment = ActionDialogFragment()
+                        actionDialog.arguments = bundle
+                        actionDialog.setMyDialogCallback(object : ActionDialogFragment.MyDialogCallback {
+                            override fun action1() {
+                                todoVm.getTodos()
+                            }
+
+                            override fun action2() {
+                                todoVm.updateTodo(checklist.toDoId, checklist.content, false)
+                            }
+                        })
+                        actionDialog.show(requireActivity().supportFragmentManager, null)
                     }
                     else -> Snackbar.make(requireView(), getString(R.string.error_api), Snackbar.LENGTH_SHORT)
                 }
