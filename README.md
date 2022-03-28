@@ -8,8 +8,6 @@
 </div>
 <br>
 
-<div align="center"><h3>2022.02 Ourpage 베타 버전이 출시되었습니다!</h3></div><br>
-<div align="center"><img src="https://user-images.githubusercontent.com/66666533/153526745-2de77e48-f729-40ad-bb6c-9c15a9302e0b.png" width="300" height="300" />   <img src="https://user-images.githubusercontent.com/66666533/153526786-670899d6-47c0-4390-a4e3-3cae617c2c99.png" width="300" height="300" /></div>
-<br>
+<div align="center"><h3>2022.03 Ourpage가 플레이스토어에 정식 출시되었습니다!</h3></div>
 <div align="center"><h3><a href="https://play.google.com/store/apps/details?id=com.mangpo.bookclub">Ourpage 플레이스토어</a></h3><h3><a href="https://instagram.com/ourpage_app?utm_medium=copy_link">Ourpage 공식 인스타그램</a></h3></div>
 <br><br>
