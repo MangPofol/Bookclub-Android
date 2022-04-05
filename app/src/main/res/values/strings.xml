@@ -80,6 +80,7 @@
     <string name="title_oldest">오래된순</string>
     <string name="title_by_name">이름순</string>
     <string name="title_memo_list">MEMO LIST</string>
+    <string name="title_help">Our page 도움말</string>
 
     <string name="action_login_en">LOG IN</string>
     <string name="action_signin">회원가입</string>
