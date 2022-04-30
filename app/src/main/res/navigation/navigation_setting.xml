@@ -9,7 +9,7 @@
         android:id="@+id/settingFragment"
         android:name="com.mangpo.bookclub.view.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" >
+        tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_settingFragment_to_changePwFragment"
             app:destination="@id/changePwFragment" />

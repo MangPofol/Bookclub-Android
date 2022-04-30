@@ -66,7 +66,7 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
         actionDialogFragment.arguments = bundle
 
         actionDialogFragment.setMyDialogCallback(object : ActionDialogFragment.MyDialogCallback {
-            override fun delete() {
+            override fun action1() {
                 showLoadingDialog()
 
                 if (!isNetworkAvailable(requireContext())) {
@@ -74,6 +74,9 @@ class RecordDetailFragment : BaseFragment<FragmentRecordDetailBinding>(FragmentR
                     showNetworkSnackBar()
                 } else
                     postVm.deletePost(record.postId)
+            }
+
+            override fun action2() {
             }
         })
     }

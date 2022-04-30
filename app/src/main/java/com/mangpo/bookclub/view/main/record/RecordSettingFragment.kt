@@ -71,13 +71,16 @@ class RecordSettingFragment : BaseFragment<FragmentRecordSettingBinding>(Fragmen
     private fun initActionDialog() {
         actionDialog = ActionDialogFragment()
         actionDialog.setMyDialogCallback(object : ActionDialogFragment.MyDialogCallback {
-            override fun delete() {
+            override fun action1() {
                 linkRVAdapter.removeLink(clickedLinkPosition!!)
 
                 if (binding.recordSettingLinkPlusView.visibility==View.GONE) {
                     binding.recordSettingLinkPlusView.visibility = View.VISIBLE
                     binding.recordSettingLinkPlusIv.visibility = View.VISIBLE
                 }
+            }
+
+            override fun action2() {
             }
         })
     }

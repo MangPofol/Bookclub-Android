@@ -70,7 +70,7 @@
             android:id="@+id/my_info_total_record_iv"
             android:layout_width="11dp"
             android:layout_height="11dp"
-            android:src="@drawable/ic_write_grey"
+            android:src="@drawable/ic_write_black_light"
             app:layout_constraintBottom_toTopOf="@+id/my_info_total_reading_books_iv"
             app:layout_constraintEnd_toStartOf="@+id/my_info_total_record_tv"
             app:layout_constraintStart_toStartOf="@+id/my_info_email_tv"

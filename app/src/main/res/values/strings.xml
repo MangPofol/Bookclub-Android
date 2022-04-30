@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Ourpage</string>
-    <string name="version">버전 1.1.0</string>
+    <string name="version">버전 1.2.0</string>
     <string name="email">ourpageapp@gmail.com</string>
 
     <string name="error_check_network">네트워크 연결을 확인해주세요.</string>
@@ -80,6 +80,7 @@
     <string name="title_oldest">오래된순</string>
     <string name="title_by_name">이름순</string>
     <string name="title_memo_list">MEMO LIST</string>
+    <string name="title_help">Our page 도움말</string>
 
     <string name="action_login_en">LOG IN</string>
     <string name="action_signin">회원가입</string>
@@ -102,6 +103,7 @@
     <string name="action_update">수정하기</string>
     <string name="action_cancel">취소</string>
     <string name="action_delete_book">책 삭제</string>
+    <string name="action_undo">되돌리기</string>
 
     <string name="msg_input_email">이메일 주소를 입력해 주세요.</string>
     <string name="msg_agree_privacy">이용약관 및 개인정보처리방침에 동의합니다.</string>
@@ -140,7 +142,7 @@
     <string name="msg_write_push">눌러서 작성하세요.</string>
     <string name="msg_input_reading_checklist">독서 체크리스트를 입력해주세요!</string>
     <string name="msg_hint_checklist">독서 체크리스트를 입력해주세요.(최대 26자)</string>
-    <string name="msg_complete_checklist">체크리스트를 완료했습니다.</string>
+    <string name="msg_complete_checklist">체크리스트를 완료했습니다!</string>
     <string name="msg_select_book">기록할 책을 선택해주세요.</string>
     <string name="msg_input_title">제목을 입력해주세요.</string>
     <string name="msg_record_desc">기억하고 싶은 글귀나 책을 읽는 순간을\n사진으로 기록해보세요.</string>
@@ -166,4 +168,5 @@
     <string name="msg_delete_link">링크를 삭제하시겠습니까?</string>
     <string name="msg_delete_link_desc">삭제 후 복구할 수 없습니다.</string>
     <string name="msg_null_link">링크 제목과 링크를 모두 입력해 주세요.</string>
+    <string name="msg_checklist_move_store">완료된 체크리스트는 보관함으로 이동합니다</string>
 </resources>

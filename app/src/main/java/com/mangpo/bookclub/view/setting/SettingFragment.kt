@@ -1,5 +1,7 @@
 package com.mangpo.bookclub.view.setting
 
+import android.content.Intent
+import android.net.Uri
 import androidx.navigation.fragment.findNavController
 import com.mangpo.bookclub.R
 import com.mangpo.bookclub.databinding.FragmentSettingBinding
@@ -45,6 +47,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
         binding.settingQuitMembershipTv.setOnClickListener {
             findNavController().navigate(R.id.action_settingFragment_to_withdrawalActivity)
+        }
+
+        binding.settingHelpTv.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://coconut-cheese-fcb.notion.site/Our-page-ee16685dfdcf477aa0c713ccb90b1d83")))
         }
     }
 }
